@@ -14,12 +14,17 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SalticosAdmin.AccesoDeDatos\SalticosAdmin.AccesoDeDatos.csproj" />
     <ProjectReference Include="..\SalticosAdmin.Modelos\SalticosAdmin.Modelos.csproj" />
     <ProjectReference Include="..\SalticosAdmin.Utilidades\SalticosAdmin.Utilidades.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers\" />
   </ItemGroup>
 
 </Project>

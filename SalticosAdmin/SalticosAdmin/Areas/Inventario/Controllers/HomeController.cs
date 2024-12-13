@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using SalticosAdmin.Modelos.ViewModels;
 using System.Diagnostics;
 
-namespace SalticosAdmin.Controllers
+namespace SalticosAdmin.Areas.Inventario.Controllers
 {
+    [Area("Inventario")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
