@@ -14,12 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
+    <ProjectReference Include="..\SalticosAdmin.Modelos\SalticosAdmin.Modelos.csproj" />
+    <ProjectReference Include="..\SalticosAdmin.Utilidades\SalticosAdmin.Utilidades.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SalticosAdmin.Modelos\SalticosAdmin.Modelos.csproj" />
-    <ProjectReference Include="..\SalticosAdmin.Utilidades\SalticosAdmin.Utilidades.csproj" />
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>
