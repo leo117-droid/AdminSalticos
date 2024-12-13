@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalticosAdmin", "SalticosAdmin\SalticosAdmin.csproj", "{34C575A5-E8C2-44E2-81C9-C908E53D7257}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalticosAdmin.AccesoDeDatos", "SalticosAdmin.AccesoDeDatos\SalticosAdmin.AccesoDeDatos.csproj", "{D0450BBF-7518-4522-A251-06D19326EFC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{34C575A5-E8C2-44E2-81C9-C908E53D7257}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34C575A5-E8C2-44E2-81C9-C908E53D7257}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34C575A5-E8C2-44E2-81C9-C908E53D7257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0450BBF-7518-4522-A251-06D19326EFC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0450BBF-7518-4522-A251-06D19326EFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0450BBF-7518-4522-A251-06D19326EFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0450BBF-7518-4522-A251-06D19326EFC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
