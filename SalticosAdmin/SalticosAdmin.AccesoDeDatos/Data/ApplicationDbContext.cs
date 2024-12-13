@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace SalticosAdmin.Data
+namespace SalticosAdmin.AccesoDeDatos.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
