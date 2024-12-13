@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using SalticosAdmin.Models;
+using SalticosAdmin.Modelos.ViewModels;
 using System.Diagnostics;
 
 namespace SalticosAdmin.Controllers

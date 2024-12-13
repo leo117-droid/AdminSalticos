@@ -1,4 +1,4 @@
-namespace SalticosAdmin.Models
+namespace SalticosAdmin.Modelos.ViewModels
 {
     public class ErrorViewModel
     {

@@ -17,4 +17,9 @@
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SalticosAdmin.Modelos\SalticosAdmin.Modelos.csproj" />
+    <ProjectReference Include="..\SalticosAdmin.Utilidades\SalticosAdmin.Utilidades.csproj" />
+  </ItemGroup>
+
 </Project>
