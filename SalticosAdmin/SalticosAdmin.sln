@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalticosAdmin", "SalticosAd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalticosAdmin.AccesoDeDatos", "SalticosAdmin.AccesoDeDatos\SalticosAdmin.AccesoDeDatos.csproj", "{D0450BBF-7518-4522-A251-06D19326EFC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalticosAdmin.Modelos", "SalticosAdmin.Modelos\SalticosAdmin.Modelos.csproj", "{A5F23913-9EDF-4B8D-B5A3-C84C48671B26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalticosAdmin.Utilidades", "SalticosAdmin.Utilidades\SalticosAdmin.Utilidades.csproj", "{BA30D8FF-CAC6-48AC-B330-C157AAE32168}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{D0450BBF-7518-4522-A251-06D19326EFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0450BBF-7518-4522-A251-06D19326EFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0450BBF-7518-4522-A251-06D19326EFC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5F23913-9EDF-4B8D-B5A3-C84C48671B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5F23913-9EDF-4B8D-B5A3-C84C48671B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5F23913-9EDF-4B8D-B5A3-C84C48671B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5F23913-9EDF-4B8D-B5A3-C84C48671B26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA30D8FF-CAC6-48AC-B330-C157AAE32168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA30D8FF-CAC6-48AC-B330-C157AAE32168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA30D8FF-CAC6-48AC-B330-C157AAE32168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA30D8FF-CAC6-48AC-B330-C157AAE32168}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
