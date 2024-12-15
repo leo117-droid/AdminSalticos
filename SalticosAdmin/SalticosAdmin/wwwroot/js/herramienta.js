@@ -47,10 +47,10 @@ function loadDataTable() {
     });
 }
 
-/*
+
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar la Bodega?",
+        title: "Esta seguro de Eliminar la Herramienta?",
         text: "Este registro no se podra recuperar",
         icon: "warning",
         buttons: true,
@@ -74,4 +74,3 @@ function Delete(url) {
         }
     });
 }
-*/

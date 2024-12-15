@@ -41,30 +41,30 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         }
 
-        /*
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(Bodega bodega)
+        public async Task<IActionResult> Upsert(Herramienta herramienta)
         {
             if (ModelState.IsValid)
             {
-                if (bodega.Id == 0)
+                if (herramienta.Id == 0)
                 {
-                    await _unidadTrabajo.Bodega.Agregar(bodega);
-                    TempData[DS.Exitosa] = "Bodega creada Exitosamente";
+                    await _unidadTrabajo.Herramienta.Agregar(herramienta);
+                    //TempData[DS.Exitosa] = "Herrramienta creada Exitosamente";
                 }
                 else
                 {
-                    _unidadTrabajo.Bodega.Actualizar(bodega);
-                    TempData[DS.Exitosa] = "Bodega actualizada Exitosamente";
+                    _unidadTrabajo.Herramienta.Actualizar(herramienta);
+                    //TempData[DS.Exitosa] = "Herramienta actualizada Exitosamente";
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
             }
-            TempData[DS.Error] = "Error al grabar Bodega";
-            return View(bodega);
+            //TempData[DS.Error] = "Error al grabar herramienta";
+            return View(herramienta);
         }
-        */
+        
 
         #region API
         [HttpGet]
@@ -72,6 +72,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var todos = await _unidadTrabajo.Herramienta.ObtenerTodos();
             return Json(new { data = todos });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var herramientaBd = await _unidadTrabajo.Herramienta.Obtener(id);
+            if (herramientaBd == null)
+            {
+                return Json(new { success = false, message = "Error al borrar Herramienta" });
+            }
+            _unidadTrabajo.Herramienta.Remover(herramientaBd);
+            await _unidadTrabajo.Guardar();
+            return Json(new { success = true, message = "Herramienta borrada exitosamente" });
         }
 
         #endregion
