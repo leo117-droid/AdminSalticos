@@ -19,9 +19,6 @@ namespace SalticosAdmin.AccesoDeDatos.Configuracion
             builder.Property(x => x.Cedula).IsRequired().HasMaxLength(11);
             builder.Property(x => x.Telefono).IsRequired().HasMaxLength(8);
             builder.Property(x => x.Correo).IsRequired().HasMaxLength(50);
-        
-
-
         }
     }
 }
