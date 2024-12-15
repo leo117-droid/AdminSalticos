@@ -87,6 +87,26 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return Json(new { success = true, message = "Herramienta borrada exitosamente" });
         }
 
+        [ActionName("ValidarNombre")]
+        public async Task<IActionResult> ValidarNombre(string nombre, int id = 0)
+        {
+            bool valor = false;
+            var lista = await _unidadTrabajo.Herramienta.ObtenerTodos();
+            if (id == 0)
+            {
+                valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim());
+            }
+            else
+            {
+                valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim() && b.Id != id);
+            }
+            if (valor)
+            {
+                return Json(new { data = true });
+            }
+            return Json(new { data = false });
+        }
+
         #endregion
     }
 }
