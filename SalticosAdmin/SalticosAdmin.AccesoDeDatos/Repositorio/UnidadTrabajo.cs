@@ -17,6 +17,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
         {
             _db = db;
             Herramienta = new HerramientaRepositorio(_db);
+
         }
 
         public void Dispose()
