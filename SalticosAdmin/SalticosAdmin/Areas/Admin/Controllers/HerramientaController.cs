@@ -51,17 +51,17 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 if (herramienta.Id == 0)
                 {
                     await _unidadTrabajo.Herramienta.Agregar(herramienta);
-                    //TempData[DS.Exitosa] = "Herrramienta creada Exitosamente";
+                    TempData[DS.Exitosa] = "Herrramienta creada Exitosamente";
                 }
                 else
                 {
                     _unidadTrabajo.Herramienta.Actualizar(herramienta);
-                    //TempData[DS.Exitosa] = "Herramienta actualizada Exitosamente";
+                    TempData[DS.Exitosa] = "Herramienta actualizada Exitosamente";
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
             }
-            //TempData[DS.Error] = "Error al grabar herramienta";
+            TempData[DS.Error] = "Error al grabar herramienta";
             return View(herramienta);
         }
         
