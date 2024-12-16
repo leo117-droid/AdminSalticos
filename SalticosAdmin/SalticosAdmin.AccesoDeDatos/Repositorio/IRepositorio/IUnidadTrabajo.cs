@@ -10,6 +10,10 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
     {
         IHerramientaRepositorio Herramienta { get; }
 
+        IClienteRepositorio Cliente { get; }
+
+        IContactoRepositorio Contacto { get; }
+
         Task Guardar();
     }
 

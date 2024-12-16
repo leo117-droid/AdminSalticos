@@ -12,11 +12,15 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
     {
         private readonly ApplicationDbContext _db;
         public IHerramientaRepositorio Herramienta { get; private set; }
+        public IClienteRepositorio Cliente { get; private set; }
+        public IContactoRepositorio Contacto { get; private set; }
 
         public UnidadTrabajo(ApplicationDbContext db)
         {
             _db = db;
             Herramienta = new HerramientaRepositorio(_db);
+            Cliente = new ClienteRepositorio(_db);
+            Contacto = new ContactoRepositorio(_db);
 
         }
 
