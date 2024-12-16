@@ -1,0 +1,121 @@
+﻿@model SalticosAdmin.Modelos.Cliente
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear Cliente";
+
+}
+
+<form method="post">
+    <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
+
+        <div class="row border-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        </div>
+
+        @if (Model.Id != 0)
+        { // Actualizar
+            titulo = "Actualizar Cliente";
+            <input type="hidden" asp-for="Id" id="id" />
+        }
+
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Nombre</label>
+                <input type="text" asp-for="Nombre" class="form-control" placeholder="Nombre del Cliente" id="nombre" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Apellidos</label>
+                <input type="text" asp-for="Apellidos" class="form-control" placeholder="Apellidos del cliente" />
+                <span asp-validation-for="Apellidos" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Cedula</label>
+                <input type="text" asp-for="Cedula" class="form-control" placeholder="Cedula del cliente" />
+                <span asp-validation-for="Cedula" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Telefono</label>
+                <input type="text" asp-for="Telefono" class="form-control" placeholder="Telefono del cliente" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Correo</label>
+                <input type="text" asp-for="Correo" class="form-control" placeholder="Correo del cliente" />
+                <span asp-validation-for="Correo" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+        <br />
+
+        <div>
+            @if (Model.Id != 0)
+            {
+                <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+            }
+            else
+            {
+                <partial name="_BotonesCrearYRegresar" />
+            }
+        </div>
+
+
+    </div>
+
+
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.getElementById("nombre").addEventListener('change', function () {
+            validarNombre();
+        });
+
+        function validarNombre() {
+            var url = '@Url.Content("~/")' + "Admin/Cliente/ValidarNombre";
+            var id = '#id';
+            var nombre = '#nombre';
+
+            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
+
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var nombre = document.getElementById("nombre");
+                        swal("Error", "Nombre ya Existe", "error");
+                        nombre.value = "";
+                    }
+                });
+
+            })
+
+        }
+
+    </script>
+}
