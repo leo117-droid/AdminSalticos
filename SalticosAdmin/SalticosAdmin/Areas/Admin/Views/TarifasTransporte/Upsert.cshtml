@@ -1,0 +1,92 @@
+﻿@model SalticosAdmin.Modelos.TarifasTransporte
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear Tarifa de Transporte";
+
+}
+
+<form method="post">
+    <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
+
+        <div class="row border-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        </div>
+
+        @if (Model.Id != 0)
+        { // Actualizar
+            titulo = "Actualizar Tarifa de Transporte";
+            <input type="hidden" asp-for="Id" id="id" />
+        }
+
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Provincia</label>
+                <input type="text" asp-for="Provincia" class="form-control" placeholder="Provincia de la Tarifa de Transporte" id="provincia" />
+                <span asp-validation-for="Provincia" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Precio</label>
+                <input type="number" asp-for="Precio" class="form-control" placeholder="Precio de la Tarifa de Transporte" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+        </div>
+
+        <br />
+
+        <div>
+            @if (Model.Id != 0)
+            {
+                <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+            }
+            else
+            {
+                <partial name="_BotonesCrearYRegresar" />
+            }
+        </div>
+
+
+    </div>
+
+
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.getElementById("provincia").addEventListener('change', function () {
+            validarNombre();
+        });
+
+        function validarNombre() {
+            var url = '@Url.Content("~/")' + "Admin/TarifasTransporte/ValidarNombre";
+            var id = '#id';
+            var provincia = '#provincia';
+
+            $.getJSON(url, { id: $(id).val(), provincia: $(provincia).val() }, function (data) {
+
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var provincia = document.getElementById("provincia");
+                        swal("Error", "Provincia ya Existe", "error");
+                        provincia.value = "";
+                    }
+                });
+
+            })
+
+        }
+
+    </script>
+}

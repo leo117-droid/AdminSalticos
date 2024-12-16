@@ -43,25 +43,25 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(Herramienta herramienta)
+        public async Task<IActionResult> Upsert(TarifasTransporte tarifasTransporte)
         {
             if (ModelState.IsValid)
             {
-                if (herramienta.Id == 0)
+                if (tarifasTransporte.Id == 0)
                 {
-                    await _unidadTrabajo.Herramienta.Agregar(herramienta);
-                    TempData[DS.Exitosa] = "Herrramienta creada Exitosamente";
+                    await _unidadTrabajo.TarifasTransporte.Agregar(tarifasTransporte);
+                    TempData[DS.Exitosa] = "Tarifa de Transporte creada Exitosamente";
                 }
                 else
                 {
-                    _unidadTrabajo.Herramienta.Actualizar(herramienta);
-                    TempData[DS.Exitosa] = "Herramienta actualizada Exitosamente";
+                    _unidadTrabajo.TarifasTransporte.Actualizar(tarifasTransporte);
+                    TempData[DS.Exitosa] = "Tarifa de Transporte actualizada Exitosamente";
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
             }
-            TempData[DS.Error] = "Error al grabar herramienta";
-            return View(herramienta);
+            TempData[DS.Error] = "Error al grabar Tarifa de Transporte";
+            return View(tarifasTransporte);
         }
 
 
@@ -69,35 +69,35 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ObtenerTodos()
         {
-            var todos = await _unidadTrabajo.Herramienta.ObtenerTodos();
+            var todos = await _unidadTrabajo.TarifasTransporte.ObtenerTodos();
             return Json(new { data = todos });
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            var herramientaBd = await _unidadTrabajo.Herramienta.Obtener(id);
-            if (herramientaBd == null)
+            var tarifaBd = await _unidadTrabajo.TarifasTransporte.Obtener(id);
+            if (tarifaBd == null)
             {
-                return Json(new { success = false, message = "Error al borrar Herramienta" });
+                return Json(new { success = false, message = "Error al borrar Tarifa de Transporte" });
             }
-            _unidadTrabajo.Herramienta.Remover(herramientaBd);
+            _unidadTrabajo.TarifasTransporte.Remover(tarifaBd);
             await _unidadTrabajo.Guardar();
-            return Json(new { success = true, message = "Herramienta borrada exitosamente" });
+            return Json(new { success = true, message = "Tarifa de Transporte borrada exitosamente" });
         }
 
         [ActionName("ValidarNombre")]
-        public async Task<IActionResult> ValidarNombre(string nombre, int id = 0)
+        public async Task<IActionResult> ValidarNombre(string provincia, int id = 0)
         {
             bool valor = false;
-            var lista = await _unidadTrabajo.Herramienta.ObtenerTodos();
+            var lista = await _unidadTrabajo.TarifasTransporte.ObtenerTodos();
             if (id == 0)
             {
-                valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim());
+                valor = lista.Any(b => b.Provincia.ToLower().Trim() == provincia.ToLower().Trim());
             }
             else
             {
-                valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim() && b.Id != id);
+                valor = lista.Any(b => b.Provincia.ToLower().Trim() == provincia.ToLower().Trim() && b.Id != id);
             }
             if (valor)
             {
