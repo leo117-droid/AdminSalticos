@@ -14,9 +14,8 @@ namespace SalticosAdmin.AccesoDeDatos.Data
         }
         public DbSet<Herramienta> Herramientas { get; set; }
         public DbSet<Contacto> Contactos { get; set; }
-
         public DbSet<Cliente> Clientes { get; set; }
-
+        public DbSet<TarifasTransporte> TarifasTransportes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
