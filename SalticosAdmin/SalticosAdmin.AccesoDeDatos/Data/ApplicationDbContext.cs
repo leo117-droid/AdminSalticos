@@ -17,6 +17,9 @@ namespace SalticosAdmin.AccesoDeDatos.Data
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<TarifasTransporte> TarifasTransportes { get; set; }
 
+        public DbSet<Vehiculo> Vehiculos { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

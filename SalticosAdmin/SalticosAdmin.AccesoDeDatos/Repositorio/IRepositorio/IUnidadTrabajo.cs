@@ -16,6 +16,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 
         ITarifasTransporteRepositorio TarifasTransporte { get; }
 
+        IVehiculoRepositorio Vehiculo { get; }
+
         Task Guardar();
     }
 
