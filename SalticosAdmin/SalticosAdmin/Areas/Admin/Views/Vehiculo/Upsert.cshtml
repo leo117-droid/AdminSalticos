@@ -1,0 +1,113 @@
+﻿@model SalticosAdmin.Modelos.Vehiculo
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear Vehiculo";
+
+}
+
+<form method="post">
+    <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
+
+        <div class="row border-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        </div>
+
+        @if (Model.Id != 0)
+        { // Actualizar
+            titulo = "Actualizar Vehiculo";
+            <input type="hidden" asp-for="Id" id="id" />
+        }
+
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Marca</label>
+                <input type="text" asp-for="Marca" class="form-control" placeholder="Marca del Vehiculo" id="marca" />
+                <span asp-validation-for="Marca" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Modelo</label>
+                <input type="text" asp-for="Modelo" class="form-control" placeholder="Modelo del vehiculo" />
+                <span asp-validation-for="Modelo" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Placa</label>
+                <input type="text" asp-for="Placa" class="form-control" placeholder="Placa del vehiculo" id="placa"/>
+                <span asp-validation-for="Placa" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Tipo de Vehículo</label>
+                <input type="text" asp-for="TipoVehiculo" class="form-control" placeholder="Tipo de vehículo" />
+                <span asp-validation-for="TipoVehiculo" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+
+        <br />
+
+        <div>
+            @if (Model.Id != 0)
+            {
+                <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+            }
+            else
+            {
+                <partial name="_BotonesCrearYRegresar" />
+            }
+        </div>
+
+
+    </div>
+
+
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.getElementById("placa").addEventListener('change', function () {
+            validarPlaca();
+        });
+
+        function validarPlaca() {
+            var url = '@Url.Content("~/")' + "Admin/Vehiculo/ValidarPlaca";
+            var id = '#id';
+            var placa = '#placa';
+
+            $.getJSON(url, { id: $(id).val(), placa: $(placa).val() }, function (data) {
+
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var placa = document.getElementById("placa");
+                        swal("Error", "Placa ya Existe", "error");
+                        placa.value = "";
+                    }
+                });
+
+            })
+
+        }
+
+    </script>
+}
