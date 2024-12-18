@@ -20,6 +20,9 @@ namespace SalticosAdmin.AccesoDeDatos.Data
         public DbSet<Vehiculo> Vehiculos { get; set; }
 
 
+        public DbSet<CategoriasEdad> CategoriasEdades { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

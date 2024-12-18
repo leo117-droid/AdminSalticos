@@ -18,6 +18,9 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IVehiculoRepositorio Vehiculo { get; private set; }
 
+        public ICategoriasEdadRepositorio CategoriasEdad { get; }
+
+
         public UnidadTrabajo(ApplicationDbContext db)
         {
             _db = db;
@@ -26,7 +29,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             Contacto = new ContactoRepositorio(_db);
             TarifasTransporte = new TarifasTransporteRepositorio(_db);
             Vehiculo = new VehiculoRepositorio(_db);
-
+            CategoriasEdad = new CategoriasEdadRepositorio(_db);
         }
 
         public void Dispose()
