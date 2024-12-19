@@ -19,6 +19,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         IVehiculoRepositorio Vehiculo { get; }
 
         ICategoriasEdadRepositorio CategoriasEdad { get; }
+        ICategoriaTamannoRepositorio CategoriaTamanno { get; }
 
         Task Guardar();
     }
