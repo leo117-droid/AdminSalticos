@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 {
@@ -28,5 +29,6 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         void Remover(T entidad);
 
         void RemoverRango(IEnumerable<T> entidad);
+        IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj);
     }
 }
