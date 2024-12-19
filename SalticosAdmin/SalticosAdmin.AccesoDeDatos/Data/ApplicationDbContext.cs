@@ -27,6 +27,8 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<Ingrediente> Ingredientes { get; set; }
 
+        public DbSet<Personal> Personal { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
