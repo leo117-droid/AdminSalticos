@@ -1,4 +1,5 @@
-﻿using SalticosAdmin.AccesoDeDatos.Data;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SalticosAdmin.AccesoDeDatos.Data;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+
 
 namespace SalticosAdmin.AccesoDeDatos.Repositorio
 {
@@ -38,7 +39,18 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             }
         }
 
-        
+        public IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj)
+        {
+            if(obj == "RolPersonal")
+            {
+                return _db.RolPersonal.Select(r => new SelectListItem
+                {
+                    Text = r.Nombre,
+                    Value = r.Id.ToString()
+                });
+            }
+            return null;
+        }
     }
 }
 

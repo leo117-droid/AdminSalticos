@@ -2,6 +2,7 @@
 using SalticosAdmin.AccesoDeDatos.Repositorio;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
+using SalticosAdmin.Modelos.ViewModels;
 using SalticosAdmin.Utilidades;
 
 namespace SalticosAdmin.Areas.Admin.Controllers
@@ -11,9 +12,13 @@ namespace SalticosAdmin.Areas.Admin.Controllers
     {
 
         private readonly IUnidadTrabajo _unidadTrabajo;
-        public PersonalController(IUnidadTrabajo unidadTrabajo)
+        private readonly IWebHostEnvironment _webHostEnviroment;
+
+
+        public PersonalController(IUnidadTrabajo unidadTrabajo, IWebHostEnvironment webHostEnviroment)
         {
             _unidadTrabajo = unidadTrabajo;
+            _webHostEnviroment = webHostEnviroment;
         }
         public IActionResult Index()
         {
@@ -23,8 +28,26 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            
-            return View();
+            PersonalVM personalVM = new PersonalVM()
+            {
+                Personal = new Personal(),
+                RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal")
+            };
+
+            if(id == null)
+            {
+                //Crear nuevo personal
+                return View(personalVM);
+            }
+            else
+            {
+                personalVM.Personal = await _unidadTrabajo.Personal.Obtener(id.GetValueOrDefault());
+                if (personalVM.Personal == null)
+                {
+                    return NotFound();
+                }
+                return View(personalVM);
+            }
 
         }
 
