@@ -49,7 +49,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             }
 
             // Manejo predeterminado para otros casos
-            return Enumerable.Empty<SelectListItem>();
+            return null;
         }
     }
 }

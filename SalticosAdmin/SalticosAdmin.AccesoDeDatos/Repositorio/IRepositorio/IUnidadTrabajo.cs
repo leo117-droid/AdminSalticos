@@ -24,7 +24,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 
         IIngredienteRepositorio Ingrediente { get; }
 
-        IRolPersonalRepositorio PersonalRepositorio { get; }
+        IPersonalRepositorio Personal { get; }
 
         Task Guardar();
     }

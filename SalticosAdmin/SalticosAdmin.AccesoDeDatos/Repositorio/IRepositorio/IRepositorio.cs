@@ -29,6 +29,5 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         void Remover(T entidad);
 
         void RemoverRango(IEnumerable<T> entidad);
-        IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj);
     }
 }

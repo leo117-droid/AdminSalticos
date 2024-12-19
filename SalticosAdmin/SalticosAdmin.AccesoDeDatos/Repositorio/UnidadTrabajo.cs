@@ -26,6 +26,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IIngredienteRepositorio Ingrediente { get; private set; }
 
+        public IPersonalRepositorio Personal { get; private set; }
+
 
         public UnidadTrabajo(ApplicationDbContext db)
         {
@@ -39,6 +41,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             CategoriaTamanno = new CategoriaTamannoRepositorio(_db);
             RolPersonal = new RolPersonalRepositorio(_db);
             Ingrediente = new IngredienteRepositorio(_db);
+            Personal = new PersonalRepositorio(_db);
+
         }
 
         public void Dispose()
