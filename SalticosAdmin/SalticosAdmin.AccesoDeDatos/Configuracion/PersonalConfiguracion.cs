@@ -21,9 +21,17 @@ namespace SalticosAdmin.AccesoDeDatos.Configuracion
             builder.Property(x => x.Cedula).IsRequired().HasMaxLength(11);
             builder.Property(x => x.FechaNacimiento).IsRequired().HasColumnType("date");
             builder.Property(x => x.FechaEntrada).IsRequired().HasColumnType("date");
+            builder.Property(x => x.RolPersonalId).IsRequired();
+            builder.Property(x => x.PadreId).IsRequired(false);
 
             //Relaciones
-            builder.HasOne(x => x.RolPersonal).WithMany().HasForeignKey(x => x.RolPersonalId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.RolPersonal).WithMany()
+                .HasForeignKey(x => x.RolPersonalId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(x => x.Padre).WithMany()
+                .HasForeignKey(x => x.PadreId)
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

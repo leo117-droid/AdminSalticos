@@ -31,26 +31,14 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
                 personalBD.FechaNacimiento = personal.FechaNacimiento;
                 personalBD.FechaEntrada = personal.FechaEntrada;
                 personalBD.RolPersonalId = personal.RolPersonalId;
+                personalBD.PadreId = personal.PadreId;
 
                 _db.SaveChanges();
 
             }
         }
 
-        public IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj)
-        {
-            if (obj == "RolPersonal")
-            {
-                return _db.RolPersonal.Select(c => new SelectListItem
-                {
-                    Text = c.Nombre,
-                    Value = c.Id.ToString()
-                });
-            }
-
-            // Manejo predeterminado para otros casos
-            return null;
-        }
+        
     }
 }
 
