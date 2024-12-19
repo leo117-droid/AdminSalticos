@@ -7,97 +7,110 @@
 
 <form method="post" id="formPersonal">
 
-    @if(Model.Personal.Id != 0)
-    {
-        titulo = "Editar Personal";
-        <input asp-for="Personal.Id" hidden/>
-    }
+    <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
 
-    <div class="border p-3">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="row">
-            <h2 class="text-info">@titulo</h2>
+        <div class="row border-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         </div>
 
-        <div class="row">
-            <div class="col-8">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Nombre</label>
-                            <input asp-for="Personal.Nombre" class="form-control"/>
-                            <span asp-validation-for="Personal.Nombre" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Apellidos</label>
-                            <input asp-for="Personal.Apellidos" class="form-control" />
-                            <span asp-validation-for="Personal.Apellidos" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Teléfono</label>
-                            <input asp-for="Personal.Telefono" class="form-control" />
-                            <span asp-validation-for="Personal.Telefono" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Correo</label>
-                            <input asp-for="Personal.Correo" class="form-control" />
-                            <span asp-validation-for="Personal.Correo" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Cedula</label>
-                            <input asp-for="Personal.Cedula" class="form-control" id="cedula"/>
-                            <span asp-validation-for="Personal.Cedula" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Fecha de Nacimiento</label>
-                            <input asp-for="Personal.FechaNacimiento" class="form-control" type="date" />
-                            <span asp-validation-for="Personal.FechaNacimiento" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Fecha de Entrada</label>
-                            <input asp-for="Personal.FechaEntrada" class="form-control" type="date" />
-                            <span asp-validation-for="Personal.FechaEntrada" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Rol</label>
-                            <select asp-for="Personal.RolPersonalId" asp-items="@Model.RolPersonalLista" class="form-select">
-                                <option disabled selected>-- Seleccione un Rol --</option>
-                            </select>
-                            <span asp-validation-for="Personal.RolPersonalId" class="text-danger"></span>
-                        </div>
-                    </div>
+        @if (Model.Personal.Id != 0)
+        {
+            titulo = "Editar Personal";
+            <input asp-for="Personal.Id" hidden />
+        }
 
-                    <br />
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2>
+        </div>
 
-                    <div class="d-grid gap-2 d-md-block">
-                        @if(Model.Personal.Id != 0)
-                        {
-                            <partial name="_BotonesActualizarYRegresar" model="Model.Personal.Id" />
-                        }
-                        else
-                        {
-                            <partial name="_BotonesCrearYRegresar" />
-                        }
-
-                    </div>
-
-                </div>
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Nombre</label>
+                <input asp-for="Personal.Nombre" class="form-control" />
+                <span asp-validation-for="Personal.Nombre" class="text-danger"></span>
             </div>
         </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Apellidos</label>
+                <input asp-for="Personal.Apellidos" class="form-control" />
+                <span asp-validation-for="Personal.Apellidos" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Teléfono</label>
+                <input asp-for="Personal.Telefono" class="form-control" />
+                <span asp-validation-for="Personal.Telefono" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Correo</label>
+                <input asp-for="Personal.Correo" class="form-control" />
+                <span asp-validation-for="Personal.Correo" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Cedula</label>
+                <input asp-for="Personal.Cedula" class="form-control" id="cedula" />
+                <span asp-validation-for="Personal.Cedula" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Fecha de Nacimiento</label>
+                <input asp-for="Personal.FechaNacimiento" class="form-control" type="date"
+                       value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                       min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Personal.FechaNacimiento" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Fecha de Entrada</label>
+                <input asp-for="Personal.FechaEntrada" class="form-control" type="date"
+                       value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                       min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Personal.FechaEntrada" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Rol</label>
+                <select asp-for="Personal.RolPersonalId" asp-items="@Model.RolPersonalLista" class="form-select">
+                    <option disabled selected>-- Seleccione un Rol --</option>
+                </select>
+                <span asp-validation-for="Personal.RolPersonalId" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <br />
+
+        <div class="d-grid gap-2 d-md-block">
+            @if (Model.Personal.Id != 0)
+            {
+                <partial name="_BotonesActualizarYRegresar" model="Model.Personal.Id" />
+            }
+            else
+            {
+                <partial name="_BotonesCrearYRegresar" />
+            }
+
+        </div>
+
 
     </div>
 
@@ -120,7 +133,7 @@
             validarCedulaAntesDeEnviar();
         });
 
-        function validarNombreAntesDeEnviar() {
+        function validarCedulaAntesDeEnviar() {
             var url = '@Url.Content("~/")' + "Admin/Personal/ValidarCedula";
             var id = '#id';
             var cedula = '#cedula';

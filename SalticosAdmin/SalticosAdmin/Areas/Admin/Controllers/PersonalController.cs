@@ -52,6 +52,35 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upsert(PersonalVM personalVM)
+        {
+            Console.WriteLine("AQUIIIII");
+
+            if (ModelState.IsValid)
+            {
+                if(personalVM.Personal.Id == 0)
+                {
+                    await _unidadTrabajo.Personal.Agregar(personalVM.Personal);
+                    TempData[DS.Exitosa] = "Personal creado Exitosamente";
+
+                }
+                else
+                {
+                    _unidadTrabajo.Personal.Actualizar(personalVM.Personal);
+                    TempData[DS.Exitosa] = "Personal actualizado Exitosamente";
+
+                }
+                await _unidadTrabajo.Guardar();
+                return View("Index");
+            }
+            personalVM.RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal");
+
+            return View(personalVM);
+        }
+
+
         
 
 

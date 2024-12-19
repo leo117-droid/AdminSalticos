@@ -29,8 +29,18 @@ function loadDataTable() {
             { "data": "telefono"},
             { "data": "correo"},
             { "data": "cedula" },
-            { "data": "fechaNacimiento" },
-            { "data": "fechaEntrada" },
+            {
+                "data": "fechaNacimiento",
+                "render": function (data) {
+                    return moment(data).format("DD/MM/YYYY");
+                }
+            },
+            {
+                "data": "fechaEntrada",
+                "render": function (data) {
+                    return moment(data).format("DD/MM/YYYY");
+                }
+            },
             { "data": "rolPersonal.nombre"},
 
             {
