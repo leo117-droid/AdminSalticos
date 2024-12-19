@@ -25,6 +25,9 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<RolPersonal> RolPersonal { get; set; }
 
+        public DbSet<Ingrediente> Ingredientes { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
