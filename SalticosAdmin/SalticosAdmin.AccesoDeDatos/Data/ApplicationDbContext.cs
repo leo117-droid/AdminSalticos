@@ -29,6 +29,8 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<Personal> Personal { get; set; }
 
+        public DbSet<Capacitacion> Capacitaciones { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
