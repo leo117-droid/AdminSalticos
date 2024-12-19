@@ -23,6 +23,7 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<CategoriaTamanno> CategoriaTammano { get; set; }
 
+        public DbSet<RolPersonal> RolPersonal { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
