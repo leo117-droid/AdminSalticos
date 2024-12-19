@@ -19,8 +19,9 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<Vehiculo> Vehiculos { get; set; }
 
-
         public DbSet<CategoriasEdad> CategoriasEdades { get; set; }
+
+        public DbSet<CategoriaTamanno> CategoriaTammano { get; set; }
 
 
 
