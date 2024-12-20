@@ -26,6 +26,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 
         IPersonalRepositorio Personal { get; }
 
+        IInflableRepositorio Inflable { get; }    
+
         Task Guardar();
     }
 

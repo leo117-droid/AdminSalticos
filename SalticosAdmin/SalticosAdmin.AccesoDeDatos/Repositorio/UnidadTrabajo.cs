@@ -18,7 +18,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IVehiculoRepositorio Vehiculo { get; private set; }
 
-        public ICategoriasEdadRepositorio CategoriasEdad { get; }
+        public ICategoriasEdadRepositorio CategoriasEdad { get; private set; }
 
         public ICategoriaTamannoRepositorio CategoriaTamanno { get; private set; }
 
@@ -27,6 +27,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
         public IIngredienteRepositorio Ingrediente { get; private set; }
 
         public IPersonalRepositorio Personal { get; private set; }
+
+        public IInflableRepositorio Inflable { get; private set; }
 
 
         public UnidadTrabajo(ApplicationDbContext db)
@@ -42,6 +44,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             RolPersonal = new RolPersonalRepositorio(_db);
             Ingrediente = new IngredienteRepositorio(_db);
             Personal = new PersonalRepositorio(_db);
+            Inflable = new InflableRepositorio(_db);
 
         }
 

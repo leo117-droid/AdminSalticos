@@ -31,6 +31,7 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<Capacitacion> Capacitaciones { get; set; }
 
+        public DbSet<Inflable> Inflables { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
