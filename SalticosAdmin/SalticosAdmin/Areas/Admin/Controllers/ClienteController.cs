@@ -88,18 +88,18 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return Json(new { success = true, message = "Cliente borrada exitosamente" });
         }
 
-        [ActionName("ValidarNombre")]
-        public async Task<IActionResult> ValidarNombre(string nombre, int id = 0)
+        [ActionName("ValidarCedula")]
+        public async Task<IActionResult> ValidarCedula(string cedula, int id = 0)
         {
             bool valor = false;
             var lista = await _unidadTrabajo.Cliente.ObtenerTodos();
             if (id == 0)
             {
-                valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim());
+                valor = lista.Any(b => b.Cedula.ToLower().Trim() == cedula.ToLower().Trim());
             }
             else
             {
-                valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim() && b.Id != id);
+                valor = lista.Any(b => b.Cedula.ToLower().Trim() == cedula.ToLower().Trim() && b.Id != id);
             }
             if (valor)
             {

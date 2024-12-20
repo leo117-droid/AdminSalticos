@@ -99,30 +99,5 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
-    <script>
-
-        document.getElementById("nombre").addEventListener('change', function () {
-            validarNombre();
-        });
-
-        function validarNombre() {
-            var url = '@Url.Content("~/")' + "Admin/Contacto/ValidarNombre";
-            var id = '#id';
-            var nombre = '#nombre';
-
-            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
-
-                $.each(data, function (key, value) {
-                    if (value) {
-                        var nombre = document.getElementById("nombre");
-                        swal("Error", "Nombre ya Existe", "error");
-                        nombre.value = "";
-                    }
-                });
-
-            })
-
-        }
-
-    </script>
+   
 }

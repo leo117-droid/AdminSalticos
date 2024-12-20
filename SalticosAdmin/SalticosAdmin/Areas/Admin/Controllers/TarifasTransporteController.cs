@@ -86,8 +86,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return Json(new { success = true, message = "Tarifa de Transporte borrada exitosamente" });
         }
 
-        [ActionName("ValidarNombre")]
-        public async Task<IActionResult> ValidarNombre(string provincia, int id = 0)
+        [ActionName("ValidarProvincia")]
+        public async Task<IActionResult> ValidarProvincia(string provincia, int id = 0)
         {
             bool valor = false;
             var lista = await _unidadTrabajo.TarifasTransporte.ObtenerTodos();

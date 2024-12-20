@@ -6,7 +6,7 @@
 
 }
 
-<form method="post">
+<form method="post" id="formHerramienta">
     <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
 
         <div class="row border-0">
@@ -78,6 +78,32 @@
             validarNombre();
         });
 
+
+        document.getElementById("formHerramienta").addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarNombreAntesDeEnviar();
+        });
+
+        function validarNombreAntesDeEnviar() {
+            var url = '@Url.Content("~/")' + "Admin/Herramienta/ValidarNombre";
+            var id = '#id';
+            var nombre = '#nombre';
+
+            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var nombreInput = document.getElementById("nombre");
+                        swal("Error", "Nombre ya Existe", "error");
+                        nombreInput.value = "";
+                        return;
+                    } else {
+                        document.getElementById("formHerramienta").submit();
+                    }
+                });
+            });
+        }
+
+
         function validarNombre()
         {
             var url = '@Url.Content("~/")' + "Admin/Herramienta/ValidarNombre";
@@ -91,6 +117,7 @@
                         var nombre = document.getElementById("nombre");
                         swal("Error", "Nombre ya Existe", "error");
                         nombre.value = "";
+                        return;
                     }
                 });
 

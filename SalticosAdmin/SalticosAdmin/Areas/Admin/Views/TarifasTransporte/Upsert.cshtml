@@ -6,7 +6,7 @@
 
 }
 
-<form method="post">
+<form method="post" id="formTarifa">
     <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
 
         <div class="row border-0">
@@ -27,7 +27,16 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Provincia</label>
-                <input type="text" asp-for="Provincia" class="form-control" placeholder="Provincia de la Tarifa de Transporte" id="provincia" />
+                <select asp-for="Provincia" class="form-select" id="provincia">
+                    <option value="" disabled selected>-- Seleccione una provincia --</option>
+                    <option value="San Jose">San José</option>
+                    <option value="Alajuela">Alajuela</option>
+                    <option value="Cartago">Cartago</option>
+                    <option value="Heredia">Heredia</option>
+                    <option value="Guanacaste">Guanacaste</option>
+                    <option value="Puntarenas">Puntarenas</option>
+                    <option value="Limon">Limón</option>
+                </select>
                 <span asp-validation-for="Provincia" class="text-danger"></span>
             </div>
         </div>
@@ -66,11 +75,37 @@
     <script>
 
         document.getElementById("provincia").addEventListener('change', function () {
-            validarNombre();
+            validarProvincia();
         });
 
-        function validarNombre() {
-            var url = '@Url.Content("~/")' + "Admin/TarifasTransporte/ValidarNombre";
+
+        document.getElementById("formProvincia").addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarProvinciaAntesDeEnviar();
+        });
+
+        function validarProvinciaAntesDeEnviar() {
+            var url = '@Url.Content("~/")' + "Admin/TarifasTransporte/ValidarProvincia";
+            var id = '#id';
+            var provincia = '#provincia';
+
+            $.getJSON(url, { id: $(id).val(), provincia: $(provincia).val() }, function (data) {
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var nombreInput = document.getElementById("provincia");
+                        swal("Error", "Provincia ya Existe", "error");
+                        nombreInput.value = "";
+                        return;
+                    } else {
+                        document.getElementById("formProvincia").submit();
+                    }
+                });
+            });
+        }
+
+
+        function validarProvincia() {
+            var url = '@Url.Content("~/")' + "Admin/TarifasTransporte/ValidarProvincia";
             var id = '#id';
             var provincia = '#provincia';
 
@@ -81,6 +116,7 @@
                         var provincia = document.getElementById("provincia");
                         swal("Error", "Provincia ya Existe", "error");
                         provincia.value = "";
+                        return;
                     }
                 });
 

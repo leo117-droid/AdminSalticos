@@ -6,7 +6,7 @@
 
 }
 
-<form method="post">
+<form method="post" id="formCliente">
     <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
 
         <div class="row border-0">
@@ -44,7 +44,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Cedula</label>
-                <input type="text" asp-for="Cedula" class="form-control" placeholder="Cedula del cliente" />
+                <input type="text" asp-for="Cedula" class="form-control" placeholder="Cedula del cliente" id="cedula"/>
                 <span asp-validation-for="Cedula" class="text-danger"></span>
             </div>
         </div>
@@ -94,22 +94,52 @@
 
     <script>
 
-        document.getElementById("nombre").addEventListener('change', function () {
-            validarNombre();
+        document.getElementById("cedula").addEventListener('change', function () {
+            validarCedula();
         });
 
-        function validarNombre() {
-            var url = '@Url.Content("~/")' + "Admin/Cliente/ValidarNombre";
-            var id = '#id';
-            var nombre = '#nombre';
 
-            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
+
+        document.getElementById("formCliente").addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarCedulaAntesDeEnviar();
+        });
+
+        function validarCedulaAntesDeEnviar() {
+            var url = '@Url.Content("~/")' + "Admin/Cliente/ValidarCedula";
+            var id = '#id';
+            var cedula = '#cedula';
+
+            $.getJSON(url, { id: $(id).val(), cedula: $(cedula).val() }, function (data) {
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var cedulaInput = document.getElementById("cedula");
+                        swal("Error", "Cedula ya Existe", "error");
+                        cedulaInput.value = "";
+                        return;
+                    } else {
+                        document.getElementById("formCliente").submit();
+                    }
+                });
+            });
+        }
+
+
+
+
+        function validarCedula() {
+            var url = '@Url.Content("~/")' + "Admin/Cliente/ValidarCedula";
+            var id = '#id';
+            var cedula = '#cedula';
+
+            $.getJSON(url, { id: $(id).val(), cedula: $(cedula).val() }, function (data) {
 
                 $.each(data, function (key, value) {
                     if (value) {
-                        var nombre = document.getElementById("nombre");
-                        swal("Error", "Nombre ya Existe", "error");
-                        nombre.value = "";
+                        var cedula = document.getElementById("cedula");
+                        swal("Error", "Cedula ya Existe", "error");
+                        cedula.value = "";
+                        return;
                     }
                 });
 
