@@ -34,6 +34,8 @@ namespace SalticosAdmin.AccesoDeDatos.Data
         public DbSet<Inflable> Inflables { get; set; }
         public DbSet<ServicioAdicional> ServiciosAdicionales { get; set; }
 
+        public DbSet<Mobiliario> Mobilarios { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
