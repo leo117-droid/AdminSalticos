@@ -28,6 +28,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 
         IInflableRepositorio Inflable { get; }
         ICapacitacionRepositorio Capacitacion { get; }
+        IServicioAdicionalRepositorio ServicioAdicional { get; }
 
         Task Guardar();
     }

@@ -30,6 +30,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IInflableRepositorio Inflable { get; private set; }
         public ICapacitacionRepositorio Capacitacion { get; private set; }
+        public IServicioAdicionalRepositorio ServicioAdicional { get; private set; }
+
 
 
         public UnidadTrabajo(ApplicationDbContext db)
@@ -47,7 +49,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             Personal = new PersonalRepositorio(_db);
             Inflable = new InflableRepositorio(_db);
             Capacitacion = new CapacitacionRepositorio(_db);
-
+            ServicioAdicional = new ServicioAdicionalRepositorio(_db);
         }
 
         public void Dispose()
