@@ -59,7 +59,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 if (servicioAdicional.Id == 0)
                 {
-                    string upload = webRootPath + DS.ImagenRutaInflable;
+                    string upload = webRootPath + DS.ImagenRutaServicioAdicional;
                     string fileName = Guid.NewGuid().ToString();
                     string extension = Path.GetExtension(files[0].FileName);
                     using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
@@ -69,21 +69,21 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     servicioAdicional.ImageUrl = fileName + extension;
 
 
-                    await _unidadTrabajo.Inflable.Agregar(inflableVM.Inflable);
-                    TempData[DS.Exitosa] = "Inflable creado Exitosamente";
+                    await _unidadTrabajo.ServicioAdicional.Agregar(servicioAdicional);
+                    TempData[DS.Exitosa] = "Servicio Adicional creado Exitosamente";
 
                 }
                 else
                 {
-                    var objInflable = await _unidadTrabajo.Inflable.ObtenerPrimero(p => p.Id == inflableVM.Inflable.Id, isTracking: false);
+                    var objServicioAdicional = await _unidadTrabajo.ServicioAdicional.ObtenerPrimero(p => p.Id == servicioAdicional.Id, isTracking: false);
                     if (files.Count > 0) // Si se carga una nueva imagen
                     {
-                        string upload = webRootPath + DS.ImagenRutaInflable;
+                        string upload = webRootPath + DS.ImagenRutaServicioAdicional;
                         string fileName = Guid.NewGuid().ToString();
                         string extension = Path.GetExtension(files[0].FileName);
 
                         // Borrar la imagen anterior
-                        var anteriorFile = Path.Combine(upload, objInflable.ImageUrl);
+                        var anteriorFile = Path.Combine(upload, objServicioAdicional.ImageUrl);
                         if (System.IO.File.Exists(anteriorFile))
                         {
                             System.IO.File.Delete(anteriorFile);
@@ -92,25 +92,21 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                         {
                             files[0].CopyTo(fileStream);
                         }
-                        inflableVM.Inflable.ImageUrl = fileName + extension;
+                        servicioAdicional.ImageUrl = fileName + extension;
                     } // Caso contrario no se carga una nueva imagen
                     else
                     {
-                        inflableVM.Inflable.ImageUrl = objInflable.ImageUrl;
+                        servicioAdicional.ImageUrl = objServicioAdicional.ImageUrl;
                     }
 
-                    _unidadTrabajo.Inflable.Actualizar(inflableVM.Inflable);
-                    TempData[DS.Exitosa] = "Inflable actualizado Exitosamente";
+                    _unidadTrabajo.ServicioAdicional.Actualizar(servicioAdicional);
+                    TempData[DS.Exitosa] = "Servicio adicional actualizado Exitosamente";
 
                 }
                 await _unidadTrabajo.Guardar();
                 return View("Index");
             }
-            inflableVM.CategoriaEdadLista = _unidadTrabajo.Inflable.ObtenerTodosDropdownLista("CategoriaEdad");
-            inflableVM.CategoriaTamannoLista = _unidadTrabajo.Inflable.ObtenerTodosDropdownLista("CategoriaTamanno");
-
-
-            return View(inflableVM);
+            return View(servicioAdicional);
         }
 
 
@@ -119,28 +115,37 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ObtenerTodos()
         {
-            var todos = await _unidadTrabajo.Ingrediente.ObtenerTodos();
+            var todos = await _unidadTrabajo.ServicioAdicional.ObtenerTodos();
             return Json(new { data = todos });
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            var ingredienteBd = await _unidadTrabajo.Ingrediente.Obtener(id);
-            if (ingredienteBd == null)
+            var servicioAdicionalBd = await _unidadTrabajo.ServicioAdicional.Obtener(id);
+            if (servicioAdicionalBd == null)
             {
-                return Json(new { success = false, message = "Error al borrar Ingrediente" });
+                return Json(new { success = false, message = "Error al borrar Servicio Adicional" });
             }
-            _unidadTrabajo.Ingrediente.Remover(ingredienteBd);
+
+            //Remover imagen
+            string upload = _webHostEnvironment.WebRootPath + DS.ImagenRutaServicioAdicional;
+            var anteriorFile = Path.Combine(upload, servicioAdicionalBd.ImageUrl);
+            if (System.IO.File.Exists(anteriorFile))
+            {
+                System.IO.File.Delete(anteriorFile);
+            }
+
+            _unidadTrabajo.ServicioAdicional.Remover(servicioAdicionalBd);
             await _unidadTrabajo.Guardar();
-            return Json(new { success = true, message = "Ingrediente borrada exitosamente" });
+            return Json(new { success = true, message = "Servicio Adicional borrado exitosamente" });
         }
 
         [ActionName("ValidarNombre")]
         public async Task<IActionResult> ValidarNombre(string nombre, int id = 0)
         {
             bool valor = false;
-            var lista = await _unidadTrabajo.Ingrediente.ObtenerTodos();
+            var lista = await _unidadTrabajo.ServicioAdicional.ObtenerTodos();
             if (id == 0)
             {
                 if(nombre != null)

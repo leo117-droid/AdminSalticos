@@ -27,6 +27,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\imagenes\inflable\" />
     <Folder Include="wwwroot\imagenes\inflable\" />
+    <Folder Include="wwwroot\imagenes\servicioAdicional\" />
   </ItemGroup>
 
 </Project>
