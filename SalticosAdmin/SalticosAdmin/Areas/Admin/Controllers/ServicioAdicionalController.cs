@@ -15,10 +15,12 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         private readonly IUnidadTrabajo _unidadTrabajo;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ServicioAdicionalController(IUnidadTrabajo unidadTrabajo)
+        public ServicioAdicionalController(IUnidadTrabajo unidadTrabajo, IWebHostEnvironment webHostEnvironment)
         {
             _unidadTrabajo = unidadTrabajo;
+            _webHostEnvironment = webHostEnvironment;
         }
+
         public IActionResult Index()
         {
             return View();
