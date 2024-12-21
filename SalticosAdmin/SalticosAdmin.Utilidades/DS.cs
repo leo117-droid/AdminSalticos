@@ -12,5 +12,7 @@ namespace SalticosAdmin.Utilidades
         public const string Error = "Error";
 
         public const string ImagenRutaInflable = @"\imagenes\inflable\";
+        public const string ImagenRutaServicioAdicional = @"\imagenes\servicioAdicional\";
+
     }
 }
