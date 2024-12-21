@@ -11,46 +11,28 @@ using System.Threading.Tasks;
 
 namespace SalticosAdmin.AccesoDeDatos.Repositorio
 {
-    public class PersonalRepositorio : Repositorio<Personal>, IPersonalRepositorio
+    public class CapacitacionRepositorio : Repositorio<Capacitacion>, ICapacitacionRepositorio
     {
         private readonly ApplicationDbContext _db;
 
-        public PersonalRepositorio(ApplicationDbContext db) : base(db)
+        public CapacitacionRepositorio(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
-        public void Actualizar(Personal personal)
+        public void Actualizar(Capacitacion capacitacion)
         {
-            var personalBD = _db.Personal.FirstOrDefault(b => b.Id == personal.Id);
-            if (personalBD != null)
+            var capacitacionBD = _db.Capacitaciones.FirstOrDefault(b => b.Id == capacitacion.Id);
+            if (capacitacionBD != null)
             {
-                personalBD.Nombre = personal.Nombre;
-                personalBD.Apellidos = personal.Apellidos;
-                personalBD.Telefono = personal.Telefono;
-                personalBD.Correo = personal.Correo;
-                personalBD.Cedula = personal.Cedula;
-                personalBD.FechaNacimiento = personal.FechaNacimiento;
-                personalBD.FechaEntrada = personal.FechaEntrada;
-                personalBD.RolPersonalId = personal.RolPersonalId;
-                personalBD.PadreId = personal.PadreId;
+                capacitacionBD.Fecha = capacitacion.Fecha;
+                capacitacionBD.Tema = capacitacion.Tema;
+                capacitacionBD.Duracion = capacitacion.Duracion;
 
                 _db.SaveChanges();
 
             }
         }
 
-        public IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj)
-        {
-            if(obj == "RolPersonal")
-            {
-                return _db.RolPersonal.Select(r => new SelectListItem
-                {
-                    Text = r.Nombre,
-                    Value = r.Id.ToString()
-                });
-            }
-            return null;
-        }
     }
 }
 

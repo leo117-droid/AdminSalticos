@@ -29,6 +29,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
         public IPersonalRepositorio Personal { get; private set; }
 
         public IInflableRepositorio Inflable { get; private set; }
+        public ICapacitacionRepositorio Capacitacion { get; private set; }
 
 
         public UnidadTrabajo(ApplicationDbContext db)
@@ -45,6 +46,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             Ingrediente = new IngredienteRepositorio(_db);
             Personal = new PersonalRepositorio(_db);
             Inflable = new InflableRepositorio(_db);
+            Capacitacion = new CapacitacionRepositorio(_db);
 
         }
 
