@@ -95,11 +95,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var lista = await _unidadTrabajo.Cliente.ObtenerTodos();
             if (id == 0)
             {
-                valor = lista.Any(b => b.Cedula.ToLower().Trim() == cedula.ToLower().Trim());
+                valor = lista.Any(b => b.Cedula.Trim() == cedula.Trim());
             }
             else
             {
-                valor = lista.Any(b => b.Cedula.ToLower().Trim() == cedula.ToLower().Trim() && b.Id != id);
+                valor = lista.Any(b => b.Cedula.Trim() == cedula.Trim() && b.Id != id);
             }
             if (valor)
             {
