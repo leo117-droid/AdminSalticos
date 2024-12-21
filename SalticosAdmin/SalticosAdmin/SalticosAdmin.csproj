@@ -24,4 +24,8 @@
     <ProjectReference Include="..\SalticosAdmin.Utilidades\SalticosAdmin.Utilidades.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\imagenes\inflable\" />
+  </ItemGroup>
+
 </Project>

@@ -46,9 +46,17 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj)
         {
-            if(obj == "RolPersonal")
+            if(obj == "CategoriaTamanno")
             {
-                return _db.RolPersonal.Select(r => new SelectListItem
+                return _db.CategoriaTammano.Select(r => new SelectListItem
+                {
+                    Text = r.Nombre,
+                    Value = r.Id.ToString()
+                });
+            }
+            if (obj == "CategoriaEdad")
+            {
+                return _db.CategoriasEdades.Select(r => new SelectListItem
                 {
                     Text = r.Nombre,
                     Value = r.Id.ToString()

@@ -1,0 +1,175 @@
+﻿@model SalticosAdmin.Modelos.ViewModels.InflableVM
+@using SalticosAdmin.Utilidades
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear Nuevo Inflable";
+}
+
+<form method="post" id="formInflable" enctype="multipart/form-data">
+
+    @if (Model.Inflable.Id != 0)
+    {
+        titulo = "Editar Inflable";
+        <input asp-for="Inflable.Id" hidden />
+        <input asp-for="Inflable.ImageUrl" hidden />
+    }
+
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <h2 class="text-info">@titulo</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Nombre</label>
+                            <input asp-for="Inflable.Nombre" class="form-control" id="nombre"/>
+                            <span asp-validation-for="Inflable.Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Descripcion</label>
+                            <input asp-for="Inflable.Descripcion" class="form-control" />
+                            <span asp-validation-for="Inflable.Descripcion" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Dimensiones</label>
+                            <input asp-for="Inflable.Dimensiones" class="form-control" />
+                            <span asp-validation-for="Inflable.Dimensiones" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Estado</label>
+                            <select asp-for="Inflable.Estado" class="form-select">
+                                <option value="true">Activo</option>
+                                <option value="false">Inactivo</option>
+                            </select>
+                            <span asp-validation-for="Inflable.Estado" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Imagen</label>
+                            <input type="file" accept="image/png, image/gif, image/jpeg" name="files" id="imagenId" class="form-control" />
+                            <span asp-validation-for="Inflable.Precio" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Precio</label>
+                            <input asp-for="Inflable.Precio" class="form-control" type="number" />
+                            <span asp-validation-for="Inflable.Precio" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Precio Hora Adicional</label>
+                            <input asp-for="Inflable.PrecioHoraAdicional" class="form-control" type="number" />
+                            <span asp-validation-for="Inflable.PrecioHoraAdicional" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Categoria Tamanno</label>
+                            <select asp-for="Inflable.CategoriaTamannoId" asp-items="@Model.CategoriaTamannoLista" class="form-select">
+                                <option disabled selected>-- Seleccione una Categoria por Tamanno --</option>
+                            </select>
+                            <span asp-validation-for="Inflable.CategoriaTamannoId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Categoria Edad</label>
+                            <select asp-for="Inflable.CategoriaEdadId" asp-items="@Model.CategoriaEdadLista" class="form-select">
+                                <option disabled selected>-- Seleccione una Categoria por Edad --</option>
+                            </select>
+                            <span asp-validation-for="Inflable.CategoriaEdadId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="d-grid gap-2 d-md-block">
+                        @if (Model.Inflable.Id != 0)
+                        {
+                            <partial name="_BotonesActualizarYRegresar" model="Model.Inflable.Id" />
+                        }
+                        else
+                        {
+                            <button type="submit" onclick="return validarImagen()" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
+                            <a asp-action="Index" class="btn btn-success "><i class="bi bi-arrow-return-left"></i> Regresar</a>
+                        }
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-4">
+                @if (Model.Inflable.Id != 0)
+                {
+                    <img src="@DS.ImagenRutaInflable@Model.Inflable.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb" />
+                }
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        function validarNombre() {
+            var url = '@Url.Content("~/")' + "Admin/Inflable/ValidarNombre";
+            var id = '#id';
+            var nombre = '#nombre';
+
+            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var nombreInput = document.getElementById("nombre");
+                        swal("Error", "Nombre ya Existe", "error");
+                        nombreInput.value = "";
+                        return false;
+                    } else {
+                        return true;                    
+                    }
+                });
+            });
+        }
+
+        function validarImagen() {
+            if (document.getElementById("imagenId").value == "") {
+                swal("Error", "Seleccione una Imagen", "error")
+                return false;
+            }
+            return validarNombre();
+        }
+
+    </script>
+}
+
