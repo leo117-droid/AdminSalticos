@@ -35,8 +35,7 @@ namespace SalticosAdmin.AccesoDeDatos.Data
         public DbSet<ServicioAdicional> ServiciosAdicionales { get; set; }
 
         public DbSet<Mobiliario> Mobilarios { get; set; }
-
-
+        public DbSet<Alimentacion> Alimentacion { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
