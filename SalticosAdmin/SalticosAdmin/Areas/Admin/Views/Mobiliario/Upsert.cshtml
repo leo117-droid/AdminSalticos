@@ -1,0 +1,155 @@
+﻿@model SalticosAdmin.Modelos.Mobiliario
+@using SalticosAdmin.Utilidades
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear Nuevo Mobiliario";
+}
+
+<form method="post" id="formMobiliario" enctype="multipart/form-data">
+
+    @if (Model.Id != 0)
+    {
+        titulo = "Editar Mobiliario";
+        <input asp-for="Id" hidden />
+        <input asp-for="ImageUrl" hidden />
+    }
+
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <h2 class="text-info">@titulo</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Nombre</label>
+                            <input asp-for="Nombre" class="form-control" placeholder="Nombre del mobiliario" id="nombre" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Descripción</label>
+                            <input asp-for="Descripcion" class="form-control" placeholder="Descripción del mobiliario" />
+                            <span asp-validation-for="Descripcion" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Dimensiones</label>
+                            <input asp-for="Dimensiones" class="form-control" placeholder="Dimensiones del mobiliario" />
+                            <span asp-validation-for="Dimensiones" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Imagen</label>
+                            <input type="file" accept="image/png, image/gif, image/jpeg" name="files" id="imagenId" class="form-control" />
+                            <span asp-validation-for="Precio" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Precio</label>
+                            <input asp-for="Precio" class="form-control" type="number" />
+                            <span asp-validation-for="Precio" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Inventario</label>
+                            <input asp-for="Inventario" class="form-control" placeholder="Inventario del mobiliario" type="number" />
+                            <span asp-validation-for="Inventario" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    
+
+                    <br />
+
+                    <div class="d-grid gap-2 d-md-block">
+                        @if (Model.Id != 0)
+                        {
+                            <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+                        }
+                        else
+                        {
+                            <button type="submit" onclick="return validarFormulario()" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
+                            <a asp-action="Index" class="btn btn-success "><i class="bi bi-arrow-return-left"></i> Regresar</a>
+                        }
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-4">
+                @if (Model.Id != 0)
+                {
+                    <img src="@DS.ImagenRutaMobiliario@Model.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb" />
+                }
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        function validarFormulario() {
+            if (!validarImagen()) {
+                return false;
+            }
+            return validarNombreAntesDeEnviar();
+        }
+
+
+        function validarImagen() {
+            if (document.getElementById("imagenId").value == "") {
+                swal("Error", "Seleccione una Imagen", "error")
+                return false;
+            }
+            return true;
+        }
+
+
+        function validarNombreAntesDeEnviar() {
+            var url = '@Url.Content("~/")' + "Admin/Mobiliario/ValidarNombre";
+            var id = '#id';
+            var nombre = '#nombre';
+
+            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var nombreInput = document.getElementById("nombre");
+                        swal("Error", "Nombre ya Existe", "error");
+                        nombreInput.value = "";
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+            });
+        }
+
+    </script>
+}
+

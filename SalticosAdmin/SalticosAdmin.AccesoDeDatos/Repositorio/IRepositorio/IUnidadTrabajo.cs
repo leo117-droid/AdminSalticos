@@ -30,6 +30,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         ICapacitacionRepositorio Capacitacion { get; }
         IServicioAdicionalRepositorio ServicioAdicional { get; }
 
+        IMobiliarioRepositorio Mobiliario { get; }
+
         Task Guardar();
     }
 

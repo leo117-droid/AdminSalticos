@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\imagenes\NewFolder1\**" />
+    <Compile Remove="wwwroot\imagenes\NewFolder2\**" />
+    <Compile Remove="wwwroot\imagenes\NewFolder\**" />
+    <Content Remove="wwwroot\imagenes\NewFolder1\**" />
+    <Content Remove="wwwroot\imagenes\NewFolder2\**" />
+    <Content Remove="wwwroot\imagenes\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\imagenes\NewFolder1\**" />
+    <EmbeddedResource Remove="wwwroot\imagenes\NewFolder2\**" />
+    <EmbeddedResource Remove="wwwroot\imagenes\NewFolder\**" />
+    <None Remove="wwwroot\imagenes\NewFolder1\**" />
+    <None Remove="wwwroot\imagenes\NewFolder2\**" />
+    <None Remove="wwwroot\imagenes\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.2" />
@@ -27,6 +42,8 @@
   <ItemGroup>
     <Folder Include="wwwroot\imagenes\inflable\" />
     <Folder Include="wwwroot\imagenes\inflable\" />
+    <Folder Include="wwwroot\imagenes\mobiliario\" />
+    <Folder Include="wwwroot\imagenes\servicioAdicional\" />
     <Folder Include="wwwroot\imagenes\servicioAdicional\" />
   </ItemGroup>
 
