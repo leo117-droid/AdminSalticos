@@ -84,7 +84,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ObtenerTodos()
         {
-            var todos = await _unidadTrabajo.Inflable.ObtenerTodos(incluirPropiedades: "CategoriaTamanno, CategoriaEdad");
+            var todos = await _unidadTrabajo.Inflable.ObtenerTodos(incluirPropiedades: "CategoriaTamanno,CategoriasEdad");
             return Json(new { data = todos });
         }
 
