@@ -38,10 +38,20 @@ function loadDataTable() {
                     }
                 },
             }, 
-            { "data": "precio" },
-            { "data": "precioHoraAdicional" },
+            {
+                "data": "precio", "className": "text-end",
+                "render": function (data) {
+                    var d = data.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    return d
+                } },
+            {
+                "data": "precioHoraAdicional", "className": "text-end",
+                "render": function (data) {
+                    var d = data.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    return d
+                } },
             { "data": "categoriaTamanno.nombre" },
-            { "data": "categoriaEdad.nombre"},
+            { "data": "categoriasEdad.nombre"},
 
             {
                 "data": "id",

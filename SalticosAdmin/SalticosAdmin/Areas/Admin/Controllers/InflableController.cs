@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using SalticosAdmin.AccesoDeDatos.Repositorio;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
@@ -12,13 +13,13 @@ namespace SalticosAdmin.Areas.Admin.Controllers
     {
 
         private readonly IUnidadTrabajo _unidadTrabajo;
-        private readonly IWebHostEnvironment _webHostEnviroment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
 
-        public InflableController(IUnidadTrabajo unidadTrabajo, IWebHostEnvironment webHostEnviroment)
+        public InflableController(IUnidadTrabajo unidadTrabajo, IWebHostEnvironment webHostEnvironment)
         {
             _unidadTrabajo = unidadTrabajo;
-            _webHostEnviroment = webHostEnviroment;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -38,6 +39,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             if(id == null)
             {
                 //Crear nuevo inflable
+                inflableVM.Inflable.Estado = true;
                 return View(inflableVM);
             }
             else
@@ -55,28 +57,66 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(PersonalVM personalVM)
+        public async Task<IActionResult> Upsert(InflableVM inflableVM)
         {
             if (ModelState.IsValid)
             {
-                if(personalVM.Personal.Id == 0)
+                var files = HttpContext.Request.Form.Files; 
+                string webRootPath = _webHostEnvironment.WebRootPath; 
+                if (inflableVM.Inflable.Id == 0)
                 {
-                    await _unidadTrabajo.Personal.Agregar(personalVM.Personal);
-                    TempData[DS.Exitosa] = "Personal creado Exitosamente";
+                    string upload = webRootPath + DS.ImagenRutaInflable;
+                    string fileName = Guid.NewGuid().ToString();
+                    string extension = Path.GetExtension(files[0].FileName);
+                    using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+                    inflableVM.Inflable.ImageUrl = fileName + extension;
+
+
+                    await _unidadTrabajo.Inflable.Agregar(inflableVM.Inflable);
+                    TempData[DS.Exitosa] = "Inflable creado Exitosamente";
 
                 }
                 else
                 {
-                    _unidadTrabajo.Personal.Actualizar(personalVM.Personal);
-                    TempData[DS.Exitosa] = "Personal actualizado Exitosamente";
+                    var objInflable = await _unidadTrabajo.Inflable.ObtenerPrimero(p => p.Id == inflableVM.Inflable.Id, isTracking: false);
+                    if (files.Count > 0) // Si se carga una nueva imagen
+                    {
+                        string upload = webRootPath + DS.ImagenRutaInflable;
+                        string fileName = Guid.NewGuid().ToString();
+                        string extension = Path.GetExtension(files[0].FileName);
+
+                        // Borrar la imagen anterior
+                        var anteriorFile = Path.Combine(upload, objInflable.ImageUrl);
+                        if (System.IO.File.Exists(anteriorFile))
+                        {
+                            System.IO.File.Delete(anteriorFile);
+                        }
+                        using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                        {
+                            files[0].CopyTo(fileStream);
+                        }
+                        inflableVM.Inflable.ImageUrl = fileName + extension;
+                    } // Caso contrario no se carga una nueva imagen
+                    else
+                    {
+                        inflableVM.Inflable.ImageUrl = objInflable.ImageUrl;
+                    }
+
+                    _unidadTrabajo.Inflable.Actualizar(inflableVM.Inflable);
+                    TempData[DS.Exitosa] = "Inflable actualizado Exitosamente";
 
                 }
                 await _unidadTrabajo.Guardar();
                 return View("Index");
             }
-            personalVM.RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal");
+            inflableVM.CategoriaEdadLista = _unidadTrabajo.Inflable.ObtenerTodosDropdownLista("CategoriaEdad");
+            inflableVM.CategoriaTamannoLista = _unidadTrabajo.Inflable.ObtenerTodosDropdownLista("CategoriaTamanno");
 
-            return View(personalVM);
+
+            return View(inflableVM);
         }
 
 
@@ -96,6 +136,15 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error al borrar Inflable" });
             }
+
+            //Remover imagen
+            string upload = _webHostEnvironment.WebRootPath + DS.ImagenRutaInflable;
+            var anteriorFile = Path.Combine(upload, inflableBd.ImageUrl);
+            if (System.IO.File.Exists(anteriorFile))
+            {
+                System.IO.File.Delete(anteriorFile);
+            }
+
             _unidadTrabajo.Inflable.Remover(inflableBd);
             await _unidadTrabajo.Guardar();
             return Json(new { success = true, message = "Inflable borrado exitosamente" });

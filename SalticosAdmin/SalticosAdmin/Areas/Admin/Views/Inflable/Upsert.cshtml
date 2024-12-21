@@ -143,31 +143,12 @@
 
     <script>
 
-        function validarNombre() {
-            var url = '@Url.Content("~/")' + "Admin/Inflable/ValidarNombre";
-            var id = '#id';
-            var nombre = '#nombre';
-
-            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
-                $.each(data, function (key, value) {
-                    if (value) {
-                        var nombreInput = document.getElementById("nombre");
-                        swal("Error", "Nombre ya Existe", "error");
-                        nombreInput.value = "";
-                        return false;
-                    } else {
-                        return true;                    
-                    }
-                });
-            });
-        }
-
         function validarImagen() {
             if (document.getElementById("imagenId").value == "") {
                 swal("Error", "Seleccione una Imagen", "error")
                 return false;
             }
-            return validarNombre();
+            return true;
         }
 
     </script>
