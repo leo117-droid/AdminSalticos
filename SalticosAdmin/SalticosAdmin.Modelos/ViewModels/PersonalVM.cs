@@ -12,6 +12,10 @@ namespace SalticosAdmin.Modelos.ViewModels
 
         public Personal Personal { get; set; }
 
+        public IEnumerable<Personal> Personales { get; set; }
         public IEnumerable<SelectListItem> RolPersonalLista { get; set; }
+
+        public int? RolPersonalSeleccionadoId { get; set; }
+
     }
 }

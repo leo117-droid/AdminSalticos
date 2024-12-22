@@ -91,6 +91,26 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return Json(new { data = todos });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Consultar(int? idPersonalRol)
+        {
+            var personalVM = new PersonalVM();
+
+            personalVM.RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal");
+
+            if (idPersonalRol.HasValue)
+            {
+                personalVM.Personales = await _unidadTrabajo.Personal.FiltrarPorRolPersonal(idPersonalRol.Value);
+            }
+            else
+            {
+                personalVM.Personales = await _unidadTrabajo.Personal.ObtenerTodos(incluirPropiedades: "RolPersonal");
+            }
+            personalVM.RolPersonalSeleccionadoId = idPersonalRol;
+            return View(personalVM);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {

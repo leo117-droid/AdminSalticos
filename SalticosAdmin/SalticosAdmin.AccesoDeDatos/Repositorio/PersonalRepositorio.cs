@@ -53,11 +53,11 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             return null;
         }
 
-        public async Task<IEnumerable<Personal>> FiltrarPorRolPersonal(int RolPersonalId)
+        public async Task<IEnumerable<Personal>> FiltrarPorRolPersonal(int rolPersonalId)
         {
             return await _db.Personal
                 .Include(p => p.RolPersonal)
-                .Where(p => p.RolPersonalId == RolPersonalId)
+                .Where(p => p.RolPersonalId == rolPersonalId)
                 .ToListAsync();
         }
     }
