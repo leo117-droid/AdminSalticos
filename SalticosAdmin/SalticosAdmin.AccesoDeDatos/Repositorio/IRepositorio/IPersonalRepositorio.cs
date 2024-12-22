@@ -14,6 +14,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         void Actualizar(Personal personal);
 
         IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj);
+        Task<IEnumerable<Personal>> FiltrarPorRolPersonal(int value);
+
 
 
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SalticosAdmin.AccesoDeDatos.Data;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
@@ -11,28 +12,54 @@ using System.Threading.Tasks;
 
 namespace SalticosAdmin.AccesoDeDatos.Repositorio
 {
-    public class CapacitacionRepositorio : Repositorio<Capacitacion>, ICapacitacionRepositorio
+    public class PersonalRepositorio : Repositorio<Personal>, IPersonalRepositorio
     {
         private readonly ApplicationDbContext _db;
 
-        public CapacitacionRepositorio(ApplicationDbContext db) : base(db)
+        public PersonalRepositorio(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
-        public void Actualizar(Capacitacion capacitacion)
+        public void Actualizar(Personal personal)
         {
-            var capacitacionBD = _db.Capacitaciones.FirstOrDefault(b => b.Id == capacitacion.Id);
-            if (capacitacionBD != null)
+            var personalBD = _db.Personal.FirstOrDefault(b => b.Id == personal.Id);
+            if (personalBD != null)
             {
-                capacitacionBD.Fecha = capacitacion.Fecha;
-                capacitacionBD.Tema = capacitacion.Tema;
-                capacitacionBD.Duracion = capacitacion.Duracion;
+                personalBD.Nombre = personal.Nombre;
+                personalBD.Apellidos = personal.Apellidos;
+                personalBD.Telefono = personal.Telefono;
+                personalBD.Correo = personal.Correo;
+                personalBD.Cedula = personal.Cedula;
+                personalBD.FechaNacimiento = personal.FechaNacimiento;
+                personalBD.FechaEntrada = personal.FechaEntrada;
+                personalBD.RolPersonalId = personal.RolPersonalId;
+                personalBD.PadreId = personal.PadreId;
 
                 _db.SaveChanges();
 
             }
         }
 
+        public IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj)
+        {
+            if (obj == "RolPersonal")
+            {
+                return _db.RolPersonal.Select(r => new SelectListItem
+                {
+                    Text = r.Nombre,
+                    Value = r.Id.ToString()
+                });
+            }
+            return null;
+        }
+
+        public async Task<IEnumerable<Personal>> FiltrarPorRolPersonal(int RolPersonalId)
+        {
+            return await _db.Personal
+                .Include(p => p.RolPersonal)
+                .Where(p => p.RolPersonalId == RolPersonalId)
+                .ToListAsync();
+        }
     }
 }
 

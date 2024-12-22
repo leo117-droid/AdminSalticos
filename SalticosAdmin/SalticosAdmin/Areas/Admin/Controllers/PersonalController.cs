@@ -56,7 +56,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(PersonalVM personalVM)
         {
-            Console.WriteLine("AQUIIIII");
 
             if (ModelState.IsValid)
             {
