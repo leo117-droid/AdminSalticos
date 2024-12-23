@@ -1,4 +1,4 @@
-﻿﻿
+﻿@model SalticosAdmin.Modelos.ViewModels.InflableVM
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,6 +11,45 @@
     <div class="col-lg-6">
         <a class="btn btn-outline-primary" asp-action="Upsert"> <i class="bi bi-plus-square-fill"></i> Crear Nuevo Inflable </a>
     </div>
+
+
+    <form id="formFiltrar" method="get" class="" action="@Url.Action("Index", "Inflable")">
+
+        <div class="row filter-row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Categoria por Tamaño</label>
+                    <select asp-for="Inflable.CategoriaTamannoId" id="categoriaTamannoSelect" name="categoriaTamannoId" asp-items="@Model.CategoriaTamannoLista" class="form-select">
+                        <option disabled selected> -- Seleccione una categoría de tamaño -- </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Categoria por Edad</label>
+                    <select asp-for="Inflable.CategoriaEdadId" id="categoriaEdadSelect" name="categoriaEdadId" asp-items="@Model.CategoriaEdadLista" class="form-select">
+                        <option disabled selected> -- Seleccione una categoría de edad -- </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" onclick="refreshDataTable()">
+                    <i class="bi bi-search"></i> Buscar Inflables
+                </button>
+            </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-secondary" onclick="clearDataTable()">
+                    <i class="bi bi-arrow-counterclockwise"></i> Limpiar Filtro
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+
 </div>
 
 <br />

@@ -5,6 +5,12 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
+
+    var dropdownTamanno = document.getElementById("categoriaTamannoSelect");
+
+    var dropdownEdad = document.getElementById("categoriaEdadSelect");
+
+
     datatable = $('#tblDatos').DataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ Registros Por Pagina",
@@ -21,7 +27,7 @@ function loadDataTable() {
             }
         },
         "ajax": {
-            "url": "/Admin/Inflable/ObtenerTodos"
+            "url": "/Admin/Inflable/ConsultarConFiltro"
         },
         "columns": [
             { "data": "nombre" },
@@ -71,6 +77,30 @@ function loadDataTable() {
             }
         ]
     });
+}
+
+
+
+function refreshDataTable() {
+    var dropdownTamanno = document.getElementById("categoriaTamannoSelect");
+
+    var dropdownEdad = document.getElementById("categoriaEdadSelect");
+
+    datatable.clear().draw();
+
+    datatable.ajax.url(`/Admin/Inflable/ConsultarConFiltro?categoriaTamannoId=${dropdownTamanno.value}&categoriaEdadId=${dropdownEdad.value}`).load();
+
+}
+
+function clearDataTable() {
+
+    document.getElementById('categoriaTamannoSelect').value = "";
+    document.getElementById('categoriaEdadSelect').value = "";
+
+    datatable.clear().draw();
+
+    datatable.ajax.url(`/Admin/Inflable/ConsultarConFiltro`).load();
+
 }
 
 

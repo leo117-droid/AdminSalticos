@@ -15,5 +15,7 @@ namespace SalticosAdmin.Modelos.ViewModels
         public IEnumerable<SelectListItem> CategoriaTamannoLista  { get; set; }
         public IEnumerable<SelectListItem> CategoriaEdadLista { get; set; }
 
+        public IEnumerable<Inflable> InflableLista { get; set; }
+
     }
 }

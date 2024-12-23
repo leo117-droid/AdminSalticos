@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SalticosAdmin.AccesoDeDatos.Data;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
@@ -64,6 +65,26 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             }
             return null;
         }
+
+        public async Task<IEnumerable<Inflable>> FiltrarPorCategorias(int? categoriaTamannoId, int? categoriaEdadId)
+        {
+            var query = _db.Inflables.Include(i => i.CategoriaTamanno)
+                                      .Include(i => i.CategoriasEdad)
+                                      .AsQueryable();
+
+            if (categoriaTamannoId.HasValue)
+            {
+                query = query.Where(i => i.CategoriaTamannoId == categoriaTamannoId.Value);
+            }
+
+            if (categoriaEdadId.HasValue)
+            {
+                query = query.Where(i => i.CategoriaEdadId == categoriaEdadId.Value);
+            }
+
+            return await query.ToListAsync();
+        }
+
     }
 }
 

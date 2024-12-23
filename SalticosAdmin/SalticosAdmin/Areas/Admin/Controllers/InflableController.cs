@@ -21,9 +21,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo = unidadTrabajo;
             _webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+
+            InflableVM inflableVM = new InflableVM()
+            {
+                Inflable = new Inflable(),
+                CategoriaTamannoLista = _unidadTrabajo.Inflable.ObtenerTodosDropdownLista("CategoriaTamanno"),
+                CategoriaEdadLista = _unidadTrabajo.Inflable.ObtenerTodosDropdownLista("CategoriaEdad"),
+
+                InflableLista = await _unidadTrabajo.Inflable.ObtenerTodos(incluirPropiedades: "CategoriaTamanno,CategoriasEdad")
+            };
+
+            return View(inflableVM);
         }
 
 
@@ -110,7 +120,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                 }
                 await _unidadTrabajo.Guardar();
-                return View("Index");
+                return RedirectToAction("Index");
             }
             inflableVM.CategoriaEdadLista = _unidadTrabajo.Inflable.ObtenerTodosDropdownLista("CategoriaEdad");
             inflableVM.CategoriaTamannoLista = _unidadTrabajo.Inflable.ObtenerTodosDropdownLista("CategoriaTamanno");
@@ -127,6 +137,35 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var todos = await _unidadTrabajo.Inflable.ObtenerTodos(incluirPropiedades: "CategoriaTamanno,CategoriasEdad");
             return Json(new { data = todos });
         }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> ConsultarConFiltro(int? categoriaTamannoId, int? categoriaEdadId)
+        {
+            var inflableVM = new InflableVM();
+
+            inflableVM.CategoriaTamannoLista = _unidadTrabajo.Inflable.ObtenerTodosDropdownLista("CategoriaTamanno");
+            inflableVM.CategoriaEdadLista = _unidadTrabajo.Inflable.ObtenerTodosDropdownLista("CategoriaEdad");
+
+            if (categoriaTamannoId.HasValue || categoriaEdadId.HasValue)
+            {
+                inflableVM.InflableLista = await _unidadTrabajo.Inflable.FiltrarPorCategorias(categoriaTamannoId, categoriaEdadId);
+            }
+            else
+            {
+                // Si no hay filtros, traer todos los inflables
+                inflableVM.InflableLista = await _unidadTrabajo.Inflable.ObtenerTodos(incluirPropiedades: "CategoriaTamanno,CategoriasEdad");
+            }
+
+            var resultados = inflableVM.InflableLista;
+            return Json(new { data = resultados });
+        }
+
+
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)

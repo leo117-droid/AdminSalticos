@@ -19,6 +19,7 @@
         <div class="row filter-row">
             <div class="col-md-4">
                 <div class="form-group">
+                    <label>Rol</label>
                     <select asp-for="Personal.RolPersonalId" id="rolPersonalSelect" name="idRolPersonal" asp-items="@Model.RolPersonalLista" class="form-select">
                         <option disabled selected> -- Seleccione un rol --</option>
                     </select>
@@ -26,7 +27,7 @@
             </div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-primary" onclick="refreshDataTable()">
-                    <i class="bi bi-search"></i> Buscar Personal por Rol
+                    <i class="bi bi-search"></i> Buscar Personal
                 </button>
             </div>
             <div class="col-md-2">
