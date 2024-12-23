@@ -33,7 +33,20 @@ function loadDataTable() {
                     return fecha.toLocaleDateString('es-ES', options);
                 }
             },
-            { "data": "hora", "width": "20%" },
+            {
+                "data": "hora",
+                "width": "20%",
+                "render": function (data) {
+                    var partes = data.split(':'); 
+                    var hora = parseInt(partes[0], 10); 
+                    var minutos = partes[1]; 
+                    var periodo = hora >= 12 ? 'PM' : 'AM'; 
+
+                    hora = hora % 12 || 12;
+
+                    return `${hora}:${minutos} ${periodo}`;
+                }
+            },
             { "data": "accion", "width": "30%" },
             { "data": "usuario", "width": "30%" }
         ]

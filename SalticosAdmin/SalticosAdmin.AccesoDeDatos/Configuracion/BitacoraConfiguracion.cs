@@ -15,10 +15,10 @@ namespace SalticosAdmin.AccesoDeDatos.Configuracion
         public void Configure(EntityTypeBuilder<Bitacora> builder)
         {
             builder.Property(x => x.Id).IsRequired();
-            builder.Property(x => x.Fecha).IsRequired();
-            builder.Property(x => x.Hora).IsRequired();
+            builder.Property(x => x.Fecha);
+            builder.Property(x => x.Hora);
             builder.Property(x => x.Accion).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.Usuario).IsRequired();
+            builder.Property(x => x.Usuario);
 
         }
     }

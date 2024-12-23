@@ -48,15 +48,25 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 if (herramienta.Id == 0)
                 {
                     await _unidadTrabajo.Herramienta.Agregar(herramienta);
                     TempData[DS.Exitosa] = "Herrramienta creada Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la herramienta '{herramienta.Nombre}'", usuarioNombre);
+
+
                 }
                 else
                 {
                     _unidadTrabajo.Herramienta.Actualizar(herramienta);
                     TempData[DS.Exitosa] = "Herramienta actualizada Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizo la herramienta '{herramienta.Nombre}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
@@ -78,13 +88,21 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var herramientaBd = await _unidadTrabajo.Herramienta.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             if (herramientaBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Herramienta" });
             }
             _unidadTrabajo.Herramienta.Remover(herramientaBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la herramienta '{herramientaBd.Nombre}'", usuarioNombre);
+
             return Json(new { success = true, message = "Herramienta borrada exitosamente" });
+
         }
 
         [ActionName("ValidarNombre")]
