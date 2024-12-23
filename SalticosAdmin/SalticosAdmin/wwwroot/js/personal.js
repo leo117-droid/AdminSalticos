@@ -5,6 +5,9 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
+
+    var dropdown = document.getElementById("rolPersonalSelect");
+
     datatable = $('#tblDatos').DataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ Registros Por Pagina",
@@ -21,7 +24,7 @@ function loadDataTable() {
             }
         },
         "ajax": {
-            "url": "/Admin/Personal/ObtenerTodos"
+            "url": "/Admin/Personal/ConsultarConFiltro"
         },
         "columns": [
             { "data": "nombre" },
@@ -62,6 +65,25 @@ function loadDataTable() {
         ]
     });
 }
+
+
+function refreshDataTable() {
+    var dropdown = document.getElementById("rolPersonalSelect");
+
+    datatable.clear().draw();
+
+    datatable.ajax.url(`/Admin/Personal/ConsultarConFiltro?idRolPersonal=${dropdown.value}`).load();
+
+}
+
+function clearDataTable() {
+
+    datatable.clear().draw();
+
+    datatable.ajax.url(`/Admin/Personal/ConsultarConFiltro`).load();
+
+}
+
 
 
 function Delete(url) {

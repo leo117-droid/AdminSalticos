@@ -1,4 +1,4 @@
-﻿﻿
+﻿@model SalticosAdmin.Modelos.ViewModels.PersonalVM
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,6 +11,33 @@
     <div class="col-lg-6">
         <a class="btn btn-outline-primary" asp-action="Upsert"> <i class="bi bi-plus-square-fill"></i> Crear Nuevo Personal </a>
     </div>
+
+
+    <form id="formFiltrar" method="get" class=" " action="@Url.Action("Index", "Personal")">
+
+
+        <div class="row filter-row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select asp-for="Personal.RolPersonalId" id="rolPersonalSelect" name="idRolPersonal" asp-items="@Model.RolPersonalLista" class="form-select">
+                        <option disabled selected> -- Seleccione un rol --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" onclick="refreshDataTable()">
+                    <i class="bi bi-search"></i> Buscar Personal por Rol
+                </button>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-secondary" onclick="clearDataTable()">
+                    <i class="bi bi-arrow-counterclockwise"></i> Limpiar Filtro
+                </button>
+            </div>
+        </div>
+    </form>
+
+
 </div>
 
 <br />
@@ -32,6 +59,14 @@
             </tr>
         </thead>
     </table>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <a class="btn btn-return stbgreen-btn" href="/">
+                <i class="bi bi-arrow-return-left"></i> Regresar
+            </a>
+        </div>
+    </div>
 
 </div>
 

@@ -20,9 +20,18 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo = unidadTrabajo;
             _webHostEnviroment = webHostEnviroment;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+            PersonalVM personalVM = new PersonalVM()
+            {
+                Personal = new Personal(),
+                RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal"),
+                PersonalLista = await _unidadTrabajo.Personal.ObtenerTodos(incluirPropiedades: "RolPersonal")
+            };
+
+
+            return View(personalVM);
         }
 
 
@@ -72,7 +81,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                 }
                 await _unidadTrabajo.Guardar();
-                return View("Index");
+                return RedirectToAction("Index");
             }
             personalVM.RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal");
 
@@ -92,22 +101,23 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Consultar(int? idPersonalRol)
+        public async Task<IActionResult> ConsultarConFiltro(int? idRolPersonal)
         {
             var personalVM = new PersonalVM();
 
             personalVM.RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal");
 
-            if (idPersonalRol.HasValue)
+            if (idRolPersonal.HasValue)
             {
-                personalVM.Personales = await _unidadTrabajo.Personal.FiltrarPorRolPersonal(idPersonalRol.Value);
+                personalVM.PersonalLista = await _unidadTrabajo.Personal.FiltrarPorRolPersonal(idRolPersonal.Value);
             }
             else
             {
-                personalVM.Personales = await _unidadTrabajo.Personal.ObtenerTodos(incluirPropiedades: "RolPersonal");
+                
+                personalVM.PersonalLista = await _unidadTrabajo.Personal.ObtenerTodos(incluirPropiedades: "RolPersonal");
             }
-            personalVM.RolPersonalSeleccionadoId = idPersonalRol;
-            return View(personalVM);
+            var resultados = personalVM.PersonalLista;
+            return Json(new { data = resultados });
         }
 
 
