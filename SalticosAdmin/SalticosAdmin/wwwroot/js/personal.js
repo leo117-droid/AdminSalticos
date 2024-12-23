@@ -77,6 +77,7 @@ function refreshDataTable() {
 }
 
 function clearDataTable() {
+    document.getElementById('rolPersonalSelect').value = "";
 
     datatable.clear().draw();
 

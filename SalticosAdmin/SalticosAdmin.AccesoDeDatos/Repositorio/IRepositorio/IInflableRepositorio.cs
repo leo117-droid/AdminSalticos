@@ -15,6 +15,6 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 
         IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj);
 
-
+        Task<IEnumerable<Inflable>> FiltrarPorCategorias(int? categoriaTamannoId, int? categoriaEdadId);
     }
 }
