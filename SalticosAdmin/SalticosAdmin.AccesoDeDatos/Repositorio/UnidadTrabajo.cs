@@ -35,6 +35,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
         public IMobiliarioRepositorio Mobiliario { get; private set; }
 
         public IAlimentacionRepositorio Alimentacion { get; private set; }
+        public IBitacoraRepositorio Bitacora { get; private set; }
+
 
 
         public UnidadTrabajo(ApplicationDbContext db)
@@ -55,6 +57,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             ServicioAdicional = new ServicioAdicionalRepositorio(_db);
             Mobiliario = new MobiliarioRepositorio(_db);
             Alimentacion = new AlimentacionRepositorio(_db);
+            Bitacora = new BitacoraRepositorio(_db);
+
 
         }
 

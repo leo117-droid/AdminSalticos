@@ -36,6 +36,8 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<Mobiliario> Mobilarios { get; set; }
         public DbSet<Alimentacion> Alimentacion { get; set; }
+        public DbSet<Bitacora> Bitacora { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

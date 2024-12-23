@@ -32,6 +32,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 
         IMobiliarioRepositorio Mobiliario { get; }
         IAlimentacionRepositorio Alimentacion { get; }
+        IBitacoraRepositorio Bitacora { get; }
 
 
         Task Guardar();
