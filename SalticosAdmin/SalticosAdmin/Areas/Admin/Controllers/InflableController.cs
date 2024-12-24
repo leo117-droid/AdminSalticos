@@ -71,6 +71,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 var files = HttpContext.Request.Form.Files; 
                 string webRootPath = _webHostEnvironment.WebRootPath; 
                 if (inflableVM.Inflable.Id == 0)
@@ -87,6 +90,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     await _unidadTrabajo.Inflable.Agregar(inflableVM.Inflable);
                     TempData[DS.Exitosa] = "Inflable creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el inflable '{inflableVM.Inflable.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -117,6 +122,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     _unidadTrabajo.Inflable.Actualizar(inflableVM.Inflable);
                     TempData[DS.Exitosa] = "Inflable actualizado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el inflable '{inflableVM.Inflable.Nombre}'", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -171,6 +178,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var inflableBd = await _unidadTrabajo.Inflable.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             if (inflableBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Inflable" });
@@ -186,6 +197,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             _unidadTrabajo.Inflable.Remover(inflableBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el inflable '{inflableBd.Nombre}'", usuarioNombre);
+
             return Json(new { success = true, message = "Inflable borrado exitosamente" });
         }
 

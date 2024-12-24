@@ -68,16 +68,23 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                if(personalVM.Personal.Id == 0)
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
+                if (personalVM.Personal.Id == 0)
                 {
                     await _unidadTrabajo.Personal.Agregar(personalVM.Personal);
                     TempData[DS.Exitosa] = "Personal creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el personal '{personalVM.Personal.Nombre}' '{personalVM.Personal.Apellidos}'", usuarioNombre);
 
                 }
                 else
                 {
                     _unidadTrabajo.Personal.Actualizar(personalVM.Personal);
                     TempData[DS.Exitosa] = "Personal actualizado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el personal '{personalVM.Personal.Nombre}' '{personalVM.Personal.Apellidos}'", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -87,10 +94,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             return View(personalVM);
         }
-
-
-        
-
 
         #region API
         [HttpGet]
@@ -125,12 +128,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var personalBd = await _unidadTrabajo.Personal.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+            
             if (personalBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Personal" });
             }
             _unidadTrabajo.Personal.Remover(personalBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el personal '{personalBd.Nombre}' '{personalBd.Apellidos}'", usuarioNombre);
+
             return Json(new { success = true, message = "Personal borrado exitosamente" });
         }
 

@@ -47,15 +47,24 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 if (tarifasTransporte.Id == 0)
                 {
                     await _unidadTrabajo.TarifasTransporte.Agregar(tarifasTransporte);
                     TempData[DS.Exitosa] = "Tarifa de Transporte creada Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la tarifa de transporte '{tarifasTransporte.Provincia}'", usuarioNombre);
+
                 }
                 else
                 {
                     _unidadTrabajo.TarifasTransporte.Actualizar(tarifasTransporte);
                     TempData[DS.Exitosa] = "Tarifa de Transporte actualizada Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizo la tarifa de transporte '{tarifasTransporte.Provincia}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
@@ -77,12 +86,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var tarifaBd = await _unidadTrabajo.TarifasTransporte.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             if (tarifaBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Tarifa de Transporte" });
             }
             _unidadTrabajo.TarifasTransporte.Remover(tarifaBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la tarifa de transporte '{tarifaBd.Provincia}'", usuarioNombre);
+
             return Json(new { success = true, message = "Tarifa de Transporte borrada exitosamente" });
         }
 

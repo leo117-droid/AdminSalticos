@@ -48,15 +48,15 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         }
 
-
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(ServicioAdicional servicioAdicional)
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 var files = HttpContext.Request.Form.Files;
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 if (servicioAdicional.Id == 0)
@@ -73,6 +73,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     await _unidadTrabajo.ServicioAdicional.Agregar(servicioAdicional);
                     TempData[DS.Exitosa] = "Servicio Adicional creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó servicio adicional '{servicioAdicional.Nombre}'", usuarioNombre);
+
 
                 }
                 else
@@ -104,6 +107,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.ServicioAdicional.Actualizar(servicioAdicional);
                     TempData[DS.Exitosa] = "Servicio adicional actualizado Exitosamente";
 
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó servicio adicional '{servicioAdicional.Nombre}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return View("Index");
@@ -125,6 +130,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var servicioAdicionalBd = await _unidadTrabajo.ServicioAdicional.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             if (servicioAdicionalBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Servicio Adicional" });
@@ -140,6 +149,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             _unidadTrabajo.ServicioAdicional.Remover(servicioAdicionalBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó servicio adicional '{servicioAdicionalBd.Nombre}'", usuarioNombre);
+
             return Json(new { success = true, message = "Servicio Adicional borrado exitosamente" });
         }
 

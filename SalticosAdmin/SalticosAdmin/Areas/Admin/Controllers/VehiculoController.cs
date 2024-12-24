@@ -49,15 +49,24 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 if (vehiculo.Id == 0)
                 {
                     await _unidadTrabajo.Vehiculo.Agregar(vehiculo);
                     TempData[DS.Exitosa] = "Vehiculo creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el vehiculo '{vehiculo.Placa}'", usuarioNombre);
+
                 }
                 else
                 {
                     _unidadTrabajo.Vehiculo.Actualizar(vehiculo);
                     TempData[DS.Exitosa] = "Vehiculo actualizado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el vehiculo '{vehiculo.Placa}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
@@ -65,7 +74,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             TempData[DS.Error] = "Error al grabar vehiculo";
             return View(vehiculo);
         }
-
 
         #region API
         [HttpGet]
@@ -79,12 +87,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var vehiculoBd = await _unidadTrabajo.Vehiculo.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             if (vehiculoBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Vehiculo" });
             }
             _unidadTrabajo.Vehiculo.Remover(vehiculoBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el vehiculo '{vehiculoBd.Placa}'", usuarioNombre);
+
             return Json(new { success = true, message = "Vehiculo borrada exitosamente" });
         }
 

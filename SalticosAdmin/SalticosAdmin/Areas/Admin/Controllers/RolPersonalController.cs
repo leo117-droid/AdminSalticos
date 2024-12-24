@@ -49,15 +49,24 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 if (rolPersonal.Id == 0)
                 {
                     await _unidadTrabajo.RolPersonal.Agregar(rolPersonal);
                     TempData[DS.Exitosa] = "Rol de personal creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el rol de personal '{rolPersonal.Nombre}'", usuarioNombre);
+
                 }
                 else
                 {
                     _unidadTrabajo.RolPersonal.Actualizar(rolPersonal);
                     TempData[DS.Exitosa] = "Rol de personal actualizado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el rol de personal '{rolPersonal.Nombre}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
@@ -79,12 +88,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var rolPersonalBd = await _unidadTrabajo.RolPersonal.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             if (rolPersonalBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar rol de personal" });
             }
             _unidadTrabajo.RolPersonal.Remover(rolPersonalBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el rol de personal '{rolPersonalBd.Nombre}'", usuarioNombre);
+
             return Json(new { success = true, message = "Rol de personal borrada exitosamente" });
         }
 

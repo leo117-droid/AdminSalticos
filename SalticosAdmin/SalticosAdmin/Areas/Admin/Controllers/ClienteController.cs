@@ -57,7 +57,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     await _unidadTrabajo.Cliente.Agregar(cliente);
                     TempData[DS.Exitosa] = "Cliente creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el cliente '{cliente.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el cliente '{cliente.Nombre}' '{cliente.Apellidos}' ", usuarioNombre);
 
                 }
                 else
@@ -65,7 +65,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.Cliente.Actualizar(cliente);
                     TempData[DS.Exitosa] = "Cliente actualizado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el cliente '{cliente.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el cliente '{cliente.Nombre}' '{cliente.Apellidos}'", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -99,7 +99,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.Cliente.Remover(clienteBd);
             await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el cliente '{clienteBd.Nombre}'", usuarioNombre);
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el cliente '{clienteBd.Nombre}' '{clienteBd.Apellidos}'", usuarioNombre);
 
             return Json(new { success = true, message = "Cliente borrada exitosamente" });
         }

@@ -55,6 +55,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 var files = HttpContext.Request.Form.Files;
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 if (mobiliario.Id == 0)
@@ -72,6 +75,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     await _unidadTrabajo.Mobiliario.Agregar(mobiliario);
                     TempData[DS.Exitosa] = "Mobiliario creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el mobiliario '{mobiliario.Nombre}'", usuarioNombre);
+
                 }
                 else
                 {
@@ -101,6 +107,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     _unidadTrabajo.Mobiliario.Actualizar(mobiliario);
                     TempData[DS.Exitosa] = "Mobiliario actualizado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el mobiliario '{mobiliario.Nombre}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
@@ -122,6 +131,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var mobiliarioBd = await _unidadTrabajo.Mobiliario.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             if (mobiliarioBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Mobiliario" });
@@ -138,6 +151,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             _unidadTrabajo.Mobiliario.Remover(mobiliarioBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el mobiliario '{mobiliarioBd.Nombre}'", usuarioNombre);
+
             return Json(new { success = true, message = "Mobiliario borrada exitosamente" });
         }
 

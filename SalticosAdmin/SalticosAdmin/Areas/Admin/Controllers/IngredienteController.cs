@@ -49,15 +49,24 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 if (ingrediente.Id == 0)
                 {
                     await _unidadTrabajo.Ingrediente.Agregar(ingrediente);
                     TempData[DS.Exitosa] = "Ingrediente creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el ingrediente '{ingrediente.Nombre}'", usuarioNombre);
+
                 }
                 else
                 {
                     _unidadTrabajo.Ingrediente.Actualizar(ingrediente);
                     TempData[DS.Exitosa] = "Ingrediente actualizado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el ingrediente '{ingrediente.Nombre}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
@@ -79,12 +88,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var ingredienteBd = await _unidadTrabajo.Ingrediente.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             if (ingredienteBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Ingrediente" });
             }
             _unidadTrabajo.Ingrediente.Remover(ingredienteBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el ingrediente '{ingredienteBd.Nombre}'", usuarioNombre);
+
             return Json(new { success = true, message = "Ingrediente borrada exitosamente" });
         }
 
