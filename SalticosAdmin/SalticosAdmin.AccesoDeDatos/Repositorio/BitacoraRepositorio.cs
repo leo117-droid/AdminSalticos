@@ -34,9 +34,13 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             await _db.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Bitacora>> ObtenerPorFecha(DateTime fecha)
+        public async Task<IEnumerable<Bitacora>> ObtenerEntreFechas(DateTime fechaInicio, DateTime fechaFin)
         {
-            return await _db.Bitacora.Where(b => b.Fecha.Date == fecha.Date).ToListAsync();
+            var fechaFinInclusive = fechaFin.AddDays(1).AddTicks(-1);
+            var datos = await _db.Bitacora
+                                        .Where(be => be.Fecha >= fechaInicio && be.Fecha <= fechaFinInclusive)
+                                        .ToListAsync();
+            return datos;
         }
 
     }

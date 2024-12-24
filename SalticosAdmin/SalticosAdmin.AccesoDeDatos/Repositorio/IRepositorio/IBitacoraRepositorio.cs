@@ -11,6 +11,6 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
     {
         Task RegistrarBitacora(string accion, string usuario);
 
-        Task<IEnumerable<Bitacora>> ObtenerPorFecha(DateTime fecha);
+        Task<IEnumerable<Bitacora>> ObtenerEntreFechas(DateTime fechaInicio, DateTime fechaFin);
     }
 }

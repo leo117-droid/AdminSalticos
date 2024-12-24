@@ -2,6 +2,16 @@
 
 $(document).ready(function () {
     loadDataTable();
+
+    $('#btnBuscar').on('click', function () {
+        filterDataTable();
+    });
+
+    $('#btnLimpiarFiltro').on('click', function () {
+        clearDataTable();
+    });
+
+
 });
 
 function loadDataTable() {
@@ -21,7 +31,11 @@ function loadDataTable() {
             }
         },
         "ajax": {
-            "url": "/Admin/Bitacora/ObtenerTodos"
+            "url": "/Admin/Bitacora/ConsultarConFiltro",
+            "data": function (d) {
+                d.fechainicial = $('#fechaInicio').val();
+                d.fechafinal = $('#fechaFin').val();
+            }
         },
         "columns": [
             {
@@ -54,35 +68,12 @@ function loadDataTable() {
 }
 
 
-function filtrarPorFecha() {
-    var fecha = $('#fecha').val();
-
-    $.ajax({
-        type: "GET",
-        url: "/Admin/Bitacora/ObtenerPorFecha",
-        data: { fecha: fecha },
-        success: function (response) {
-            var data = response.data;
-            datatable.clear().rows.add(data).draw();
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+function filterDataTable() {
+    datatable.ajax.reload();
 }
 
-function limpiarFiltro() {
-    $('#fecha').val('');
-
-    $.ajax({
-        type: "GET",
-        url: "/Admin/Bitacora/ObtenerTodos",
-        success: function (response) {
-            var data = response.data;
-            datatable.clear().rows.add(data).draw();
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+function clearDataTable() {
+    $('#fechaInicio').val('');
+    $('#fechaFin').val('');
+    datatable.ajax.reload();
 }

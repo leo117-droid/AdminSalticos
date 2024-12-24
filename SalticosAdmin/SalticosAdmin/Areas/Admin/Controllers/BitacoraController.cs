@@ -30,13 +30,26 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return Json(new { data = todos });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ObtenerPorFecha(DateTime fecha)
-        {
-            var registros = await _unidadTrabajo.Bitacora.ObtenerPorFecha(fecha);
-            return Json(new { data = registros });
-        }
+       
 
+
+        [HttpGet]
+        public async Task<IActionResult> ConsultarConFiltro(DateTime fechainicial, DateTime fechafinal)
+
+        {
+            if (fechainicial != DateTime.MinValue && fechafinal != DateTime.MinValue)
+            {
+                var registrosBitacora = await _unidadTrabajo.Bitacora.ObtenerEntreFechas(fechainicial, fechafinal);
+                return Json(new { data = registrosBitacora });
+
+            }
+
+            var Todos = await _unidadTrabajo.Bitacora.ObtenerTodos();
+            return Json(new { data = Todos });
+        }
         #endregion
+
     }
+
 }
+
