@@ -24,7 +24,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             Capacitacion capacitacion = new Capacitacion();
 
-
             if (id == null)
             {
                 // Crear una nueva capacitacion
@@ -48,15 +47,25 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 if (capacitacion.Id == 0)
                 {
                     await _unidadTrabajo.Capacitacion.Agregar(capacitacion);
-                    TempData[DS.Exitosa] = "Herrramienta creada Exitosamente";
+                    TempData[DS.Exitosa] = "Capacitacion creada Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la capacitación '{capacitacion.Tema}'", usuarioNombre);
+
                 }
                 else
                 {
                     _unidadTrabajo.Capacitacion.Actualizar(capacitacion);
-                    TempData[DS.Exitosa] = "Herramienta actualizada Exitosamente";
+                    TempData[DS.Exitosa] = "Capacitacion actualizada Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó la capacitación '{capacitacion.Tema}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
@@ -77,6 +86,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             var capacitacionBd = await _unidadTrabajo.Capacitacion.Obtener(id);
             if (capacitacionBd == null)
             {
@@ -84,7 +96,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
             _unidadTrabajo.Capacitacion.Remover(capacitacionBd);
             await _unidadTrabajo.Guardar();
-            return Json(new { success = true, message = "CapacitacionBd borrada exitosamente" });
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la capacitación '{capacitacionBd.Tema}'", usuarioNombre);
+
+            return Json(new { success = true, message = "Capacitacion borrada exitosamente" });
         }
 
         #endregion

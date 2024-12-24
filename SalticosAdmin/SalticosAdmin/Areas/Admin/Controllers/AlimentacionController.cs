@@ -57,6 +57,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 var files = HttpContext.Request.Form.Files;
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 if (alimentacion.Id == 0)
@@ -73,6 +76,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     await _unidadTrabajo.Alimentacion.Agregar(alimentacion);
                     TempData[DS.Exitosa] = "Alimentacion creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la alimentacion '{alimentacion.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -104,6 +109,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.Alimentacion.Actualizar(alimentacion);
                     TempData[DS.Exitosa] = "Alimentacion actualizado Exitosamente";
 
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó la alimentacion '{alimentacion.Nombre}'", usuarioNombre);
+
+
                 }
                 await _unidadTrabajo.Guardar();
                 return View("Index");
@@ -128,6 +136,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error al borrar Alimentacion" });
             }
 
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             //Remover imagen
             string upload = _webHostEnvironment.WebRootPath + DS.ImagenRutaAlimentacion;
             var anteriorFile = Path.Combine(upload, alimentacionBd.ImageUrl);
@@ -138,6 +149,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             _unidadTrabajo.Alimentacion.Remover(alimentacionBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la alimentacion '{alimentacionBd.Nombre}'", usuarioNombre);
+
             return Json(new { success = true, message = "Alimentacion borrado exitosamente" });
         }
 

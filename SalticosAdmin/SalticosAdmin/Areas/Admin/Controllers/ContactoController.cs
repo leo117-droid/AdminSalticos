@@ -3,6 +3,7 @@ using SalticosAdmin.AccesoDeDatos.Repositorio;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
 using SalticosAdmin.Utilidades;
+using System.Diagnostics.Contracts;
 
 namespace SalticosAdmin.Areas.Admin.Controllers
 {
@@ -28,7 +29,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             if (id == null)
             {
-                // Crear una nueva herramienta
+                // Crear una nuevo contacto 
                 return View(contacto);
             }
 
@@ -49,15 +50,24 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 if (contacto.Id == 0)
                 {
                     await _unidadTrabajo.Contacto.Agregar(contacto);
                     TempData[DS.Exitosa] = "Contacto creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el contacto '{contacto.Nombre}'", usuarioNombre);
+
                 }
                 else
                 {
                     _unidadTrabajo.Contacto.Actualizar(contacto);
                     TempData[DS.Exitosa] = "Contacto actualizado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el contacto '{contacto.Nombre}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
@@ -79,12 +89,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var contactoBd = await _unidadTrabajo.Contacto.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+            
             if (contactoBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Contacto" });
             }
             _unidadTrabajo.Contacto.Remover(contactoBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el contacto '{contactoBd.Nombre}'", usuarioNombre);
+
             return Json(new { success = true, message = "Contacto borrado exitosamente" });
         }
 

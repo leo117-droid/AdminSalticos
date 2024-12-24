@@ -25,7 +25,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             CategoriaTamanno categoriaTamanno = new CategoriaTamanno();
 
-
             if (id == null)
             {
                 // Crear una nueva categoria por tamanno
@@ -49,15 +48,24 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 if (categoriaTamanno.Id == 0)
                 {
                     await _unidadTrabajo.CategoriaTamanno.Agregar(categoriaTamanno);
                     TempData[DS.Exitosa] = "Categoria por tamanno creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la categoria de tamaño '{categoriaTamanno.Nombre}'", usuarioNombre);
+
                 }
                 else
                 {
                     _unidadTrabajo.CategoriaTamanno.Actualizar(categoriaTamanno);
                     TempData[DS.Exitosa] = "Categoria por tamanno actualizado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó la categoria de tamaño '{categoriaTamanno.Nombre}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
@@ -79,12 +87,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var categoriaTamannoBd = await _unidadTrabajo.CategoriaTamanno.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+            
             if (categoriaTamannoBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Categoría por tamanno" });
             }
             _unidadTrabajo.CategoriaTamanno.Remover(categoriaTamannoBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la categoria de tamaño '{categoriaTamannoBd.Nombre}'", usuarioNombre);
+
             return Json(new { success = true, message = "Categoría por tamanno borrada exitosamente" });
         }
 

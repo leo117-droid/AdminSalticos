@@ -49,15 +49,24 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var usuarioNombre = User.Identity.Name;
+                var usuarioNombre = "usuarioPrueba";
+
                 if (categoriasEdad.Id == 0)
                 {
                     await _unidadTrabajo.CategoriasEdad.Agregar(categoriasEdad);
                     TempData[DS.Exitosa] = "Categoria por edad creado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la categoria de edad '{categoriasEdad.Nombre}'", usuarioNombre);
+
                 }
                 else
                 {
                     _unidadTrabajo.CategoriasEdad.Actualizar(categoriasEdad);
                     TempData[DS.Exitosa] = "Categoria por edad actualizado Exitosamente";
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó la categoria de edad '{categoriasEdad.Nombre}'", usuarioNombre);
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
@@ -79,12 +88,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var categoriasEdadBd = await _unidadTrabajo.CategoriasEdad.Obtener(id);
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
             if (categoriasEdadBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Categoría por edad" });
             }
             _unidadTrabajo.CategoriasEdad.Remover(categoriasEdadBd);
             await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la categoria de edad '{categoriasEdadBd.Nombre}'", usuarioNombre);
+
             return Json(new { success = true, message = "Categoría por edad borrada exitosamente" });
         }
 

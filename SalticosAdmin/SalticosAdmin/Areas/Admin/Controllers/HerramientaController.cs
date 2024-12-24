@@ -58,7 +58,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la herramienta '{herramienta.Nombre}'", usuarioNombre);
 
-
                 }
                 else
                 {
