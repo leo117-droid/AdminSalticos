@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 {
-    public interface IContactoRepositorio : IRepositorio<Contacto>
+    public interface ICapacitacionRepositorio : IRepositorio<Capacitacion>
     {
-        void Actualizar(Contacto contacto);
+        void Actualizar(Capacitacion capacitacion);
 
     }
 }
