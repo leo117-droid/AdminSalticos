@@ -38,6 +38,8 @@ namespace SalticosAdmin.AccesoDeDatos.Data
         public DbSet<Alimentacion> Alimentacion { get; set; }
         public DbSet<Bitacora> Bitacora { get; set; }
 
+        public DbSet<CapacitacionPersonal> CapacitacionesPersonal { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
