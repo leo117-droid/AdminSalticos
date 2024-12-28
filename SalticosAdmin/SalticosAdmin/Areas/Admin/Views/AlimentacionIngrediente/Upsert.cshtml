@@ -1,0 +1,112 @@
+﻿@model SalticosAdmin.Modelos.ViewModels.AlimentacionIngredienteVM
+@using SalticosAdmin.Utilidades﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Agregar nuevo ingrediente";
+}
+
+<form method="post" id="formAlimentacionIngrediente" enctype="multipart/form-data">
+    <div class="form-container">
+        @if (Model.IdRelacion != 0)
+        {
+            titulo = "Editar Ingrediente en Alimentación";
+            <input asp-for="IdRelacion" hidden />
+            <input asp-for="IdAlimentacion" hidden />
+        }
+
+
+        <div class="border ">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-12 border-bottom p-0">
+                <div class="center-form">
+                    <h2 class="soda-font-bold">@titulo</h2>
+                </div>
+            </div>
+
+            <div class="center-form">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label for="id">ID Capacitacion</label>
+                                    <input type="text" class="form-control" id="id" value="@Model.IdAlimentacion" readonly />
+                                    <input asp-for="@Model.IdAlimentacion" hidden />
+                                </div>
+                            </div>
+                            @if (Model.IdRelacion != 0)
+                            {
+
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label>Listado de Ingredientes</label>
+                                        <select asp-for="IdIngrediente" asp-items="@Model.ListaIngrediente" class="form-select" required>
+                                            <option disabled selected value=""> -- Seleccione ingrediente --</option>
+                                        </select>
+                                        <span asp-validation-for="IdIngrediente" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            }
+
+                            <br />
+
+                            <div class="d-grid gap-2 d-md-block">
+                                @if (Model.IdRelacion != 0)
+                                {
+
+
+
+                                    <div class="d-grid gap-2 d-md-block">
+                                        @if (Model.ListaIngrediente.Any())
+                                        {
+                                            <button type="submit" class="btn btn-primary" onfocus="false" asp-route-id="@Model" asp-action="Upsert">
+                                                <i class="bi bi-pencil-square"></i> Guardar Cambios
+                                            </button>
+
+                                        }
+                                        <a asp-action="Index" class="btn btn-success" id="regresarBtn">
+                                            <i class="bi bi-arrow-return-left"></i> Regresar
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @if (Model.ListaIngrediente.Any())
+                                    {
+                                        <button type="submit" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
+                                    }
+                                    <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+
+
+    <script>
+      
+
+        var url = window.location.href;
+
+        var numeros = url.match(/\d+/g);
+        if (numeros != null) {
+            var id = numeros[1];
+            var enlaceUrl = "/Admin/AlimentacionIngrediente/index/" + id;
+            document.getElementById('regresarBtn').setAttribute('href', enlaceUrl);
+        }
+
+
+    </script>
+}
