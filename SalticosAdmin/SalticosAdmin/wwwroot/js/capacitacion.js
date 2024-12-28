@@ -31,7 +31,7 @@ function loadDataTable() {
                 }
             },
             { "data": "tema", "width": "40%" },
-            { "data": "duracion", "width": "20%" },
+            { "data": "duracion", "width": "10%" },
             {
                 "data": "id",
                 "render": function (data) {
@@ -50,7 +50,7 @@ function loadDataTable() {
 
                         </div>
                     `;
-                }, "width": "20%"
+                }, "width": "40%"
             }
         ]
     });

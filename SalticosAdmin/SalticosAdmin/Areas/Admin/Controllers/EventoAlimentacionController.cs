@@ -61,7 +61,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 eventoAlimentacionVM.IdAlimentacion = eventoAlimentacionOBJ.IdAlimentacion;
 
 
-                return View(eventoAlimentacionOBJ);
+                return View(eventoAlimentacionVM);
             }
 
         }
@@ -122,7 +122,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     eventoAlimentacion.IdAlimentacion = eventoAlimentacionVM.IdAlimentacion;
                     eventoAlimentacion.Cantidad = eventoAlimentacionVM.Cantidad;
                     eventoAlimentacion.Id = eventoAlimentacionVM.IdRelacion;
-
+                    Console.WriteLine("CANTIDAAAAD: " + eventoAlimentacionVM.Cantidad);
                     eventoAlimentacion.Alimentacion = await _unidadTrabajo.Alimentacion.ObtenerPrimero(X => X.Id == eventoAlimentacionVM.IdAlimentacion);
                     eventoAlimentacion.Evento = await _unidadTrabajo.Evento.ObtenerPrimero(X => X.Id == eventoAlimentacionVM.IdEvento);
 
