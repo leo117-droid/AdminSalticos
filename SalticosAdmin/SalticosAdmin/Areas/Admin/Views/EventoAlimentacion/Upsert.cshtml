@@ -1,0 +1,120 @@
+﻿@model SalticosAdmin.Modelos.ViewModels.EventoAlimentacionVM
+@using SalticosAdmin.Utilidades﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Agregar nuevo producto de alimentación";
+}
+
+<form method="post" id="formEventoAlimentacion" enctype="multipart/form-data">
+    <div class="form-container">
+        @if (Model.IdRelacion != 0)
+        {
+            titulo = "Editar Alimentación en el Evento";
+            <input asp-for="IdRelacion" hidden />
+            <input asp-for="IdEvento" hidden />
+        }
+
+
+        <div class="border ">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-12 border-bottom p-0">
+                <div class="center-form">
+                    <h2 class="soda-font-bold">@titulo</h2>
+                </div>
+            </div>
+
+            <div class="center-form">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label for="id">ID Evento</label>
+                                    <input type="text" class="form-control" id="id" value="@Model.IdEvento" readonly />
+                                    <input asp-for="@Model.IdEvento" hidden />
+                                </div>
+                            </div>
+                            @if (Model.IdRelacion != 0)
+                            {
+
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label>Lista de productos de alimentación</label>
+                                        <select asp-for="IdAlimentacion" asp-items="@Model.ListaAlimentacion" class="form-select" required>
+                                            <option disabled selected value=""> -- Seleccione producto de alimentación --</option>
+                                        </select>
+                                        <span asp-validation-for="IdAlimentacion" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2 mt-2">
+                                    <div class="form-group col-md-6">
+                                        <label>Cantidad</label>
+                                        <input type="number" asp-for="Cantidad" class="form-control" placeholder="Cantidad del producto de alimentación" />
+                                        <span asp-validation-for="Cantidad" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            }
+
+                            <br />
+
+                            <div class="d-grid gap-2 d-md-block">
+                                @if (Model.IdRelacion != 0)
+                                {
+
+
+
+                                    <div class="d-grid gap-2 d-md-block">
+                                        @if (Model.ListaAlimentacion.Any())
+                                        {
+                                            <button type="submit" class="btn btn-primary" onfocus="false" asp-route-id="@Model" asp-action="Upsert">
+                                                <i class="bi bi-pencil-square"></i> Guardar Cambios
+                                            </button>
+
+                                        }
+                                        <a asp-action="Index" class="btn btn-success" id="regresarBtn">
+                                            <i class="bi bi-arrow-return-left"></i> Regresar
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @if (Model.ListaAlimentacion.Any())
+                                    {
+                                        <button type="submit" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
+                                    }
+                                    <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+
+
+    <script>
+      
+
+        var url = window.location.href;
+
+        var numeros = url.match(/\d+/g);
+        if (numeros != null) {
+            var id = numeros[1];
+            var enlaceUrl = "/Admin/CapacitacionPersonal/index/" + id;
+            document.getElementById('regresarBtn').setAttribute('href', enlaceUrl);
+        }
+
+
+    </script>
+}
