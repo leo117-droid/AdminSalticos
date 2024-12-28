@@ -37,7 +37,7 @@ function loadDataTable() {
                 }
             },
             {
-                "data": "horaFin",
+                "data": "horaFinal",
                 "render": function (data) {
                     return moment(data, "HH:mm:ss").format("hh:mm A"); 
                 }

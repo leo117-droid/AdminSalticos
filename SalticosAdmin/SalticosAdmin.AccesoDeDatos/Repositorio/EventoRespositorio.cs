@@ -44,7 +44,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             {
                 return _db.Clientes.Select(r => new SelectListItem
                 {
-                    Text = r.Nombre,
+                    Text = $"{r.Nombre} {r.Apellidos} - {r.Cedula}",
                     Value = r.Id.ToString()
                 });
             }
