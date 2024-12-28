@@ -5,6 +5,10 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
+
+    var id = obtenerIdDesdeURL(); // Obtener la ID de la URL
+    var padreId = id;
+
     datatable = $('#tblDatos').DataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ Registros Por Pagina",
@@ -21,45 +25,44 @@ function loadDataTable() {
             }
         },
         "ajax": {
-            "url": "/Admin/Capacitacion/ObtenerTodos"
+            "url": `/Admin/CapacitacionPersonal/ObtenerTodos?id=${id}`
         },
         "columns": [
-            {
-                "data": "fechaNacimiento",
-                "render": function (data) {
-                    return moment(data).format("DD/MM/YYYY");
-                }
-            },
-            { "data": "tema", "width": "40%" },
-            { "data": "duracion", "width": "20%" },
+            { "data": "personal.nombre" },
+            { "data": "personal.apellidos"  },
+            { "data": "personal.cedula" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                         <div class = "text-center">
-                            <a href="/Admin/Capacitacion/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer"> 
+                            <a href="/Admin/CapacitacionPersonal/Upsert/${padreId}?relacionId=${data}&capacitacionID=${padreId}" class="btn btn-success text-white" style="cursor:pointer"> 
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a href="/Admin/CapacitacionPersonal/Index/${data}" class="btn btn-primary btn-secondary btn-outline-white" style="cursor:pointer">
-                                <i class="bi bi-people-fill"></i> Participantes
-                            </a>
-
-                            <a onclick = Delete("/Admin/Capacitacion/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
+                            <a onclick = Delete("/Admin/CapacitacionPersonal/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
                                 <i class = "bi bi-trash3-fill"></i>
                             </a>
 
                         </div>
                     `;
-                }, "width": "20%"
+                }
             }
         ]
     });
 }
 
 
+function obtenerIdDesdeURL() {
+
+    var urlParams = window.location.pathname.split('/');
+    return urlParams[urlParams.length - 1];
+}
+
+
+
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar la Capacitacion?",
+        title: "Esta seguro de Eliminar el Personal?",
         text: "Este registro no se podra recuperar",
         icon: "warning",
         buttons: true,
