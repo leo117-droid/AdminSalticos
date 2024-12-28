@@ -5,9 +5,6 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-
-    var dropdown = document.getElementById("eventoSelect");
-
     datatable = $('#tblDatos').DataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ Registros Por Pagina",
@@ -24,72 +21,55 @@ function loadDataTable() {
             }
         },
         "ajax": {
-            "url": "/Admin/E/ConsultarConFiltro"
+            "url": "/Admin/Evento/ObtenerTodos"
         },
         "columns": [
-            { "data": "nombre" },
-            { "data": "apellidos"  },
-            { "data": "telefono"},
-            { "data": "correo"},
-            { "data": "cedula" },
             {
-                "data": "fechaNacimiento",
+                "data": "fecha",
                 "render": function (data) {
                     return moment(data).format("DD/MM/YYYY");
                 }
             },
             {
-                "data": "fechaEntrada",
+                "data": "horaInicio",
                 "render": function (data) {
-                    return moment(data).format("DD/MM/YYYY");
+                    return moment(data, "HH:mm:ss").format("hh:mm A"); 
                 }
             },
-            { "data": "rolPersonal.nombre"},
+            {
+                "data": "horaFin",
+                "render": function (data) {
+                    return moment(data, "HH:mm:ss").format("hh:mm A"); 
+                }
+            },
+            { "data": "direccion"},
+            { "data": "provincia"},
+            { "data": "cliente.nombre"},
 
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                         <div class = "text-center">
-                            <a href="/Admin/Personal/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer"> 
+                            <a href="/Admin/Evento/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer"> 
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a onclick = Delete("/Admin/Personal/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
+                            <a onclick = Delete("/Admin/Evento/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
                                 <i class = "bi bi-trash3-fill"></i>
                             </a>
 
                         </div>
                     `;
-                }
+                },
             }
         ]
     });
 }
 
 
-function refreshDataTable() {
-    var dropdown = document.getElementById("rolPersonalSelect");
-
-    datatable.clear().draw();
-
-    datatable.ajax.url(`/Admin/Personal/ConsultarConFiltro?idRolPersonal=${dropdown.value}`).load();
-
-}
-
-function clearDataTable() {
-    document.getElementById('rolPersonalSelect').value = "";
-
-    datatable.clear().draw();
-
-    datatable.ajax.url(`/Admin/Personal/ConsultarConFiltro`).load();
-
-}
-
-
-
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el Personal?",
+        title: "Esta seguro de Eliminar el Evento?",
         text: "Este registro no se podra recuperar",
         icon: "warning",
         buttons: true,

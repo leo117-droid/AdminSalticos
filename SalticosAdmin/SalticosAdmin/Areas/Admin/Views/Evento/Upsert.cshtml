@@ -26,10 +26,10 @@
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Fecha de Entrada</label>
+                <label>Fecha</label>
                 <input asp-for="Evento.Fecha" class="form-control" type="date"
                        value="@DateTime.Now.ToString("yyyy-MM-dd")"
-                       min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                       min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="Evento.Fecha" class="text-danger"></span>
             </div>
         </div>
@@ -77,7 +77,7 @@
             <div class="form-group col-md-6">
                 <label>Cliente</label>
                 <select asp-for="Evento.ClienteId" asp-items="@Model.ClienteLista" class="form-select">
-                    <option disabled selected>-- Seleccione un Rol --</option>
+                    <option disabled selected>-- Seleccione un Cliente --</option>
                 </select>
                 <span asp-validation-for="Evento.ClienteId" class="text-danger"></span>
             </div>

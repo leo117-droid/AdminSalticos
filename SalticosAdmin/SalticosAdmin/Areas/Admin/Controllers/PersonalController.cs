@@ -8,14 +8,14 @@ using SalticosAdmin.Utilidades;
 namespace SalticosAdmin.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class EventoController : Controller
+    public class PersonalController : Controller
     {
 
         private readonly IUnidadTrabajo _unidadTrabajo;
         private readonly IWebHostEnvironment _webHostEnviroment;
 
 
-        public EventoController(IUnidadTrabajo unidadTrabajo, IWebHostEnvironment webHostEnviroment)
+        public PersonalController(IUnidadTrabajo unidadTrabajo, IWebHostEnvironment webHostEnviroment)
         {
             _unidadTrabajo = unidadTrabajo;
             _webHostEnviroment = webHostEnviroment;
@@ -23,39 +23,39 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            EventoVM eventoVM = new EventoVM()
+            PersonalVM personalVM = new PersonalVM()
             {
-                Evento = new Evento(),
-                ClienteLista = _unidadTrabajo.Evento.ObtenerTodosDropdownLista("Cliente"),
-                EventoLista = await _unidadTrabajo.Evento.ObtenerTodos(incluirPropiedades: "Cliente")
+                Personal = new Personal(),
+                RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal"),
+                PersonalLista = await _unidadTrabajo.Personal.ObtenerTodos(incluirPropiedades: "RolPersonal")
             };
 
 
-            return View(eventoVM);
+            return View(personalVM);
         }
 
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            EventoVM eventoVM = new EventoVM()
+            PersonalVM personalVM = new PersonalVM()
             {
-                Evento = new Evento(),
-                ClienteLista = _unidadTrabajo.Evento.ObtenerTodosDropdownLista("Cliente"),
+                Personal = new Personal(),
+                RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal")
             };
 
-            if(id == null)
+            if (id == null)
             {
                 //Crear nuevo personal
-                return View(eventoVM);
+                return View(personalVM);
             }
             else
             {
-                eventoVM.Evento = await _unidadTrabajo.Evento.Obtener(id.GetValueOrDefault());
-                if (eventoVM.Evento == null)
+                personalVM.Personal = await _unidadTrabajo.Personal.Obtener(id.GetValueOrDefault());
+                if (personalVM.Personal == null)
                 {
                     return NotFound();
                 }
-                return View(eventoVM);
+                return View(personalVM);
             }
 
         }
@@ -63,7 +63,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(EventoVM eventoVM)
+        public async Task<IActionResult> Upsert(PersonalVM personalVM)
         {
 
             if (ModelState.IsValid)
@@ -71,56 +71,100 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 //var usuarioNombre = User.Identity.Name;
                 var usuarioNombre = "usuarioPrueba";
 
-                if (eventoVM.Evento.Id == 0)
+                if (personalVM.Personal.Id == 0)
                 {
-                    await _unidadTrabajo.Evento.Agregar(eventoVM.Evento);
-                    TempData[DS.Exitosa] = "Evento creado Exitosamente";
+                    await _unidadTrabajo.Personal.Agregar(personalVM.Personal);
+                    TempData[DS.Exitosa] = "Personal creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el evento '{eventoVM.Evento.Id}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el personal '{personalVM.Personal.Nombre}' '{personalVM.Personal.Apellidos}'", usuarioNombre);
 
                 }
                 else
                 {
-                    _unidadTrabajo.Evento.Actualizar(eventoVM.Evento);
-                    TempData[DS.Exitosa] = "Evento actualizado Exitosamente";
+                    _unidadTrabajo.Personal.Actualizar(personalVM.Personal);
+                    TempData[DS.Exitosa] = "Personal actualizado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el evento '{eventoVM.Evento.Id}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el personal '{personalVM.Personal.Nombre}' '{personalVM.Personal.Apellidos}'", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction("Index");
             }
-            eventoVM.ClienteLista = _unidadTrabajo.Evento.ObtenerTodosDropdownLista("Cliente");
+            personalVM.RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal");
 
-            return View(eventoVM);
+            return View(personalVM);
         }
 
         #region API
         [HttpGet]
         public async Task<IActionResult> ObtenerTodos()
         {
-            var todos = await _unidadTrabajo.Evento.ObtenerTodos(incluirPropiedades:"Cliente");
+            var todos = await _unidadTrabajo.Personal.ObtenerTodos(incluirPropiedades: "RolPersonal");
             return Json(new { data = todos });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ConsultarConFiltro(int? idRolPersonal)
+        {
+            var personalVM = new PersonalVM();
+
+            personalVM.RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal");
+
+            if (idRolPersonal.HasValue)
+            {
+                personalVM.PersonalLista = await _unidadTrabajo.Personal.FiltrarPorRolPersonal(idRolPersonal.Value);
+            }
+            else
+            {
+
+                personalVM.PersonalLista = await _unidadTrabajo.Personal.ObtenerTodos(incluirPropiedades: "RolPersonal");
+            }
+            var resultados = personalVM.PersonalLista;
+            return Json(new { data = resultados });
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            var eventoBd = await _unidadTrabajo.Evento.Obtener(id);
+            var personalBd = await _unidadTrabajo.Personal.Obtener(id);
 
             //var usuarioNombre = User.Identity.Name;
             var usuarioNombre = "usuarioPrueba";
-            
-            if (eventoBd == null)
+
+            if (personalBd == null)
             {
-                return Json(new { success = false, message = "Error al borrar Evento" });
+                return Json(new { success = false, message = "Error al borrar Personal" });
             }
-            _unidadTrabajo.Evento.Remover(eventoBd);
+            _unidadTrabajo.Personal.Remover(personalBd);
             await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el evento '{eventoBd.Id}'", usuarioNombre);
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el personal '{personalBd.Nombre}' '{personalBd.Apellidos}'", usuarioNombre);
 
-            return Json(new { success = true, message = "Evento borrado exitosamente" });
+            return Json(new { success = true, message = "Personal borrado exitosamente" });
+        }
+
+        [ActionName("ValidarCedula")]
+        public async Task<IActionResult> ValidarCedula(string cedula, int id = 0)
+        {
+            bool valor = false;
+            var lista = await _unidadTrabajo.Cliente.ObtenerTodos();
+            if (id == 0)
+            {
+                if (cedula != null)
+                {
+                    valor = lista.Any(b => b.Cedula.ToLower().Trim() == cedula.ToLower().Trim());
+                }
+            }
+            else
+            {
+                valor = lista.Any(b => b.Cedula.ToLower().Trim() == cedula.ToLower().Trim() && b.Id != id);
+            }
+            if (valor)
+            {
+                return Json(new { data = true });
+            }
+            return Json(new { data = false });
         }
 
         #endregion

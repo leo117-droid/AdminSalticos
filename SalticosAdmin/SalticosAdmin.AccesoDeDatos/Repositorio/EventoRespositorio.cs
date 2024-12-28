@@ -42,7 +42,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
         {
             if(obj == "Cliente")
             {
-                return _db.CategoriaTammano.Select(r => new SelectListItem
+                return _db.Clientes.Select(r => new SelectListItem
                 {
                     Text = r.Nombre,
                     Value = r.Id.ToString()
