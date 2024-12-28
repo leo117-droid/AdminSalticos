@@ -1,0 +1,112 @@
+﻿@model SalticosAdmin.Modelos.ViewModels.EventoVM
+@using SalticosAdmin.Utilidades
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear Nuevo Evento";
+}
+
+<form method="post" id="formEvento">
+
+    <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
+
+        <div class="row border-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        </div>
+
+        @if (Model.Evento.Id != 0)
+        {
+            titulo = "Editar Evento";
+            <input asp-for="Evento.Id" hidden />
+        }
+
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Fecha de Entrada</label>
+                <input asp-for="Evento.Fecha" class="form-control" type="date"
+                       value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                       min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Evento.Fecha" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Hora de Inicio</label>
+                <input asp-for="Evento.HoraInicio" class="form-control" type="time" />
+                <span asp-validation-for="Evento.HoraInicio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label>Hora de Fin</label>
+                <input asp-for="Evento.HoraFinal" class="form-control" type="time" />
+                <span asp-validation-for="Evento.HoraFinal" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Dirección</label>
+                <input asp-for="Evento.Direccion" class="form-control" />
+                <span asp-validation-for="Evento.Direccion" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Provincia</label>
+                <select asp-for="Evento.Provincia" class="form-select" id="provincia">
+                    <option value="" disabled selected>-- Seleccione una provincia --</option>
+                    <option value="San Jose">San José</option>
+                    <option value="Alajuela">Alajuela</option>
+                    <option value="Cartago">Cartago</option>
+                    <option value="Heredia">Heredia</option>
+                    <option value="Guanacaste">Guanacaste</option>
+                    <option value="Puntarenas">Puntarenas</option>
+                    <option value="Limon">Limón</option>
+                </select>
+                <span asp-validation-for="Evento.Provincia" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Cliente</label>
+                <select asp-for="Evento.ClienteId" asp-items="@Model.ClienteLista" class="form-select">
+                    <option disabled selected>-- Seleccione un Rol --</option>
+                </select>
+                <span asp-validation-for="Evento.ClienteId" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <br />
+
+        <div class="d-grid gap-2 d-md-block">
+            @if (Model.Evento.Id != 0)
+            {
+                <partial name="_BotonesActualizarYRegresar" model="Model.Evento.Id" />
+            }
+            else
+            {
+                <partial name="_BotonesCrearYRegresar" />
+            }
+
+        </div>
+
+
+    </div>
+
+</form>
+
+
+@section Scripts {
+    
+
+    </script>
+}
+

@@ -37,7 +37,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         ICapacitacionPersonalRepositorio CapacitacionPersonal { get; }
 
         IAlimentacionIngredienteRepositorio AlimentacionIngrediente { get; }
-
+        IEventoRepositorio Evento { get; }
 
         Task Guardar();
     }
