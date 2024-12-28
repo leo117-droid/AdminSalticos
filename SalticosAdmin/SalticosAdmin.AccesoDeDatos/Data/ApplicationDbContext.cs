@@ -40,7 +40,7 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<CapacitacionPersonal> CapacitacionesPersonal { get; set; }
         public DbSet<AlimentacionIngrediente> AlimentacionIngredientes { get; set; }
-
+        public DbSet<Evento> Eventos { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
