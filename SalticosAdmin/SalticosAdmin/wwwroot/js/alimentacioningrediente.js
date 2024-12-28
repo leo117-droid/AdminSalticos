@@ -5,6 +5,10 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
+
+    var id = obtenerIdDesdeURL(); // Obtener la ID de la URL
+    var padreId = id;
+
     datatable = $('#tblDatos').DataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ Registros Por Pagina",
@@ -21,48 +25,50 @@ function loadDataTable() {
             }
         },
         "ajax": {
-            "url": "/Admin/Alimentacion/ObtenerTodos"
+            "url": `/Admin/AlimentacionIngrediente/ObtenerTodos?id=${id}`
         },
         "columns": [
-            { "data": "nombre", "width": "20%" },
-            { "data": "descripcion", "width": "30%" },
+            { "data": "ingrediente.nombre" },
+            { "data": "ingrediente.descripcion" },
             {
-                "data": "precio", "className": "text-end",
+                "data": "ingrediente.precio", "className": "text-end",
                 "render": function (data) {
                     var d = data.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                     return d
                 }
             },
-
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                         <div class = "text-center">
-                            <a href="/Admin/Alimentacion/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer"> 
+                            <a href="/Admin/AlimentacionIngrediente/Upsert/${padreId}?relacionId=${data}&alimentacionID=${padreId}" class="btn btn-success text-white" style="cursor:pointer"> 
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-
-                            <a href="/Admin/Alimentacioningrediente/Index/${data}" class="btn btn-primary btn-secondary btn-outline-white" style="cursor:pointer">
-                                <i class="bi bi-cart"></i> Ingredientes
-                            </a>
-
-                            <a onclick = Delete("/Admin/Alimentacion/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
+                            <a onclick = Delete("/Admin/AlimentacionIngrediente/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
                                 <i class = "bi bi-trash3-fill"></i>
                             </a>
 
                         </div>
                     `;
-                }, "width": "30%"
+                }
             }
         ]
     });
 }
 
 
+function obtenerIdDesdeURL() {
+
+    var urlParams = window.location.pathname.split('/');
+    return urlParams[urlParams.length - 1];
+}
+
+
+
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar Alimentacion?",
+        title: "Esta seguro de Eliminar el Ingrediente?",
         text: "Este registro no se podra recuperar",
         icon: "warning",
         buttons: true,
