@@ -1,5 +1,6 @@
 ﻿using SalticosAdmin.AccesoDeDatos.Data;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
+using SalticosAdmin.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IAlimentacionIngredienteRepositorio AlimentacionIngrediente { get; private set; }
         public IEventoRepositorio Evento { get; private set; }
+        public IEventoAlimentacionRepositorio EventoAlimentacion { get; private set; }  
 
         public UnidadTrabajo(ApplicationDbContext db)
         {
@@ -64,6 +66,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             CapacitacionPersonal = new CapacitacionPersonalRepositorio(_db);
             AlimentacionIngrediente = new AlimentacionIngredienteRepositorio(_db);
             Evento = new EventoRepositorio(_db);
+            EventoAlimentacion = new EventoAlimentacionRepositorio(_db);
 
         }
 

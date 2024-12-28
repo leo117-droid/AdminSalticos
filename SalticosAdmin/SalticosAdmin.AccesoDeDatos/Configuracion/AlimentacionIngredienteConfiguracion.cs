@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SalticosAdmin.AccesoDeDatos.Configuracion
 {
-    public class AlimentacioningredienteConfiguracion : IEntityTypeConfiguration<AlimentacionIngrediente>
+    public class AlimentacionIngredienteConfiguracion : IEntityTypeConfiguration<AlimentacionIngrediente>
     {
         public void Configure(EntityTypeBuilder<AlimentacionIngrediente> builder)
         {
