@@ -1,0 +1,84 @@
+﻿@model SalticosAdmin.Modelos.ViewModels.EventoVehiculoVM
+@using SalticosAdmin.Utilidades﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Agregar nuevo vehiculo";
+}
+<form method="post" id="formEventoVehiculo" enctype="multipart/form-data">
+    <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
+
+        @if (Model.IdRelacion != 0)
+        {
+            titulo = "Editar Alimentación en el Evento";
+            <input type="hidden" asp-for="IdRelacion" id="idRelacion" />
+            <input type="hidden" asp-for="IdEvento" id="idEvento" />
+            <input type="hidden" asp-for="IdVehiculo" id="idVehiculo" />
+        }
+
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>ID Evento</label>
+                <input type="text" class="form-control" value="@Model.IdEvento" readonly />
+                <input asp-for="@Model.IdEvento" hidden />
+
+            </div>
+        </div>
+
+        @if (Model.IdRelacion == 0)
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Lista de vehiculos</label>
+                    <select asp-for="IdVehiculo" asp-items="@Model.ListaVehiculo" class="form-control">
+                        <option disabled selected value="">-- Seleccione vehículo --</option>
+                    </select>
+                    <span asp-validation-for="IdVehiculo" class="text-danger"></span>
+                </div>
+            </div>
+        }
+
+        <br />
+
+        <div class="d-grid gap-2 d-md-block">
+            @if (Model.IdRelacion != 0)
+            {
+                <button type="submit" class="btn btn-primary" onfocus="false" asp-route-id="@Model" asp-action="Upsert">
+                    <i class="bi bi-pencil-square"></i> Guardar Cambios
+                </button>
+                <a asp-action="Index" class="btn btn-success" id="regresarBtn">
+                    <i class="bi bi-arrow-return-left"></i> Regresar
+                </a>
+            }
+            else
+            {
+                @if (Model.ListaVehiculo.Any())
+                {
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
+                }
+                <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+            }
+        </div>
+
+    </div>
+</form>
+
+@section Scripts {
+
+
+    <script>
+      
+        var url = window.location.href;
+
+        var numeros = url.match(/\d+/g);
+        if (numeros != null) {
+            var id = numeros[1];
+            var enlaceUrl = "/Admin/EventoVehiculo/index/" + id;
+            document.getElementById('regresarBtn').setAttribute('href', enlaceUrl);
+        }
+
+    </script>
+}

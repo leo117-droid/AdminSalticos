@@ -33,13 +33,13 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IEnumerable<SelectListItem> ObtenerVehiculo(string obj, int? idEvento)
         {
-            if (obj.Equals("Vehiculo")){ // o Ingredientes 
+            if (obj.Equals("Vehiculo")){  
                 var vehiculo = _db.Vehiculos
                                 .Where(t => !_db.EventoVehiculo
                                             .Any(cp => cp.IdVehiculo == t.Id && cp.IdEvento == idEvento))
                                 .Select(c => new SelectListItem
                                 {
-                                    Text = $"{c.Placa}",
+                                    Text = $"{c.Modelo} - {c.Placa}",
                                     Value = c.Id.ToString()
                                 })
                                 .ToList();
