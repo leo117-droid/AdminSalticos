@@ -39,7 +39,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         IAlimentacionIngredienteRepositorio AlimentacionIngrediente { get; }
         IEventoRepositorio Evento { get; }
         IEventoAlimentacionRepositorio EventoAlimentacion { get; }
-
+        IEventoVehiculoRepositorio EventoVehiculo { get; }
 
         Task Guardar();
     }

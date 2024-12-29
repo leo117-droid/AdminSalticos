@@ -42,7 +42,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IAlimentacionIngredienteRepositorio AlimentacionIngrediente { get; private set; }
         public IEventoRepositorio Evento { get; private set; }
-        public IEventoAlimentacionRepositorio EventoAlimentacion { get; private set; }  
+        public IEventoAlimentacionRepositorio EventoAlimentacion { get; private set; }
+        public IEventoVehiculoRepositorio EventoVehiculo { get; private set; }
 
         public UnidadTrabajo(ApplicationDbContext db)
         {
@@ -67,7 +68,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             AlimentacionIngrediente = new AlimentacionIngredienteRepositorio(_db);
             Evento = new EventoRepositorio(_db);
             EventoAlimentacion = new EventoAlimentacionRepositorio(_db);
-
+            EventoVehiculo = new EventoVehiculoRepositorio(_db);
         }
 
         public void Dispose()
