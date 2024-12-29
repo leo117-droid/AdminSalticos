@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 function loadDataTable() {
 
-    var dropdown = document.getElementById("eventoSelect");
+    
 
     datatable = $('#tblDatos').DataTable({
         "language": {
@@ -24,7 +24,7 @@ function loadDataTable() {
             }
         },
         "ajax": {
-            "url": "/Admin/E/ConsultarConFiltro"
+            "url": "/Admin/Personal/ConsultarConFiltro"
         },
         "columns": [
             { "data": "nombre" },
