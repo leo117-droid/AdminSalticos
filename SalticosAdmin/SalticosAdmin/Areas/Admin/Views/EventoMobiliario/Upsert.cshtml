@@ -1,0 +1,93 @@
+﻿@model SalticosAdmin.Modelos.ViewModels.EventoMobiliarioVM
+@using SalticosAdmin.Utilidades﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Agregar nuevo mobiliario";
+}
+<form method="post" id="formEventoMobiliario" enctype="multipart/form-data">
+    <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
+
+        @if (Model.IdRelacion != 0)
+        {
+            titulo = "Editar Mobiliario en el Evento";
+            <input type="hidden" asp-for="IdRelacion" id="idRelacion" />
+            <input type="hidden" asp-for="IdEvento" id="idEvento" />
+            <input type="hidden" asp-for="IdMobiliario" id="idMobiliario" />
+        }
+
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>ID Evento</label>
+                <input type="text" class="form-control" value="@Model.IdEvento" readonly />
+                <input asp-for="@Model.IdEvento" hidden />
+            </div>
+        </div>
+
+        @if (Model.IdRelacion == 0)
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Lista de mobiliarios</label>
+                    <select asp-for="IdMobiliario" asp-items="@Model.ListaMobiliario" class="form-control">
+                        <option disabled selected value="">-- Seleccione mobiliario --</option>
+                    </select>
+                    <span asp-validation-for="IdMobiliario" class="text-danger"></span>
+                </div>
+            </div>
+        }
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Cantidad</label>
+                <input type="number" asp-for="Cantidad" class="form-control" placeholder="Cantidad del mobiliario" />
+                <span asp-validation-for="Cantidad" class="text-danger"></span>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="d-grid gap-2 d-md-block">
+            @if (Model.IdRelacion != 0)
+            {
+                <button type="submit" class="btn btn-primary" onfocus="false" asp-route-id="@Model" asp-action="Upsert">
+                    <i class="bi bi-pencil-square"></i> Guardar Cambios
+                </button>
+                <a asp-action="Index" class="btn btn-success" id="regresarBtn">
+                    <i class="bi bi-arrow-return-left"></i> Regresar
+                </a>
+            }
+            else
+            {
+                @if (Model.ListaMobiliario.Any())
+                {
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
+                }
+                <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+            }
+        </div>
+
+    </div>
+</form>
+
+@section Scripts {
+
+
+    <script>
+      
+
+        var url = window.location.href;
+
+        var numeros = url.match(/\d+/g);
+        if (numeros != null) {
+            var id = numeros[1];
+            var enlaceUrl = "/Admin/EventoMobiliario/index/" + id;
+            document.getElementById('regresarBtn').setAttribute('href', enlaceUrl);
+        }
+
+
+    </script>
+}
