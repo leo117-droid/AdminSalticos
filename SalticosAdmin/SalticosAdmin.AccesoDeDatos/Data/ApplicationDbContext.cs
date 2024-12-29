@@ -43,9 +43,9 @@ namespace SalticosAdmin.AccesoDeDatos.Data
         public DbSet<Evento> Eventos { get; set; }
         public DbSet<EventoAlimentacion> EventoAlimentacion { get; set; }
         public DbSet<EventoVehiculo> EventoVehiculo { get; set; }
-
-
         public DbSet<EventoMobiliario> EventoMobiliario { get; set; }
+        public DbSet<EventoPersonal> EventoPersonal { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -44,7 +44,12 @@ function loadDataTable() {
             },
             { "data": "direccion"},
             { "data": "provincia"},
-            { "data": "cliente.nombre"},
+            {
+                "data": null, 
+                "render": function (data) {
+                    return `${data.cliente.nombre} ${data.cliente.apellidos}`;
+                }
+            },
 
             {
                 "data": "id",
