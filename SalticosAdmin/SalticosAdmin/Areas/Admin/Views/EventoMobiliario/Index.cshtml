@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row mb-4">
+    <div class="col-lg-6">
+        <h2 class="text-primary">Mobiliario del Evento</h2>
+    </div>
+    <div class="col-lg-6 text-end">
+        <a class="btn btn-outline-primary" asp-action="Upsert" asp-route-eventoID="@ViewData["Id"]">
+            <i class="bi bi-plus-square-fill"></i> Agregar Nuevo Mobiliario
+        </a>
+    </div>
+</div>
+
+<div class="p-4 border rounded bg-light">
+    <table id="tblDatos" class="table table-responsive table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+
+    <div class="row mt-3">
+        <div class="col-lg-6">
+            <a class="btn btn-success" href="/Admin/Evento">
+                <i class="bi bi-arrow-return-left"></i> Regresar
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/eventomobiliario.js"></script>
+}
