@@ -41,6 +41,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         IEventoAlimentacionRepositorio EventoAlimentacion { get; }
         IEventoVehiculoRepositorio EventoVehiculo { get; }
 
+        IEventoMobiliarioRepositorio EventoMobiliario { get; }
+
         Task Guardar();
     }
 
