@@ -31,10 +31,13 @@ namespace SalticosAdmin.Modelos
 
 
         [Required(ErrorMessage = "Inventario es requerido")]
+        [Range(0, int.MaxValue, ErrorMessage = "El inventario no puede ser negativo.")]
+
         public int Inventario { get; set; }
 
 
         [Required(ErrorMessage = "Precio es requerido")]
+        [Range(0, int.MaxValue, ErrorMessage = "El precio no puede ser negativo.")]
         public double Precio { get; set; }
 
     }

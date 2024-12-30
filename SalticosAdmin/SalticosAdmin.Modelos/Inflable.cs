@@ -33,9 +33,12 @@ namespace SalticosAdmin.Modelos
         public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = "Precio es requerido")]
+        [Range(0, int.MaxValue, ErrorMessage = "El precio no puede ser negativo.")]
         public double Precio { get; set; }
 
         [Required(ErrorMessage = "Precio por hora adicional es requerido")]
+        [Range(0, int.MaxValue, ErrorMessage = "El precio por hora adicional no puede ser negativo.")]
+
         public double PrecioHoraAdicional { get; set; }
 
         [Required(ErrorMessage = "Categoria Tamanno es Requerido")]
