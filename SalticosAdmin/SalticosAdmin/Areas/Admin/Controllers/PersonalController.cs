@@ -68,6 +68,15 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                // Validación de edad mínima (18 años)
+                var fechaMinima = DateTime.Now.AddYears(-18);
+                if (personalVM.Personal.FechaNacimiento > fechaMinima)
+                {
+                    ModelState.AddModelError("Personal.FechaNacimiento", "El personal debe ser mayor de 18 años.");
+                    personalVM.RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal");
+                    return View(personalVM);
+                }  
+
                 //var usuarioNombre = User.Identity.Name;
                 var usuarioNombre = "usuarioPrueba";
 

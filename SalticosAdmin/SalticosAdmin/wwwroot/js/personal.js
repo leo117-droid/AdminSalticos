@@ -35,7 +35,18 @@ function loadDataTable() {
             {
                 "data": "fechaNacimiento",
                 "render": function (data) {
-                    return moment(data).format("DD/MM/YYYY");
+                    if (!data) {
+                        return "No especificada"; 
+                    }
+
+                    let formattedDate = moment(data).format("DD/MM/YYYY");
+                    let age = moment().diff(data, 'years'); 
+
+                    if (age < 18) {
+                        return `<span class="text-danger">${formattedDate} (Menor de edad)</span>`;
+                    }
+
+                    return formattedDate;
                 }
             },
             {
