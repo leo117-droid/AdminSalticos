@@ -72,6 +72,11 @@ function loadDataTable() {
                                 <i class="bi bi-wrench"></i> Mobiliario
                             </a>
 
+
+                            <a href="/Admin/EventoPersonal/Index/${data}" class="btn btn-primary btn-secondary btn-outline-white" style="cursor:pointer">
+                                <i class="bi bi-person-fill-add"></i> Personal
+                            </a>
+
                             <a onclick = Delete("/Admin/Evento/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
                                 <i class = "bi bi-trash3-fill"></i>
                             </a>
