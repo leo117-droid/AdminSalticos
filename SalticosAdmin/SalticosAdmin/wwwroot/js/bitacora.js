@@ -40,7 +40,7 @@ function loadDataTable() {
         "columns": [
             {
                 "data": "fecha",
-                "width": "20%",
+                "width": "15%",
                 "render": function (data) {
                     var fecha = new Date(data);
                     var options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -49,7 +49,7 @@ function loadDataTable() {
             },
             {
                 "data": "hora",
-                "width": "20%",
+                "width": "15%",
                 "render": function (data) {
                     var partes = data.split(':'); 
                     var hora = parseInt(partes[0], 10); 
@@ -61,8 +61,8 @@ function loadDataTable() {
                     return `${hora}:${minutos} ${periodo}`;
                 }
             },
-            { "data": "accion", "width": "30%" },
-            { "data": "usuario", "width": "30%" }
+            { "data": "accion", "width": "50%" },
+            { "data": "usuario", "width": "20%" }
         ]
     });
 }

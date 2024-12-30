@@ -107,7 +107,15 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         TempData[DS.Exitosa] = "Vehiculo agregado exitosamente";
 
-                       
+                        //var usuarioNombre = User.Identity.Name;
+                        var usuarioNombre = "usuarioPrueba";
+
+                        var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVehiculo.Evento.ClienteId);
+                        var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(eventoVehiculo.IdVehiculo);
+
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
+                            $" para {eventoVehiculo.Evento.Fecha.ToString("dd/MM/yyyy")} el vehiculo {vehiculoBitacora.Placa}'", usuarioNombre);
+
                     }
 
                 }
@@ -125,6 +133,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.EventoVehiculo.Actualizar(eventoVehiculo);
                     TempData[DS.Exitosa] = "Evento actualizado exitosamente";
 
+                    //var usuarioNombre = User.Identity.Name;
+                    var usuarioNombre = "usuarioPrueba";
+
+                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVehiculo.Evento.ClienteId);
+                    var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(eventoVehiculo.IdVehiculo);
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
+                        $" para {eventoVehiculo.Evento.Fecha.ToString("dd/MM/yyyy")} el vehiculo {vehiculoBitacora.Placa}'", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -166,6 +182,17 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             _unidadTrabajo.EventoVehiculo.Remover(EventoVehiculoBd);
             await _unidadTrabajo.Guardar();
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
+            var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoVehiculoBd.IdEvento);
+            var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(EventoVehiculoBd.IdVehiculo);
+            var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBitacora.ClienteId);
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
+                $" para {eventoBitacora.Fecha.ToString("dd/MM/yyyy")} el vehiculo {vehiculoBitacora.Placa}", usuarioNombre);
+
 
             return Json(new { success = true, message = "Vehiculo borrado del evento exitosamente" });
 

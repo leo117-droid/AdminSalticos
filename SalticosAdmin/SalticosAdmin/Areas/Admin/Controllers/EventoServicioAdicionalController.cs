@@ -104,6 +104,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         TempData[DS.Exitosa] = "Servicio Adicional agregado exitosamente";
 
+                        //var usuarioNombre = User.Identity.Name;
+                        var usuarioNombre = "usuarioPrueba";
+                        
+                        var servicioAdicionalBitacora = await _unidadTrabajo.ServicioAdicional.Obtener(eventoServicioAdicional.IdServicioAdicional);
+                        var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoServicioAdicional.Evento.ClienteId);
+
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
+                            $" para {eventoServicioAdicional.Evento.Fecha.ToString("dd/MM/yyyy")} el servicio de {servicioAdicionalBitacora.Nombre}'", usuarioNombre);
 
                     }
 
@@ -123,6 +131,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.EventoServicioAdicional.Actualizar(eventoServicioAdicional);
                     TempData[DS.Exitosa] = "Evento actualizado exitosamente";
 
+                    //var usuarioNombre = User.Identity.Name;
+                    var usuarioNombre = "usuarioPrueba";
+
+                    var servicioAdicionalBitacora = await _unidadTrabajo.ServicioAdicional.Obtener(eventoServicioAdicional.IdServicioAdicional);
+                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoServicioAdicional.Evento.ClienteId);
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
+                        $" para {eventoServicioAdicional.Evento.Fecha.ToString("dd/MM/yyyy")} el servicio de {servicioAdicionalBitacora.Nombre}'", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -167,6 +183,17 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             _unidadTrabajo.EventoServicioAdicional.Remover(EventoServicioAdicionalBd);
             await _unidadTrabajo.Guardar();
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+
+            var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoServicioAdicionalBd.IdEvento);
+            var servicioAdicionalBitacora = await _unidadTrabajo.ServicioAdicional.Obtener(EventoServicioAdicionalBd.IdServicioAdicional);
+            var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBitacora.ClienteId);
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
+                $" para {eventoBitacora.Fecha.ToString("dd/MM/yyyy")} el servicio de {servicioAdicionalBitacora.Nombre}", usuarioNombre);
+
 
             return Json(new { success = true, message = "Servicio borrado del evento exitosamente" });
 
