@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SalticosAdmin.AccesoDeDatos.Repositorio;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
@@ -71,12 +72,15 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 //var usuarioNombre = User.Identity.Name;
                 var usuarioNombre = "usuarioPrueba";
 
+
                 if (eventoVM.Evento.Id == 0)
                 {
                     await _unidadTrabajo.Evento.Agregar(eventoVM.Evento);
                     TempData[DS.Exitosa] = "Evento creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el evento '{eventoVM.Evento.Id}'", usuarioNombre);
+                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVM.Evento.ClienteId);
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoVM.Evento.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
 
                 }
                 else
@@ -84,8 +88,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.Evento.Actualizar(eventoVM.Evento);
                     TempData[DS.Exitosa] = "Evento actualizado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el evento '{eventoVM.Evento.Id}'", usuarioNombre);
+                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVM.Evento.ClienteId);
 
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoVM.Evento.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction("Index");
@@ -118,7 +123,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.Evento.Remover(eventoBd);
             await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el evento '{eventoBd.Id}'", usuarioNombre);
+            var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBd.ClienteId);
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoBd.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
 
             return Json(new { success = true, message = "Evento borrado exitosamente" });
         }
