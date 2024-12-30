@@ -18,7 +18,7 @@ namespace SalticosAdmin.Modelos
         public TimeSpan Hora { get; set; }
 
         [Required(ErrorMessage = "Accion es requerido")]
-        [MaxLength(100, ErrorMessage = "Accion debe ser maximo 100 caracteres")]
+        [MaxLength(200, ErrorMessage = "Accion debe ser maximo 200 caracteres")]
         public string Accion { get; set; }
         public string Usuario { get; set; }
 

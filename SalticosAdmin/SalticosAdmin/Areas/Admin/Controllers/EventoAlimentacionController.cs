@@ -108,6 +108,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         await _unidadTrabajo.EventoAlimentacion.Agregar(eventoAlimentacion);
 
+                        //var usuarioNombre = User.Identity.Name;
+                        var usuarioNombre = "usuarioPrueba";
+
+                        var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoAlimentacion.Evento.ClienteId);
+
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoAlimentacion.Evento.Fecha.ToString("dd/MM/yyyy")} agregó el producto de alimentación {eventoAlimentacionVM.AlimentacionNombre}'", usuarioNombre);
+
+
                         TempData[DS.Exitosa] = "Alimentacion agregado exitosamente";
 
                        
@@ -127,6 +135,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     eventoAlimentacion.Evento = await _unidadTrabajo.Evento.ObtenerPrimero(X => X.Id == eventoAlimentacionVM.IdEvento);
 
                     _unidadTrabajo.EventoAlimentacion.Actualizar(eventoAlimentacion);
+
+                    //var usuarioNombre = User.Identity.Name;
+                    var usuarioNombre = "usuarioPrueba";
+
+                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoAlimentacion.Evento.ClienteId);
+
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoAlimentacion.Evento.Fecha.ToString("dd/MM/yyyy")} agregó el producto de alimentación {eventoAlimentacionVM.AlimentacionNombre}'", usuarioNombre);
+
                     TempData[DS.Exitosa] = "Evento actualizado exitosamente";
 
 
@@ -172,6 +188,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             _unidadTrabajo.EventoAlimentacion.Remover(EventoAlimentacionBd);
             await _unidadTrabajo.Guardar();
+
+            //var usuarioNombre = User.Identity.Name;
+            var usuarioNombre = "usuarioPrueba";
+            Console.WriteLine("antes de evento bitacora");
+            var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoAlimentacionBd.IdEvento);
+            Console.WriteLine("antes de alimentacion bitacora");
+
+            var alimentacionBitacora = await _unidadTrabajo.Alimentacion.Obtener(EventoAlimentacionBd.IdAlimentacion);
+            Console.WriteLine("antes de cliente bitacora");
+
+            var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBitacora.ClienteId);
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoBitacora.Fecha.ToString("dd/MM/yyyy")} agregó el producto de alimentación {alimentacionBitacora.Nombre}", usuarioNombre);
 
             return Json(new { success = true, message = "Alimentacion borrado del evento exitosamente" });
 

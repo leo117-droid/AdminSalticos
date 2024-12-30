@@ -17,7 +17,7 @@ namespace SalticosAdmin.AccesoDeDatos.Configuracion
             builder.Property(x => x.Id).IsRequired();
             builder.Property(x => x.Fecha);
             builder.Property(x => x.Hora);
-            builder.Property(x => x.Accion).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Accion).IsRequired().HasMaxLength(200);
             builder.Property(x => x.Usuario);
 
         }
