@@ -46,6 +46,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(Herramienta herramienta)
         {
+            if (herramienta.Cantidad < 0)
+            {
+                ModelState.AddModelError("Cantidad", "La cantidad no puede ser negativa.");
+            }
+
             if (ModelState.IsValid)
             {
                 //var usuarioNombre = User.Identity.Name;

@@ -29,7 +29,7 @@ namespace SalticosAdmin.Modelos
         public string Direccion { get; set; }
 
         [Required(ErrorMessage = "Telefono es requerido")]
-        [StringLength(8, ErrorMessage = "La cedula debe tener exactamente 8 caracteres", MinimumLength = 8)]
+        [StringLength(8, ErrorMessage = "El telefono debe tener exactamente 8 caracteres", MinimumLength = 8)]
         [RegularExpression(@"^\d+$", ErrorMessage = "El Telefono solo debe contener números")]
         public string Telefono { get; set; }
 

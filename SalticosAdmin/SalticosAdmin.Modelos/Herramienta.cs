@@ -22,6 +22,7 @@ namespace SalticosAdmin.Modelos
         public string Descripcion { get; set; }
 
         [Required(ErrorMessage = "Cantidad es requerido")]
+        [Range(0, int.MaxValue, ErrorMessage = "La cantidad no puede ser negativa.")]
         public int Cantidad { get; set; }
 
 

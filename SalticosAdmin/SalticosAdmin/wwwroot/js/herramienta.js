@@ -2,8 +2,17 @@
 
 $(document).ready(function () {
     loadDataTable();
-});
 
+    $("#herramientaForm").on("submit", function (event) {
+        var cantidad = $("#Cantidad").val(); // Asume que el id del campo cantidad es "Cantidad"
+
+        if (cantidad < 0) {
+            event.preventDefault(); // Prevenir el envío del formulario
+            toastr.error("La cantidad no puede ser negativa.");
+            return false; // Evita que el formulario se envíe si la cantidad es negativa
+        }
+    });
+});
 function loadDataTable() {
     datatable = $('#tblDatos').DataTable({
         "language": {
