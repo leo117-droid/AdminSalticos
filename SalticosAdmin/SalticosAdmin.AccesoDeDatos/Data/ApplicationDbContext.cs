@@ -37,6 +37,9 @@ namespace SalticosAdmin.AccesoDeDatos.Data
         public DbSet<EventoPersonal> EventoPersonal { get; set; }
         public DbSet<EventoInflable> EventoInflable { get; set; }
 
+        public DbSet<EventoServicioAdicional> EventoServicioAdicional { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
