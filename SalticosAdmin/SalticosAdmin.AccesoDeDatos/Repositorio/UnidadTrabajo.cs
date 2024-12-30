@@ -49,6 +49,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
         public IEventoPersonalRepositorio EventoPersonal { get; private set; }
         public IEventoInflableRepositorio EventoInflable { get; private set; }
 
+        public IEventoServicioAdicionalRepositorio EventoServicioAdicional { get; private set; }
+
 
         public UnidadTrabajo(ApplicationDbContext db)
         {
@@ -77,6 +79,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             EventoMobiliario = new EventoMobiliarioRepositorio(_db);
             EventoPersonal = new EventoPersonalRepositorio(_db);
             EventoInflable = new EventoInflableRepositorio(_db);
+            EventoServicioAdicional = new EventoServicioAdicionalRepositorio(_db);
 
         }
 

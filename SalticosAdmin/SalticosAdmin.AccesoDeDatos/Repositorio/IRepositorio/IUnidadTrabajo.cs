@@ -45,6 +45,9 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         IEventoPersonalRepositorio EventoPersonal { get; }
         IEventoInflableRepositorio EventoInflable { get; }
 
+        IEventoServicioAdicionalRepositorio EventoServicioAdicional { get; }
+
+
 
         Task Guardar();
     }
