@@ -11,21 +11,15 @@
         {
             titulo = "Editar Mobiliario en el Evento";
             <input type="hidden" asp-for="IdRelacion" id="idRelacion" />
-            <input type="hidden" asp-for="IdEvento" id="idEvento" />
             <input type="hidden" asp-for="IdMobiliario" id="idMobiliario" />
         }
+        <input type="hidden" asp-for="IdEvento" id="idEvento" />
+
 
         <div class="col-12 border-bottom p-0">
             <h2 class="text-primary">@titulo</h2>
         </div>
 
-        <div class="row mb-2 mt-2">
-            <div class="form-group col-md-6">
-                <label>ID Evento</label>
-                <input type="text" class="form-control" value="@Model.IdEvento" readonly />
-                <input asp-for="@Model.IdEvento" hidden />
-            </div>
-        </div>
 
         @if (Model.IdRelacion == 0)
         {

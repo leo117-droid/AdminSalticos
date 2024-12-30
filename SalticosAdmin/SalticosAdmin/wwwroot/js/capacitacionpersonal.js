@@ -36,9 +36,6 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                         <div class = "text-center">
-                            <a href="/Admin/CapacitacionPersonal/Upsert/${padreId}?relacionId=${data}&capacitacionID=${padreId}" class="btn btn-success text-white" style="cursor:pointer"> 
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
                             <a onclick = Delete("/Admin/CapacitacionPersonal/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
                                 <i class = "bi bi-trash3-fill"></i>
                             </a>
