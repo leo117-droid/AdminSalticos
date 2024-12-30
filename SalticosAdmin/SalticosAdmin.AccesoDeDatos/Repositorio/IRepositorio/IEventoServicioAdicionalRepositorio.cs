@@ -13,7 +13,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         void Actualizar(EventoServicioAdicional eventoServicioAdicional);
 
 
-        IEnumerable<SelectListItem> ObtenerServicio(string objeto, int? idEvento);
+        IEnumerable<SelectListItem> ObtenerServicioAdicional(string objeto, int? idEvento);
 
     }
 }

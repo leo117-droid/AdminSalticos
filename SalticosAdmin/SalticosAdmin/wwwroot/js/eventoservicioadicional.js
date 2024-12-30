@@ -25,20 +25,20 @@ function loadDataTable() {
             }
         },
         "ajax": {
-            "url": `/Admin/EventoMobiliario/ObtenerTodos?id=${id}`
+            "url": `/Admin/EventoServicioAdicional/ObtenerTodos?id=${id}`
         },
         "columns": [
-            { "data": "mobiliario.nombre" },
+            { "data": "servicioAdicional.nombre" },
             { "data": "cantidad" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                         <div class = "text-center">
-                            <a href="/Admin/EventoMobiliario/Upsert/${padreId}?relacionId=${data}&eventoID=${padreId}" class="btn btn-success text-white" style="cursor:pointer">
+                            <a href="/Admin/EventoServicioAdicional/Upsert/${padreId}?relacionId=${data}&eventoID=${padreId}" class="btn btn-success text-white" style="cursor:pointer">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a onclick = Delete("/Admin/EventoMobiliario/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
+                            <a onclick = Delete("/Admin/EventoServicioAdicional/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
                                 <i class = "bi bi-trash3-fill"></i>
                             </a>
 
@@ -61,7 +61,7 @@ function obtenerIdDesdeURL() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el mobiliario?",
+        title: "Esta seguro de Eliminar el servicio adicional?",
         text: "Este registro no se podra recuperar",
         icon: "warning",
         buttons: true,

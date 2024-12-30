@@ -81,6 +81,10 @@ function loadDataTable() {
                                 <i class="bi bi-balloon-fill"></i> Inflable
                             </a>
 
+                            <a href="/Admin/EventoServicioAdicional/Index/${data}" class="btn btn-primary btn-secondary btn-outline-white" style="cursor:pointer">
+                                <i class="bi bi-plus-square-dotted"></i> Servicios Adicionales
+                            </a>
+
                             <a onclick = Delete("/Admin/Evento/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
                                 <i class = "bi bi-trash3-fill"></i>
                             </a>
