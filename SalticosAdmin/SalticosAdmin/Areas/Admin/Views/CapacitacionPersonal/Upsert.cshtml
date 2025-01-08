@@ -12,20 +12,13 @@
         {
             titulo = "Editar Participación en Capacitación";
             <input asp-for="IdRelacion" id="idRelacion" hidden/>
-            <input asp-for="IdCapacitacion" id="idCapacitacion" hidden/>
         }
+        <input asp-for="IdCapacitacion" id="idCapacitacion" hidden />
 
         <div class="col-12 border-bottom p-0">
             <h2 class="text-primary">@titulo</h2>
         </div>
 
-        <div class="row mb-2 mt-2">
-            <div class="form-group col-md-6">
-                <label for="id">ID Capacitacion</label>
-                <input type="text" class="form-control" id="id" value="@Model.IdCapacitacion" readonly />
-                <input asp-for="@Model.IdCapacitacion" hidden />
-            </div>
-        </div>
 
         @if (Model.IdRelacion == 0)
         {
