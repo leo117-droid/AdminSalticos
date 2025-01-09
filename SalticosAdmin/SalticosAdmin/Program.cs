@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SalticosAdmin.AccesoDeDatos.Data;
@@ -16,6 +17,18 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(1); // Tiempo de inactividad
+    options.SlidingExpiration = true; // Renueva la cookie si hay actividad
+    options.LoginPath = "/Identity/Account/Login"; // Asegúrate de tener un LoginPath definido
+    options.Cookie.IsEssential = true; // Requerido para cookies críticas
+});
+
+
 
 // Para los correos
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
@@ -48,7 +61,6 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 
 app.MapControllerRoute(
