@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SalticosAdmin.AccesoDeDatos.Data;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
@@ -20,8 +21,26 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
         {
             _db = db;
         }
-        
 
+
+        public void Actualizar(Usuario usuario)
+        {
+            var usuarioBD = _db.Usuario.FirstOrDefault(c => c.Id == usuario.Id);
+
+            if (usuarioBD != null)
+            {
+                usuarioBD.Nombre = usuario.Nombre;
+                usuarioBD.Apellido = usuario.Apellido;
+                usuarioBD.Email = usuario.Email;
+
+                _db.SaveChanges();
+            }
+        }
+
+        public async Task<Usuario> ObtenerPorIdAsync(string id)
+        {
+            return await _db.Usuario.FindAsync(id);
+        }
 
     }
 }

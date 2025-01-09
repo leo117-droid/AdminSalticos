@@ -11,8 +11,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 {
     public interface IUsuarioRepositorio : IRepositorio<Usuario>
     {
-        //void Actualizar(Usuario usuario);
-        //Task<Usuario> ObtenerPorIdAsync(string id);
+        void Actualizar(Usuario usuario);
+        Task<Usuario> ObtenerPorIdAsync(string id);
 
     }
 }
