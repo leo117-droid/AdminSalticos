@@ -146,13 +146,18 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 System.IO.File.Delete(anteriorFile);
             }
+            try
+            {
+                _unidadTrabajo.ServicioAdicional.Remover(servicioAdicionalBd);
+                await _unidadTrabajo.Guardar();
 
-            _unidadTrabajo.ServicioAdicional.Remover(servicioAdicionalBd);
-            await _unidadTrabajo.Guardar();
+                await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó servicio adicional '{servicioAdicionalBd.Nombre}'", usuarioNombre);
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó servicio adicional '{servicioAdicionalBd.Nombre}'", usuarioNombre);
-
-            return Json(new { success = true, message = "Servicio Adicional borrado exitosamente" });
+                return Json(new { success = true, message = "Servicio Adicional borrado exitosamente" });
+            }catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Servicio Adicional asignado a un evento" });
+            }
         }
 
         [ActionName("ValidarNombre")]

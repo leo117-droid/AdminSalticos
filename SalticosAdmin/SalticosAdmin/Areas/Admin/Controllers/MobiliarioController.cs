@@ -148,13 +148,18 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 System.IO.File.Delete(anteriorFile);
             }
 
+            try
+            {
+                _unidadTrabajo.Mobiliario.Remover(mobiliarioBd);
+                await _unidadTrabajo.Guardar();
 
-            _unidadTrabajo.Mobiliario.Remover(mobiliarioBd);
-            await _unidadTrabajo.Guardar();
+                await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el mobiliario '{mobiliarioBd.Nombre}'", usuarioNombre);
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el mobiliario '{mobiliarioBd.Nombre}'", usuarioNombre);
-
-            return Json(new { success = true, message = "Mobiliario borrada exitosamente" });
+                return Json(new { success = true, message = "Mobiliario borrada exitosamente" });
+            } catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Mobiliario asignado a un evento" });
+            }
         }
 
         [ActionName("ValidarNombre")]

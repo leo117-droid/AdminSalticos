@@ -96,12 +96,17 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error al borrar Ingrediente" });
             }
-            _unidadTrabajo.Ingrediente.Remover(ingredienteBd);
-            await _unidadTrabajo.Guardar();
+            try
+            {
+                _unidadTrabajo.Ingrediente.Remover(ingredienteBd);
+                await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el ingrediente '{ingredienteBd.Nombre}'", usuarioNombre);
+                await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el ingrediente '{ingredienteBd.Nombre}'", usuarioNombre);
 
-            return Json(new { success = true, message = "Ingrediente borrada exitosamente" });
+                return Json(new { success = true, message = "Ingrediente borrada exitosamente" });
+            } catch (Exception ex) {
+                return Json(new { success = false, message = "Ingrediente asignado a un alimento" });
+            }
         }
 
         [ActionName("ValidarNombre")]

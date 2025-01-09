@@ -96,12 +96,17 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error al borrar rol de personal" });
             }
-            _unidadTrabajo.RolPersonal.Remover(rolPersonalBd);
-            await _unidadTrabajo.Guardar();
+            try
+            {
+                _unidadTrabajo.RolPersonal.Remover(rolPersonalBd);
+                await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el rol de personal '{rolPersonalBd.Nombre}'", usuarioNombre);
+                await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el rol de personal '{rolPersonalBd.Nombre}'", usuarioNombre);
 
-            return Json(new { success = true, message = "Rol de personal borrada exitosamente" });
+                return Json(new { success = true, message = "Rol de personal borrada exitosamente" });
+            } catch (Exception ex) {
+                return Json(new { success = false, message = "Rol ocupado por personal" });
+            }
         }
 
         [ActionName("ValidarNombre")]
