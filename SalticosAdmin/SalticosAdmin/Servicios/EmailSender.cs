@@ -53,31 +53,6 @@ namespace SalticosAdmin.Servicios
             await client.SendEmailAsync(msg);
         }
 
-        //public async Task SendEmailWithAttachment(string subject, string toEmail, string username, string message, byte[] fileBytes, string fileName, bool isHtml = false)
-        //{
-        //    var apiKey = _emailSettings.APIKey;
-        //    var client = new SendGridClient(apiKey);
-        //    var from = new EmailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName);
-        //    var to = new EmailAddress(toEmail, username);
-
-        //    var msg = MailHelper.CreateSingleEmail(from, to, subject, null, message);
-
-        //    if (isHtml)
-        //    {
-        //        msg.HtmlContent = message;
-        //    }
-        //    else
-        //    {
-        //        msg.PlainTextContent = message;
-        //    }
-
-        //    // Adjuntar el archivo al correo electrónico
-        //    var file = Convert.ToBase64String(fileBytes);
-        //    msg.AddAttachment(fileName, file, "application/pdf");
-
-        //    var response = await client.SendEmailAsync(msg);
-        //}
-
 
 
     }

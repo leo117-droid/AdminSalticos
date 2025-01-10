@@ -71,17 +71,22 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
 
         }
 
-        public IActionResult OnGet(string code = null)
+        public IActionResult OnGet(string code = null, string email = null)
         {
-            if (code == null)
+            //if (code == null)
+            //{
+            //    return BadRequest("A code must be supplied for password reset.");
+            //}
+            if (code == null || email == null)
             {
-                return BadRequest("A code must be supplied for password reset.");
+                return BadRequest("Debe proporcionarse un código y un correo electrónico para el restablecimiento de contraseña.");
             }
             else
             {
                 Input = new InputModel
                 {
-                    Code = code
+                    Code = code,
+                    Email = email
                 };
                 return Page();
             }

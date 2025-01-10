@@ -84,6 +84,40 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
 
 
 
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
+
+        //    var user = await _userManager.FindByEmailAsync(Input.Email);
+        //    //if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+        //    if (user == null)
+        //    {
+        //        // No revelar si el usuario no existe o no está confirmado
+        //        return RedirectToPage("./ForgotPasswordConfirmation");
+        //    }
+
+        //    // Generar el token de restablecimiento de contraseña
+        //    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        //    var callbackUrl = Url.Page(
+        //        "/Account/ResetPassword",
+        //        pageHandler: null,
+        //        values: new { area = "Identity", code = token, email = Input.Email },
+        //        //values: new { area = "Identity", token, email = Input.Email },
+        //        protocol: Request.Scheme);
+
+        //    // Enviar el correo
+        //    await _emailSender.SendEmailAsync(
+        //        Input.Email,
+        //        "Restablecer contraseña",
+        //        $"Por favor, restablezca su contraseña haciendo <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clic aquí</a>.");
+
+        //    return RedirectToPage("./ForgotPasswordConfirmation");
+        //}
+
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -92,7 +126,6 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
             }
 
             var user = await _userManager.FindByEmailAsync(Input.Email);
-            //if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
             if (user == null)
             {
                 // No revelar si el usuario no existe o no está confirmado
@@ -104,19 +137,31 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
             var callbackUrl = Url.Page(
                 "/Account/ResetPassword",
                 pageHandler: null,
-                values: new { area = "Identity", code = token },
-                //values: new { area = "Identity", token, email = Input.Email },
+                values: new { area = "Identity", code = token, email = Input.Email },
                 protocol: Request.Scheme);
+
+            // Crear contenido del correo
+            var emailBody = $@"
+                <div style='font-family: Arial, sans-serif; line-height: 1.6;'>
+                    <h2 style='color: #333;'>Restablecimiento de Contraseña</h2>
+                    <p>Hola,</p>
+                    <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Si fuiste tú quien realizó esta solicitud, haz clic en el siguiente botón para continuar:</p>
+                    <p style='text-align: center;'>
+                        <a href='{HtmlEncoder.Default.Encode(callbackUrl)}' 
+                           style='background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-size: 16px;'>Restablecer Contraseña</a>
+                    </p>
+                    <p>Si no realizaste esta solicitud, puedes ignorar este correo. Tu cuenta permanecerá segura.</p>
+                    <hr style='border: 0; border-top: 1px solid #ccc;' />
+                </div>";
 
             // Enviar el correo
             await _emailSender.SendEmailAsync(
                 Input.Email,
-                "Restablecer contraseña",
-                $"Por favor, restablezca su contraseña haciendo <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clic aquí</a>.");
+                "Solicitud para Restablecer Contraseña",
+                emailBody);
 
             return RedirectToPage("./ForgotPasswordConfirmation");
         }
-
 
 
     }
