@@ -22,14 +22,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddDefaultTokenProviders();
 
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(1); // Tiempo de inactividad
-    options.SlidingExpiration = true; // Renueva la cookie si hay actividad
-    options.LoginPath = "/Identity/Account/Login"; // Asegúrate de tener un LoginPath definido
-    options.Cookie.IsEssential = true; // Requerido para cookies críticas
-});
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+//    options.Cookie.HttpOnly = true;
+//    options.ExpireTimeSpan = TimeSpan.FromMinutes(1); // Tiempo de inactividad
+//    options.SlidingExpiration = true; // Renueva la cookie si hay actividad
+//    options.LoginPath = "/Identity/Account/Login"; // Asegúrate de tener un LoginPath definido
+//    options.Cookie.IsEssential = true; // Requerido para cookies críticas
+//});
 
 
 
