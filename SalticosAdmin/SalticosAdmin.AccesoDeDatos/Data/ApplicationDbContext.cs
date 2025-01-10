@@ -39,6 +39,8 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<EventoServicioAdicional> EventoServicioAdicional { get; set; }
 
+        public DbSet<Usuario> Usuario { get; set; } 
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)

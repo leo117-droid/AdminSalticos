@@ -1,8 +1,13 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using SalticosAdmin.AccesoDeDatos.Data;
 using SalticosAdmin.AccesoDeDatos.Repositorio;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
+using SalticosAdmin.Modelos;
+using SalticosAdmin.Servicios;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +17,32 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(1); // Tiempo de inactividad
+    options.SlidingExpiration = true; // Renueva la cookie si hay actividad
+    options.LoginPath = "/Identity/Account/Login"; // Asegúrate de tener un LoginPath definido
+    options.Cookie.IsEssential = true; // Requerido para cookies críticas
+});
+
+
+
+// Para los correos
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-builder.Services.AddScoped<IUnidadTrabajo, UnidadTrabajo>(); 
+builder.Services.AddScoped<IUnidadTrabajo, UnidadTrabajo>();
+
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -37,7 +63,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
