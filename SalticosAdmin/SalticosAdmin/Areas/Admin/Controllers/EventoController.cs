@@ -120,6 +120,41 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error al borrar Evento" });
             }
+
+            //Eliminar entidades intermedias
+
+            var eventoAlimentacion = await _unidadTrabajo.EventoAlimentacion.ObtenerTodos(ea => ea.IdEvento == id);
+            if(eventoAlimentacion != null)
+            {
+                _unidadTrabajo.EventoAlimentacion.RemoverRango(eventoAlimentacion);
+            }
+
+            var eventoVehiculo = await _unidadTrabajo.EventoVehiculo.ObtenerTodos(ea => ea.IdEvento == id);
+            if (eventoVehiculo != null)
+            {
+                _unidadTrabajo.EventoVehiculo.RemoverRango(eventoVehiculo);
+            }
+            var eventoMobiliario = await _unidadTrabajo.EventoMobiliario.ObtenerTodos(ea => ea.IdEvento == id);
+            if (eventoMobiliario != null)
+            {
+                _unidadTrabajo.EventoMobiliario.RemoverRango(eventoMobiliario);
+            }
+            var eventoPersonal = await _unidadTrabajo.EventoPersonal.ObtenerTodos(ea => ea.IdEvento == id);
+            if (eventoPersonal != null)
+            {
+                _unidadTrabajo.EventoPersonal.RemoverRango(eventoPersonal);
+            }
+            var eventoInflable= await _unidadTrabajo.EventoInflable.ObtenerTodos(ea => ea.IdEvento == id);
+            if (eventoInflable != null)
+            {
+                _unidadTrabajo.EventoInflable.RemoverRango(eventoInflable);
+            }
+            var eventoServicioAdicional = await _unidadTrabajo.EventoServicioAdicional.ObtenerTodos(ea => ea.IdEvento == id);
+            if (eventoServicioAdicional != null)
+            {
+                _unidadTrabajo.EventoServicioAdicional.RemoverRango(eventoServicioAdicional);
+            }
+
             _unidadTrabajo.Evento.Remover(eventoBd);
             await _unidadTrabajo.Guardar();
 

@@ -145,12 +145,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error al borrar Personal" });
             }
-            _unidadTrabajo.Personal.Remover(personalBd);
-            await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el personal '{personalBd.Nombre}' '{personalBd.Apellidos}'", usuarioNombre);
+            try
+            {
+                _unidadTrabajo.Personal.Remover(personalBd);
+                await _unidadTrabajo.Guardar();
 
-            return Json(new { success = true, message = "Personal borrado exitosamente" });
+                await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el personal '{personalBd.Nombre}' '{personalBd.Apellidos}'", usuarioNombre);
+
+                return Json(new { success = true, message = "Personal borrado exitosamente" });
+            } catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Personal asignado a un evento o capacitacion" });
+            }
         }
 
         [ActionName("ValidarCedula")]

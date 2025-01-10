@@ -147,12 +147,18 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 System.IO.File.Delete(anteriorFile);
             }
 
-            _unidadTrabajo.Alimentacion.Remover(alimentacionBd);
-            await _unidadTrabajo.Guardar();
+            try
+            {
+                _unidadTrabajo.Alimentacion.Remover(alimentacionBd);
+                await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la alimentacion '{alimentacionBd.Nombre}'", usuarioNombre);
+                await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la alimentacion '{alimentacionBd.Nombre}'", usuarioNombre);
 
-            return Json(new { success = true, message = "Alimentacion borrado exitosamente" });
+                return Json(new { success = true, message = "Alimentacion borrado exitosamente" });
+            }catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Alimentacion asignada a un evento" });
+            }
         }
 
         [ActionName("ValidarNombre")]

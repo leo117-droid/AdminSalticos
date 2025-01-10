@@ -195,12 +195,18 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 System.IO.File.Delete(anteriorFile);
             }
 
-            _unidadTrabajo.Inflable.Remover(inflableBd);
-            await _unidadTrabajo.Guardar();
+            try
+            {
+                _unidadTrabajo.Inflable.Remover(inflableBd);
+                await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el inflable '{inflableBd.Nombre}'", usuarioNombre);
+                await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el inflable '{inflableBd.Nombre}'", usuarioNombre);
 
-            return Json(new { success = true, message = "Inflable borrado exitosamente" });
+                return Json(new { success = true, message = "Inflable borrado exitosamente" });
+            } catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Infable asignado a un evento" });
+            }
         }
 
         [ActionName("ValidarNombre")]

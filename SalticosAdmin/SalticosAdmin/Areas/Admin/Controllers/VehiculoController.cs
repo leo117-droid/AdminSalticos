@@ -95,12 +95,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error al borrar Vehiculo" });
             }
-            _unidadTrabajo.Vehiculo.Remover(vehiculoBd);
-            await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el vehiculo '{vehiculoBd.Placa}'", usuarioNombre);
+            try
+            {
+                _unidadTrabajo.Vehiculo.Remover(vehiculoBd);
+                await _unidadTrabajo.Guardar();
 
-            return Json(new { success = true, message = "Vehiculo borrada exitosamente" });
+                await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el vehiculo '{vehiculoBd.Placa}'", usuarioNombre);
+
+                return Json(new { success = true, message = "Vehiculo borrada exitosamente" });
+            } catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Vehiculo asignado a un evento" });
+            }
         }
 
         [ActionName("ValidarPlaca")]

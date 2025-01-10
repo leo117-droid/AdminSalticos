@@ -95,12 +95,18 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error al borrar Categoría por tamanno" });
             }
-            _unidadTrabajo.CategoriaTamanno.Remover(categoriaTamannoBd);
-            await _unidadTrabajo.Guardar();
+            try
+            {
+                _unidadTrabajo.CategoriaTamanno.Remover(categoriaTamannoBd);
+                await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la categoria de tamaño '{categoriaTamannoBd.Nombre}'", usuarioNombre);
+                await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la categoria de tamaño '{categoriaTamannoBd.Nombre}'", usuarioNombre);
 
-            return Json(new { success = true, message = "Categoría por tamanno borrada exitosamente" });
+                return Json(new { success = true, message = "Categoría por tamanno borrada exitosamente" });
+            } catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Categoría ocupada por un inflable" });
+            }
         }
 
         [ActionName("ValidarNombre")]
