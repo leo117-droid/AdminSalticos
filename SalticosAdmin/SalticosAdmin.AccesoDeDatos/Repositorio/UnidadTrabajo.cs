@@ -53,6 +53,9 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IUsuarioRepositorio Usuario { get; private set; }
 
+        public ITareasRepositorio Tareas { get; private set; }
+
+
         public UnidadTrabajo(ApplicationDbContext db)
         {
             _db = db;
