@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalticosAdmin.AccesoDeDatos.Data;
 
@@ -11,9 +12,11 @@ using SalticosAdmin.AccesoDeDatos.Data;
 namespace SalticosAdmin.AccesoDeDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250111200900_AgregarFechaRecordatorioAEvento")]
+    partial class AgregarFechaRecordatorioAEvento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -487,11 +490,6 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
 
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Correo")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Direccion")
                         .IsRequired()

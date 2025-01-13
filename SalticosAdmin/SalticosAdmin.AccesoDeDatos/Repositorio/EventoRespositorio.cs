@@ -32,6 +32,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
                 eventoBD.Direccion = evento.Direccion;
                 eventoBD.Provincia = evento.Provincia;
                 eventoBD.ClienteId = evento.ClienteId;
+                eventoBD.FechaRecordatorio = evento.FechaRecordatorio;
 
                 _db.SaveChanges();
 

@@ -41,5 +41,15 @@ namespace SalticosAdmin.Modelos
         [ForeignKey("ClienteId")]
         public Cliente Cliente { get; set; }
 
+        // Nueva propiedad para el recordatorio
+        [DataType(DataType.Date, ErrorMessage = "Formato de fecha no válido")]
+        public DateTime? FechaRecordatorio { get; set; }
+
+        //Nueva propiedad para el recordatorio
+        [Required(ErrorMessage = "Correo es requerido")]
+        [MaxLength(50, ErrorMessage = "Correo debe ser máximo 50 caracteres")]
+        [EmailAddress(ErrorMessage = "El formato del correo no es válido")]
+        public string Correo { get; set; }
+
     }
 }

@@ -83,6 +83,23 @@
             </div>
         </div>
 
+        <!-- Apartado de Recordatorios -->
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Fecha de Recordatorio</label>
+                <input asp-for="Evento.FechaRecordatorio" class="form-control" type="date"
+                       min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+
+
+                <span asp-validation-for="Evento.FechaRecordatorio" class="text-danger"></span>
+            </div>
+        </div> 
+
+        <div class="form-group">
+            <label for="RecordatorioEmail">Correo Electrónico del Recordatorio</label>
+            <input asp-for="Evento.Correo" class="form-control" placeholder="Ingrese el email" />
+        </div>
+
 
         <br />
 
@@ -105,8 +122,9 @@
 
 
 @section Scripts {
-    
-
+    <script>
+      
     </script>
 }
+
 
