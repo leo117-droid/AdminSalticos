@@ -53,6 +53,15 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             return null;
         }
 
+        public async Task<List<Evento>> ObtenerEventosSolapados(DateTime fecha, TimeSpan horaInicio, TimeSpan horaFin)
+        {
+            return await _db.Eventos
+                .Where(e => e.Fecha == fecha &&
+                            e.HoraInicio < horaFin &&
+                            e.HoraFinal > horaInicio)
+                .ToListAsync();
+        }
+
     }
 }
 

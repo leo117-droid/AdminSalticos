@@ -10,5 +10,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
     public interface IMobiliarioRepositorio : IRepositorio<Mobiliario>
     {
         void Actualizar(Mobiliario mobiliario);
+
+        Task<List<Mobiliario>> ObtenerMobiliariosSolapados(DateTime fechaEvento, TimeSpan horaInicio, TimeSpan horaFin);
     }
 }
