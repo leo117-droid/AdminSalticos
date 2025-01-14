@@ -7,6 +7,7 @@
 <h1>Resumen de Cotización</h1>
 
 <div>
+    <!-- Inflables Seleccionados -->
     <h2>Inflables Seleccionados</h2>
     <table class="table">
         <thead>
@@ -28,6 +29,7 @@
         </tbody>
     </table>
 
+    <!-- Mobiliarios Seleccionados -->
     <h2>Mobiliarios Seleccionados</h2>
     <table class="table">
         <thead>
@@ -56,5 +58,35 @@
         </tbody>
     </table>
 
+    <!-- Servicios Adicionales Seleccionados -->
+    <h2>Servicios Adicionales Seleccionados</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ServiciosSeleccionados)
+            {
+                var servicio = item.Servicio; // El servicio adicional
+                var cantidad = item.Cantidad; // La cantidad seleccionada
+
+                <tr>
+                    <td>@servicio.Nombre</td>
+                    <td>@servicio.Descripcion</td>
+                    <td>@servicio.Precio.ToString("C")</td>
+                    <td>@cantidad</td>
+                    <td>@(servicio.Precio * cantidad)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Monto Total -->
     <h3>Total: @Model.MontoTotal.ToString("C")</h3>
 </div>
