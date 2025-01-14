@@ -39,29 +39,42 @@
                     </div>
 
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row mb-2 mt-2">
+                        <div class="form-group col-md-6">
                             <label>Prioridad</label>
-                            <input asp-for="Prioridad" class="form-control" />
+                            <select asp-for="Prioridad" class="form-select" id="prioridad">
+                                <option value="" disabled selected>-- Seleccione una prioridad --</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Media">Media</option>
+                                <option value="Baja">Baja</option>
+                            </select>
                             <span asp-validation-for="Prioridad" class="text-danger"></span>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row mb-2 mt-2">
+                        <div class="form-group col-md-6">
                             <label>Estado</label>
-                            <input asp-for="Estado" class="form-control" />
+                            <select asp-for="Estado" class="form-select" id="estado">
+                                <option value="" disabled selected>-- Seleccione un estado --</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="En Progreso">En Progreso</option>
+                                <option value="Completada">Completada</option>
+                            </select>
                             <span asp-validation-for="Estado" class="text-danger"></span>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row mb-2 mt-2">
+                        <div class="form-group col-md-6">
                             <label>Fecha</label>
-                            <input asp-for="Fecha" class="form-control" type="date" />
+                            <input asp-for="Fecha" class="form-control" type="date"
+                                   value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                                   min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                             <span asp-validation-for="Fecha" class="text-danger"></span>
                         </div>
                     </div>
+
 
                     <div class="row">
                         <div class="col-md-6">
