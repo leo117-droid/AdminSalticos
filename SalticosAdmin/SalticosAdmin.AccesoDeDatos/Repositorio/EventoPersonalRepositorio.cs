@@ -33,10 +33,23 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IEnumerable<SelectListItem> ObtenerPersonal(string obj, int? idEvento)
         {
-            if (obj.Equals("Personal")){  
+            if (obj.Equals("Personal")){
+                var eventoActual = _db.Eventos.FirstOrDefault(e => e.Id == idEvento);
+                if (eventoActual == null)
+                {
+                    return null;
+                }
                 var personal = _db.Personal
                                 .Where(t => !_db.EventoPersonal
-                                            .Any(cp => cp.IdPersonal == t.Id && cp.IdEvento == idEvento))
+                                            .Any(ep => ep.IdPersonal == t.Id && 
+                                            (
+                                                ep.IdEvento == idEvento ||
+                                                _db.Eventos.Any(ev => ev.Id == ep.IdEvento &&
+                                                             ev.Fecha == eventoActual.Fecha &&
+                                                             ev.HoraInicio < eventoActual.HoraFinal &&
+                                                             ev.HoraFinal > eventoActual.HoraInicio)
+                                            )
+                                            ))
                                 .Select(c => new SelectListItem
                                 {
                                     Text = $"{c.Nombre} {c.Apellidos} - {c.Cedula}",
