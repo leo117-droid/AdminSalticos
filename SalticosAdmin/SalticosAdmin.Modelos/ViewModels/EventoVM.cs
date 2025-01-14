@@ -15,6 +15,9 @@ namespace SalticosAdmin.Modelos.ViewModels
         public IEnumerable<SelectListItem> ClienteLista  { get; set; }
 
         public IEnumerable<Evento> EventoLista { get; set; }
+        
+        // Propiedades para el recordatorio
+        
 
     }
 }
