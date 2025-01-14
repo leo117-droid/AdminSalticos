@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SalticosAdmin.AccesoDeDatos.Repositorio;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
@@ -91,14 +92,12 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     return View(eventoMobiliarioVM);
                 }
 
-                // Obtener los eventos solapados
                 var eventosSolapados = await _unidadTrabajo.Evento.ObtenerEventosSolapados(
                     eventoActual.Fecha,
                     eventoActual.HoraInicio,
                     eventoActual.HoraFinal
                 );
 
-                // Obtener el mobiliario del evento que se está intentando asignar
                 var mobiliario = await _unidadTrabajo.Mobiliario.ObtenerPrimero(m => m.Id == eventoMobiliarioVM.IdMobiliario);
                 if (mobiliario == null)
                 {
@@ -106,22 +105,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     return View(eventoMobiliarioVM);
                 }
 
-                // Calcular la cantidad total de mobiliario asignado en eventos solapados
                 var eventoMobiliarios = await _unidadTrabajo.EventoMobiliario.ObtenerTodos();
 
-                // Filtramos con Where sobre el resultado obtenido
                 int cantidadAsignadaEnEventosSolapados = eventoMobiliarios
                     .Where(em => eventosSolapados.Any(e => e.Id == em.IdEvento)
                                 && em.IdMobiliario == eventoMobiliarioVM.IdMobiliario)
                     .Sum(em => em.Cantidad);
 
-                // Verificar si la cantidad a asignar excede el inventario disponible
                 int cantidadTotalAsignada = cantidadAsignadaEnEventosSolapados + eventoMobiliarioVM.Cantidad;
                 if (cantidadTotalAsignada > mobiliario.Inventario)
                 {
-                    Console.WriteLine("\nNo hay INVENTARIOOOOOOOOOOOOO\n\n");
 
                     TempData[DS.Error] = $"No hay suficiente mobiliario disponible. Solo quedan {mobiliario.Inventario - cantidadAsignadaEnEventosSolapados} unidades.";
+                    eventoMobiliarioVM.ListaMobiliario = _unidadTrabajo.EventoMobiliario.ObtenerMobiliario("Mobiliario", eventoMobiliarioVM.IdEvento);
                     return View(eventoMobiliarioVM);
                 }
 
