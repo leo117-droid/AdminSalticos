@@ -27,7 +27,7 @@
                         </td>
                         <td>@inflable.Nombre</td>
                         <td>@inflable.Descripcion</td>
-                        <td>@inflable.Precio.ToString("C")</td>
+                        <td>₡@inflable.Precio.ToString("N2")</td>
                     </tr>
                 }
             </tbody>
@@ -53,7 +53,7 @@
                         </td>
                         <td>@mobiliario.Nombre</td>
                         <td>@mobiliario.Descripcion</td>
-                        <td>@mobiliario.Precio.ToString("C")</td>
+                        <td>₡@mobiliario.Precio.ToString("N2")</td>
                         <td>
                             <input type="number" name="cantidades" value="1" min="1" style="width: 80px;" />
                         </td>
@@ -82,7 +82,7 @@
                         </td>
                         <td>@Model.ServiciosAdicionales[i].Nombre</td>
                         <td>@Model.ServiciosAdicionales[i].Descripcion</td>
-                        <td>@Model.ServiciosAdicionales[i].Precio.ToString("C")</td>
+                        <td>₡@Model.ServiciosAdicionales[i].Precio.ToString("N2")</td>
                         <td>
                             <input type="number" name="servicioCantidades" min="1" value="1" />
                         </td>
@@ -111,7 +111,7 @@
                         </td>
                         <td>@alimentacion.Nombre</td>
                         <td>@alimentacion.Descripcion</td>
-                        <td>@alimentacion.Precio.ToString("C")</td>
+                        <td>₡@alimentacion.Precio.ToString("N2")</td>
                         <td>
                             <input type="number" name="alimentacionCantidades" value="1" min="1" style="width: 80px;" />
                         </td>

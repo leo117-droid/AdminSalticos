@@ -23,7 +23,7 @@
                 <tr>
                     <td>@inflable.Nombre</td>
                     <td>@inflable.Descripcion</td>
-                    <td>@inflable.Precio.ToString("C")</td>
+                    <td>₡@inflable.Precio.ToString("N2")</td>
                 </tr>
             }
         </tbody>
@@ -50,9 +50,9 @@
                 <tr>
                     <td>@mobiliario.Nombre</td>
                     <td>@mobiliario.Descripcion</td>
-                    <td>@mobiliario.Precio.ToString("C")</td>
+                    <td>₡@mobiliario.Precio.ToString("N2")</td>
                     <td>@cantidad</td>
-                    <td>@(mobiliario.Precio * cantidad)</td>
+                    <td>₡@((mobiliario.Precio * cantidad).ToString("N2"))</td>
                 </tr>
             }
         </tbody>
@@ -79,14 +79,15 @@
                 <tr>
                     <td>@servicio.Nombre</td>
                     <td>@servicio.Descripcion</td>
-                    <td>@servicio.Precio.ToString("C")</td>
+                    <td>₡@servicio.Precio.ToString("N2")</td>
                     <td>@cantidad</td>
-                    <td>@(servicio.Precio * cantidad)</td>
+                    <td>₡@((servicio.Precio * cantidad).ToString("N2"))</td>
                 </tr>
             }
         </tbody>
     </table>
 
+    <!-- Alimentación Seleccionada -->
     <h2>Alimentación Seleccionada</h2>
     <table class="table">
         <thead>
@@ -107,15 +108,14 @@
                 <tr>
                     <td>@alimentacion.Nombre</td>
                     <td>@alimentacion.Descripcion</td>
-                    <td>@alimentacion.Precio.ToString("C")</td>
+                    <td>₡@alimentacion.Precio.ToString("N2")</td>
                     <td>@cantidad</td>
-                    <td>@(alimentacion.Precio * cantidad)</td>
+                    <td>₡@((alimentacion.Precio * cantidad).ToString("N2"))</td>
                 </tr>
             }
         </tbody>
     </table>
 
-
     <!-- Monto Total -->
-    <h3>Total: @Model.MontoTotal.ToString("C")</h3>
+    <h3>Total: ₡@Model.MontoTotal.ToString("N2")</h3>
 </div>
