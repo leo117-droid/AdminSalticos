@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
+using SalticosAdmin.Utilidades;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,24 +25,26 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Upsert(int? id)
+        public async Task<IActionResult> Upsert(int? id)
         {
-            if (id == null || id == 0)
+            Tarea tarea = new Tarea();
+
+            if (id == null)
             {
-                // Crear nueva tarea
-                return View(new Tarea());
-            }
-            else
-            {
-                // Editar tarea existente
-                var tarea = _unidadTrabajo.Tareas.Obtener(id.GetValueOrDefault());
-                if (tarea == null)
-                {
-                    return NotFound();
-                }
+                // Crear una nueva capacitacion
                 return View(tarea);
             }
+
+            // Actualizamos
+            tarea = await _unidadTrabajo.Tareas.Obtener(id.GetValueOrDefault());
+            if (tarea == null)
+            {
+                return NotFound();
+            }
+            return View(tarea);
+
         }
+
 
 
         [HttpPost]
@@ -50,22 +53,24 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var usuarioNombre = User.Identity.Name;
                 if (tarea.Id == 0)
                 {
                     // Crear nueva tarea
                     await _unidadTrabajo.Tareas.Agregar(tarea);
-                    TempData["Success"] = "Tarea creada exitosamente";
+                    TempData[DS.Exitosa] = "Tarea creada exitosamente";
                 }
                 else
                 {
                     // Editar tarea existente
                     _unidadTrabajo.Tareas.Actualizar(tarea);
-                    TempData["Success"] = "Tarea actualizada exitosamente";
+                    TempData[DS.Exitosa] = "Tarea actualizada exitosamente";
                 }
 
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
             }
+            TempData[DS.Error] = "Error al guardar Tarea";
             return View(tarea);
         }
 
