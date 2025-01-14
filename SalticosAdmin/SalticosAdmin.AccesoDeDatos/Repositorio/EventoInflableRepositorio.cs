@@ -33,17 +33,32 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IEnumerable<SelectListItem> ObtenerInflable(string obj, int? idEvento)
         {
-            if (obj.Equals("Inflable")){  
-                var inflable = _db.Inflables
-                                .Where(t => !_db.EventoInflable
-                                            .Any(cp => cp.IdInflable == t.Id && cp.IdEvento == idEvento))
-                                .Select(c => new SelectListItem
-                                {
-                                    Text = $"{c.Nombre}",
-                                    Value = c.Id.ToString()
-                                })
-                                .ToList();
-                return inflable;
+            if (obj.Equals("Inflable")) {
+
+                var eventoActual = _db.Eventos.FirstOrDefault(e => e.Id == idEvento);
+                if (eventoActual == null)
+                {
+                    return null; // Si el evento no existe, devolver null
+                }
+
+                var inflablesDisponibles = _db.Inflables
+                    .Where(t => !_db.EventoInflable
+                        .Any(ei => ei.IdInflable == t.Id &&
+                                   (
+                                       ei.IdEvento == idEvento || // Ya está asignado al evento actual
+                                       _db.Eventos.Any(ev => ev.Id == ei.IdEvento &&
+                                                             ev.Fecha == eventoActual.Fecha && // Misma fecha
+                                                             ev.HoraInicio < eventoActual.HoraFinal && // Horarios se solapan
+                                                             ev.HoraFinal > eventoActual.HoraInicio)
+                                   )
+                        ))
+                    .Select(c => new SelectListItem
+                    {
+                        Text = $"{c.Nombre}",
+                        Value = c.Id.ToString()
+                    })
+                    .ToList();
+                return inflablesDisponibles;
             }
             return null;
         }
