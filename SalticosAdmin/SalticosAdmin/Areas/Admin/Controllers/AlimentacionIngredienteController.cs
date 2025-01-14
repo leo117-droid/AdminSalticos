@@ -166,6 +166,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var usuarioNombre = User.Identity.Name;
+
             var AlimentacionIngredienteBd = await _unidadTrabajo.AlimentacionIngrediente.Obtener(id);
             if(AlimentacionIngredienteBd == null)
             {

@@ -44,7 +44,7 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                         <div class="text-center">
-                            <a href="/Admin/Tarea/Editar/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                            <a href="/Admin/Tarea/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <a onclick="Delete('/Admin/Tarea/Delete/${data}')" class="btn btn-danger text-white" style="cursor:pointer">

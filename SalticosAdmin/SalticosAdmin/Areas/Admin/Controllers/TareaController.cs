@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
+using SalticosAdmin.Utilidades;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,24 +25,24 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Upsert(int? id)
+        public async Task<IActionResult> Upsert(int? id)
         {
-            if (id == null || id == 0)
+            Tarea tarea = new Tarea();
+
+            if (id == null)
             {
-                // Crear nueva tarea
-                return View(new Tarea());
-            }
-            else
-            {
-                // Editar tarea existente
-                var tarea = _unidadTrabajo.Tareas.Obtener(id.GetValueOrDefault());
-                if (tarea == null)
-                {
-                    return NotFound();
-                }
                 return View(tarea);
             }
+
+            tarea = await _unidadTrabajo.Tareas.Obtener(id.GetValueOrDefault());
+            if (tarea == null)
+            {
+                return NotFound();
+            }
+            return View(tarea);
+
         }
+
 
 
         [HttpPost]
@@ -50,22 +51,28 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var usuarioNombre = User.Identity.Name;
+
                 if (tarea.Id == 0)
                 {
-                    // Crear nueva tarea
                     await _unidadTrabajo.Tareas.Agregar(tarea);
-                    TempData["Success"] = "Tarea creada exitosamente";
+                    TempData[DS.Exitosa] = "Tarea creada exitosamente";
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó la tarea '{tarea.Titulo}'", usuarioNombre);
+
                 }
                 else
                 {
                     // Editar tarea existente
                     _unidadTrabajo.Tareas.Actualizar(tarea);
-                    TempData["Success"] = "Tarea actualizada exitosamente";
+                    TempData[DS.Exitosa] = "Tarea actualizada exitosamente";
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó la tarea '{tarea.Titulo}'", usuarioNombre);
+
                 }
 
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
             }
+            TempData[DS.Error] = "Error al guardar Tarea";
             return View(tarea);
         }
 
@@ -87,31 +94,31 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return Json(new { success = false, message = "Criterio no válido" });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CrearTarea([FromBody] Tarea tarea)
-        {
-            if (ModelState.IsValid)
-            {
-                await _unidadTrabajo.Tareas.Agregar(tarea);
-                await _unidadTrabajo.Guardar();
-                return Json(new { success = true, message = "Tarea creada exitosamente" });
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> CrearTarea([FromBody] Tarea tarea)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        await _unidadTrabajo.Tareas.Agregar(tarea);
+        //        await _unidadTrabajo.Guardar();
+        //        return Json(new { success = true, message = "Tarea creada exitosamente" });
+        //    }
 
-            return Json(new { success = false, message = "Datos no válidos" });
-        }
+        //    return Json(new { success = false, message = "Datos no válidos" });
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> Editar([FromBody] Tarea tarea)
-        {
-            if (ModelState.IsValid)
-            {
-                _unidadTrabajo.Tareas.Actualizar(tarea);
-                await _unidadTrabajo.Guardar();
-                return Json(new { success = true, message = "Tarea actualizada exitosamente" });
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> Editar([FromBody] Tarea tarea)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _unidadTrabajo.Tareas.Actualizar(tarea);
+        //        await _unidadTrabajo.Guardar();
+        //        return Json(new { success = true, message = "Tarea actualizada exitosamente" });
+        //    }
 
-            return Json(new { success = false, message = "Datos no válidos" });
-        }
+        //    return Json(new { success = false, message = "Datos no válidos" });
+        //}
 
        
 
@@ -170,6 +177,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.Tareas.Remover(tareaBD);
             await _unidadTrabajo.Guardar();
             await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la tarea '{tareaBD.Titulo}'", usuarioNombre);
+
             return Json(new { success = true, message = "Tarea eliminada exitosamente" });
        
         }
