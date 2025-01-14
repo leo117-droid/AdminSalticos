@@ -1,5 +1,6 @@
 ﻿using SalticosAdmin.AccesoDeDatos.Data;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
+using SalticosAdmin.AccesoDeDatos.Repositorio.SalticosAdmin.AccesoDeDatos.Repositorio;
 using SalticosAdmin.Modelos;
 using System;
 using System.Collections.Generic;
@@ -85,6 +86,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             EventoInflable = new EventoInflableRepositorio(_db);
             EventoServicioAdicional = new EventoServicioAdicionalRepositorio(_db);
             Usuario = new UsuarioRepositorio(_db);
+            Tareas = new TareasRepositorio(_db);
 
         }
 
