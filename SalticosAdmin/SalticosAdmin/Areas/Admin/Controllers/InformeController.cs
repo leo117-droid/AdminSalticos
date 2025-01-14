@@ -39,14 +39,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 document.Open();
 
                 // Título del informe
-                document.Add(new Paragraph("Informe de Inflables Más Solicitados"));
+                // Crear el título del informe y centrarlo
+                Paragraph titulo = new Paragraph("Informe de inflables más solicitados", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14));
+                titulo.Alignment = Element.ALIGN_CENTER; // Centrar el texto
+                document.Add(titulo);
+                document.Add(new Paragraph(" "));
+
                 document.Add(new Paragraph($"Fecha: {DateTime.Now.ToShortDateString()}"));
                 document.Add(new Paragraph(" "));
 
                 // Crear la tabla para mostrar los inflables
                 PdfPTable table = new PdfPTable(2);
                 table.AddCell("Nombre del Inflable");
-                table.AddCell("Cantidad de Veces Solicitado");
+                table.AddCell("Cantidad de veces solicitado");
 
                 // Agregar los inflables a la tabla
                 foreach (var inflable in inflablesMasSolicitados)
@@ -59,7 +64,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 document.Close();
 
                 // Descargar el PDF
-                return File(memoryStream.ToArray(), "application/pdf", "Informe_Inflables_Solicitados.pdf");
+                return File(memoryStream.ToArray(), "application/pdf", "InformeInflablesSolicitados.pdf");
             }
         }
 
@@ -74,14 +79,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 document.Open();
 
                 // Título del informe
-                document.Add(new Paragraph("Informe de Alimentos Más Solicitados"));
+                // Crear el título del informe y centrarlo
+                Paragraph titulo = new Paragraph("Informe de alimentación más solicitada", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14));
+                titulo.Alignment = Element.ALIGN_CENTER; // Centrar el texto
+                document.Add(titulo);
+                document.Add(new Paragraph(" "));
+
                 document.Add(new Paragraph($"Fecha: {DateTime.Now.ToShortDateString()}"));
                 document.Add(new Paragraph(" "));
 
                 // Crear la tabla para mostrar los alimentos
                 PdfPTable table = new PdfPTable(2);
                 table.AddCell("Nombre del Alimento");
-                table.AddCell("Cantidad de Veces Solicitado");
+                table.AddCell("Cantidad de veces solicitado");
 
                 foreach (var alimento in alimentosMasSolicitados)
                 {
@@ -92,7 +102,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 document.Add(table);
                 document.Close();
 
-                return File(memoryStream.ToArray(), "application/pdf", "Informe_Alimentos_Solicitados.pdf");
+                return File(memoryStream.ToArray(), "application/pdf", "InformeAlimentosSolicitados.pdf");
             }
         }
 
@@ -107,14 +117,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 document.Open();
 
                 // Título del informe
-                document.Add(new Paragraph("Informe de Mobiliarios Más Solicitados"));
+                // Crear el título del informe y centrarlo
+                Paragraph titulo = new Paragraph("Informe de mobiliario más solicitado", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14));
+                titulo.Alignment = Element.ALIGN_CENTER; // Centrar el texto
+                document.Add(titulo);
+                document.Add(new Paragraph(" "));
+
                 document.Add(new Paragraph($"Fecha: {DateTime.Now.ToShortDateString()}"));
                 document.Add(new Paragraph(" "));
 
                 // Crear la tabla para mostrar los mobiliarios
                 PdfPTable table = new PdfPTable(2);
                 table.AddCell("Nombre del Mobiliario");
-                table.AddCell("Cantidad de Veces Solicitado");
+                table.AddCell("Cantidad de veces solicitado");
 
                 foreach (var mobiliario in mobiliariosMasSolicitados)
                 {
@@ -125,7 +140,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 document.Add(table);
                 document.Close();
 
-                return File(memoryStream.ToArray(), "application/pdf", "Informe_Mobiliarios_Solicitados.pdf");
+                return File(memoryStream.ToArray(), "application/pdf", "InformeMobiliariosSolicitados.pdf");
             }
         }
 
