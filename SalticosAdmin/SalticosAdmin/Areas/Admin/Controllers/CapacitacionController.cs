@@ -48,15 +48,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 if (capacitacion.Id == 0)
                 {
                     await _unidadTrabajo.Capacitacion.Agregar(capacitacion);
                     TempData[DS.Exitosa] = "Capacitacion creada Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la capacitación '{capacitacion.Tema}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó la capacitación '{capacitacion.Tema}'", usuarioNombre);
 
                 }
                 else
@@ -86,8 +85,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             var capacitacionBd = await _unidadTrabajo.Capacitacion.Obtener(id);
             if (capacitacionBd == null)

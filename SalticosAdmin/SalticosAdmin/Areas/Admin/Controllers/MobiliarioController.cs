@@ -55,8 +55,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 var files = HttpContext.Request.Form.Files;
                 string webRootPath = _webHostEnvironment.WebRootPath;
@@ -76,7 +75,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     await _unidadTrabajo.Mobiliario.Agregar(mobiliario);
                     TempData[DS.Exitosa] = "Mobiliario creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el mobiliario '{mobiliario.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el mobiliario '{mobiliario.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -132,8 +131,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var mobiliarioBd = await _unidadTrabajo.Mobiliario.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (mobiliarioBd == null)
             {

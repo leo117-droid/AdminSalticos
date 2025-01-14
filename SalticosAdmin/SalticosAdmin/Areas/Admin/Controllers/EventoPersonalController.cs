@@ -107,8 +107,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         TempData[DS.Exitosa] = "Evento agregado exitosamente";
 
-                        //var usuarioNombre = User.Identity.Name;
-                        var usuarioNombre = "usuarioPrueba";
+                        var usuarioNombre = User.Identity.Name;
 
                         var personalBitacora = await _unidadTrabajo.Personal.Obtener(eventoPersonal.IdPersonal);
                         var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoPersonal.Evento.ClienteId);
@@ -134,8 +133,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.EventoPersonal.Actualizar(eventoPersonal);
                     TempData[DS.Exitosa] = "Evento actualizado exitosamente";
 
-                    //var usuarioNombre = User.Identity.Name;
-                    var usuarioNombre = "usuarioPrueba";
+                    var usuarioNombre = User.Identity.Name;
 
                     var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoPersonal.Evento.ClienteId);
                     var personalBitacora = await _unidadTrabajo.Personal.Obtener(eventoPersonal.IdPersonal);
@@ -184,8 +182,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.EventoPersonal.Remover(EventoPersonalBd);
             await _unidadTrabajo.Guardar();
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoPersonalBd.IdEvento);
             var personalBitacora = await _unidadTrabajo.Personal.Obtener(EventoPersonalBd.IdPersonal);

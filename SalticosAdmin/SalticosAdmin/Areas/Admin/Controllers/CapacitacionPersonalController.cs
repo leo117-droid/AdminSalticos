@@ -87,6 +87,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
+                var usuarioNombre = User.Identity.Name;
+
                 if (capacitacionPersonalVM.IdRelacion == 0)
                 {
                     //productoPrecioVM.productoPrecio.Idproducto = id;
@@ -109,7 +111,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         TempData[DS.Exitosa] = "Personal agregado exitosamente";
 
-                       
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el personal '{capacitacionPersonal.Personal.Nombre}' a la capacitación '{capacitacionPersonal.Capacitacion.Tema}'", usuarioNombre);
+
                     }
 
                 }
@@ -127,6 +130,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.CapacitacionPersonal.Actualizar(capacitacionPersonal);
                     TempData[DS.Exitosa] = "Personal actualizado exitosamente";
 
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el personal '{capacitacionPersonal.Personal.Nombre}' en la capacitación '{capacitacionPersonal.Capacitacion.Tema}'", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -161,6 +165,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
+            var usuarioNombre = User.Identity.Name;
 
             var CapacitacionPersonalBd = await _unidadTrabajo.CapacitacionPersonal.Obtener(id);
             if(CapacitacionPersonalBd == null)
@@ -170,6 +175,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             _unidadTrabajo.CapacitacionPersonal.Remover(CapacitacionPersonalBd);
             await _unidadTrabajo.Guardar();
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el personal '{CapacitacionPersonalBd.Personal.Nombre}' de la capacitación '{CapacitacionPersonalBd.Capacitacion.Tema}'", usuarioNombre);
+
 
             return Json(new { success = true, message = "personal borrado de capacitacion exitosamente" });
 

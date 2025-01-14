@@ -54,8 +54,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 var files = HttpContext.Request.Form.Files;
                 string webRootPath = _webHostEnvironment.WebRootPath;
@@ -74,7 +73,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     await _unidadTrabajo.ServicioAdicional.Agregar(servicioAdicional);
                     TempData[DS.Exitosa] = "Servicio Adicional creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó servicio adicional '{servicioAdicional.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó servicio adicional '{servicioAdicional.Nombre}'", usuarioNombre);
 
 
                 }
@@ -131,8 +130,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var servicioAdicionalBd = await _unidadTrabajo.ServicioAdicional.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (servicioAdicionalBd == null)
             {

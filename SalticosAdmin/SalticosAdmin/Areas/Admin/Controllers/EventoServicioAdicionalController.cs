@@ -104,8 +104,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         TempData[DS.Exitosa] = "Servicio Adicional agregado exitosamente";
 
-                        //var usuarioNombre = User.Identity.Name;
-                        var usuarioNombre = "usuarioPrueba";
+                        var usuarioNombre = User.Identity.Name;
                         
                         var servicioAdicionalBitacora = await _unidadTrabajo.ServicioAdicional.Obtener(eventoServicioAdicional.IdServicioAdicional);
                         var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoServicioAdicional.Evento.ClienteId);
@@ -131,8 +130,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.EventoServicioAdicional.Actualizar(eventoServicioAdicional);
                     TempData[DS.Exitosa] = "Evento actualizado exitosamente";
 
-                    //var usuarioNombre = User.Identity.Name;
-                    var usuarioNombre = "usuarioPrueba";
+                    var usuarioNombre = User.Identity.Name;
 
                     var servicioAdicionalBitacora = await _unidadTrabajo.ServicioAdicional.Obtener(eventoServicioAdicional.IdServicioAdicional);
                     var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoServicioAdicional.Evento.ClienteId);
@@ -184,8 +182,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.EventoServicioAdicional.Remover(EventoServicioAdicionalBd);
             await _unidadTrabajo.Guardar();
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoServicioAdicionalBd.IdEvento);
             var servicioAdicionalBitacora = await _unidadTrabajo.ServicioAdicional.Obtener(EventoServicioAdicionalBd.IdServicioAdicional);

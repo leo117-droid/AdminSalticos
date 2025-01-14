@@ -49,15 +49,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 if (vehiculo.Id == 0)
                 {
                     await _unidadTrabajo.Vehiculo.Agregar(vehiculo);
                     TempData[DS.Exitosa] = "Vehiculo creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el vehiculo '{vehiculo.Placa}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el vehiculo '{vehiculo.Placa}'", usuarioNombre);
 
                 }
                 else
@@ -88,8 +87,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var vehiculoBd = await _unidadTrabajo.Vehiculo.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (vehiculoBd == null)
             {

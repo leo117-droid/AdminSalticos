@@ -104,8 +104,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         TempData[DS.Exitosa] = "Mobilairio agregado exitosamente";
 
-                        //var usuarioNombre = User.Identity.Name;
-                        var usuarioNombre = "usuarioPrueba";
+                        var usuarioNombre = User.Identity.Name;
 
                         var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoMobiliario.Evento.ClienteId);
                         var mobiliarioBitacora = await _unidadTrabajo.Mobiliario.Obtener(eventoMobiliario.IdMobiliario);
@@ -131,8 +130,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.EventoMobiliario.Actualizar(eventoMobiliario);
                     TempData[DS.Exitosa] = "Evento actualizado exitosamente";
 
-                    //var usuarioNombre = User.Identity.Name;
-                    var usuarioNombre = "usuarioPrueba";
+                    var usuarioNombre = User.Identity.Name;
 
                     var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoMobiliario.Evento.ClienteId);
                     var mobiliarioBitacora = await _unidadTrabajo.Mobiliario.Obtener(eventoMobiliario.IdMobiliario);
@@ -184,8 +182,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.EventoMobiliario.Remover(EventoMobiliarioBd);
             await _unidadTrabajo.Guardar();
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoMobiliarioBd.IdEvento);
             var mobiliarioBitacora = await _unidadTrabajo.Mobiliario.Obtener(EventoMobiliarioBd.IdMobiliario);

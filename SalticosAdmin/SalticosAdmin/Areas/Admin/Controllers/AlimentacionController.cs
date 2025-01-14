@@ -57,8 +57,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 var files = HttpContext.Request.Form.Files;
                 string webRootPath = _webHostEnvironment.WebRootPath;
@@ -77,7 +76,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     await _unidadTrabajo.Alimentacion.Agregar(alimentacion);
                     TempData[DS.Exitosa] = "Alimentacion creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la alimentacion '{alimentacion.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó la alimentacion '{alimentacion.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -136,8 +135,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error al borrar Alimentacion" });
             }
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             //Remover imagen
             string upload = _webHostEnvironment.WebRootPath + DS.ImagenRutaAlimentacion;

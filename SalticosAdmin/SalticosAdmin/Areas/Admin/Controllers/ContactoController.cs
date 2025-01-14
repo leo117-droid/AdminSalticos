@@ -50,15 +50,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 if (contacto.Id == 0)
                 {
                     await _unidadTrabajo.Contacto.Agregar(contacto);
                     TempData[DS.Exitosa] = "Contacto creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el contacto '{contacto.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el contacto '{contacto.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -90,8 +89,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var contactoBd = await _unidadTrabajo.Contacto.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
             
             if (contactoBd == null)
             {

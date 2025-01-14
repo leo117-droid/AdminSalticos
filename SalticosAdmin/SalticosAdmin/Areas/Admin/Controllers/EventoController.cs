@@ -69,8 +69,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
 
                 if (eventoVM.Evento.Id == 0)
@@ -80,7 +79,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVM.Evento.ClienteId);
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoVM.Evento.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoVM.Evento.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
 
                 }
                 else
@@ -113,8 +112,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var eventoBd = await _unidadTrabajo.Evento.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (eventoBd == null)
             {

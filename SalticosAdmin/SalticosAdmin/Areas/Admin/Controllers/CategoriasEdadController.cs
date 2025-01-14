@@ -49,15 +49,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 if (categoriasEdad.Id == 0)
                 {
                     await _unidadTrabajo.CategoriasEdad.Agregar(categoriasEdad);
                     TempData[DS.Exitosa] = "Categoria por edad creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la categoria de edad '{categoriasEdad.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó la categoria de edad '{categoriasEdad.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -89,8 +88,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var categoriasEdadBd = await _unidadTrabajo.CategoriasEdad.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (categoriasEdadBd == null)
             {
