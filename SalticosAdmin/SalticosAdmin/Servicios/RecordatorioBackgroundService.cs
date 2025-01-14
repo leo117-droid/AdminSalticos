@@ -47,15 +47,14 @@ public class RecordatorioBackgroundService : BackgroundService
                             string subject = $"Recordatorio para el evento del {evento.Fecha:dd/MM/yyyy}";
                             string message = $@"
                                 <h1>Recordatorio de Evento</h1>
-                                <p>Este es un recordatorio para su evento programado:</p>
+                                <p>Este es un recordatorio para un evento programado:</p>
                                 <ul>
                                     <li><strong>Fecha:</strong> {evento.Fecha:dd/MM/yyyy}</li>
                                     <li><strong>Hora Inicio:</strong> {evento.HoraInicio}</li>
                                     <li><strong>Hora Final:</strong> {evento.HoraFinal}</li>
                                     <li><strong>Dirección:</strong> {evento.Direccion}</li>
                                     <li><strong>Provincia:</strong> {evento.Provincia}</li>
-                                </ul>
-                                <p>¡Gracias por confiar en nuestros servicios!</p>";
+                                </ul>";
 
                             // Enviar el correo
                             await emailSender.SendEmailAsync(evento.Correo, subject, message);
