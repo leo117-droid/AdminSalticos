@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Informe de Productos Más Solicitados";
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <p>Descarga el informe con los productos más solicitados:</p>
+
+    <form method="post" action="@Url.Action("GenerarInformeInflables", "Informe")">
+        <button type="submit" class="btn btn-primary">Descargar Informe Inflables en PDF</button>
+    </form>
+
+    <form method="post" action="@Url.Action("GenerarInformeAlimentos", "Informe")">
+        <button type="submit" class="btn btn-primary">Descargar Informe Alimentacion en PDF</button>
+    </form>
+    <form method="post" action="@Url.Action("GenerarInformeMobiliarios", "Informe")">
+        <button type="submit" class="btn btn-primary">Descargar Informe Mobiliario en PDF</button>
+    </form>
+
+
+</div>

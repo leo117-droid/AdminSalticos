@@ -28,15 +28,43 @@ namespace SalticosAdmin.Servicios
 
             return inflablesMasSolicitados;
         }
+
+        // Método para obtener los alimentos más solicitados y la cantidad de veces que fueron pedidos
+        public List<AlimentoConCantidad> ObtenerAlimentosMasSolicitados()
+        {
+            var alimentosMasSolicitados = _context.EventoAlimentacion
+                .GroupBy(ea => ea.IdAlimentacion) // Agrupar por Alimentación
+                .Select(group => new AlimentoConCantidad
+                {
+                    IdAlimentacion = group.Key, // El Id del alimento
+                    Nombre = group.First().Alimentacion.Nombre, // Nombre del alimento
+                    Cantidad = group.Sum(ea => ea.Cantidad) // Sumar la cantidad total de solicitudes
+                })
+                .OrderByDescending(a => a.Cantidad) // Ordenar por la cantidad de veces solicitado
+                .ToList();
+
+            return alimentosMasSolicitados;
+        }
+
+        // Método para obtener los mobiliarios más solicitados
+        public List<MobiliarioConCantidad> ObtenerMobiliariosMasSolicitados()
+        {
+            var mobiliariosMasSolicitados = _context.EventoMobiliario
+                .GroupBy(em => em.IdMobiliario)
+                .Select(group => new MobiliarioConCantidad
+                {
+                    IdMobiliario = group.Key,
+                    Nombre = group.First().Mobiliario.Nombre,
+                    Cantidad = group.Sum(em => em.Cantidad)
+                })
+                .OrderByDescending(m => m.Cantidad)
+                .ToList();
+
+            return mobiliariosMasSolicitados;
+        }
     }
-
-    // Clase auxiliar para representar inflables con su cantidad de uso
-    public class InflableConCantidad
-    {
-        public int IdInflable { get; set; }
-        public string Nombre { get; set; }
-        public int Cantidad { get; set; }
-    }
-
-
 }
+
+
+
+

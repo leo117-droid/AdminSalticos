@@ -19,7 +19,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _informeServicio = informeServicio;
         }
 
-        public IActionResult InformeInflables()
+        public IActionResult Informe()
         {
             return View();
         }
@@ -60,6 +60,72 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                 // Descargar el PDF
                 return File(memoryStream.ToArray(), "application/pdf", "Informe_Inflables_Solicitados.pdf");
+            }
+        }
+
+        public IActionResult GenerarInformeAlimentos()
+        {
+            var alimentosMasSolicitados = _informeServicio.ObtenerAlimentosMasSolicitados();
+
+            using (var memoryStream = new MemoryStream())
+            {
+                var document = new Document(PageSize.A4);
+                PdfWriter.GetInstance(document, memoryStream);
+                document.Open();
+
+                // Título del informe
+                document.Add(new Paragraph("Informe de Alimentos Más Solicitados"));
+                document.Add(new Paragraph($"Fecha: {DateTime.Now.ToShortDateString()}"));
+                document.Add(new Paragraph(" "));
+
+                // Crear la tabla para mostrar los alimentos
+                PdfPTable table = new PdfPTable(2);
+                table.AddCell("Nombre del Alimento");
+                table.AddCell("Cantidad de Veces Solicitado");
+
+                foreach (var alimento in alimentosMasSolicitados)
+                {
+                    table.AddCell(alimento.Nombre);
+                    table.AddCell(alimento.Cantidad.ToString());
+                }
+
+                document.Add(table);
+                document.Close();
+
+                return File(memoryStream.ToArray(), "application/pdf", "Informe_Alimentos_Solicitados.pdf");
+            }
+        }
+
+        public IActionResult GenerarInformeMobiliarios()
+        {
+            var mobiliariosMasSolicitados = _informeServicio.ObtenerMobiliariosMasSolicitados();
+
+            using (var memoryStream = new MemoryStream())
+            {
+                var document = new Document(PageSize.A4);
+                PdfWriter.GetInstance(document, memoryStream);
+                document.Open();
+
+                // Título del informe
+                document.Add(new Paragraph("Informe de Mobiliarios Más Solicitados"));
+                document.Add(new Paragraph($"Fecha: {DateTime.Now.ToShortDateString()}"));
+                document.Add(new Paragraph(" "));
+
+                // Crear la tabla para mostrar los mobiliarios
+                PdfPTable table = new PdfPTable(2);
+                table.AddCell("Nombre del Mobiliario");
+                table.AddCell("Cantidad de Veces Solicitado");
+
+                foreach (var mobiliario in mobiliariosMasSolicitados)
+                {
+                    table.AddCell(mobiliario.Nombre);
+                    table.AddCell(mobiliario.Cantidad.ToString());
+                }
+
+                document.Add(table);
+                document.Close();
+
+                return File(memoryStream.ToArray(), "application/pdf", "Informe_Mobiliarios_Solicitados.pdf");
             }
         }
 
