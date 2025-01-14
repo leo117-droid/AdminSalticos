@@ -83,13 +83,23 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                Console.WriteLine("\nAqui entroooooo a Upseerrtttt\n\n");
 
                 var eventoActual = await _unidadTrabajo.Evento.ObtenerPrimero(X => X.Id == eventoMobiliarioVM.IdEvento);
                 if (eventoActual == null)
                 {
                     TempData[DS.Error] = "Evento no encontrado.";
                     return View(eventoMobiliarioVM);
+                }
+
+                //Se obtiene la cantidad actual del mobiliario en el evento
+                int cantidadActualEvento = 0;
+                if (eventoMobiliarioVM.IdRelacion != 0)
+                {
+                    var eventoMobiliarioActual = await _unidadTrabajo.EventoMobiliario.ObtenerPrimero(x => x.Id == eventoMobiliarioVM.IdRelacion);
+                    if (eventoMobiliarioActual != null)
+                    {
+                        cantidadActualEvento = eventoMobiliarioActual.Cantidad;
+                    }
                 }
 
                 var eventosSolapados = await _unidadTrabajo.Evento.ObtenerEventosSolapados(
@@ -112,11 +122,22 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                                 && em.IdMobiliario == eventoMobiliarioVM.IdMobiliario)
                     .Sum(em => em.Cantidad);
 
-                int cantidadTotalAsignada = cantidadAsignadaEnEventosSolapados + eventoMobiliarioVM.Cantidad;
+                
+                int cantidadTotalAsignada = cantidadAsignadaEnEventosSolapados + eventoMobiliarioVM.Cantidad - cantidadActualEvento;
                 if (cantidadTotalAsignada > mobiliario.Inventario)
                 {
 
-                    TempData[DS.Error] = $"No hay suficiente mobiliario disponible. Solo quedan {mobiliario.Inventario - cantidadAsignadaEnEventosSolapados} unidades.";
+                    if (cantidadActualEvento == cantidadAsignadaEnEventosSolapados)
+                    {
+                        TempData[DS.Error] = $"No hay suficiente mobiliario disponible. Solo hay {mobiliario.Inventario} unidades.";
+
+                    }
+                    else
+                    {
+                        TempData[DS.Error] = $"No hay suficiente mobiliario disponible. Solo quedan {mobiliario.Inventario - cantidadAsignadaEnEventosSolapados} unidades.";
+
+                    }
+
                     eventoMobiliarioVM.ListaMobiliario = _unidadTrabajo.EventoMobiliario.ObtenerMobiliario("Mobiliario", eventoMobiliarioVM.IdEvento);
                     return View(eventoMobiliarioVM);
                 }
