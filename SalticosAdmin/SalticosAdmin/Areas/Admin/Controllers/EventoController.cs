@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SalticosAdmin.AccesoDeDatos.Data;
 using SalticosAdmin.AccesoDeDatos.Repositorio;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
 using SalticosAdmin.Modelos.ViewModels;
 using SalticosAdmin.Utilidades;
+using System.Drawing.Printing;
 
 namespace SalticosAdmin.Areas.Admin.Controllers
 {
@@ -56,6 +58,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
+                eventoVM.Evento = await _unidadTrabajo.Evento.Obtener(id.GetValueOrDefault());
                 return View(eventoVM);
             }
 
@@ -110,9 +113,12 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
+       
             var eventoBd = await _unidadTrabajo.Evento.Obtener(id);
+            
 
             var usuarioNombre = User.Identity.Name;
+
 
             if (eventoBd == null)
             {
@@ -158,10 +164,22 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBd.ClienteId);
 
+            
+
             await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoBd.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
+           
 
             return Json(new { success = true, message = "Evento borrado exitosamente" });
+            
         }
+
+
+
+       
+
+
+
+
 
         #endregion
     }

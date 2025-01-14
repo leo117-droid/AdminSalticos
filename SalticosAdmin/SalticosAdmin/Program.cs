@@ -37,6 +37,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
+// Registrar el servicio de fondo para los recordatorios
+builder.Services.AddSingleton<RecordatorioBackgroundService>();
+builder.Services.AddHostedService(sp => sp.GetRequiredService<RecordatorioBackgroundService>());
+
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 

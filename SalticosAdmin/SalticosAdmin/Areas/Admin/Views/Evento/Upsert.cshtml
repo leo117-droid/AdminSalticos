@@ -24,15 +24,31 @@
             <h2 class="text-primary">@titulo</h2>
         </div>
 
-        <div class="row mb-2 mt-2">
-            <div class="form-group col-md-6">
-                <label>Fecha</label>
-                <input asp-for="Evento.Fecha" class="form-control" type="date"
-                       value="@DateTime.Now.ToString("yyyy-MM-dd")"
-                       min="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                <span asp-validation-for="Evento.Fecha" class="text-danger"></span>
+        @if (Model.Evento.Id != 0)
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha</label>
+                    <input asp-for="Evento.Fecha" class="form-control" type="date"
+                           min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Evento.Fecha" class="text-danger"></span>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha</label>
+                    <input asp-for="Evento.Fecha" class="form-control" type="date"
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                           min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Evento.Fecha" class="text-danger"></span>
+                </div>
+            </div>
+        }
+
+        
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
@@ -83,6 +99,25 @@
             </div>
         </div>
 
+        <!-- Apartado de Recordatorios -->
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Fecha de Recordatorio</label>
+                <input asp-for="Evento.FechaRecordatorio" class="form-control" type="date"
+                       min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Evento.FechaRecordatorio" class="text-danger"></span>
+            </div>
+        </div> 
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Correo Electrónico del Recordatorio</label>
+                <input asp-for="Evento.Correo" class="form-control" placeholder="Ingrese el email" />
+                <span asp-validation-for="Evento.Correo" class="text-danger"></span>
+            </div>
+            
+        </div>
+
 
         <br />
 
@@ -104,9 +139,5 @@
 </form>
 
 
-@section Scripts {
-    
 
-    </script>
-}
 
