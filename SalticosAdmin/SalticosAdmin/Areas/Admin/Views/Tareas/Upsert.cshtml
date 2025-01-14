@@ -1,0 +1,120 @@
+﻿@model SalticosAdmin.Modelos.Tareas
+@using SalticosAdmin.Utilidades
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear Nueva Tarea";
+}
+
+<form method="post" id="formTareas" enctype="multipart/form-data">
+
+    @if (Model.Id != 0)
+    {
+        titulo = "Editar Tarea";
+        <input asp-for="Id" hidden />
+    }
+
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <h2 class="text-info">@titulo</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Titulo</label>
+                            <input asp-for="Titulo" class="form-control" id="titulo"/>
+                            <span asp-validation-for="Titulo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Descripcion</label>
+                            <input asp-for="Descripcion" class="form-control" />
+                            <span asp-validation-for="Descripcion" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Prioridad</label>
+                            <input asp-for="Prioridad" class="form-control" />
+                            <span asp-validation-for="Prioridad" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Estado</label>
+                            <input asp-for="Estado" class="form-control" />
+                            <span asp-validation-for="Estado" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Fecha</label>
+                            <input asp-for="Fecha" class="form-control" type="date" />
+                            <span asp-validation-for="Fecha" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Hora</label>
+                            <input asp-for="Hora" class="form-control" type="time" />
+                            <span asp-validation-for="Hora" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="d-grid gap-2 d-md-block">
+                        @if (Model.Id != 0)
+                        {
+                            <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+                        }
+                        else
+                        {
+                            <button type="submit" onclick="return validarImagen()" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
+                            <a asp-action="Index" class="btn btn-success "><i class="bi bi-arrow-return-left"></i> Regresar</a>
+                        }
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        const ahora = new Date();
+
+        // Formatear la fecha en formato YYYY-MM-DD
+        const fecha = ahora.toISOString().split('T')[0];
+        document.getElementById('fechaActual').value = fecha;
+
+        // Formatear la hora en formato HH:mm
+        const hora = ahora.toTimeString().slice(0, 5);
+        document.getElementById('horaActual').value = hora;
+
+
+    </script>
+}
+
