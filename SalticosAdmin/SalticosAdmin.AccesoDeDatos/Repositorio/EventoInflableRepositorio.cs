@@ -38,17 +38,17 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
                 var eventoActual = _db.Eventos.FirstOrDefault(e => e.Id == idEvento);
                 if (eventoActual == null)
                 {
-                    return null; // Si el evento no existe, devolver null
+                    return null; 
                 }
 
                 var inflablesDisponibles = _db.Inflables
                     .Where(t => !_db.EventoInflable
                         .Any(ei => ei.IdInflable == t.Id &&
                                    (
-                                       ei.IdEvento == idEvento || // Ya está asignado al evento actual
+                                       ei.IdEvento == idEvento || 
                                        _db.Eventos.Any(ev => ev.Id == ei.IdEvento &&
-                                                             ev.Fecha == eventoActual.Fecha && // Misma fecha
-                                                             ev.HoraInicio < eventoActual.HoraFinal && // Horarios se solapan
+                                                             ev.Fecha == eventoActual.Fecha && 
+                                                             ev.HoraInicio < eventoActual.HoraFinal && 
                                                              ev.HoraFinal > eventoActual.HoraInicio)
                                    )
                         ))
