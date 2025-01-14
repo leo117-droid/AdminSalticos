@@ -44,8 +44,10 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Precio</label>
-                <input type="number" asp-for="Precio" class="form-control" placeholder="Precio de la Tarifa de Transporte" />
-                <span asp-validation-for="Precio" class="text-danger"></span>
+                <div class="input-group">
+                    <span class="input-group-text">₡</span>
+                    <input asp-for="Precio" class="form-control" type="number" />
+                </div>
             </div>
         </div>
 
