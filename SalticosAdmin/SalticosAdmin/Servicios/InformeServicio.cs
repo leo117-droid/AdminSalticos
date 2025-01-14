@@ -12,29 +12,31 @@ namespace SalticosAdmin.Servicios
             _context = context;
         }
 
-        // Método para obtener los inflables más utilizados
-        public List<Inflable> ObtenerInflablesMasUtilizados()
+        // Método para obtener los inflables más solicitados y la cantidad de veces que fueron usados
+        public List<InflableConCantidad> ObtenerInflablesMasSolicitados()
         {
-            var inflablesUtilizados = _context.EventoInflable
-                .GroupBy(ei => ei.IdInflable)  // Agrupar por Inflable
-                .Select(g => new
+            var inflablesMasSolicitados = _context.EventoInflable
+                .GroupBy(ei => ei.IdInflable) // Agrupar por Inflable
+                .Select(group => new InflableConCantidad
                 {
-                    InflableId = g.Key,
-                    Cantidad = g.Count()  // Contar cuántas veces ha sido utilizado
+                    IdInflable = group.Key,  // El Id del Inflable
+                    Nombre = group.First().Inflable.Nombre,  // Nombre del inflable
+                    Cantidad = group.Count()  // Contar las veces que aparece este inflable
                 })
-                .OrderByDescending(x => x.Cantidad)  // Ordenar por la cantidad
+                .OrderByDescending(i => i.Cantidad)  // Ordenar por la cantidad de veces utilizado
                 .ToList();
 
-            // Obtener los inflables con sus nombres y cantidades
-            var inflables = inflablesUtilizados.Select(x =>
-            {
-                var inflable = _context.Inflables.FirstOrDefault(i => i.Id == x.InflableId);
-                inflable.Nombre = inflable.Nombre;  // Asignar el nombre al inflable
-                return inflable;
-            }).ToList();
-
-            return inflables;
+            return inflablesMasSolicitados;
         }
     }
+
+    // Clase auxiliar para representar inflables con su cantidad de uso
+    public class InflableConCantidad
+    {
+        public int IdInflable { get; set; }
+        public string Nombre { get; set; }
+        public int Cantidad { get; set; }
+    }
+
 
 }

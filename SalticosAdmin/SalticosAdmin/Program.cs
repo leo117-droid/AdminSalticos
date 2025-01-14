@@ -40,6 +40,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 // Registrar el servicio de fondo para los recordatorios
 builder.Services.AddSingleton<RecordatorioBackgroundService>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<RecordatorioBackgroundService>());
+builder.Services.AddScoped<InformeServicio>();
 
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
