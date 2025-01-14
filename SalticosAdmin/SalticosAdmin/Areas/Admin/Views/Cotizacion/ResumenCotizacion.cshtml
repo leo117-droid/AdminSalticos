@@ -1,31 +1,60 @@
-﻿@model SalticosAdmin.Modelos.Cotizacion
+﻿@model SalticosAdmin.Modelos.ViewModels.CotizacionVM
 
-<h2>Resumen de la Cotización</h2>
+@{
+    ViewData["Title"] = "Resumen de Cotización";
+}
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Inflable</th>
-            <th>Precio</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var inflable in Model.InflablesSeleccionados)
-        {
+<h1>Resumen de Cotización</h1>
+
+<div>
+    <h2>Inflables Seleccionados</h2>
+    <table class="table">
+        <thead>
             <tr>
-                <td>@inflable.Nombre</td>
-                <td>$@inflable.Precio</td>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
             </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>Total</th>
-            <th>
-                $@Model.InflablesSeleccionados.Sum(i => i.Precio)
-            </th>
-        </tr>
-    </tfoot>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var inflable in Model.InflablesSeleccionados)
+            {
+                <tr>
+                    <td>@inflable.Nombre</td>
+                    <td>@inflable.Descripcion</td>
+                    <td>@inflable.Precio.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<a asp-action="Index" class="btn btn-secondary">Regresar</a>
+    <h2>Mobiliarios Seleccionados</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MobiliariosSeleccionados)
+            {
+                var mobiliario = item.Mobiliario; // El mobiliario
+                var cantidad = item.Cantidad; // La cantidad
+
+                <tr>
+                    <td>@mobiliario.Nombre</td>
+                    <td>@mobiliario.Descripcion</td>
+                    <td>@mobiliario.Precio.ToString("C")</td>
+                    <td>@cantidad</td>
+                    <td>@(mobiliario.Precio * cantidad)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Total: @Model.MontoTotal.ToString("C")</h3>
+</div>
