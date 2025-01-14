@@ -69,16 +69,20 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label>Precio</label>
-                            <input asp-for="Inflable.Precio" class="form-control" type="number" />
-                            <span asp-validation-for="Inflable.Precio" class="text-danger"></span>
+                            <div class="input-group">
+                                <span class="input-group-text">₡</span>
+                                <input asp-for="Inflable.Precio" class="form-control" type="number" />
+                            </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <label>Precio Hora Adicional</label>
-                            <input asp-for="Inflable.PrecioHoraAdicional" class="form-control" type="number" />
-                            <span asp-validation-for="Inflable.PrecioHoraAdicional" class="text-danger"></span>
+                            <div class="input-group">
+                                <span class="input-group-text">₡</span>
+                                <input asp-for="Inflable.PrecioHoraAdicional" class="form-control" type="number" />
+                            </div>
                         </div>
                     </div>
 

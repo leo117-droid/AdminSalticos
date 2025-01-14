@@ -29,7 +29,7 @@ function loadDataTable() {
             {
                 "data": "precio", "className": "text-end",
                 "render": function (data) {
-                    var d = data.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    var d = `₡${data.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
                     return d
                 }
             },
