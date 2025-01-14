@@ -87,6 +87,35 @@
         </tbody>
     </table>
 
+    <h2>Alimentación Seleccionada</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AlimentacionSeleccionada)
+            {
+                var alimentacion = item.Alimentacion;
+                var cantidad = item.Cantidad;
+
+                <tr>
+                    <td>@alimentacion.Nombre</td>
+                    <td>@alimentacion.Descripcion</td>
+                    <td>@alimentacion.Precio.ToString("C")</td>
+                    <td>@cantidad</td>
+                    <td>@(alimentacion.Precio * cantidad)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
     <!-- Monto Total -->
     <h3>Total: @Model.MontoTotal.ToString("C")</h3>
 </div>

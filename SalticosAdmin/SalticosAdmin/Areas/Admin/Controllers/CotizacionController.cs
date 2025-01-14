@@ -20,18 +20,17 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Obtener todos los inflables y mobiliarios
             var inflables = await _unidadTrabajo.Inflable.ObtenerTodos();
             var mobiliarios = await _unidadTrabajo.Mobiliario.ObtenerTodos();
             var servicios = await _unidadTrabajo.ServicioAdicional.ObtenerTodos();
+            var alimentacion = await _unidadTrabajo.Alimentacion.ObtenerTodos(); // Obtener la alimentación
 
-
-            // Crear el modelo fuertemente tipado para la vista
             var modelo = new CotizacionVM
             {
                 Inflables = (List<Inflable>)inflables,
                 Mobiliarios = (List<Mobiliario>)mobiliarios,
-                ServiciosAdicionales = (List<ServicioAdicional>)servicios
+                ServiciosAdicionales = (List<ServicioAdicional>)servicios,
+                Alimentacion = (List<Alimentacion>)alimentacion // Agregar a la vista
             };
 
             return View(modelo);
@@ -42,24 +41,25 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             List<int> mobiliarioIds,
             List<int> cantidades,
             List<int> servicioIds,
-            List<int> servicioCantidades) // Cantidades para los servicios seleccionados
+            List<int> servicioCantidades,
+            List<int> alimentacionIds, // IDs de alimentación seleccionada
+            List<int> alimentacionCantidades) // Cantidades para cada opción de alimentación
         {
             if ((inflableIds == null || !inflableIds.Any()) &&
                 (mobiliarioIds == null || !mobiliarioIds.Any()) &&
-                (servicioIds == null || !servicioIds.Any()))
+                (servicioIds == null || !servicioIds.Any()) &&
+                (alimentacionIds == null || !alimentacionIds.Any()))
             {
-                TempData["Error"] = "Debe seleccionar al menos un inflable, mobiliario o servicio adicional.";
+                TempData["Error"] = "Debe seleccionar al menos un elemento.";
                 return RedirectToAction(nameof(Index));
             }
 
-            // Obtener inflables seleccionados
+            // Inflables
             var inflables = await _unidadTrabajo.Inflable.ObtenerTodos();
-            var inflablesSeleccionados = inflables
-                .Where(i => inflableIds.Contains(i.Id))
-                .ToList();
+            var inflablesSeleccionados = inflables.Where(i => inflableIds.Contains(i.Id)).ToList();
             var montoInflables = inflablesSeleccionados.Sum(i => i.Precio);
 
-            // Obtener mobiliarios seleccionados y calcular el monto
+            // Mobiliarios
             var mobiliarios = await _unidadTrabajo.Mobiliario.ObtenerTodos();
             var mobiliariosSeleccionados = new List<(Mobiliario Mobiliario, int Cantidad)>();
             double montoMobiliarios = 0;
@@ -71,8 +71,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     var mobiliario = mobiliarios.FirstOrDefault(m => m.Id == mobiliarioIds[i]);
                     if (mobiliario != null)
                     {
-                        var cantidad = cantidades.ElementAtOrDefault(i); // Evitar excepciones si la cantidad no existe
-                        if (cantidad > 0) // Solo procesar si la cantidad es válida
+                        var cantidad = cantidades.ElementAtOrDefault(i);
+                        if (cantidad > 0)
                         {
                             mobiliariosSeleccionados.Add((mobiliario, cantidad));
                             montoMobiliarios += mobiliario.Precio * cantidad;
@@ -81,7 +81,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 }
             }
 
-            // Obtener servicios adicionales seleccionados y calcular el monto
+            // Servicios adicionales
             var servicios = await _unidadTrabajo.ServicioAdicional.ObtenerTodos();
             var serviciosSeleccionados = new List<(ServicioAdicional Servicio, int Cantidad)>();
             double montoServicios = 0;
@@ -93,11 +93,33 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     var servicio = servicios.FirstOrDefault(s => s.Id == servicioIds[i]);
                     if (servicio != null)
                     {
-                        var cantidad = servicioCantidades.ElementAtOrDefault(i); // Evitar excepciones si la cantidad no existe
-                        if (cantidad > 0) // Solo procesar si la cantidad es válida
+                        var cantidad = servicioCantidades.ElementAtOrDefault(i);
+                        if (cantidad > 0)
                         {
                             serviciosSeleccionados.Add((servicio, cantidad));
                             montoServicios += servicio.Precio * cantidad;
+                        }
+                    }
+                }
+            }
+
+            // Alimentación
+            var alimentacion = await _unidadTrabajo.Alimentacion.ObtenerTodos();
+            var alimentacionSeleccionada = new List<(Alimentacion Alimentacion, int Cantidad)>();
+            double montoAlimentacion = 0;
+
+            if (alimentacionIds != null && alimentacionCantidades != null)
+            {
+                for (int i = 0; i < alimentacionIds.Count; i++)
+                {
+                    var opcion = alimentacion.FirstOrDefault(a => a.Id == alimentacionIds[i]);
+                    if (opcion != null)
+                    {
+                        var cantidad = alimentacionCantidades.ElementAtOrDefault(i);
+                        if (cantidad > 0)
+                        {
+                            alimentacionSeleccionada.Add((opcion, cantidad));
+                            montoAlimentacion += opcion.Precio * cantidad;
                         }
                     }
                 }
@@ -109,11 +131,13 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 InflablesSeleccionados = inflablesSeleccionados,
                 MobiliariosSeleccionados = mobiliariosSeleccionados,
                 ServiciosSeleccionados = serviciosSeleccionados,
-                MontoTotal = montoInflables + montoMobiliarios + montoServicios
+                AlimentacionSeleccionada = alimentacionSeleccionada,
+                MontoTotal = montoInflables + montoMobiliarios + montoServicios + montoAlimentacion
             };
 
             return View("ResumenCotizacion", cotizacion);
         }
+
 
 
     }
