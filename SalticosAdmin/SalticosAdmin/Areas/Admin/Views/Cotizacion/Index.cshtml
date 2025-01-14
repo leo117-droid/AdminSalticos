@@ -1,0 +1,125 @@
+﻿@model SalticosAdmin.Modelos.ViewModels.CotizacionVM
+
+@{
+    ViewData["Title"] = "Generar Cotización";
+}
+
+<h1>Generar Cotización</h1>
+
+<div>
+    <h2>Inflables</h2>
+    <form asp-action="GenerarCotizacion" method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var inflable in Model.Inflables)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="inflableIds" value="@inflable.Id" />
+                        </td>
+                        <td>@inflable.Nombre</td>
+                        <td>@inflable.Descripcion</td>
+                        <td>₡@inflable.Precio.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h2>Mobiliarios</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var mobiliario in Model.Mobiliarios)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="mobiliarioIds" value="@mobiliario.Id" />
+                        </td>
+                        <td>@mobiliario.Nombre</td>
+                        <td>@mobiliario.Descripcion</td>
+                        <td>₡@mobiliario.Precio.ToString("N2")</td>
+                        <td>
+                            <input type="number" name="cantidades" value="1" min="1" style="width: 80px;" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h2>Servicios Adicionales</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.ServiciosAdicionales.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="servicioIds" value="@Model.ServiciosAdicionales[i].Id" />
+                        </td>
+                        <td>@Model.ServiciosAdicionales[i].Nombre</td>
+                        <td>@Model.ServiciosAdicionales[i].Descripcion</td>
+                        <td>₡@Model.ServiciosAdicionales[i].Precio.ToString("N2")</td>
+                        <td>
+                            <input type="number" name="servicioCantidades" min="1" value="1" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h2>Alimentación</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var alimentacion in Model.Alimentacion)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="alimentacionIds" value="@alimentacion.Id" />
+                        </td>
+                        <td>@alimentacion.Nombre</td>
+                        <td>@alimentacion.Descripcion</td>
+                        <td>₡@alimentacion.Precio.ToString("N2")</td>
+                        <td>
+                            <input type="number" name="alimentacionCantidades" value="1" min="1" style="width: 80px;" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary">Generar Cotización</button>
+    </form>
+</div>
