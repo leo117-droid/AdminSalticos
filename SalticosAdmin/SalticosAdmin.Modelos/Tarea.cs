@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SalticosAdmin.Modelos
 {
-    public class Tareas
+    public class Tarea
     {
         [Key]
         public int Id { get; set; }

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace SalticosAdmin.AccesoDeDatos.Configuracion
 {
-    public class TareaConfiguracion : IEntityTypeConfiguration<Tareas>
+    public class TareaConfiguracion : IEntityTypeConfiguration<Tarea>
     {
-        public void Configure(EntityTypeBuilder<Tareas> builder)
+        public void Configure(EntityTypeBuilder<Tarea> builder)
         {
 
             builder.Property(x => x.Id).IsRequired();

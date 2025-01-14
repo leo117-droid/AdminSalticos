@@ -8,16 +8,16 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 {
     namespace SalticosAdmin.AccesoDeDatos.Repositorio
     {
-        public class TareasRepositorio : Repositorio<Tareas>, ITareasRepositorio
+        public class TareaRepositorio : Repositorio<Tarea>, ITareaRepositorio
         {
             private readonly ApplicationDbContext _db;
 
-            public TareasRepositorio(ApplicationDbContext db) : base(db)
+            public TareaRepositorio(ApplicationDbContext db) : base(db)
             {
                 _db = db;
             }
 
-            public void Actualizar(Tareas tarea)
+            public void Actualizar(Tarea tarea)
             {
                 var tareaBD = _db.Tareas.FirstOrDefault(t => t.Id == tarea.Id);
                 if (tareaBD != null)
@@ -55,11 +55,11 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
                 return null;
             }
-            public async Task<IEnumerable<Tareas>> FiltrarPorEstado(string estado)
+            public async Task<IEnumerable<Tarea>> FiltrarPorEstado(string estado)
             {
                 return await _db.Tareas.Where(t => t.Estado == estado).ToListAsync();
             }
-            public async Task<IEnumerable<Tareas>> FiltrarPorPrioridad(string prioridad)
+            public async Task<IEnumerable<Tarea>> FiltrarPorPrioridad(string prioridad)
             {
                 return await _db.Tareas.Where(t => t.Prioridad == prioridad).ToListAsync();
             }

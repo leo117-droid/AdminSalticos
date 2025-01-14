@@ -54,7 +54,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IUsuarioRepositorio Usuario { get; private set; }
 
-        public ITareasRepositorio Tareas { get; private set; }
+        public ITareaRepositorio Tareas { get; private set; }
 
 
         public UnidadTrabajo(ApplicationDbContext db)
@@ -86,7 +86,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             EventoInflable = new EventoInflableRepositorio(_db);
             EventoServicioAdicional = new EventoServicioAdicionalRepositorio(_db);
             Usuario = new UsuarioRepositorio(_db);
-            Tareas = new TareasRepositorio(_db);
+            Tareas = new TareaRepositorio(_db);
 
         }
 

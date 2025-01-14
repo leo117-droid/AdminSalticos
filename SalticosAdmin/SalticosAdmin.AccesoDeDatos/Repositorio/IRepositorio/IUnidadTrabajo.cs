@@ -49,7 +49,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 
         IUsuarioRepositorio Usuario { get; }
 
-        ITareasRepositorio Tareas { get; }
+        ITareaRepositorio Tareas { get; }
 
         Task Guardar();
     }

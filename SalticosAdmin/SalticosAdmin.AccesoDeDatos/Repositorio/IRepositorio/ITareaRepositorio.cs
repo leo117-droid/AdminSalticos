@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 {
-    public interface ITareasRepositorio : IRepositorio<Tareas>
+    public interface ITareaRepositorio : IRepositorio<Tarea>
     {
-        void Actualizar(Tareas tarea);
+        void Actualizar(Tarea tarea);
         IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj);
-        Task<IEnumerable<Tareas>> FiltrarPorEstado(string estado);
-        Task<IEnumerable<Tareas>> FiltrarPorPrioridad(string prioridad);
+        Task<IEnumerable<Tarea>> FiltrarPorEstado(string estado);
+        Task<IEnumerable<Tarea>> FiltrarPorPrioridad(string prioridad);
     }
 }

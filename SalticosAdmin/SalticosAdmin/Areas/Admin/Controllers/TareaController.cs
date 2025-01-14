@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace SalticosAdmin.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class TareasController : Controller
+    public class TareaController : Controller
     {
         private readonly IUnidadTrabajo _unidadTrabajo;
 
-        public TareasController(IUnidadTrabajo unidadTrabajo)
+        public TareaController(IUnidadTrabajo unidadTrabajo)
         {
             _unidadTrabajo = unidadTrabajo;
         }
@@ -29,7 +29,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             if (id == null || id == 0)
             {
                 // Crear nueva tarea
-                return View(new Tareas());
+                return View(new Tarea());
             }
             else
             {
@@ -46,7 +46,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(Tareas tarea)
+        public async Task<IActionResult> Upsert(Tarea tarea)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearTarea([FromBody] Tareas tarea)
+        public async Task<IActionResult> CrearTarea([FromBody] Tarea tarea)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar([FromBody] Tareas tarea)
+        public async Task<IActionResult> Editar([FromBody] Tarea tarea)
         {
             if (ModelState.IsValid)
             {
@@ -142,18 +142,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> ObtenerTodos()
         {
             var todos = await _unidadTrabajo.Tareas.ObtenerTodos();
-            return Json(new
-            {
-                data = todos.Select(t => new
-                {
-                    t.Titulo,
-                    t.Descripcion,
-                    t.Estado,
-                    t.Prioridad,
-                    Fecha = t.Fecha.ToString("yyyy-MM-dd"), // Opcional: formatear fecha
-                    Hora = t.Hora.ToString(@"hh\:mm")
-                })
-            });
+            //return Json(new
+            //{
+            //    data = todos.Select(t => new
+            //    {
+            //        t.Titulo,
+            //        t.Descripcion,
+            //        t.Estado,
+            //        t.Prioridad,
+            //        Fecha = t.Fecha.ToString("yyyy-MM-dd"), // Opcional: formatear fecha
+            //        Hora = t.Hora.ToString(@"hh\:mm")
+            //    })
+            //});
+            return Json(new { data = todos });
         }
 
 

@@ -21,24 +21,33 @@ function loadDataTable() {
             }
         },
         "ajax": {
-            "url": "/Admin/Tareas/ObtenerTodos"
+            "url": "/Admin/Tarea/ObtenerTodos"
         },
         "columns": [
             { "data": "titulo"},
             { "data": "descripcion" },
             { "data": "estado" },
             { "data": "prioridad" },
-            { "data": "fecha" },
-            { "data": "hora" },
+            {
+                "data": "fecha",
+                "render": function (data) {
+                    return moment(data).format("DD/MM/YYYY");
+                }
+            },
+            {
+                "data": "hora",
+                "render": function (data) {
+                    return moment(data, "HH:mm:ss").format("hh:mm A");
+                }            },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                         <div class="text-center">
-                            <a href="/Admin/Tareas/Editar/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                            <a href="/Admin/Tarea/Editar/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a onclick="Delete('/Admin/Tareas/Delete/${data}')" class="btn btn-danger text-white" style="cursor:pointer">
+                            <a onclick="Delete('/Admin/Tarea/Delete/${data}')" class="btn btn-danger text-white" style="cursor:pointer">
                                 <i class="bi bi-trash3-fill"></i>
                             </a>
                         </div>
