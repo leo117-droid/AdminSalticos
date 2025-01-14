@@ -107,8 +107,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         TempData[DS.Exitosa] = "Vehiculo agregado exitosamente";
 
-                        //var usuarioNombre = User.Identity.Name;
-                        var usuarioNombre = "usuarioPrueba";
+                        var usuarioNombre = User.Identity.Name;
 
                         var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVehiculo.Evento.ClienteId);
                         var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(eventoVehiculo.IdVehiculo);
@@ -133,8 +132,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.EventoVehiculo.Actualizar(eventoVehiculo);
                     TempData[DS.Exitosa] = "Evento actualizado exitosamente";
 
-                    //var usuarioNombre = User.Identity.Name;
-                    var usuarioNombre = "usuarioPrueba";
+                    var usuarioNombre = User.Identity.Name;
 
                     var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVehiculo.Evento.ClienteId);
                     var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(eventoVehiculo.IdVehiculo);
@@ -183,8 +181,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.EventoVehiculo.Remover(EventoVehiculoBd);
             await _unidadTrabajo.Guardar();
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoVehiculoBd.IdEvento);
             var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(EventoVehiculoBd.IdVehiculo);

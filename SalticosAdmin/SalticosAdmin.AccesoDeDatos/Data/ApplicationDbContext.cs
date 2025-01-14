@@ -41,6 +41,7 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<Usuario> Usuario { get; set; } 
 
+        public DbSet<Tarea> Tareas { get; set; }   
 
 
         protected override void OnModelCreating(ModelBuilder builder)

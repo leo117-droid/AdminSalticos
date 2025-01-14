@@ -49,15 +49,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 if (ingrediente.Id == 0)
                 {
                     await _unidadTrabajo.Ingrediente.Agregar(ingrediente);
                     TempData[DS.Exitosa] = "Ingrediente creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el ingrediente '{ingrediente.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el ingrediente '{ingrediente.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -89,8 +88,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var ingredienteBd = await _unidadTrabajo.Ingrediente.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (ingredienteBd == null)
             {

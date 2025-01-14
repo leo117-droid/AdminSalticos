@@ -53,15 +53,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 if (herramienta.Id == 0)
                 {
                     await _unidadTrabajo.Herramienta.Agregar(herramienta);
                     TempData[DS.Exitosa] = "Herrramienta creada Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la herramienta '{herramienta.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó la herramienta '{herramienta.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -69,7 +68,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.Herramienta.Actualizar(herramienta);
                     TempData[DS.Exitosa] = "Herramienta actualizada Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizo la herramienta '{herramienta.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó la herramienta '{herramienta.Nombre}'", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -93,8 +92,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var herramientaBd = await _unidadTrabajo.Herramienta.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (herramientaBd == null)
             {

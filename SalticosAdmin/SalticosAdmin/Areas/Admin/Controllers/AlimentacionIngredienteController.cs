@@ -87,6 +87,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
+                var usuarioNombre = User.Identity.Name;
+
                 if (alimentacionIngredienteVM.IdRelacion == 0)
                 {
                     //productoPrecioVM.productoPrecio.Idproducto = id;
@@ -108,8 +110,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                         await _unidadTrabajo.AlimentacionIngrediente.Agregar(alimentacionIngrediente);
 
                         TempData[DS.Exitosa] = "Ingrediente agregado exitosamente";
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el ingrediente '{alimentacionIngrediente.Ingrediente.Nombre}' al producto de alimentación '{alimentacionIngrediente.Alimentacion.Nombre}'", usuarioNombre);
 
-                       
+
                     }
 
                 }
@@ -127,6 +130,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.AlimentacionIngrediente.Actualizar(alimentacionIngrediente);
                     TempData[DS.Exitosa] = "Ingrediente actualizado exitosamente";
 
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el ingrediente '{alimentacionIngrediente.Ingrediente.Nombre}' en el producto de alimentación '{alimentacionIngrediente.Alimentacion.Nombre}'", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -161,7 +165,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-
+            var usuarioNombre = User.Identity.Name;
             var AlimentacionIngredienteBd = await _unidadTrabajo.AlimentacionIngrediente.Obtener(id);
             if(AlimentacionIngredienteBd == null)
             {
@@ -170,6 +174,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             _unidadTrabajo.AlimentacionIngrediente.Remover(AlimentacionIngredienteBd);
             await _unidadTrabajo.Guardar();
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el ingrediente '{AlimentacionIngredienteBd.Ingrediente.Nombre}' del producto de alimentación '{AlimentacionIngredienteBd.Alimentacion.Nombre}'", usuarioNombre);
+
 
             return Json(new { success = true, message = "Ingrediente borrado de producto de alimentación exitosamente" });
 

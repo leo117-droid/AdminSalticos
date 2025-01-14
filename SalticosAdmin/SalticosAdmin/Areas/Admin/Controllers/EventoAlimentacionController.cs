@@ -108,13 +108,12 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         await _unidadTrabajo.EventoAlimentacion.Agregar(eventoAlimentacion);
 
-                        //var usuarioNombre = User.Identity.Name;
-                        var usuarioNombre = "usuarioPrueba";
+                        var usuarioNombre = User.Identity.Name;
 
                         var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoAlimentacion.Evento.ClienteId);
                         var alimentacionBitacora = await _unidadTrabajo.Alimentacion.Obtener(eventoAlimentacion.IdAlimentacion);
 
-                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
                             $" para {eventoAlimentacion.Evento.Fecha.ToString("dd/MM/yyyy")} el producto de alimentación {alimentacionBitacora.Nombre}", usuarioNombre);
 
 
@@ -138,8 +137,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     _unidadTrabajo.EventoAlimentacion.Actualizar(eventoAlimentacion);
 
-                    //var usuarioNombre = User.Identity.Name;
-                    var usuarioNombre = "usuarioPrueba";
+                    var usuarioNombre = User.Identity.Name;
 
                     var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoAlimentacion.Evento.ClienteId);
                     var alimentacionBitacora = await _unidadTrabajo.Alimentacion.Obtener(eventoAlimentacion.IdAlimentacion);
@@ -193,8 +191,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.EventoAlimentacion.Remover(EventoAlimentacionBd);
             await _unidadTrabajo.Guardar();
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
             
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoAlimentacionBd.IdEvento);
             var alimentacionBitacora = await _unidadTrabajo.Alimentacion.Obtener(EventoAlimentacionBd.IdAlimentacion);

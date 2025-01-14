@@ -71,8 +71,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 var files = HttpContext.Request.Form.Files; 
                 string webRootPath = _webHostEnvironment.WebRootPath; 
@@ -91,7 +90,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     await _unidadTrabajo.Inflable.Agregar(inflableVM.Inflable);
                     TempData[DS.Exitosa] = "Inflable creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el inflable '{inflableVM.Inflable.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el inflable '{inflableVM.Inflable.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -179,8 +178,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var inflableBd = await _unidadTrabajo.Inflable.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (inflableBd == null)
             {

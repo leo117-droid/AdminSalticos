@@ -47,15 +47,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 if (tarifasTransporte.Id == 0)
                 {
                     await _unidadTrabajo.TarifasTransporte.Agregar(tarifasTransporte);
                     TempData[DS.Exitosa] = "Tarifa de Transporte creada Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la tarifa de transporte '{tarifasTransporte.Provincia}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó la tarifa de transporte '{tarifasTransporte.Provincia}'", usuarioNombre);
 
                 }
                 else
@@ -87,8 +86,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var tarifaBd = await _unidadTrabajo.TarifasTransporte.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (tarifaBd == null)
             {

@@ -77,15 +77,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     return View(personalVM);
                 }  
 
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 if (personalVM.Personal.Id == 0)
                 {
                     await _unidadTrabajo.Personal.Agregar(personalVM.Personal);
                     TempData[DS.Exitosa] = "Personal creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el personal '{personalVM.Personal.Nombre}' '{personalVM.Personal.Apellidos}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el personal '{personalVM.Personal.Nombre}' '{personalVM.Personal.Apellidos}'", usuarioNombre);
 
                 }
                 else
@@ -138,8 +137,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var personalBd = await _unidadTrabajo.Personal.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (personalBd == null)
             {

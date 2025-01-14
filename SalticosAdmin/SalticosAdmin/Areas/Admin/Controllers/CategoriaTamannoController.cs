@@ -48,15 +48,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 if (categoriaTamanno.Id == 0)
                 {
                     await _unidadTrabajo.CategoriaTamanno.Agregar(categoriaTamanno);
                     TempData[DS.Exitosa] = "Categoria por tamanno creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó la categoria de tamaño '{categoriaTamanno.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó la categoria de tamaño '{categoriaTamanno.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -88,8 +87,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var categoriaTamannoBd = await _unidadTrabajo.CategoriaTamanno.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
             
             if (categoriaTamannoBd == null)
             {

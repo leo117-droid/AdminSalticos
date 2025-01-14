@@ -107,8 +107,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         TempData[DS.Exitosa] = "Inflable agregado exitosamente";
 
-                        //var usuarioNombre = User.Identity.Name;
-                        var usuarioNombre = "usuarioPrueba";
+                        var usuarioNombre = User.Identity.Name;
 
                         var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoInflable.Evento.ClienteId);
                         var inflableBitacora = await _unidadTrabajo.Inflable.Obtener(eventoInflable.IdInflable);
@@ -133,8 +132,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.EventoInflable.Actualizar(eventoInflable);
                     TempData[DS.Exitosa] = "Evento actualizado exitosamente";
 
-                    //var usuarioNombre = User.Identity.Name;
-                    var usuarioNombre = "usuarioPrueba";
+                    var usuarioNombre = User.Identity.Name;
 
                     var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoInflable.Evento.ClienteId);
                     var inflableBitacora = await _unidadTrabajo.Inflable.Obtener(eventoInflable.IdInflable);
@@ -183,8 +181,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.EventoInflable.Remover(EventoInflableBd);
             await _unidadTrabajo.Guardar();
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoInflableBd.IdEvento);
             var inflableBitacora = await _unidadTrabajo.Inflable.Obtener(EventoInflableBd.IdInflable);

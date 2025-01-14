@@ -49,15 +49,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var usuarioNombre = User.Identity.Name;
-                var usuarioNombre = "usuarioPrueba";
+                var usuarioNombre = User.Identity.Name;
 
                 if (rolPersonal.Id == 0)
                 {
                     await _unidadTrabajo.RolPersonal.Agregar(rolPersonal);
                     TempData[DS.Exitosa] = "Rol de personal creado Exitosamente";
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se insertó el rol de personal '{rolPersonal.Nombre}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el rol de personal '{rolPersonal.Nombre}'", usuarioNombre);
 
                 }
                 else
@@ -89,8 +88,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             var rolPersonalBd = await _unidadTrabajo.RolPersonal.Obtener(id);
 
-            //var usuarioNombre = User.Identity.Name;
-            var usuarioNombre = "usuarioPrueba";
+            var usuarioNombre = User.Identity.Name;
 
             if (rolPersonalBd == null)
             {
