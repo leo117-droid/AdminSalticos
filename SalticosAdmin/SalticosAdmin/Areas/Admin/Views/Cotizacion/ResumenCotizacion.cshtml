@@ -1,0 +1,31 @@
+﻿@model SalticosAdmin.Modelos.Cotizacion
+
+<h2>Resumen de la Cotización</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Inflable</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var inflable in Model.InflablesSeleccionados)
+        {
+            <tr>
+                <td>@inflable.Nombre</td>
+                <td>$@inflable.Precio</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Total</th>
+            <th>
+                $@Model.InflablesSeleccionados.Sum(i => i.Precio)
+            </th>
+        </tr>
+    </tfoot>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Regresar</a>
