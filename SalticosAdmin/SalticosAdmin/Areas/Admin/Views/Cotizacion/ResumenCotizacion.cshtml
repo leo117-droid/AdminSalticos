@@ -1,4 +1,6 @@
 ﻿@model SalticosAdmin.Modelos.ViewModels.CotizacionVM
+@using SalticosAdmin.Utilidades
+
 
 @{
     ViewData["Title"] = "Resumen de Cotización";
@@ -8,114 +10,145 @@
 
 <div>
     <!-- Inflables Seleccionados -->
-    <h2>Inflables Seleccionados</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var inflable in Model.InflablesSeleccionados)
-            {
+    @if (Model.InflablesSeleccionados != null && Model.InflablesSeleccionados.Any())
+    {
+        <h2>Inflables Seleccionados</h2>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@inflable.Nombre</td>
-                    <td>@inflable.Descripcion</td>
-                    <td>₡@inflable.Precio.ToString("N2")</td>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var inflable in Model.InflablesSeleccionados)
+                {
+                    <tr>
+                        <td>@inflable.Nombre</td>
+                        <td>@inflable.Descripcion</td>
+                        <td>₡@inflable.Precio.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
     <!-- Mobiliarios Seleccionados -->
-    <h2>Mobiliarios Seleccionados</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.MobiliariosSeleccionados)
-            {
-                var mobiliario = item.Mobiliario; // El mobiliario
-                var cantidad = item.Cantidad; // La cantidad
-
+    @if (Model.MobiliariosSeleccionados != null && Model.MobiliariosSeleccionados.Any())
+    {
+        <h2>Mobiliarios Seleccionados</h2>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@mobiliario.Nombre</td>
-                    <td>@mobiliario.Descripcion</td>
-                    <td>₡@mobiliario.Precio.ToString("N2")</td>
-                    <td>@cantidad</td>
-                    <td>₡@((mobiliario.Precio * cantidad).ToString("N2"))</td>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.MobiliariosSeleccionados)
+                {
+                    var mobiliario = item.Mobiliario; // El mobiliario
+                    var cantidad = item.Cantidad; // La cantidad
+
+                    <tr>
+                        <td>@mobiliario.Nombre</td>
+                        <td>@mobiliario.Descripcion</td>
+                        <td>₡@mobiliario.Precio.ToString("N2")</td>
+                        <td>@cantidad</td>
+                        <td>₡@((mobiliario.Precio * cantidad).ToString("N2"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
     <!-- Servicios Adicionales Seleccionados -->
-    <h2>Servicios Adicionales Seleccionados</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ServiciosSeleccionados)
-            {
-                var servicio = item.Servicio; // El servicio adicional
-                var cantidad = item.Cantidad; // La cantidad seleccionada
-
+    @if (Model.ServiciosSeleccionados != null && Model.ServiciosSeleccionados.Any())
+    {
+        <h2>Servicios Adicionales Seleccionados</h2>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@servicio.Nombre</td>
-                    <td>@servicio.Descripcion</td>
-                    <td>₡@servicio.Precio.ToString("N2")</td>
-                    <td>@cantidad</td>
-                    <td>₡@((servicio.Precio * cantidad).ToString("N2"))</td>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ServiciosSeleccionados)
+                {
+                    var servicio = item.Servicio; // El servicio adicional
+                    var cantidad = item.Cantidad; // La cantidad seleccionada
+
+                    <tr>
+                        <td>@servicio.Nombre</td>
+                        <td>@servicio.Descripcion</td>
+                        <td>₡@servicio.Precio.ToString("N2")</td>
+                        <td>@cantidad</td>
+                        <td>₡@((servicio.Precio * cantidad).ToString("N2"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
     <!-- Alimentación Seleccionada -->
-    <h2>Alimentación Seleccionada</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.AlimentacionSeleccionada)
-            {
-                var alimentacion = item.Alimentacion;
-                var cantidad = item.Cantidad;
-
+    @if (Model.AlimentacionSeleccionada != null && Model.AlimentacionSeleccionada.Any())
+    {
+        <h2>Alimentación Seleccionada</h2>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@alimentacion.Nombre</td>
-                    <td>@alimentacion.Descripcion</td>
-                    <td>₡@alimentacion.Precio.ToString("N2")</td>
-                    <td>@cantidad</td>
-                    <td>₡@((alimentacion.Precio * cantidad).ToString("N2"))</td>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.AlimentacionSeleccionada)
+                {
+                    var alimentacion = item.Alimentacion;
+                    var cantidad = item.Cantidad;
+
+                    <tr>
+                        <td>@alimentacion.Nombre</td>
+                        <td>@alimentacion.Descripcion</td>
+                        <td>₡@alimentacion.Precio.ToString("N2")</td>
+                        <td>@cantidad</td>
+                        <td>₡@((alimentacion.Precio * cantidad).ToString("N2"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
     <!-- Monto Total -->
     <h3>Total: ₡@Model.MontoTotal.ToString("N2")</h3>
+
+    <!-- Aquí se agregará un contenedor para alinear los botones a la derecha -->
+    <div class="mt-4 text-end">
+        <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+    </div>
+
 </div>
+
+@section Scripts {
+    <script>
+        var url = window.location.href;
+
+        var numeros = url.match(/\d+/g);
+        if (numeros != null) {
+            var id = numeros[1];
+            var enlaceUrl = "/Admin/Cotizacion/index/" + id;
+            document.getElementById('regresarBtn').setAttribute('href', enlaceUrl);
+        }
+    </script>
+}

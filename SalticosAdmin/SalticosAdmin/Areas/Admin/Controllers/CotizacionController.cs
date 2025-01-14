@@ -12,10 +12,16 @@ namespace SalticosAdmin.Areas.Admin.Controllers
     public class CotizacionController : Controller
     {
         private readonly IUnidadTrabajo _unidadTrabajo;
+        public List<Inflable> InflablesSeleccionados { get; set; } = new List<Inflable>();
+        public List<Mobiliario> MobiliariosSeleccionados { get; set; } = new List<Mobiliario>();
+        public List<ServicioAdicional> ServiciosSeleccionados { get; set; } = new List<ServicioAdicional>();
+        public List<Alimentacion> AlimentacionSeleccionada { get; set; } = new List<Alimentacion>();
+        public decimal MontoTotal { get; set; }
 
         public CotizacionController(IUnidadTrabajo unidadTrabajo)
         {
             _unidadTrabajo = unidadTrabajo;
+
         }
 
         public async Task<IActionResult> Index()
@@ -125,13 +131,12 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 }
             }
 
-            // Crear el modelo de cotización
             var cotizacion = new CotizacionVM
             {
-                InflablesSeleccionados = inflablesSeleccionados,
-                MobiliariosSeleccionados = mobiliariosSeleccionados,
-                ServiciosSeleccionados = serviciosSeleccionados,
-                AlimentacionSeleccionada = alimentacionSeleccionada,
+                InflablesSeleccionados = inflablesSeleccionados.Any() ? inflablesSeleccionados : null,
+                MobiliariosSeleccionados = mobiliariosSeleccionados.Any() ? mobiliariosSeleccionados : null,
+                ServiciosSeleccionados = serviciosSeleccionados.Any() ? serviciosSeleccionados : null,
+                AlimentacionSeleccionada = alimentacionSeleccionada.Any() ? alimentacionSeleccionada : null,
                 MontoTotal = montoInflables + montoMobiliarios + montoServicios + montoAlimentacion
             };
 
