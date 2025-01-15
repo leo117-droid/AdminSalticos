@@ -107,26 +107,26 @@
 
     <!-- Alimentación Seleccionada -->
     @if (Model.AlimentacionSeleccionada != null && Model.AlimentacionSeleccionada.Any())
-    {
-        <h2>Alimentación Seleccionada</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.AlimentacionSeleccionada)
-                {
-                    var alimentacion = item.Alimentacion;
-                    var cantidad = item.Cantidad;
+{
+    <h2>Alimentación Seleccionada</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AlimentacionSeleccionada)
+            {
+                var alimentacion = item.Alimentacion;
+                var cantidad = item.Cantidad;
 
-                    <tr>
-                        <td>@alimentacion.Nombre</td>
+                <tr>
+                    <td>@alimentacion.Nombre</td>
                         <td>@alimentacion.Descripcion</td>
                         <td>₡@alimentacion.Precio.ToString("N2")</td>
                         <td>@cantidad</td>
@@ -135,12 +135,36 @@
                 }
             </tbody>
         </table>
+
+    }
+    <!-- Transporte -->
+    @if (Model.TarifaTransporteSeleccionada != null && Model.TarifaTransporteSeleccionada.Any())
+    {
+        <h2>Transporte Seleccionado</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Provincia</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tarifasTransporte in Model.TarifaTransporteSeleccionada)
+                {
+                    <tr>
+                        <td>@tarifasTransporte.Provincia</td>
+                        <td>₡@tarifasTransporte.Precio.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    
     }
 
     <!-- Monto Total -->
-    <h1>Total: ₡@Model.MontoTotal.ToString("N2")</h1>
+    <h3>Total: ₡@Model.MontoTotal.ToString("N2")</h3>
 
-    <h1>Total con IVA: ₡@Model.MontoTotalIVA.ToString("N2")</h1>
+    <h3>Total con IVA: ₡@Model.MontoTotalIVA.ToString("N2")</h3>
 
     <!-- Aquí se agregará un contenedor para alinear los botones a la derecha -->
     <div class="mt-4 text-end">
