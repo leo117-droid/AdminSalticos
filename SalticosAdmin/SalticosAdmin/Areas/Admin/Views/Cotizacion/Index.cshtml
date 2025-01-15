@@ -16,6 +16,7 @@
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Precio</th>
+                    <th>Horas Extras</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,9 @@
                         <td>@inflable.Nombre</td>
                         <td>@inflable.Descripcion</td>
                         <td>₡@inflable.Precio.ToString("N2")</td>
+                        <td>
+                            <input type="number" name="inflableHorasAdicionales" min="0" value="0" style="width: 80px;" />
+                        </td>
                     </tr>
                 }
             </tbody>

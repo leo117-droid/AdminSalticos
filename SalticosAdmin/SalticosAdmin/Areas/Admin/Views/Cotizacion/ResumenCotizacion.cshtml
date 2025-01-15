@@ -8,31 +8,38 @@
 
 <h1>Resumen de Cotización</h1>
 
-<div>
-    <!-- Inflables Seleccionados -->
-    @if (Model.InflablesSeleccionados != null && Model.InflablesSeleccionados.Any())
-    {
-        <h2>Inflables Seleccionados</h2>
-        <table class="table">
-            <thead>
+@if (Model.InflablesSeleccionados != null && Model.InflablesSeleccionados.Any())
+{
+    <h2>Inflables Seleccionados</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio Base</th>
+                <th>Horas Adicionales</th>
+                <th>Precio Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.InflablesSeleccionados)
+            {
+                var inflable = item.Inflable;
+                var horasAdicionales = item.HorasAdicionales;
+                var precioTotal = inflable.Precio + (horasAdicionales * inflable.PrecioHoraAdicional);
+
                 <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
+                    <td>@inflable.Nombre</td>
+                    <td>@inflable.Descripcion</td>
+                    <td>₡@inflable.Precio.ToString("N2")</td>
+                    <td>@horasAdicionales</td>
+                    <td>₡@precioTotal.ToString("N2")</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var inflable in Model.InflablesSeleccionados)
-                {
-                    <tr>
-                        <td>@inflable.Nombre</td>
-                        <td>@inflable.Descripcion</td>
-                        <td>₡@inflable.Precio.ToString("N2")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
+            }
+        </tbody>
+    </table>
+}
+
 
     <!-- Mobiliarios Seleccionados -->
     @if (Model.MobiliariosSeleccionados != null && Model.MobiliariosSeleccionados.Any())
@@ -131,7 +138,9 @@
     }
 
     <!-- Monto Total -->
-    <h3>Total: ₡@Model.MontoTotal.ToString("N2")</h3>
+    <h1>Total: ₡@Model.MontoTotal.ToString("N2")</h1>
+
+    <h1>Total con IVA: ₡@Model.MontoTotalIVA.ToString("N2")</h1>
 
     <!-- Aquí se agregará un contenedor para alinear los botones a la derecha -->
     <div class="mt-4 text-end">

@@ -44,6 +44,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         public async Task<IActionResult> GenerarCotizacion(
             List<int> inflableIds,
+            List<int> inflableHorasAdicionales, // Horas adicionales por inflable
             List<int> mobiliarioIds,
             List<int> cantidades,
             List<int> servicioIds,
@@ -62,8 +63,31 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             // Inflables
             var inflables = await _unidadTrabajo.Inflable.ObtenerTodos();
-            var inflablesSeleccionados = inflables.Where(i => inflableIds.Contains(i.Id)).ToList();
-            var montoInflables = inflablesSeleccionados.Sum(i => i.Precio);
+            var inflablesSeleccionados = new List<(Inflable Inflable, int HorasAdicionales)>();
+            double montoInflables = 0;
+
+            if (inflableIds != null && inflableHorasAdicionales != null)
+            {
+                for (int i = 0; i < inflableIds.Count; i++)
+                {
+                    var inflable = inflables.FirstOrDefault(m => m.Id == inflableIds[i]);
+                    if (inflable != null)
+                    {
+                        // Si las horas adicionales no están especificadas, asigna 0 por defecto.
+                        var horaAdicional = inflableHorasAdicionales.ElementAtOrDefault(i);
+
+                        // Asegúrate de que horaAdicional no sea negativo.
+                        horaAdicional = Math.Max(0, horaAdicional);
+
+                        // Agrega el inflable a la lista de seleccionados.
+                        inflablesSeleccionados.Add((inflable, horaAdicional));
+
+                        // Calcula el monto del inflable, incluyendo las horas adicionales (si las hay).
+                        montoInflables += inflable.Precio + (inflable.PrecioHoraAdicional * horaAdicional);
+                    }
+                }
+            }
+
 
             // Mobiliarios
             var mobiliarios = await _unidadTrabajo.Mobiliario.ObtenerTodos();
