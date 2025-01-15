@@ -14,5 +14,7 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
         void Actualizar(Evento evento);
 
         IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj);
+
+        Task<List<Evento>> ObtenerEventosSolapados(DateTime fecha, TimeSpan horaInicio, TimeSpan horaFin);
     }
 }

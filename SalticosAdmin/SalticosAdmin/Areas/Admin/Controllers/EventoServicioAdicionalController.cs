@@ -82,6 +82,64 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
+
+                var eventoActual = await _unidadTrabajo.Evento.ObtenerPrimero(X => X.Id == eventoServicioAdicionalVM.IdEvento);
+                if (eventoActual == null)
+                {
+                    TempData[DS.Error] = "Evento no encontrado.";
+                    return View(eventoServicioAdicionalVM);
+                }
+
+                //Se obtiene la cantidad actual del servicio en el evento
+                int cantidadActualEvento = 0;
+                if (eventoServicioAdicionalVM.IdRelacion != 0)
+                {
+                    var eventoServicioActual = await _unidadTrabajo.EventoServicioAdicional.ObtenerPrimero(x => x.Id == eventoServicioAdicionalVM.IdRelacion);
+                    if (eventoServicioActual != null)
+                    {
+                        cantidadActualEvento = eventoServicioActual.Cantidad;
+                    }
+                }
+
+
+                var eventosSolapados = await _unidadTrabajo.Evento.ObtenerEventosSolapados(
+                    eventoActual.Fecha,
+                    eventoActual.HoraInicio,
+                    eventoActual.HoraFinal
+                );
+
+                var servicioAdicional = await _unidadTrabajo.ServicioAdicional.ObtenerPrimero(m => m.Id == eventoServicioAdicionalVM.IdServicioAdicional);
+                if (servicioAdicional == null)
+                {
+                    TempData[DS.Error] = "Servicio no encontrado.";
+                    return View(eventoServicioAdicionalVM);
+                }
+
+                var eventoServiciosAdicionales = await _unidadTrabajo.EventoServicioAdicional.ObtenerTodos();
+
+                int cantidadAsignadaEnEventosSolapados = eventoServiciosAdicionales
+                    .Where(es => eventosSolapados.Any(e => e.Id == es.IdEvento)
+                                && es.IdServicioAdicional == eventoServicioAdicionalVM.IdServicioAdicional)
+                    .Sum(em => em.Cantidad);
+
+                int cantidadTotalAsignada = cantidadAsignadaEnEventosSolapados + eventoServicioAdicionalVM.Cantidad - cantidadActualEvento;
+                if (cantidadTotalAsignada > servicioAdicional.Inventario)
+                {
+                    if (cantidadActualEvento == cantidadAsignadaEnEventosSolapados)
+                    {
+                        TempData[DS.Error] = $"No hay suficiente del servicio disponible. Solo hay {servicioAdicional.Inventario} unidades.";
+
+                    }
+                    else
+                    {
+                        TempData[DS.Error] = $"No hay suficiente mobiliario disponible. Solo quedan {servicioAdicional.Inventario - cantidadAsignadaEnEventosSolapados} unidades.";
+
+                    }
+                    eventoServicioAdicionalVM.ListaServicioAdicional = _unidadTrabajo.EventoServicioAdicional.ObtenerServicioAdicional("ServicioAdicional", eventoServicioAdicionalVM.IdEvento);
+                    return View(eventoServicioAdicionalVM);
+                }
+
+
                 if (eventoServicioAdicionalVM.IdRelacion == 0)
                 {
                     EventoServicioAdicional existeServicioAdicional = await _unidadTrabajo.EventoServicioAdicional.ObtenerPrimero(X => X.IdEvento == eventoServicioAdicionalVM.IdEvento && X.IdServicioAdicional == eventoServicioAdicionalVM.IdServicioAdicional);

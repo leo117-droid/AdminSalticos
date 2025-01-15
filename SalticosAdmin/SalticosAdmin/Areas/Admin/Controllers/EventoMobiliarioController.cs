@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SalticosAdmin.AccesoDeDatos.Repositorio;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
@@ -82,6 +83,66 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
+
+                var eventoActual = await _unidadTrabajo.Evento.ObtenerPrimero(X => X.Id == eventoMobiliarioVM.IdEvento);
+                if (eventoActual == null)
+                {
+                    TempData[DS.Error] = "Evento no encontrado.";
+                    return View(eventoMobiliarioVM);
+                }
+
+                //Se obtiene la cantidad actual del mobiliario en el evento
+                int cantidadActualEvento = 0;
+                if (eventoMobiliarioVM.IdRelacion != 0)
+                {
+                    var eventoMobiliarioActual = await _unidadTrabajo.EventoMobiliario.ObtenerPrimero(x => x.Id == eventoMobiliarioVM.IdRelacion);
+                    if (eventoMobiliarioActual != null)
+                    {
+                        cantidadActualEvento = eventoMobiliarioActual.Cantidad;
+                    }
+                }
+
+                var eventosSolapados = await _unidadTrabajo.Evento.ObtenerEventosSolapados(
+                    eventoActual.Fecha,
+                    eventoActual.HoraInicio,
+                    eventoActual.HoraFinal
+                );
+
+                var mobiliario = await _unidadTrabajo.Mobiliario.ObtenerPrimero(m => m.Id == eventoMobiliarioVM.IdMobiliario);
+                if (mobiliario == null)
+                {
+                    TempData[DS.Error] = "Mobiliario no encontrado.";
+                    return View(eventoMobiliarioVM);
+                }
+
+                var eventoMobiliarios = await _unidadTrabajo.EventoMobiliario.ObtenerTodos();
+
+                int cantidadAsignadaEnEventosSolapados = eventoMobiliarios
+                    .Where(em => eventosSolapados.Any(e => e.Id == em.IdEvento)
+                                && em.IdMobiliario == eventoMobiliarioVM.IdMobiliario)
+                    .Sum(em => em.Cantidad);
+
+                
+                int cantidadTotalAsignada = cantidadAsignadaEnEventosSolapados + eventoMobiliarioVM.Cantidad - cantidadActualEvento;
+                if (cantidadTotalAsignada > mobiliario.Inventario)
+                {
+
+                    if (cantidadActualEvento == cantidadAsignadaEnEventosSolapados)
+                    {
+                        TempData[DS.Error] = $"No hay suficiente mobiliario disponible. Solo hay {mobiliario.Inventario} unidades.";
+
+                    }
+                    else
+                    {
+                        TempData[DS.Error] = $"No hay suficiente mobiliario disponible. Solo quedan {mobiliario.Inventario - cantidadAsignadaEnEventosSolapados} unidades.";
+
+                    }
+
+                    eventoMobiliarioVM.ListaMobiliario = _unidadTrabajo.EventoMobiliario.ObtenerMobiliario("Mobiliario", eventoMobiliarioVM.IdEvento);
+                    return View(eventoMobiliarioVM);
+                }
+
+
                 if (eventoMobiliarioVM.IdRelacion == 0)
                 {
                     EventoMobiliario existeMobiliario = await _unidadTrabajo.EventoMobiliario.ObtenerPrimero(X => X.IdEvento == eventoMobiliarioVM.IdEvento && X.IdMobiliario == eventoMobiliarioVM.IdMobiliario);
