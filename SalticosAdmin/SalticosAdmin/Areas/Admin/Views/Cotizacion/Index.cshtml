@@ -16,6 +16,7 @@
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Precio</th>
+                    <th>Precio Hora Extra</th>
                     <th>Horas Extras</th>
                 </tr>
             </thead>
@@ -29,6 +30,7 @@
                         <td>@inflable.Nombre</td>
                         <td>@inflable.Descripcion</td>
                         <td>₡@inflable.Precio.ToString("N2")</td>
+                        <td>₡@inflable.PrecioHoraAdicional.ToString("N2")</td>
                         <td>
                             <input type="number" name="inflableHorasAdicionales" min="0" value="0" style="width: 80px;" />
                         </td>
@@ -127,11 +129,11 @@
         <h2>Tarifa Transporte</h2>
         <div>
             <label for="transporteIds">Seleccionar Provincia de Transporte</label>
-            <select id="transporteIds" name="transporteIds" class="form-control">
+            <select id="transporteIds" name="transporteIds" class="form-control small-dropdown">
                 <option value="">-- Selecciona una provincia --</option>
                 @foreach (var tarifaTransporte in Model.TarifasTransporte)
                 {
-                    <option value="@tarifaTransporte.Id">@tarifaTransporte.Provincia</option>
+                    <option value="@tarifaTransporte">@tarifaTransporte.Provincia</option>
                 }
             </select>
         </div>
