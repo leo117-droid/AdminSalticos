@@ -30,13 +30,16 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var mobiliarios = await _unidadTrabajo.Mobiliario.ObtenerTodos();
             var servicios = await _unidadTrabajo.ServicioAdicional.ObtenerTodos();
             var alimentacion = await _unidadTrabajo.Alimentacion.ObtenerTodos(); // Obtener la alimentación
+            var tarifas = await _unidadTrabajo.TarifasTransporte.ObtenerTodos();
 
             var modelo = new CotizacionVM
             {
                 Inflables = (List<Inflable>)inflables,
                 Mobiliarios = (List<Mobiliario>)mobiliarios,
                 ServiciosAdicionales = (List<ServicioAdicional>)servicios,
-                Alimentacion = (List<Alimentacion>)alimentacion // Agregar a la vista
+                Alimentacion = (List<Alimentacion>)alimentacion, // Agregar a la vista
+                TarifasTransporte = (List<TarifasTransporte>)tarifas // Agregar a la vista
+
             };
 
             return View(modelo);
@@ -44,12 +47,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         public async Task<IActionResult> GenerarCotizacion(
             List<int> inflableIds,
+            List<int> inflableHorasAdicionales, // Horas adicionales por inflable
             List<int> mobiliarioIds,
             List<int> cantidades,
             List<int> servicioIds,
             List<int> servicioCantidades,
             List<int> alimentacionIds, // IDs de alimentación seleccionada
-            List<int> alimentacionCantidades) // Cantidades para cada opción de alimentación
+            List<int> alimentacionCantidades, 
+            List<int> transporteIds) // Cantidades para cada opción de alimentación
         {
             if ((inflableIds == null || !inflableIds.Any()) &&
                 (mobiliarioIds == null || !mobiliarioIds.Any()) &&
@@ -62,8 +67,31 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             // Inflables
             var inflables = await _unidadTrabajo.Inflable.ObtenerTodos();
-            var inflablesSeleccionados = inflables.Where(i => inflableIds.Contains(i.Id)).ToList();
-            var montoInflables = inflablesSeleccionados.Sum(i => i.Precio);
+            var inflablesSeleccionados = new List<(Inflable Inflable, int HorasAdicionales)>();
+            double montoInflables = 0;
+
+            if (inflableIds != null && inflableHorasAdicionales != null)
+            {
+                for (int i = 0; i < inflableIds.Count; i++)
+                {
+                    var inflable = inflables.FirstOrDefault(m => m.Id == inflableIds[i]);
+                    if (inflable != null)
+                    {
+                        // Si las horas adicionales no están especificadas, asigna 0 por defecto.
+                        var horaAdicional = inflableHorasAdicionales.ElementAtOrDefault(i);
+
+                        // Asegúrate de que horaAdicional no sea negativo.
+                        horaAdicional = Math.Max(0, horaAdicional);
+
+                        // Agrega el inflable a la lista de seleccionados.
+                        inflablesSeleccionados.Add((inflable, horaAdicional));
+
+                        // Calcula el monto del inflable, incluyendo las horas adicionales (si las hay).
+                        montoInflables += inflable.Precio + (inflable.PrecioHoraAdicional * horaAdicional);
+                    }
+                }
+            }
+
 
             // Mobiliarios
             var mobiliarios = await _unidadTrabajo.Mobiliario.ObtenerTodos();
@@ -131,13 +159,20 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 }
             }
 
+            //Tarifas de Transporte
+            var transportes = await _unidadTrabajo.TarifasTransporte.ObtenerTodos();
+            var tarifaTransporteSeleccionada = transportes.Where(i => transporteIds.Contains(i.Id)).ToList();
+            var montoTransporte = tarifaTransporteSeleccionada.Sum(i => i.Precio);
+
+
             var cotizacion = new CotizacionVM
             {
                 InflablesSeleccionados = inflablesSeleccionados.Any() ? inflablesSeleccionados : null,
                 MobiliariosSeleccionados = mobiliariosSeleccionados.Any() ? mobiliariosSeleccionados : null,
                 ServiciosSeleccionados = serviciosSeleccionados.Any() ? serviciosSeleccionados : null,
                 AlimentacionSeleccionada = alimentacionSeleccionada.Any() ? alimentacionSeleccionada : null,
-                MontoTotal = montoInflables + montoMobiliarios + montoServicios + montoAlimentacion
+                TarifaTransporteSeleccionada = tarifaTransporteSeleccionada.Any() ? tarifaTransporteSeleccionada: null, 
+                MontoTotal = montoInflables + montoMobiliarios + montoServicios + montoAlimentacion + montoTransporte
             };
 
             return View("ResumenCotizacion", cotizacion);
