@@ -125,28 +125,22 @@
         </table>
 
         <h2>Tarifa Transporte</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Seleccionar</th>
-                    <th>Provincia</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div>
+            <label for="transporteIds">Seleccionar Provincia de Transporte</label>
+            <select id="transporteIds" name="transporteIds" class="form-control">
+                <option value="">-- Selecciona una provincia --</option>
                 @foreach (var tarifaTransporte in Model.TarifasTransporte)
                 {
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="transporteIds" value="@tarifaTransporte.Id" />
-                        </td>
-                        <td>@tarifaTransporte.Provincia</td>
-                        <td>₡@tarifaTransporte.Precio.ToString("N2")</td>
-                    </tr>
+                    <option value="@tarifaTransporte.Id">@tarifaTransporte.Provincia</option>
                 }
-            </tbody>
-        </table>
+            </select>
+        </div>
 
-        <button type="submit" class="btn btn-primary">Generar Cotización</button>
+
+
+        <div>
+            <button type="submit" class="btn btn-primary">Generar Cotización</button>
+        </div>
+
     </form>
 </div>
