@@ -20,6 +20,7 @@ namespace SalticosAdmin.AccesoDeDatos.Configuracion
             builder.Property(x => x.Direccion).IsRequired().HasMaxLength(120);
             builder.Property(x => x.Provincia).IsRequired().HasMaxLength(20);
             builder.Property(x => x.ClienteId).IsRequired();
+            builder.Property(x => x.EstadoRecordatorio).IsRequired();
 
             //Relaciones
             builder.HasOne(x => x.Cliente).WithMany()
