@@ -55,6 +55,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
         public IUsuarioRepositorio Usuario { get; private set; }
 
         public ITareaRepositorio Tareas { get; private set; }
+        public ISeguroRepositorio Seguros { get; private set; }
+
 
         public IProveedorRepositorio Proveedor { get; private set; }
         public UnidadTrabajo(ApplicationDbContext db)
@@ -88,6 +90,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
             Usuario = new UsuarioRepositorio(_db);
             Tareas = new TareaRepositorio(_db);
             Proveedor = new ProveedorRepositorio(_db);
+            Seguros = new SeguroRepositorio(_db);
+
 
         }
 

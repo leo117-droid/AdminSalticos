@@ -45,6 +45,9 @@ namespace SalticosAdmin.AccesoDeDatos.Data
 
         public DbSet<Proveedor> Proveedor { get; set; }
 
+        public DbSet<Seguro> Seguros { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

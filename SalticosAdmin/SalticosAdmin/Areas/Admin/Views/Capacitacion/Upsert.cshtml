@@ -24,15 +24,34 @@
             <h2 class="text-primary">@titulo</h2>
         </div>
 
-        <div class="row mb-2 mt-2">
-            <div class="form-group col-md-6">
-                <label>Fecha</label>
-                <input asp-for="Fecha" class="form-control" type="date"
-                       value="@DateTime.Now.ToString("yyyy-MM-dd")"
-                       min="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                <span asp-validation-for="Fecha" class="text-danger"></span>
+
+        @if (Model.Id != 0)
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha</label>
+                    <input asp-for="Fecha" class="form-control" type="date"
+                           min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha</label>
+                    <input asp-for="Fecha" class="form-control" type="date"
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                           min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                </div>
+            </div>
+        }
+
+
+
+        
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">

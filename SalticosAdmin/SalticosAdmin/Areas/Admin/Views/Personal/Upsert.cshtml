@@ -66,25 +66,52 @@
             </div>
         </div>
 
-        <div class="row mb-2 mt-2">
-            <div class="form-group col-md-6">
-                <label>Fecha de Nacimiento</label>
-                <input asp-for="Personal.FechaNacimiento" class="form-control" type="date"
-                       value="@DateTime.Now.ToString("yyyy-MM-dd")"
-                       min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                <span asp-validation-for="Personal.FechaNacimiento" class="text-danger"></span>
-            </div>
-        </div>
 
-        <div class="row mb-2 mt-2">
-            <div class="form-group col-md-6">
-                <label>Fecha de Entrada</label>
-                <input asp-for="Personal.FechaEntrada" class="form-control" type="date"
-                       value="@DateTime.Now.ToString("yyyy-MM-dd")"
-                       min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                <span asp-validation-for="Personal.FechaEntrada" class="text-danger"></span>
+
+
+        @if (Model.Personal.Id != 0)
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha de Nacimiento</label>
+                    <input asp-for="Personal.FechaNacimiento" class="form-control" type="date"
+                           min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Personal.FechaNacimiento" class="text-danger"></span>
+                </div>
             </div>
-        </div>
+
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha de Entrada</label>
+                    <input asp-for="Personal.FechaEntrada" class="form-control" type="date"
+                           min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Personal.FechaEntrada" class="text-danger"></span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha de Nacimiento</label>
+                    <input asp-for="Personal.FechaNacimiento" class="form-control" type="date"
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                           min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Personal.FechaNacimiento" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha de Entrada</label>
+                    <input asp-for="Personal.FechaEntrada" class="form-control" type="date"
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                           min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Personal.FechaEntrada" class="text-danger"></span>
+                </div>
+            </div>
+        }
+
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
