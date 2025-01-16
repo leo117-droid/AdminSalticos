@@ -99,6 +99,26 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return Json(new { success = true, message = "Seguro borrado exitosamente" });
         }
 
+        [ActionName("ValidarPoliza")]
+        public async Task<IActionResult> ValidarPoliza(int poliza, int id = 0)
+        {
+            bool valor = false;
+            var lista = await _unidadTrabajo.Seguros.ObtenerTodos();
+            if (id == 0)
+            {
+                valor = lista.Any(b => b.NumeroPoliza == poliza);
+            }
+            else
+            {
+                valor = lista.Any(b => b.NumeroPoliza == poliza && b.Id != id);
+            }
+            if (valor)
+            {
+                return Json(new { data = true });
+            }
+            return Json(new { data = false });
+        }
+
         #endregion
     }
 }
