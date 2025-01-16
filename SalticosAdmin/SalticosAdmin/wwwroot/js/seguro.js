@@ -71,6 +71,25 @@ function loadDataTable() {
     });
 }
 
+function validarFechas(id) {
+    // Verificar las fechas antes de redirigir al formulario de actualización
+    $.ajax({
+        type: "GET",
+        url: `/Admin/Seguro/ObtenerSeguroPorId/${id}`,
+        success: function (data) {
+            var fechaInicio = new Date(data.fechaInicio);
+            var fechaVencimiento = new Date(data.fechaVencimiento);
+
+            if (fechaVencimiento <= fechaInicio) {
+                swal("Error", "La fecha de vencimiento debe ser posterior a la fecha de inicio", "error");
+                return false;  // Impide que el usuario acceda al formulario de actualización
+            } else {
+                // Si las fechas son correctas, redirige al formulario de actualización
+                window.location.href = `/Admin/Seguro/Upsert/${id}`;
+            }
+        }
+    });
+}
 
 function Delete(url) {
     swal({

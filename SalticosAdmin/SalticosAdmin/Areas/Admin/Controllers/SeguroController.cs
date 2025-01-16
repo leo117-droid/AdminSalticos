@@ -51,6 +51,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                 if (seguro.Id == 0)
                 {
+
                     await _unidadTrabajo.Seguros.Agregar(seguro);
                     TempData[DS.Exitosa] = "Seguro creado Exitosamente";
 
@@ -59,6 +60,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 }
                 else
                 {
+
                     _unidadTrabajo.Seguros.Actualizar(seguro);
                     TempData[DS.Exitosa] = "Capacitacion actualizada Exitosamente";
 
