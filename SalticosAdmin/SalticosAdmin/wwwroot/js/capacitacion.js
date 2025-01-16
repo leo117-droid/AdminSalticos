@@ -25,7 +25,7 @@ function loadDataTable() {
         },
         "columns": [
             {
-                "data": "fechaNacimiento",
+                "data": "fecha",
                 "render": function (data) {
                     return moment(data).format("DD/MM/YYYY");
                 }
