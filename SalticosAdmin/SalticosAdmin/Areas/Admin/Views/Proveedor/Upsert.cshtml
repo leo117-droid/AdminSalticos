@@ -1,0 +1,121 @@
+﻿@model SalticosAdmin.Modelos.Proveedor
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear Proveedor";
+
+}
+
+<form method="post" id="formProveedor">
+    <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
+
+        <div class="row border-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        </div>
+
+        @if (Model.Id != 0)
+        { // Actualizar
+            titulo = "Actualizar Proveedor";
+            <input type="hidden" asp-for="Id" id="id" />
+        }
+
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Nombre Empresa</label>
+                <input type="text" asp-for="NombreEmpresa" class="form-control" placeholder="Nombre de la Empresa" />
+                <span asp-validation-for="NombreEmpresa" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Contacto</label>
+                <input type="text" asp-for="Contacto" class="form-control" placeholder="Nombre del Contacto" />
+                <span asp-validation-for="Contacto" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Teléfono</label>
+                <input type="tel" asp-for="Telefono" class="form-control" placeholder="Teléfono del Proveedor" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Correo</label>
+                <input type="email" asp-for="Correo" class="form-control" placeholder="Correo Electrónico" />
+                <span asp-validation-for="Correo" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Dirección</label>
+                <input type="text" asp-for="Direccion" class="form-control" placeholder="Dirección del Proveedor" />
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Descripción</label>
+                <textarea asp-for="Descripcion" class="form-control" placeholder="Descripción del Proveedor"></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Tipo de Proveedor</label>
+                <select asp-for="TipoProveedor" class="form-select" id="tipoProveedor">
+                    <option value="" disabled selected>-- Seleccione un tipo de proveedor --</option>
+                    <option value="Alimentación">Alimentación</option>
+                    <option value="Herramientas">Herramientas</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Inflables">Inflables</option>
+                    <option value="Mobiliario">Mobiliario</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <span asp-validation-for="TipoProveedor" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+        <br />
+
+        <div>
+            @if (Model.Id != 0)
+            {
+                <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+            }
+            else
+            {
+                <partial name="_BotonesCrearYRegresar" />
+            }
+        </div>
+
+
+    </div>
+
+
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+
+
+    </script>
+}

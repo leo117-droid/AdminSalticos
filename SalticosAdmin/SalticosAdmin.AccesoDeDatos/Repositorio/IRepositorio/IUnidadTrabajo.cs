@@ -51,8 +51,10 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
 
         ITareaRepositorio Tareas { get; }
 
+        IProveedorRepositorio Proveedor { get; }
+        
         ISeguroRepositorio Seguros { get; }
-
+        
 
         Task Guardar();
     }

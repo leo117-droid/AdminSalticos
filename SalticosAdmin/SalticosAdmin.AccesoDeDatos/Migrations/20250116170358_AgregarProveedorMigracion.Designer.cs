@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalticosAdmin.AccesoDeDatos.Data;
 
@@ -11,9 +12,11 @@ using SalticosAdmin.AccesoDeDatos.Data;
 namespace SalticosAdmin.AccesoDeDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250116170358_AgregarProveedorMigracion")]
+    partial class AgregarProveedorMigracion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -943,41 +946,6 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RolPersonal");
-                });
-
-            modelBuilder.Entity("SalticosAdmin.Modelos.Seguro", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Estado")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("FechaInicio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaVencimiento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NombreAseguradora")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("NumeroPoliza")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TipoSeguro")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Seguros");
                 });
 
             modelBuilder.Entity("SalticosAdmin.Modelos.ServicioAdicional", b =>

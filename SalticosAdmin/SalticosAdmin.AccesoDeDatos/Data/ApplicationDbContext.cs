@@ -42,7 +42,11 @@ namespace SalticosAdmin.AccesoDeDatos.Data
         public DbSet<Usuario> Usuario { get; set; } 
 
         public DbSet<Tarea> Tareas { get; set; }
+
+        public DbSet<Proveedor> Proveedor { get; set; }
+
         public DbSet<Seguro> Seguros { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
