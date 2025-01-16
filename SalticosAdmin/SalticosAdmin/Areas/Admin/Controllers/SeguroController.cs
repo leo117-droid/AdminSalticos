@@ -47,6 +47,13 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
+                // Validar que la fecha de inicio no sea posterior a la fecha de vencimiento
+                if (seguro.FechaInicio > seguro.FechaVencimiento)
+                {
+                    TempData[DS.Error] = "La fecha de inicio no puede ser posterior a la fecha de vencimiento.";
+                    return View(seguro);
+                }
+
                 var usuarioNombre = User.Identity.Name;
 
                 if (seguro.Id == 0)
