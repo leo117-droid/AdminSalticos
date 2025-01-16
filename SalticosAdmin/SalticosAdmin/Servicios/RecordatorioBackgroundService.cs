@@ -33,11 +33,11 @@ public class RecordatorioBackgroundService : BackgroundService
                 {
                     // Obtener la fecha actual
                     var fechaActual = DateTime.Now.Date;
+                    var horaActual = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0);
 
                     // Consultar los eventos con recordatorio para hoy
                     var recordatorios = (await unidadTrabajo.Evento
-                        .ObtenerTodos(e => e.FechaRecordatorio.HasValue && e.FechaRecordatorio.Value.Date == fechaActual))
-                        .ToList();
+                      .ObtenerTodos(e => e.Fecha == fechaActual.AddDays(1) && e.HoraInicio == horaActual && e.EstadoRecordatorio == false)).ToList();
 
                     foreach (var evento in recordatorios)
                     {
@@ -60,6 +60,8 @@ public class RecordatorioBackgroundService : BackgroundService
                             await emailSender.SendEmailAsync(evento.Correo, subject, message);
 
                             _logger.LogInformation($"Recordatorio enviado a {evento.Correo} para el evento {evento.Id}");
+                            evento.EstadoRecordatorio = true;
+                            await unidadTrabajo.Guardar();
                         }
                         catch (Exception ex)
                         {
@@ -74,58 +76,8 @@ public class RecordatorioBackgroundService : BackgroundService
             }
 
             ////// Esperar un intervalo antes de la próxima ejecución (por ejemplo, 30 minutos)
-            await Task.Delay(TimeSpan.FromMinutes(0.5), stoppingToken);
+            await Task.Delay(TimeSpan.FromMinutes(0.1), stoppingToken);
         }
     }
 }
 
-//public class RecordatorioBackgroundService : BackgroundService
-//{
-//    private readonly IServiceProvider _serviceProvider;
-//    private readonly ILogger<RecordatorioBackgroundService> _logger;
-
-//    public RecordatorioBackgroundService(IServiceProvider serviceProvider, ILogger<RecordatorioBackgroundService> logger)
-//    {
-//        _serviceProvider = serviceProvider;
-//        _logger = logger;
-//    }
-
-//    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-//    {
-//        while (!stoppingToken.IsCancellationRequested)
-//        {
-//            _logger.LogInformation("Ejecutando la lógica de recordatorios...");
-
-//            using (var scope = _serviceProvider.CreateScope())
-//            {
-//                var unidadTrabajo = scope.ServiceProvider.GetRequiredService<IUnidadTrabajo>();
-
-//                try
-//                {
-//                    // Obtener la fecha actual
-//                    var fechaActual = DateTime.Now.Date;
-
-//                    // Consultar los recordatorios con fecha igual a hoy
-//                    var recordatorios = (await unidadTrabajo.Evento
-//                        .ObtenerTodos(r => r.FechaRecordatorio.HasValue && r.FechaRecordatorio.Value.Date == fechaActual))
-//                        .ToList();
-
-//                    foreach (var recordatorio in recordatorios)
-//                    {
-//                        // Lógica para enviar el recordatorio (puede ser un correo, notificación, etc.)
-//                        _logger.LogInformation($"Enviando recordatorio: {recordatorio}");
-//                        // Ejemplo: await EnviarNotificacionAsync(recordatorio);
-//                    }
-//                }
-//                catch (Exception ex)
-//                {
-//                    _logger.LogError($"Error al procesar los recordatorios: {ex.Message}");
-//                }
-//            }
-
-//            // Esperar un intervalo antes de la próxima ejecución (por ejemplo, 1 hora)
-//            await Task.Delay(TimeSpan.FromMinutes(0.5), stoppingToken);
-//        }
-//    }
-
-//}
