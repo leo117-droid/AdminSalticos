@@ -1,0 +1,160 @@
+﻿@model SalticosAdmin.Modelos.Seguro
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear Nuevo Seguro";
+
+}
+
+<form method="post">
+    <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
+
+        <div class="row border-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        </div>
+
+        @if (Model.Id != 0)
+        { // Actualizar
+            titulo = "Actualizar Seguro";
+            <input type="hidden" asp-for="Id" id="id" />
+        }
+
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Tipo Seguro</label>
+                <input type="text" asp-for="TipoSeguro" class="form-control" placeholder="Tipo Seguro" id="TipoSeguro" />
+                <span asp-validation-for="TipoSeguro" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Nombre Aseguradora</label>
+                <input type="text" asp-for="NombreAseguradora" class="form-control" placeholder="NombreAseguradora" />
+                <span asp-validation-for="NombreAseguradora" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Numero Poliza</label>
+                <input type="number" asp-for="NumeroPoliza" class="form-control" placeholder="Numero Poliza" id="poliza" />
+                <span asp-validation-for="NumeroPoliza" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        @if (Model.Id != 0)
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha Inicio</label>
+                    <input asp-for="FechaInicio" class="form-control" type="date" />
+                    <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha Inicio</label>
+                    <input asp-for="FechaInicio" class="form-control" type="date"
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                </div>
+            </div>
+        }
+
+
+        @if (Model.Id != 0)
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha Vencimiento</label>
+                    <input asp-for="FechaVencimiento" class="form-control" type="date" />
+                    <span asp-validation-for="FechaVencimiento" class="text-danger"></span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row mb-2 mt-2">
+                <div class="form-group col-md-6">
+                    <label>Fecha Vencimiento</label>
+                    <input asp-for="FechaVencimiento" class="form-control" type="date"
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="FechaVencimiento" class="text-danger"></span>
+                </div>
+            </div>
+        }
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <label>Estado</label>
+                <select asp-for="Estado" class="form-select">
+                    <option value="true">Vigente</option>
+                    <option value="false">Vencido</option>
+                </select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <br />
+
+        <div>
+            @if (Model.Id != 0)
+            {
+                <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+            }
+            else
+            {
+                <partial name="_BotonesCrearYRegresar" />
+            }
+        </div>
+
+
+    </div>
+
+
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.getElementById("poliza").addEventListener('change', function () {
+            validarPlaca();
+        });
+
+        function validarPlaca() {
+            var url = '@Url.Content("~/")' + "Admin/Seguro/ValidarPoliza";
+            var id = '#id';
+            var poliza = '#poliza';
+
+            $.getJSON(url, { id: $(id).val(), poliza: $(poliza).val() }, function (data) {
+
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var placa = document.getElementById("poliza");
+                        swal("Error", "Poliza ya Existe", "error");
+                        poliza.value = "";
+                    }
+                });
+
+            })
+
+        }
+
+    </script>
+}

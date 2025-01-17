@@ -33,17 +33,28 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
 
         public IEnumerable<SelectListItem> ObtenerVehiculo(string obj, int? idEvento)
         {
-            if (obj.Equals("Vehiculo")){  
-                var vehiculo = _db.Vehiculos
-                                .Where(t => !_db.EventoVehiculo
-                                            .Any(cp => cp.IdVehiculo == t.Id && cp.IdEvento == idEvento))
+            if (obj.Equals("Vehiculo")){
+                var vehiculosDisponibles = _db.Vehiculos
+                                        .Where(t => !_db.EventoVehiculo
+                                        .Any(evVeh => evVeh.IdVehiculo == t.Id &&
+                                              (
+                                                  evVeh.IdEvento == idEvento || 
+                                                  _db.Eventos.Any(ev => ev.Id == evVeh.IdEvento &&
+                                                                        ev.Id != idEvento && 
+                                                                        _db.Eventos.Where(e => e.Id == idEvento)
+                                                                                   .Any(evento => evento.Fecha == ev.Fecha && 
+                                                                                                  evento.HoraInicio < ev.HoraFinal && 
+                                                                                                  evento.HoraFinal > ev.HoraInicio)
+                                                  )
+                                              )
+                                        ))
                                 .Select(c => new SelectListItem
                                 {
                                     Text = $"{c.Modelo} - {c.Placa}",
                                     Value = c.Id.ToString()
                                 })
                                 .ToList();
-                return vehiculo;
+                return vehiculosDisponibles;
             }
             return null;
         }

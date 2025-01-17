@@ -13,5 +13,8 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio
     {
         void Actualizar(ServicioAdicional servicioAdicional);
 
+        Task<List<ServicioAdicional>> ObtenerServiciosAdicionalesSolapados(DateTime fechaEvento, TimeSpan horaInicio, TimeSpan horaFin);
+
+
     }
 }

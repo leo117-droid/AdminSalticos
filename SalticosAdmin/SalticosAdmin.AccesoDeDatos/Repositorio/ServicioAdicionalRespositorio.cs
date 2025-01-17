@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SalticosAdmin.AccesoDeDatos.Data;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
@@ -37,6 +38,17 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
                 _db.SaveChanges();
 
             }
+        }
+
+        public async Task<List<ServicioAdicional>> ObtenerServiciosAdicionalesSolapados(DateTime fechaEvento, TimeSpan horaInicio, TimeSpan horaFin)
+        {
+            return await _db.ServiciosAdicionales
+                .Where(m => _db.EventoServicioAdicional
+                    .Any(em => em.IdServicioAdicional == m.Id &&
+                               em.Evento.Fecha == fechaEvento &&
+                               em.Evento.HoraInicio < horaFin &&
+                               em.Evento.HoraFinal > horaInicio))
+                .ToListAsync();
         }
     }
 }

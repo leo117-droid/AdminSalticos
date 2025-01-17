@@ -1,4 +1,5 @@
-﻿using SalticosAdmin.AccesoDeDatos.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SalticosAdmin.AccesoDeDatos.Data;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
 using SalticosAdmin.Modelos.ViewModels;
@@ -37,6 +38,17 @@ namespace SalticosAdmin.AccesoDeDatos.Repositorio
                 _db.SaveChanges();
 
             }
+        }
+
+        public async Task<List<Mobiliario>> ObtenerMobiliariosSolapados(DateTime fechaEvento, TimeSpan horaInicio, TimeSpan horaFin)
+        {
+            return await _db.Mobilarios
+                .Where(m => _db.EventoMobiliario
+                    .Any(em => em.IdMobiliario == m.Id &&
+                               em.Evento.Fecha == fechaEvento &&
+                               em.Evento.HoraInicio < horaFin &&
+                               em.Evento.HoraFinal > horaInicio))
+                .ToListAsync();
         }
 
     }

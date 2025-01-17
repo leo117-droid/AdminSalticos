@@ -57,7 +57,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 }
 
 
-                //  productoPrecioVM.tipoPrecioNombre = productoPrecioVM.ListaPrecios.Where(x => x.Value.Equals(productoPrecioOBJ.Idprecio.ToString())).Select(x=>x.Text).FirstOrDefault();
                 eventoPersonalVM.IdPersonal = eventoPersonalOBJ.IdPersonal;
 
 
@@ -87,7 +86,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 if (eventoPersonalVM.IdRelacion == 0)
                 {
-                    //productoPrecioVM.productoPrecio.Idproducto = id;
+                    
                     EventoPersonal existePersonal = await _unidadTrabajo.EventoPersonal.ObtenerPrimero(X => X.IdEvento == eventoPersonalVM.IdEvento && X.IdPersonal == eventoPersonalVM.IdPersonal);
                     if (existePersonal != null)
                     {

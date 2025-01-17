@@ -498,10 +498,10 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<bool>("EstadoRecordatorio")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTime?>("FechaRecordatorio")
+                    b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
                     b.Property<TimeSpan>("HoraFinal")
@@ -881,6 +881,52 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
                     b.ToTable("Personal");
                 });
 
+            modelBuilder.Entity("SalticosAdmin.Modelos.Proveedor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Contacto")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Correo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Direccion")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("NombreEmpresa")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("TipoProveedor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Proveedor");
+                });
+
             modelBuilder.Entity("SalticosAdmin.Modelos.RolPersonal", b =>
                 {
                     b.Property<int>("Id")
@@ -897,6 +943,41 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RolPersonal");
+                });
+
+            modelBuilder.Entity("SalticosAdmin.Modelos.Seguro", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaVencimiento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NombreAseguradora")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("NumeroPoliza")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TipoSeguro")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Seguros");
                 });
 
             modelBuilder.Entity("SalticosAdmin.Modelos.ServicioAdicional", b =>
