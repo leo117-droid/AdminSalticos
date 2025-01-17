@@ -1,0 +1,166 @@
+﻿@{
+    ViewData["Title"] = "Informe de Productos Más Solicitados";
+    var inflablesMasSolicitados = ViewBag.InflablesMasSolicitados as List<SalticosAdmin.Modelos.InflableConCantidad>;
+    var alimentosMasSolicitados = ViewBag.AlimentosMasSolicitados as List<SalticosAdmin.Modelos.AlimentoConCantidad>;
+    var mobiliariosMasSolicitados = ViewBag.MobiliariosMasSolicitados as List<SalticosAdmin.Modelos.MobiliarioConCantidad>;
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <p>Descarga el informe con los productos más solicitados:</p>
+
+    <h2>Inflables Más Solicitados</h2>
+    @if (inflablesMasSolicitados != null && inflablesMasSolicitados.Any())
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre del Inflable</th>
+                    <th>Cantidad de Veces Solicitado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var inflable in inflablesMasSolicitados)
+                {
+                    <tr>
+                        <td>@inflable.Nombre</td>
+                        <td>@inflable.Cantidad</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <canvas id="chartInflables" width="100" height="50"></canvas>
+    }
+    else
+    {
+        <p>No hay inflables solicitados para mostrar.</p>
+    }
+    <br />
+    <br />
+    <form method="post" action="@Url.Action("GenerarInformeInflables", "Informe")">
+        <button type="submit" class="btn btn-primary">Descargar Informe Inflables en PDF</button>
+    </form>
+
+    <h2>Alimentos Más Solicitados</h2>
+    @if (alimentosMasSolicitados != null && alimentosMasSolicitados.Any())
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre del Alimento</th>
+                    <th>Cantidad de Veces Solicitado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var alimento in alimentosMasSolicitados)
+                {
+                    <tr>
+                        <td>@alimento.Nombre</td>
+                        <td>@alimento.Cantidad</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <canvas id="chartAlimentos" width="100" height="50"></canvas>
+    }
+    else
+    {
+        <p>No hay alimentos solicitados para mostrar.</p>
+    }
+    <br />
+    <br />
+    <form method="post" action="@Url.Action("GenerarInformeAlimentos", "Informe")">
+        <button type="submit" class="btn btn-primary">Descargar Informe Alimentacion en PDF</button>
+    </form>
+
+    <h2>Mobiliarios Más Solicitados</h2>
+    @if (mobiliariosMasSolicitados != null && mobiliariosMasSolicitados.Any())
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre del Mobiliario</th>
+                    <th>Cantidad de Veces Solicitado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var mobiliario in mobiliariosMasSolicitados)
+                {
+                    <tr>
+                        <td>@mobiliario.Nombre</td>
+                        <td>@mobiliario.Cantidad</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <canvas id="chartMobiliarios" width="100" height="50"></canvas>
+    }
+    else
+    {
+        <p>No hay mobiliarios solicitados para mostrar.</p>
+    }
+
+    <br />
+    <br />
+
+    <form method="post" action="@Url.Action("GenerarInformeMobiliarios", "Informe")">
+        <button type="submit" class="btn btn-primary">Descargar Informe Mobiliario en PDF</button>
+    </form>
+
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function generateColors(count) {
+            const colors = [];
+            for (let i = 0; i < count; i++) {
+                const red = Math.floor(Math.random() * 255);
+                const green = Math.floor(Math.random() * 255);
+                const blue = Math.floor(Math.random() * 255);
+                colors.push(`rgb(${red}, ${green}, ${blue})`);
+            }
+            return colors;
+        }
+
+        const inflablesData = {
+            labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(inflablesMasSolicitados?.Select(i => i.Nombre))),
+            datasets: [{
+                label: 'Inflables Más Solicitados',
+                data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(inflablesMasSolicitados?.Select(i => i.Cantidad))),
+                backgroundColor: generateColors(@inflablesMasSolicitados?.Count() ?? 0),
+                borderColor: 'rgba(0, 0, 0, 0.1)',
+                borderWidth: 1
+            }]
+        };
+
+        const alimentosData = {
+            labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(alimentosMasSolicitados?.Select(a => a.Nombre))),
+            datasets: [{
+                label: 'Alimentos Más Solicitados',
+                data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(alimentosMasSolicitados?.Select(a => a.Cantidad))),
+                backgroundColor: generateColors(@alimentosMasSolicitados?.Count() ?? 0),
+                borderColor: 'rgba(0, 0, 0, 0.1)',
+                borderWidth: 1
+            }]
+        };
+
+        const mobiliariosData = {
+            labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(mobiliariosMasSolicitados?.Select(m => m.Nombre))),
+            datasets: [{
+                label: 'Mobiliarios Más Solicitados',
+                data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(mobiliariosMasSolicitados?.Select(m => m.Cantidad))),
+                backgroundColor: generateColors(@mobiliariosMasSolicitados?.Count() ?? 0),
+                borderColor: 'rgba(0, 0, 0, 0.1)',
+                borderWidth: 1
+            }]
+        };
+
+        new Chart(document.getElementById('chartInflables'), { type: 'pie', data: inflablesData });
+        new Chart(document.getElementById('chartAlimentos'), { type: 'bar', data: alimentosData });
+        new Chart(document.getElementById('chartMobiliarios'), { type: 'bar', data: mobiliariosData });
+    </script>
+}
+
+
+
