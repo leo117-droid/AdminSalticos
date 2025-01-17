@@ -21,8 +21,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         public IActionResult Informe()
         {
+            // Obtener los datos de los inflables más solicitados
+            var inflablesMasSolicitados = _informeServicio.ObtenerInflablesMasSolicitados();
+            ViewBag.InflablesMasSolicitados = inflablesMasSolicitados;
+
+            var alimentosMasSolicitados = _informeServicio.ObtenerAlimentosMasSolicitados();
+            ViewBag.AlimentosMasSolicitados = alimentosMasSolicitados;
+
+            var mobiliariosMasSolicitados = _informeServicio.ObtenerMobiliariosMasSolicitados();
+            ViewBag.MobiliariosMasSolicitados = mobiliariosMasSolicitados;
+            // Pasar los datos a la vista
             return View();
         }
+
 
 
         // Acción para generar el informe

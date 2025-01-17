@@ -46,6 +46,8 @@ namespace SalticosAdmin.Servicios
             return alimentosMasSolicitados;
         }
 
+
+
         // Método para obtener los mobiliarios más solicitados
         public List<MobiliarioConCantidad> ObtenerMobiliariosMasSolicitados()
         {
@@ -62,6 +64,8 @@ namespace SalticosAdmin.Servicios
 
             return mobiliariosMasSolicitados;
         }
+
+
     }
 }
 
