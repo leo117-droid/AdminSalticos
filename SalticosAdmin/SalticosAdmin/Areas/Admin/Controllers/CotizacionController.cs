@@ -5,6 +5,11 @@ using SalticosAdmin.Modelos.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SalticosAdmin.Servicios;
+using System.IO;
+using System.Collections.Generic;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace SalticosAdmin.Areas.Admin.Controllers
 {
@@ -177,6 +182,94 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             return View("ResumenCotizacion", cotizacion);
         }
+
+        public async Task<IActionResult> DescargarPDF(
+            List<int> inflableIds,
+            List<int> mobiliarioIds,
+            List<int> servicioIds,
+            List<int> alimentacionIds,
+            List<int> transporteIds)
+        {
+            var inflables = await _unidadTrabajo.Inflable.ObtenerTodos();
+            var mobiliarios = await _unidadTrabajo.Mobiliario.ObtenerTodos();
+            var servicios = await _unidadTrabajo.ServicioAdicional.ObtenerTodos();
+            var alimentacion = await _unidadTrabajo.Alimentacion.ObtenerTodos();
+            var tarifas = await _unidadTrabajo.TarifasTransporte.ObtenerTodos();
+
+            var inflablesSeleccionados = inflables.Where(i => inflableIds.Contains(i.Id)).ToList();
+            var mobiliariosSeleccionados = mobiliarios.Where(m => mobiliarioIds.Contains(m.Id)).ToList();
+            var serviciosSeleccionados = servicios.Where(s => servicioIds.Contains(s.Id)).ToList();
+            var alimentacionSeleccionada = alimentacion.Where(a => alimentacionIds.Contains(a.Id)).ToList();
+            var transporteSeleccionado = tarifas.Where(t => transporteIds.Contains(t.Id)).ToList();
+
+            using (var ms = new MemoryStream())
+            {
+                var document = new Document();
+                PdfWriter.GetInstance(document, ms);
+                document.Open();
+
+                document.Add(new Paragraph("Resumen de Cotización"));
+                document.Add(new Paragraph(" "));
+
+                if (inflablesSeleccionados.Any())
+                {
+                    document.Add(new Paragraph("Inflables Seleccionados"));
+                    foreach (var inflable in inflablesSeleccionados)
+                    {
+                        document.Add(new Paragraph($"Nombre: {inflable.Nombre}, Descripción: {inflable.Descripcion}, Precio: ₡{inflable.Precio.ToString("N2")}"));
+                    }
+                }
+
+                document.Add(new Paragraph(" "));
+
+                if (mobiliariosSeleccionados.Any())
+                {
+                    document.Add(new Paragraph("Mobiliarios Seleccionados"));
+                    foreach (var mobiliario in mobiliariosSeleccionados)
+                    {
+                        document.Add(new Paragraph($"Nombre: {mobiliario.Nombre}, Descripción: {mobiliario.Descripcion}, Precio: ₡{mobiliario.Precio.ToString("N2")}"));
+                    }
+                }
+
+                document.Add(new Paragraph(" "));
+
+                if (serviciosSeleccionados.Any())
+                {
+                    document.Add(new Paragraph("Servicios Adicionales Seleccionados"));
+                    foreach (var servicio in serviciosSeleccionados)
+                    {
+                        document.Add(new Paragraph($"Nombre: {servicio.Nombre}, Descripción: {servicio.Descripcion}, Precio: ₡{servicio.Precio.ToString("N2")}"));
+                    }
+                }
+
+                document.Add(new Paragraph(" "));
+
+                if (alimentacionSeleccionada.Any())
+                {
+                    document.Add(new Paragraph("Alimentación Seleccionada"));
+                    foreach (var opcion in alimentacionSeleccionada)
+                    {
+                        document.Add(new Paragraph($"Nombre: {opcion.Nombre}, Descripción: {opcion.Descripcion}, Precio: ₡{opcion.Precio.ToString("N2")}"));
+                    }
+                }
+
+                document.Add(new Paragraph(" "));
+
+                if (transporteSeleccionado.Any())
+                {
+                    document.Add(new Paragraph("Transporte Seleccionado"));
+                    foreach (var tarifa in transporteSeleccionado)
+                    {
+                        document.Add(new Paragraph($"Provincia: {tarifa.Provincia}, Precio: ₡{tarifa.Precio.ToString("N2")}"));
+                    }
+                }
+
+                document.Close();
+                var bytes = ms.ToArray();
+                return File(bytes, "application/pdf", "ResumenCotizacion.pdf");
+            }
+        }
+
 
 
 

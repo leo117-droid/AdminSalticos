@@ -169,7 +169,16 @@
     <!-- Aquí se agregará un contenedor para alinear los botones a la derecha -->
     <div class="mt-4 text-end">
         <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+        <a asp-action="DescargarPDF" asp-route-inflableIds="@string.Join(",", Model.InflablesSeleccionados.Select(i => i.Inflable.Id))"
+           asp-route-mobiliarioIds="@string.Join(",", Model.MobiliariosSeleccionados.Select(m => m.Mobiliario.Id))"
+           asp-route-servicioIds="@string.Join(",", Model.ServiciosSeleccionados.Select(s => s.Servicio.Id))"
+           asp-route-alimentacionIds="@string.Join(",", Model.AlimentacionSeleccionada.Select(a => a.Alimentacion.Id))"
+           
+           class="btn btn-primary"><i class="bi bi-file-earmark-pdf"></i> Descargar PDF</a>
     </div>
+
+
+
 
 </div>
 
