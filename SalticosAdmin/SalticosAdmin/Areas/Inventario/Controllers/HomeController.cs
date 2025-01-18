@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
 using SalticosAdmin.Modelos.ViewModels;
 using System.Diagnostics;
@@ -11,11 +12,13 @@ namespace SalticosAdmin.Areas.Inventario.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnidadTrabajo _unidadTrabajo;
 
-        public HomeController(ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager)
+        public HomeController(ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager, IUnidadTrabajo unidadTrabajo)
         {
             _logger = logger;
             _signInManager = signInManager;
+            _unidadTrabajo = unidadTrabajo;
         }
 
         public async Task<IActionResult> Index()
@@ -24,7 +27,8 @@ namespace SalticosAdmin.Areas.Inventario.Controllers
             {
                 return Redirect("/Identity/Account/Login");
             }
-            return View();
+            IEnumerable<Inflable> inflableLista = await _unidadTrabajo.Inflable.ObtenerTodos();
+            return View(inflableLista);
         }
 
         public IActionResult Privacy()
