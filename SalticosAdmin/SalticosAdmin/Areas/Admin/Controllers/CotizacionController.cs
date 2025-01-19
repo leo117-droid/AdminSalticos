@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Newtonsoft.Json;
+using System.Data.SqlTypes;
 
 namespace SalticosAdmin.Areas.Admin.Controllers
 {
@@ -57,7 +58,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             List<int> inflableIds,
             List<int> inflableHorasAdicionales, // Horas adicionales por inflable
             List<int> mobiliarioIds,
-            List<int> cantidades,
+            List<int> mobiliarioCantidades,
             List<int> servicioIds,
             List<int> servicioCantidades,
             List<int> alimentacionIds, // IDs de alimentación seleccionada
@@ -125,14 +126,23 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var mobiliariosSeleccionados = new List<(Mobiliario Mobiliario, int Cantidad)>();
             double montoMobiliarios = 0;
 
-            if (mobiliarioIds != null && cantidades != null)
+            if (mobiliarioIds != null && mobiliarioCantidades != null)
             {
                 for (int i = 0; i < mobiliarioIds.Count; i++)
                 {
                     var mobiliario = mobiliarios.FirstOrDefault(m => m.Id == mobiliarioIds[i]);
                     if (mobiliario != null)
                     {
-                        var cantidad = cantidades.ElementAtOrDefault(i);
+                        // Busca la cantidad asociada al mobiliario
+                        var key = $"mobiliarioCantidades_{mobiliarioIds[i]}";
+                        var cantidadStr = form[key];
+                        int cantidad = 0;
+
+                        // Si se encuentra el valor y es válido, úsalo; de lo contrario, asigna 0
+                        if (!string.IsNullOrEmpty(cantidadStr) && int.TryParse(cantidadStr, out var cantidadParseada))
+                        {
+                            cantidad = Math.Max(0, cantidadParseada);
+                        }
                         if (cantidad > 0)
                         {
                             mobiliariosSeleccionados.Add((mobiliario, cantidad));
@@ -154,7 +164,16 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     var servicio = servicios.FirstOrDefault(s => s.Id == servicioIds[i]);
                     if (servicio != null)
                     {
-                        var cantidad = servicioCantidades.ElementAtOrDefault(i);
+                        // Busca la cantidad asociada al servicio
+                        var key = $"servicioCantidades_{servicioIds[i]}";
+                        var cantidadStr = form[key];
+                        int cantidad = 0;
+
+                        // Valida y asigna la cantidad
+                        if (!string.IsNullOrEmpty(cantidadStr) && int.TryParse(cantidadStr, out var cantidadParseada))
+                        {
+                            cantidad = Math.Max(1, cantidadParseada); // Mínimo 1
+                        }
                         if (cantidad > 0)
                         {
                             serviciosSeleccionados.Add((servicio, cantidad));
@@ -176,7 +195,16 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     var opcion = alimentacion.FirstOrDefault(a => a.Id == alimentacionIds[i]);
                     if (opcion != null)
                     {
-                        var cantidad = alimentacionCantidades.ElementAtOrDefault(i);
+                        // Busca la cantidad asociada al alimento
+                        var key = $"alimentacionCantidades_{alimentacionIds[i]}";
+                        var cantidadStr = form[key];
+                        int cantidad = 0;
+
+                        // Si se encuentra el valor y es válido, úsalo; de lo contrario, asigna 0
+                        if (!string.IsNullOrEmpty(cantidadStr) && int.TryParse(cantidadStr, out var cantidadParseada))
+                        {
+                            cantidad = Math.Max(0, cantidadParseada);
+                        }
                         if (cantidad > 0)
                         {
                             alimentacionSeleccionada.Add((opcion, cantidad));
@@ -359,9 +387,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     document.Add(new Paragraph("Mobiliarios Seleccionados:"));
                     document.Add(new Paragraph(" "));
 
-                    var table = new PdfPTable(4); // Nombre, Descripción, Cantidad, Precio Total
+                    var table = new PdfPTable(5); // Nombre, Descripción, Cantidad, Precio Total
                     table.AddCell("Nombre");
                     table.AddCell("Descripción");
+                    table.AddCell("Precio / Unidad");
                     table.AddCell("Cantidad");
                     table.AddCell("Precio Total");
 
@@ -369,6 +398,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     {
                         table.AddCell(mobiliario.Mobiliario.Nombre);
                         table.AddCell(mobiliario.Mobiliario.Descripcion);
+                        table.AddCell($"₡{mobiliario.Mobiliario.Precio:N2}");
                         table.AddCell(mobiliario.Cantidad.ToString());
                         var precioTotal = mobiliario.Mobiliario.Precio * mobiliario.Cantidad;
                         table.AddCell($"₡{precioTotal:N2}");
@@ -384,14 +414,16 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     document.Add(new Paragraph("Servicios Adicionales Seleccionados:"));
                     document.Add(new Paragraph(" "));
 
-                    var table = new PdfPTable(3); // Nombre, Cantidad, Precio Total
+                    var table = new PdfPTable(4); // Nombre, Cantidad, Precio Total
                     table.AddCell("Nombre");
+                    table.AddCell("Precio / Unidad");
                     table.AddCell("Cantidad");
                     table.AddCell("Precio Total");
 
                     foreach (var servicio in cotizacionActual.ServiciosSeleccionados)
                     {
                         table.AddCell(servicio.Servicio.Nombre);
+                        table.AddCell($"₡{servicio.Servicio.Precio:N2}");
                         table.AddCell(servicio.Cantidad.ToString());
                         var precioTotal = servicio.Servicio.Precio * servicio.Cantidad;
                         table.AddCell($"₡{precioTotal:N2}");
@@ -407,14 +439,16 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     document.Add(new Paragraph("Alimentación Seleccionada:"));
                     document.Add(new Paragraph(" "));
 
-                    var table = new PdfPTable(3); // Nombre, Cantidad, Precio Total
+                    var table = new PdfPTable(4); // Nombre, Cantidad, Precio Total
                     table.AddCell("Nombre");
+                    table.AddCell("Precio / Unidad");
                     table.AddCell("Cantidad");
                     table.AddCell("Precio Total");
 
                     foreach (var opcion in cotizacionActual.AlimentacionSeleccionada)
                     {
                         table.AddCell(opcion.Alimentacion.Nombre);
+                        table.AddCell($"₡{opcion.Alimentacion.Precio:N2}");
                         table.AddCell(opcion.Cantidad.ToString());
                         var precioTotal = opcion.Alimentacion.Precio * opcion.Cantidad;
                         table.AddCell($"₡{precioTotal:N2}");

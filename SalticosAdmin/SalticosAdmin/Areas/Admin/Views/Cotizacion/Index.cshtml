@@ -61,7 +61,7 @@
                         <td>@mobiliario.Descripcion</td>
                         <td>₡@mobiliario.Precio.ToString("N2")</td>
                         <td>
-                            <input type="number" name="cantidades" value="1" min="1" style="width: 80px;" />
+                            <input type="number" name="mobiliarioCantidades_@mobiliario.Id" value="1" min="1" style="width: 80px;" />
                         </td>
                     </tr>
                 }
@@ -90,7 +90,7 @@
                         <td>@Model.ServiciosAdicionales[i].Descripcion</td>
                         <td>₡@Model.ServiciosAdicionales[i].Precio.ToString("N2")</td>
                         <td>
-                            <input type="number" name="servicioCantidades" min="1" value="1" />
+                            <input type="number" name="servicioCantidades_@Model.ServiciosAdicionales[i].Id" min="1" value="1" />
                         </td>
                     </tr>
                 }
@@ -119,7 +119,7 @@
                         <td>@alimentacion.Descripcion</td>
                         <td>₡@alimentacion.Precio.ToString("N2")</td>
                         <td>
-                            <input type="number" name="alimentacionCantidades" value="1" min="1" style="width: 80px;" />
+                            <input type="number" name="alimentacionCantidades_@alimentacion.Id" value="1" min="1" style="width: 80px;" />
                         </td>
                     </tr>
                 }
