@@ -10,6 +10,7 @@ using System.IO;
 using System.Collections.Generic;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Newtonsoft.Json;
 
 namespace SalticosAdmin.Areas.Admin.Controllers
 {
@@ -22,6 +23,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public List<ServicioAdicional> ServiciosSeleccionados { get; set; } = new List<ServicioAdicional>();
         public List<Alimentacion> AlimentacionSeleccionada { get; set; } = new List<Alimentacion>();
         public decimal MontoTotal { get; set; }
+
+        public CotizacionVM cotizacionActual { get; set; }
 
         public CotizacionController(IUnidadTrabajo unidadTrabajo)
         {
@@ -59,7 +62,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             List<int> servicioCantidades,
             List<int> alimentacionIds, // IDs de alimentación seleccionada
             List<int> alimentacionCantidades, 
-            List<int> transporteIds) // Cantidades para cada opción de alimentación
+            List<int> transporteIds,
+            IFormCollection form) 
         {
             if ((inflableIds == null || !inflableIds.Any()) &&
                 (mobiliarioIds == null || !mobiliarioIds.Any()) &&
@@ -74,19 +78,37 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var inflables = await _unidadTrabajo.Inflable.ObtenerTodos();
             var inflablesSeleccionados = new List<(Inflable Inflable, int HorasAdicionales)>();
             double montoInflables = 0;
-
             if (inflableIds != null && inflableHorasAdicionales != null)
             {
+
                 for (int i = 0; i < inflableIds.Count; i++)
                 {
                     var inflable = inflables.FirstOrDefault(m => m.Id == inflableIds[i]);
                     if (inflable != null)
                     {
-                        // Si las horas adicionales no están especificadas, asigna 0 por defecto.
-                        var horaAdicional = inflableHorasAdicionales.ElementAtOrDefault(i);
+                        
+                        /// ------ PRUEBA DE HORAS ADICIONALES
 
-                        // Asegúrate de que horaAdicional no sea negativo.
-                        horaAdicional = Math.Max(0, horaAdicional);
+                        // Busca las horas adicionales asociadas al inflable
+                        var key = $"inflableHorasAdicionales_{inflableIds[i]}";
+                        var horasAdicionalesStr = form[key];
+                        int horaAdicional = 0;
+
+                        // Si se encuentra el valor y es válido, úsalo; de lo contrario, asigna 0
+                        if (!string.IsNullOrEmpty(horasAdicionalesStr) && int.TryParse(horasAdicionalesStr, out var horas))
+                        {
+                            horaAdicional = Math.Max(0, horas);
+                        }
+
+
+
+                        /// 
+
+                        // Si las horas adicionales no están especificadas, asigna 0 por defecto.
+                        //var horaAdicional = inflableHorasAdicionales.ElementAtOrDefault(i);
+
+                        //// Asegúrate de que horaAdicional no sea negativo.
+                        //horaAdicional = Math.Max(0, horaAdicional);
 
                         // Agrega el inflable a la lista de seleccionados.
                         inflablesSeleccionados.Add((inflable, horaAdicional));
@@ -179,97 +201,308 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 TarifaTransporteSeleccionada = tarifaTransporteSeleccionada.Any() ? tarifaTransporteSeleccionada: null, 
                 MontoTotal = montoInflables + montoMobiliarios + montoServicios + montoAlimentacion + montoTransporte
             };
-
+            
+            TempData["CotizacionActual"] = JsonConvert.SerializeObject(cotizacion);
+            TempData.Keep("CotizacionActual");
             return View("ResumenCotizacion", cotizacion);
         }
 
-        public async Task<IActionResult> DescargarPDF(
-            List<int> inflableIds,
-            List<int> mobiliarioIds,
-            List<int> servicioIds,
-            List<int> alimentacionIds,
-            List<int> transporteIds)
+        //public async Task<IActionResult> DescargarPDF(
+        //    List<int> inflableIds,
+        //    List<int> mobiliarioIds,
+        //    List<int> servicioIds,
+        //    List<int> alimentacionIds,
+        //    List<int> transporteIds)
+        //{
+        //    var inflables = await _unidadTrabajo.Inflable.ObtenerTodos();
+        //    var mobiliarios = await _unidadTrabajo.Mobiliario.ObtenerTodos();
+        //    var servicios = await _unidadTrabajo.ServicioAdicional.ObtenerTodos();
+        //    var alimentacion = await _unidadTrabajo.Alimentacion.ObtenerTodos();
+        //    var tarifas = await _unidadTrabajo.TarifasTransporte.ObtenerTodos();
+
+        //    var inflablesSeleccionados = inflables.Where(i => inflableIds.Contains(i.Id)).ToList();
+        //    var mobiliariosSeleccionados = mobiliarios.Where(m => mobiliarioIds.Contains(m.Id)).ToList();
+        //    var serviciosSeleccionados = servicios.Where(s => servicioIds.Contains(s.Id)).ToList();
+        //    var alimentacionSeleccionada = alimentacion.Where(a => alimentacionIds.Contains(a.Id)).ToList();
+        //    var transporteSeleccionado = tarifas.Where(t => transporteIds.Contains(t.Id)).ToList();
+
+        //    using (var ms = new MemoryStream())
+        //    {
+        //        var document = new Document();
+        //        PdfWriter.GetInstance(document, ms);
+        //        document.Open();
+
+        //        document.Add(new Paragraph("Resumen de Cotización"));
+        //        document.Add(new Paragraph(" "));
+
+        //        if (inflablesSeleccionados.Any())
+        //        {
+        //            document.Add(new Paragraph("Inflables Seleccionados"));
+        //            foreach (var inflable in inflablesSeleccionados)
+        //            {
+        //                document.Add(new Paragraph($"Nombre: {inflable.Nombre}, Descripción: {inflable.Descripcion}, Precio: ₡{inflable.Precio.ToString("N2")}"));
+        //            }
+        //        }
+
+        //        document.Add(new Paragraph(" "));
+
+        //        if (mobiliariosSeleccionados.Any())
+        //        {
+        //            document.Add(new Paragraph("Mobiliarios Seleccionados"));
+        //            foreach (var mobiliario in mobiliariosSeleccionados)
+        //            {
+        //                document.Add(new Paragraph($"Nombre: {mobiliario.Nombre}, Descripción: {mobiliario.Descripcion}, Precio: ₡{mobiliario.Precio.ToString("N2")}"));
+        //            }
+        //        }
+
+        //        document.Add(new Paragraph(" "));
+
+        //        if (serviciosSeleccionados.Any())
+        //        {
+        //            document.Add(new Paragraph("Servicios Adicionales Seleccionados"));
+        //            foreach (var servicio in serviciosSeleccionados)
+        //            {
+        //                document.Add(new Paragraph($"Nombre: {servicio.Nombre}, Descripción: {servicio.Descripcion}, Precio: ₡{servicio.Precio.ToString("N2")}"));
+        //            }
+        //        }
+
+        //        document.Add(new Paragraph(" "));
+
+        //        if (alimentacionSeleccionada.Any())
+        //        {
+        //            document.Add(new Paragraph("Alimentación Seleccionada"));
+        //            foreach (var opcion in alimentacionSeleccionada)
+        //            {
+        //                document.Add(new Paragraph($"Nombre: {opcion.Nombre}, Descripción: {opcion.Descripcion}, Precio: ₡{opcion.Precio.ToString("N2")}"));
+        //            }
+        //        }
+
+        //        document.Add(new Paragraph(" "));
+
+        //        if (transporteSeleccionado.Any())
+        //        {
+        //            document.Add(new Paragraph("Transporte Seleccionado"));
+        //            foreach (var tarifa in transporteSeleccionado)
+        //            {
+        //                document.Add(new Paragraph($"Provincia: {tarifa.Provincia}, Precio: ₡{tarifa.Precio.ToString("N2")}"));
+        //            }
+        //        }
+
+        //        document.Close();
+        //        var bytes = ms.ToArray();
+        //        return File(bytes, "application/pdf", "ResumenCotizacion.pdf");
+        //    }
+        //}
+
+
+        [HttpPost]
+        public IActionResult DescargarPDF()
         {
-            var inflables = await _unidadTrabajo.Inflable.ObtenerTodos();
-            var mobiliarios = await _unidadTrabajo.Mobiliario.ObtenerTodos();
-            var servicios = await _unidadTrabajo.ServicioAdicional.ObtenerTodos();
-            var alimentacion = await _unidadTrabajo.Alimentacion.ObtenerTodos();
-            var tarifas = await _unidadTrabajo.TarifasTransporte.ObtenerTodos();
+            if (TempData["CotizacionActual"] == null)
+            {
+                TempData["Error"] = "No se encontró una cotización activa.";
+                return RedirectToAction(nameof(Index));
+            }
 
-            var inflablesSeleccionados = inflables.Where(i => inflableIds.Contains(i.Id)).ToList();
-            var mobiliariosSeleccionados = mobiliarios.Where(m => mobiliarioIds.Contains(m.Id)).ToList();
-            var serviciosSeleccionados = servicios.Where(s => servicioIds.Contains(s.Id)).ToList();
-            var alimentacionSeleccionada = alimentacion.Where(a => alimentacionIds.Contains(a.Id)).ToList();
-            var transporteSeleccionado = tarifas.Where(t => transporteIds.Contains(t.Id)).ToList();
+            var cotizacionJson = TempData["CotizacionActual"].ToString();
+            var cotizacionActual = JsonConvert.DeserializeObject<CotizacionVM>(cotizacionJson);
 
-            using (var ms = new MemoryStream())
+            if (cotizacionActual == null)
+            {
+                TempData["Error"] = "Error al procesar los datos de la cotización.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            using (var memoryStream = new MemoryStream())
             {
                 var document = new Document();
-                PdfWriter.GetInstance(document, ms);
+                var writer = PdfWriter.GetInstance(document, memoryStream);
                 document.Open();
-
+                AddHeaderAndFooter(document, writer);
+                // Agregar título
                 document.Add(new Paragraph("Resumen de Cotización"));
+                document.Add(new Paragraph($"Monto Total: ₡{cotizacionActual.MontoTotal:N2}"));
+                document.Add(new Paragraph($"Monto Total con IVA: ₡{cotizacionActual.MontoTotalIVA:N2}"));
                 document.Add(new Paragraph(" "));
 
-                if (inflablesSeleccionados.Any())
+                // Inflables seleccionados
+                if (cotizacionActual.InflablesSeleccionados != null && cotizacionActual.InflablesSeleccionados.Any())
                 {
-                    document.Add(new Paragraph("Inflables Seleccionados"));
-                    foreach (var inflable in inflablesSeleccionados)
+                    document.Add(new Paragraph("Inflables Seleccionados:"));
+                    document.Add(new Paragraph(" "));
+
+                    var table = new PdfPTable(5); // Nombre, Descripción, Precio Base, Horas Adicionales, Precio Total
+                    table.AddCell("Nombre");
+                    table.AddCell("Descripción");
+                    table.AddCell("Precio Base");
+                    table.AddCell("Horas Adicionales");
+                    table.AddCell("Precio Total");
+
+                    foreach (var inflable in cotizacionActual.InflablesSeleccionados)
                     {
-                        document.Add(new Paragraph($"Nombre: {inflable.Nombre}, Descripción: {inflable.Descripcion}, Precio: ₡{inflable.Precio.ToString("N2")}"));
+                        table.AddCell(inflable.Inflable.Nombre);
+                        table.AddCell(inflable.Inflable.Descripcion);
+                        table.AddCell($"₡{inflable.Inflable.Precio:N2}");
+                        table.AddCell($"₡{inflable.Inflable.PrecioHoraAdicional:N2}");
+                        table.AddCell(inflable.HorasAdicionales.ToString());
+                        var precioTotal = inflable.Inflable.Precio + inflable.HorasAdicionales * inflable.Inflable.PrecioHoraAdicional;
+                        table.AddCell($"₡{precioTotal:N2}");
                     }
+                    document.Add(table);
                 }
 
                 document.Add(new Paragraph(" "));
 
-                if (mobiliariosSeleccionados.Any())
+                // Mobiliarios seleccionados
+                if (cotizacionActual.MobiliariosSeleccionados != null && cotizacionActual.MobiliariosSeleccionados.Any())
                 {
-                    document.Add(new Paragraph("Mobiliarios Seleccionados"));
-                    foreach (var mobiliario in mobiliariosSeleccionados)
+                    document.Add(new Paragraph("Mobiliarios Seleccionados:"));
+                    document.Add(new Paragraph(" "));
+
+                    var table = new PdfPTable(4); // Nombre, Descripción, Cantidad, Precio Total
+                    table.AddCell("Nombre");
+                    table.AddCell("Descripción");
+                    table.AddCell("Cantidad");
+                    table.AddCell("Precio Total");
+
+                    foreach (var mobiliario in cotizacionActual.MobiliariosSeleccionados)
                     {
-                        document.Add(new Paragraph($"Nombre: {mobiliario.Nombre}, Descripción: {mobiliario.Descripcion}, Precio: ₡{mobiliario.Precio.ToString("N2")}"));
+                        table.AddCell(mobiliario.Mobiliario.Nombre);
+                        table.AddCell(mobiliario.Mobiliario.Descripcion);
+                        table.AddCell(mobiliario.Cantidad.ToString());
+                        var precioTotal = mobiliario.Mobiliario.Precio * mobiliario.Cantidad;
+                        table.AddCell($"₡{precioTotal:N2}");
                     }
+                    document.Add(table);
                 }
 
                 document.Add(new Paragraph(" "));
 
-                if (serviciosSeleccionados.Any())
+                // Servicios seleccionados
+                if (cotizacionActual.ServiciosSeleccionados != null && cotizacionActual.ServiciosSeleccionados.Any())
                 {
-                    document.Add(new Paragraph("Servicios Adicionales Seleccionados"));
-                    foreach (var servicio in serviciosSeleccionados)
+                    document.Add(new Paragraph("Servicios Adicionales Seleccionados:"));
+                    document.Add(new Paragraph(" "));
+
+                    var table = new PdfPTable(3); // Nombre, Cantidad, Precio Total
+                    table.AddCell("Nombre");
+                    table.AddCell("Cantidad");
+                    table.AddCell("Precio Total");
+
+                    foreach (var servicio in cotizacionActual.ServiciosSeleccionados)
                     {
-                        document.Add(new Paragraph($"Nombre: {servicio.Nombre}, Descripción: {servicio.Descripcion}, Precio: ₡{servicio.Precio.ToString("N2")}"));
+                        table.AddCell(servicio.Servicio.Nombre);
+                        table.AddCell(servicio.Cantidad.ToString());
+                        var precioTotal = servicio.Servicio.Precio * servicio.Cantidad;
+                        table.AddCell($"₡{precioTotal:N2}");
                     }
+                    document.Add(table);
                 }
 
                 document.Add(new Paragraph(" "));
 
-                if (alimentacionSeleccionada.Any())
+                // Alimentación seleccionada
+                if (cotizacionActual.AlimentacionSeleccionada != null && cotizacionActual.AlimentacionSeleccionada.Any())
                 {
-                    document.Add(new Paragraph("Alimentación Seleccionada"));
-                    foreach (var opcion in alimentacionSeleccionada)
+                    document.Add(new Paragraph("Alimentación Seleccionada:"));
+                    document.Add(new Paragraph(" "));
+
+                    var table = new PdfPTable(3); // Nombre, Cantidad, Precio Total
+                    table.AddCell("Nombre");
+                    table.AddCell("Cantidad");
+                    table.AddCell("Precio Total");
+
+                    foreach (var opcion in cotizacionActual.AlimentacionSeleccionada)
                     {
-                        document.Add(new Paragraph($"Nombre: {opcion.Nombre}, Descripción: {opcion.Descripcion}, Precio: ₡{opcion.Precio.ToString("N2")}"));
+                        table.AddCell(opcion.Alimentacion.Nombre);
+                        table.AddCell(opcion.Cantidad.ToString());
+                        var precioTotal = opcion.Alimentacion.Precio * opcion.Cantidad;
+                        table.AddCell($"₡{precioTotal:N2}");
                     }
+                    document.Add(table);
                 }
 
                 document.Add(new Paragraph(" "));
 
-                if (transporteSeleccionado.Any())
+                // Transporte seleccionado
+                if (cotizacionActual.TarifaTransporteSeleccionada != null && cotizacionActual.TarifaTransporteSeleccionada.Any())
                 {
-                    document.Add(new Paragraph("Transporte Seleccionado"));
-                    foreach (var tarifa in transporteSeleccionado)
+                    document.Add(new Paragraph("Transporte Seleccionado:"));
+                    document.Add(new Paragraph(" "));
+
+                    foreach (var tarifa in cotizacionActual.TarifaTransporteSeleccionada)
                     {
-                        document.Add(new Paragraph($"Provincia: {tarifa.Provincia}, Precio: ₡{tarifa.Precio.ToString("N2")}"));
+                        document.Add(new Paragraph($"Provincia: {tarifa.Provincia}, Precio: ₡{tarifa.Precio:N2}"));
                     }
                 }
 
                 document.Close();
-                var bytes = ms.ToArray();
-                return File(bytes, "application/pdf", "ResumenCotizacion.pdf");
+                var pdfContent = memoryStream.ToArray();
+
+                // Devolver el archivo PDF
+                return File(pdfContent, "application/pdf", "Cotizacion.pdf");
             }
         }
 
+
+        private void AddHeaderAndFooter(Document document, PdfWriter writer)
+        {
+            // Agregar encabezado
+            var headerTable = new PdfPTable(2) { WidthPercentage = 100 };
+            float[] columnWidths = { 1f, 3f }; // Tamaño relativo de las columnas (logo y texto)
+            headerTable.SetWidths(columnWidths);
+
+            // Logo de la empresa
+            var logoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes", "logo.jpg");
+            if (System.IO.File.Exists(logoPath))
+            {
+                var logo = Image.GetInstance(logoPath);
+                logo.ScaleToFit(100f, 100f); // Ajustar tamaño del logo
+                var logoCell = new PdfPCell(logo)
+                {
+                    Border = Rectangle.NO_BORDER,
+                    HorizontalAlignment = Element.ALIGN_LEFT,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                };
+                headerTable.AddCell(logoCell);
+            }
+            else
+            {
+                var emptyCell = new PdfPCell(new Phrase(" ")) { Border = Rectangle.NO_BORDER };
+                headerTable.AddCell(emptyCell);
+            }
+
+            // Texto del encabezado (nombre de la empresa)
+            var companyName = new Phrase("Sal-Ticos", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16));
+            var companyCell = new PdfPCell(companyName)
+            {
+                Border = Rectangle.NO_BORDER,
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                VerticalAlignment = Element.ALIGN_MIDDLE
+            };
+            headerTable.AddCell(companyCell);
+
+            // Posicionar el encabezado manualmente en la parte superior
+            headerTable.TotalWidth = document.PageSize.Width - document.LeftMargin - document.RightMargin;
+            headerTable.WriteSelectedRows(0, -1, document.LeftMargin, document.PageSize.Height - 10, writer.DirectContent);
+
+            // Espaciado para que el contenido no se superponga al encabezado
+            document.Add(new Paragraph(" "));
+
+            // Agregar pie de página
+            var footerTable = new PdfPTable(1) { WidthPercentage = 100 };
+            var footerText = new Phrase("Página generada automáticamente - © Sal-ticos", FontFactory.GetFont(FontFactory.HELVETICA, 10, Font.ITALIC));
+            var footerCell = new PdfPCell(footerText)
+            {
+                Border = Rectangle.NO_BORDER,
+                HorizontalAlignment = Element.ALIGN_CENTER
+            };
+            footerTable.AddCell(footerCell);
+
+            // Posicionar el pie de página manualmente en la parte inferior
+            footerTable.TotalWidth = document.PageSize.Width - document.LeftMargin - document.RightMargin;
+            footerTable.WriteSelectedRows(0, -1, document.LeftMargin, document.BottomMargin, writer.DirectContent);
+        }
 
 
 

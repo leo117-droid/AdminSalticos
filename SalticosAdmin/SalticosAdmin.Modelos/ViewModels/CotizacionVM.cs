@@ -7,14 +7,14 @@
         public List<Mobiliario> Mobiliarios { get; set; }
         public List<ServicioAdicional> ServiciosAdicionales { get; set; }
         public List<Alimentacion> Alimentacion { get; set; } = new List<Alimentacion>();
-        public List<TarifasTransporte> TarifasTransporte { get; set; } // Lista de tarifas
+        public List<TarifasTransporte> TarifasTransporte { get; set; } 
 
         public List<(Inflable Inflable, int HorasAdicionales)> InflablesSeleccionados { get; set; } 
         public List<(Mobiliario Mobiliario, int Cantidad)> MobiliariosSeleccionados { get; set; }
         public List<(ServicioAdicional Servicio, int Cantidad)> ServiciosSeleccionados { get; set; }
-        public List<(Alimentacion Alimentacion, int Cantidad)> AlimentacionSeleccionada { get; set; } // Nueva propiedad
+        public List<(Alimentacion Alimentacion, int Cantidad)> AlimentacionSeleccionada { get; set; } 
 
-        public List<TarifasTransporte> TarifaTransporteSeleccionada { get; set; } // Nueva propiedad
+        public List<TarifasTransporte> TarifaTransporteSeleccionada { get; set; } 
 
         public double MontoTotal { get; set; }
         public double MontoTotalIVA => MontoTotal * 1.13;
