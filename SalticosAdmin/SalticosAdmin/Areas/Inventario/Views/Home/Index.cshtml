@@ -5,18 +5,19 @@
     ViewData["Title"] = "Home Page";
 }
 
-<header class="header">
-    <div class="container pt-sm-5">
-        <div class="heading-primary text-center">
-            Los Mejores Productos & <br />
-            Marcas en nuestra Tienda
-        </div>
-    </div>
-</header>
+
+<h1 class="display-5 fw-bold" style="color: #6f18ff;">Bienvenido al Sistema Administrativo Salticos</h1>
+
+
+<!-- Imagen -->
+<div class="text-center my-4">
+    <img src="~/imagenes/UI/1.png" alt="Imagen decorativa" class="img-fluid" style="max-width: 100%; height: auto;">
+</div>
+
 
 <section>
     <!-- Barra de búsqueda -->
-    <div class="col-lg-6 col-md-6 col-sm-6 d-flex">
+    <div class="col-lg-6 col-md-6 col-sm-6 d-flex mt-4">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="button-addon2" />
             <button class="btn btn-outline-primary">
@@ -24,56 +25,40 @@
             </button>
         </div>
     </div>
+</section>
+
+<section>
 
     <div class="container my-4">
-        <!-- Nuevo botón Evento -->
-        <div class="d-flex justify-content-center mb-4">
-            <a class="btn btn-primary btn-lg me-3" asp-area="Admin" asp-controller="Evento" asp-action="Index">
-                <i class="bi bi-calendar-event"></i> Evento
-            </a>
-
-            <!-- Botón Personal -->
-            <a class="btn btn-primary btn-lg me-3" asp-area="Admin" asp-controller="Personal" asp-action="Intermedia">
-                <i class="bi bi-people-fill"></i> Personal
-            </a>
-
-            <!-- Botón Transporte -->
-            <a class="btn btn-primary btn-lg me-3" asp-area="Admin" asp-controller="Vehiculo" asp-action="Intermedia">
-                <i class="bi bi-car-front-fill"></i> Transporte
-            </a>
-
-            <!-- Botón Servicios -->
-            <a class="btn btn-primary btn-lg me-3" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Intermedia">
-                <i class="bi bi-car-front-fill"></i> Servicios
-            </a>
-
-            <!-- Botón Otros -->
-            <a class="btn btn-primary btn-lg me-3" asp-area="Admin" asp-controller="Bitacora" asp-action="Intermedia">
-                <i class="bi bi-car-front-fill"></i> Otros
-            </a>
+        <!-- Botones principales -->
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <a class="btn custom-btn btn-block py-4 fs-4 w-100" asp-area="Admin" asp-controller="Evento" asp-action="Intermedia">
+                    <i class="bi bi-calendar-event"></i> Evento
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a class="btn custom-btn btn-block py-4 fs-4 w-100" asp-area="Admin" asp-controller="Personal" asp-action="Intermedia">
+                    <i class="bi bi-people-fill"></i> Personal
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a class="btn custom-btn btn-block py-4 fs-4 w-100" asp-area="Admin" asp-controller="Vehiculo" asp-action="Intermedia">
+                    <i class="bi bi-car-front-fill"></i> Transporte
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a class="btn custom-btn btn-block py-4 fs-4 w-100" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Intermedia">
+                    <i class="bi bi-tools"></i> Servicios
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a class="btn custom-btn btn-block py-4 fs-4 w-100" asp-area="Admin" asp-controller="Bitacora" asp-action="Intermedia">
+                    <i class="bi bi-journal-text"></i> Otros
+                </a>
+            </div>
         </div>
     </div>
 
-
-
-        <!-- Listado de productos 
-        <div class="row">
-            @foreach (var inflable in Model)
-            {
-                <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
-                    <div class="card w-100 my-2">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">@inflable.Nombre</h5>
-                            <p class="card-text"> ₡ @String.Format("{0:#,##0.00}", inflable.Precio) </p>
-                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto bg-white">
-                                <a href="#" class="btn btn-outline-primary">
-                                    <i class="bi bi-tags-fill"></i> Detalle
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div> -->
     </div>
 </section>

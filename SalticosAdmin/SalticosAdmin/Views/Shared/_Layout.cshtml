@@ -29,9 +29,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
@@ -39,22 +37,6 @@
                         @* Verifica si el usuario está autenticado antes de mostrar el dropdown *@
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Contenido
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Herramienta" asp-action="Index">Herramientas</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Contacto" asp-action="Index">Contactos</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Bitacora" asp-action="Index">Bitacora</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Usuario" asp-action="Index">Usuarios</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Tarea" asp-action="Index">Tareas</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Proveedor" asp-action="Index">Proveedores</a></li>       
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Seguro" asp-action="Index">Seguros</a></li>
-
-
-                                </ul>
-                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Cotizacion" asp-action="Index">
@@ -66,6 +48,13 @@
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Informe" asp-action="Informe">
                                     <i class="bi bi-reception-4"></i>
                                     Informe
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Tarea" asp-action="Index">
+                                    <i class="bi bi-check2-square"></i>
+                                    Tarea
                                 </a>
                             </li>
 
