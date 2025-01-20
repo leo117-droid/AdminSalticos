@@ -166,16 +166,42 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                    //    protocol: Request.Scheme);
 
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                        protocol: Request.Scheme);
+
+                    // Envía el correo al usuario
+                    await _emailSender.SendEmailAsync(
+                        Input.Email,
+                        "Confirma tu cuenta en Sal-ticos Admin",
+                        $@"
+                        <div style='font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px; border-radius: 10px; max-width: 600px; margin: auto;'>
+                            <h2 style='color: #4CAF50; text-align: center;'>¡Bienvenido a Sal-ticos Admin!</h2>
+                            <p style='font-size: 16px;'>Hola <strong>{Input.Nombre}</strong>,</p>
+                            <p style='font-size: 16px;'>
+                                Gracias por registrarte en nuestra plataforma. Por favor, confirma tu cuenta haciendo clic en el botón de abajo para empezar a gestionar tu información de forma fácil y rápida.
+                            </p>
+                            <div style='text-align: center; margin: 20px 0;'>
+                                <a href='{HtmlEncoder.Default.Encode(callbackUrl)}' 
+                                    style='background-color: #4CAF50; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-size: 16px;'>
+                                    Confirmar mi cuenta
+                                </a>
+                            </div>
+                            <p style='font-size: 14px; color: #777;'>
+                                Si no solicitaste este registro, por favor ignora este correo.
+                            </p>
+                            <hr style='border: none; border-top: 1px solid #ddd;' />
+                            <p style='font-size: 12px; color: #999; text-align: center;'>
+                                Este es un mensaje automático. Por favor, no respondas a este correo.
+                            </p>
+                        </div>");
+
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
