@@ -24,30 +24,69 @@
     </div>
 </section>
 
+
 <section class="py-5">
     <div class="container">
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-md-4">
-                <div class="card text-center border-primary shadow">
+                <div class="card text-center border-primary shadow card-evento">
                     <div class="card-body">
-                        <i class="bi bi-calendar-event display-1 text-primary"></i>
+                        <i class="bi bi-calendar-event display-1"></i> <!-- Icono con color cambiado por CSS -->
                         <h5 class="card-title mt-3">Evento</h5>
                         <p class="card-text">Gestiona y organiza todos los eventos importantes.</p>
-                        <a href="#" class="btn btn-primary">Ir</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Evento" asp-action="Intermedia">Ir</a>
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4">
-                <div class="card text-center border-success shadow">
+                <div class="card text-center border-primary shadow card-personal">
                     <div class="card-body">
-                        <i class="bi bi-people-fill display-1 text-success"></i>
+                        <i class="bi bi-people-fill display-1"></i>
                         <h5 class="card-title mt-3">Personal</h5>
-                        <p class="card-text">Administra tu equipo de trabajo eficientemente.</p>
-                        <a href="#" class="btn btn-success">Ir</a>
+                        <p class="card-text">Administra eficientemente al personal, incluyendo roles y capacitaciones.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Personal" asp-action="Intermedia">Ir</a>
                     </div>
                 </div>
             </div>
-            <!-- Repite para otros botones -->
+
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-tools display-1"></i>
+                        <h5 class="card-title mt-3">Servicios</h5>
+                        <p class="card-text">Coordina y gestiona servicios adicionales que complementen los eventos.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-transporte">
+                    <div class="card-body">
+                        <i class="bi bi-car-front-fill display-1"></i>
+                        <h5 class="card-title mt-3">Transporte</h5>
+                        <p class="card-text">Organiza los vehículos y tarifas de transporte necesarios para garantizar la logística eficiente en los eventos.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Vehiculo" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-otros">
+                    <div class="card-body">
+                        <i class="bi bi-journal-text display-1"></i>
+                        <h5 class="card-title mt-3">Otros</h5>
+                        <p class="card-text">Registra y controla información adicional, para mantener todos los detalles organizados.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Bitacora" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+
+

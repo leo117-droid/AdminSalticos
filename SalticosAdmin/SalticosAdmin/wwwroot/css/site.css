@@ -26,3 +26,68 @@ body {
         display: block;
     }
 
+/* Cambio del borde de las tarjetas a negro */
+.card {
+    border: 1px  #000000; /* Borde negro */
+}
+
+/* Color para la tarjeta "Evento" */
+.card-evento .btn {
+    background-color: #ff6a00; /* Mismo color que el icono */
+    border-color: #ff6a00; /* Mismo color que el icono */
+    color: white; /* Texto blanco */
+}
+
+/* Icono dentro de la tarjeta "Evento" */
+.card-evento .bi {
+    color: #ff6a00; /* Mismo color que el fondo y el borde del botón */
+}
+
+/* Color para la tarjeta "Personal" */
+.card-personal .btn {
+    background-color: #8a2bff;
+    border-color: #8a2bff;
+    color: white;
+}
+
+/* Icono dentro de la tarjeta "Personal" */
+.card-personal .bi {
+    color: #8a2bff;
+}
+
+/* Color para la tarjeta "Servicios" */
+.card-servicios .btn {
+    background-color: #16d600;
+    border-color: #16d600;
+    color: white;
+}
+
+/* Icono dentro de la tarjeta "Servicios" */
+.card-servicios .bi {
+    color: #16d600;
+}
+
+/* Color para la tarjeta "Transporte" */
+.card-transporte .btn {
+    background-color: #ffd621;
+    border-color: #ffd621;
+    color: white;
+}
+
+/* Icono dentro de la tarjeta "Transporte" */
+.card-transporte .bi {
+    color: #ffd621;
+}
+
+/* Color para la tarjeta "Otros" */
+.card-otros .btn {
+    background-color: #19c2ff;
+    border-color: #19c2ff;
+    color: white;
+}
+
+/* Icono dentro de la tarjeta "Otros" */
+.card-otros .bi {
+    color: #19c2ff;
+}
+
