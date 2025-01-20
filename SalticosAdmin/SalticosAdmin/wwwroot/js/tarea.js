@@ -24,7 +24,19 @@ function loadDataTable() {
             "url": "/Admin/Tarea/ObtenerTodos"
         },
         "columns": [
-            { "data": "titulo"},
+            {
+                "data": "id", "render": function (data) {
+                    return `
+                        <div class="text-center">
+                            <a onclick="ActualizarEstado(${data})" class="btn btn-primary text-white" style="cursor:pointer">
+                                <i class="bi bi-check-circle"></i>
+                            </a>
+                        </div>
+                    `;
+                },
+                "width": "10%"
+            },
+            { "data": "titulo" },
             { "data": "descripcion" },
             { "data": "estado" },
             { "data": "prioridad" },
@@ -38,7 +50,8 @@ function loadDataTable() {
                 "data": "hora",
                 "render": function (data) {
                     return moment(data, "HH:mm:ss").format("hh:mm A");
-                }            },
+                }
+            },
             {
                 "data": "id",
                 "render": function (data) {
@@ -47,40 +60,38 @@ function loadDataTable() {
                             <a href="/Admin/Tarea/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a onclick="Delete('/Admin/Tarea/Delete/${data}')" class="btn btn-danger text-white" style="cursor:pointer">
-                                <i class="bi bi-trash3-fill"></i>
-                            </a>
                         </div>
                     `;
                 },
-                "width": "20%"
+                "width": "10%"
             }
         ]
     });
 }
 
-function Delete(url) {
+function ActualizarEstado(id) {
     swal({
-        title: "¿Está seguro de eliminar esta tarea?",
-        text: "Este registro no se podrá recuperar",
-        icon: "warning",
+        title: "¿Está seguro de marcar esta tarea como completada?",
+        icon: "info",
         buttons: true,
-        dangerMode: true
-    }).then((borrar) => {
-        if (borrar) {
+        dangerMode: false
+    }).then((completar) => {
+        if (completar) {
             $.ajax({
                 type: "POST",
-                url: url,
+                url: "/Admin/Tarea/ActualizarEstado",
+                data: { id: id },
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.message);
+                        // Recargar o actualizar la lista de tareas si es necesario
                         datatable.ajax.reload();
                     } else {
                         toastr.error(data.message);
                     }
                 },
                 error: function () {
-                    toastr.error("Hubo un error al intentar eliminar la tarea.");
+                    toastr.error("Hubo un error al intentar marcar la tarea como completada.");
                 }
             });
         }

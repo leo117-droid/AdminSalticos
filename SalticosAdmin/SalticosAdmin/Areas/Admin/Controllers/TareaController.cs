@@ -94,34 +94,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return Json(new { success = false, message = "Criterio no válido" });
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CrearTarea([FromBody] Tarea tarea)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        await _unidadTrabajo.Tareas.Agregar(tarea);
-        //        await _unidadTrabajo.Guardar();
-        //        return Json(new { success = true, message = "Tarea creada exitosamente" });
-        //    }
-
-        //    return Json(new { success = false, message = "Datos no válidos" });
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> Editar([FromBody] Tarea tarea)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _unidadTrabajo.Tareas.Actualizar(tarea);
-        //        await _unidadTrabajo.Guardar();
-        //        return Json(new { success = true, message = "Tarea actualizada exitosamente" });
-        //    }
-
-        //    return Json(new { success = false, message = "Datos no válidos" });
-        //}
-
-       
-
         [HttpGet]
         public async Task<IActionResult> OrdenarPor(string criterio)
         {
@@ -143,24 +115,31 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             return Json(new { data = tareas });
         }
+        [HttpPost]
+        public async Task<IActionResult> ActualizarEstado(int id) 
+        {
+            var usuarioNombre = User.Identity.Name;
+            var tarea = await _unidadTrabajo.Tareas.Obtener(id);
 
+            if (tarea == null) 
+            {
+                return Json(new { success = false, message = "Tarea no encontrada" });
+            }
+
+            tarea.Estado = "Completada";
+            _unidadTrabajo.Tareas.Actualizar(tarea);
+            await _unidadTrabajo.Guardar();
+
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"La tarea '{tarea.Titulo}' fue marcada como completada", usuarioNombre);
+
+            return Json(new { success = true, message = "Tarea marcada como completada exitosamente" });
+        }
         #region API
         [HttpGet]
         public async Task<IActionResult> ObtenerTodos()
         {
             var todos = await _unidadTrabajo.Tareas.ObtenerTodos();
-            //return Json(new
-            //{
-            //    data = todos.Select(t => new
-            //    {
-            //        t.Titulo,
-            //        t.Descripcion,
-            //        t.Estado,
-            //        t.Prioridad,
-            //        Fecha = t.Fecha.ToString("yyyy-MM-dd"), // Opcional: formatear fecha
-            //        Hora = t.Hora.ToString(@"hh\:mm")
-            //    })
-            //});
+            todos = todos.Where(t => !t.Estado.Equals("Completada"));
             return Json(new { data = todos });
         }
 
@@ -176,9 +155,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
             _unidadTrabajo.Tareas.Remover(tareaBD);
             await _unidadTrabajo.Guardar();
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la tarea '{tareaBD.Titulo}'", usuarioNombre);
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se completó la tarea '{tareaBD.Titulo}'", usuarioNombre);
 
-            return Json(new { success = true, message = "Tarea eliminada exitosamente" });
+            return Json(new { success = true, message = "Tarea completada exitosamente" });
        
         }
 
