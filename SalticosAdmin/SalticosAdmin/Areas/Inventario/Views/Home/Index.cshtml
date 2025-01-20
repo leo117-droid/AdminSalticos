@@ -5,14 +5,11 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-<h1 class="display-5 fw-bold" style="color: #6f18ff;">Bienvenido al Sistema Administrativo Salticos</h1>
-
-
-<!-- Imagen -->
-<div class="text-center my-4">
-    <img src="~/imagenes/UI/1.png" alt="Imagen decorativa" class="img-fluid" style="max-width: 100%; height: auto;">
+<!-- HTML -->
+<div class="full-width-image">
+    <img src="~/imagenes/UI/banner1.png" alt="Imagen decorativa" class="img-banner">
 </div>
+
 
 
 <section>
@@ -27,38 +24,30 @@
     </div>
 </section>
 
-<section>
-
-    <div class="container my-4">
-        <!-- Botones principales -->
-        <div class="row text-center">
-            <div class="col-md-4 mb-4">
-                <a class="btn custom-btn btn-block py-4 fs-4 w-100" asp-area="Admin" asp-controller="Evento" asp-action="Intermedia">
-                    <i class="bi bi-calendar-event"></i> Evento
-                </a>
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow">
+                    <div class="card-body">
+                        <i class="bi bi-calendar-event display-1 text-primary"></i>
+                        <h5 class="card-title mt-3">Evento</h5>
+                        <p class="card-text">Gestiona y organiza todos los eventos importantes.</p>
+                        <a href="#" class="btn btn-primary">Ir</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <a class="btn custom-btn btn-block py-4 fs-4 w-100" asp-area="Admin" asp-controller="Personal" asp-action="Intermedia">
-                    <i class="bi bi-people-fill"></i> Personal
-                </a>
+            <div class="col-md-4">
+                <div class="card text-center border-success shadow">
+                    <div class="card-body">
+                        <i class="bi bi-people-fill display-1 text-success"></i>
+                        <h5 class="card-title mt-3">Personal</h5>
+                        <p class="card-text">Administra tu equipo de trabajo eficientemente.</p>
+                        <a href="#" class="btn btn-success">Ir</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <a class="btn custom-btn btn-block py-4 fs-4 w-100" asp-area="Admin" asp-controller="Vehiculo" asp-action="Intermedia">
-                    <i class="bi bi-car-front-fill"></i> Transporte
-                </a>
-            </div>
-            <div class="col-md-4 mb-4">
-                <a class="btn custom-btn btn-block py-4 fs-4 w-100" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Intermedia">
-                    <i class="bi bi-tools"></i> Servicios
-                </a>
-            </div>
-            <div class="col-md-4 mb-4">
-                <a class="btn custom-btn btn-block py-4 fs-4 w-100" asp-area="Admin" asp-controller="Bitacora" asp-action="Intermedia">
-                    <i class="bi bi-journal-text"></i> Otros
-                </a>
-            </div>
+            <!-- Repite para otros botones -->
         </div>
-    </div>
-
     </div>
 </section>
