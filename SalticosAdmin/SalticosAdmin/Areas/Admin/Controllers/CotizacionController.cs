@@ -363,6 +363,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     table.AddCell("Nombre");
                     table.AddCell("Descripción");
                     table.AddCell("Precio Base");
+                    table.AddCell("Precio / Hora Adicional");
                     table.AddCell("Horas Adicionales");
                     table.AddCell("Precio Total");
 
@@ -507,7 +508,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
 
             // Texto del encabezado (nombre de la empresa)
-            var companyName = new Phrase("Sal-Ticos", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16));
+            var companyName = new Phrase("Cotización Sal-Ticos", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16));
             var companyCell = new PdfPCell(companyName)
             {
                 Border = Rectangle.NO_BORDER,
