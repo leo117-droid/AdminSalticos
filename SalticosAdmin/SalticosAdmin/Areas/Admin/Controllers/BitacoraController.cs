@@ -21,6 +21,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return View();
         }
 
+        public IActionResult Intermedia()
+        {
+            return View();
+        }
 
         #region API
         [HttpGet]
