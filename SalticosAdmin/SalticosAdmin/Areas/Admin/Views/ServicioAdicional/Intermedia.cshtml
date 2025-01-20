@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Personal";
+}
+
+<header class="my-4 text-center">
+    <h1 class="fw-bold">Gestión de Servicios</h1>
+</header>
+
+
+<section>
+    <div class="container my-4 text-center">
+        <div class="row justify-content-center">
+            <!-- Botón Inflable -->
+            <div class="col-md-6 mb-3">
+                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Inflable" asp-action="Intermedia">
+                    <i class="bi bi-person-badge"></i> Inflables
+                </a>
+            </div>
+
+            <!-- Botón Mobiliario -->
+            <div class="col-md-6 mb-3">
+                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Mobiliario" asp-action="Index">
+                    <i class="bi bi-journal"></i> Mobiliario
+                </a>
+            </div>
+
+            <!-- Botón Alimentación -->
+            <div class="col-md-6 mb-3">
+                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Alimentacion" asp-action="Index">
+                    <i class="bi bi-journal"></i> Alimentación
+                </a>
+            </div>
+
+            <!-- Botón Servicios Adicionales -->
+            <div class="col-md-6 mb-3">
+                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Index">
+                    <i class="bi bi-journal"></i> Servicios Adicionales
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

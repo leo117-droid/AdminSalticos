@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Inflable";
+}
+
+<header class="my-4 text-center">
+    <h1 class="fw-bold">Gestión de Inflables</h1>
+</header>
+
+
+<section>
+    <div class="container my-4 text-center">
+        <div class="row justify-content-center">
+            <!-- Botón Inflable -->
+            <div class="col-md-4 mb-3">
+                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Inflable" asp-action="Index">
+                    <i class="bi bi-person-badge"></i> Inflables
+                </a>
+            </div>
+
+            <!-- Botón Categoría por Edad -->
+            <div class="col-md-4 mb-3">
+                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="CategoriasEdad" asp-action="Index">
+                    <i class="bi bi-journal"></i> Categoría por Edad
+                </a>
+            </div>
+
+            <!-- Botón Categoría por Tamaño -->
+            <div class="col-md-4 mb-3">
+                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="CategoriaTamanno" asp-action="Index">
+                    <i class="bi bi-journal"></i> Categoría por Tamaño
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
