@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Evento";
+}
+
+<header class="my-4 text-center">
+    <h1 class="fw-bold">Gestión de Eventos</h1>
+</header>
+
+
+<section>
+    <div class="container my-4 text-center">
+        <div class="row justify-content-center">
+
+            <!-- Botón Evento -->
+            <div class="col-md-4 mb-3">
+                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Evento" asp-action="Index">
+                    <i class="bi bi-calendar-plus"></i> Eventos
+                </a>
+            </div>
+
+            <!-- Botón Cliente -->
+            <div class="col-md-4 mb-3">
+                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Cliente" asp-action="Index">
+                    <i class="bi bi-person-circle"></i> Clientes
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
