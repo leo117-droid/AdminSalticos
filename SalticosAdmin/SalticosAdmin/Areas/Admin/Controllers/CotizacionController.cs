@@ -359,7 +359,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     document.Add(new Paragraph("Inflables Seleccionados:"));
                     document.Add(new Paragraph(" "));
 
-                    var table = new PdfPTable(5); // Nombre, Descripción, Precio Base, Horas Adicionales, Precio Total
+                    var table = new PdfPTable(6); // Nombre, Descripción, Precio Base, Horas Adicionales, Precio Total
                     table.AddCell("Nombre");
                     table.AddCell("Descripción");
                     table.AddCell("Precio Base");
