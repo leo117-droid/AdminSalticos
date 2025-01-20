@@ -34,6 +34,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return View(personalVM);
         }
 
+        public IActionResult Intermedia()
+        {
+            return View();
+        }
+
 
         public async Task<IActionResult> Upsert(int? id)
         {

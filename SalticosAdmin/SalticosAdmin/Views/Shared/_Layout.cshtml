@@ -45,15 +45,11 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="Herramienta" asp-action="Index">Herramientas</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Cliente" asp-action="Index">Clientes</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="Contacto" asp-action="Index">Contactos</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="TarifasTransporte" asp-action="Index">Tarifas Transporte</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Vehiculo" asp-action="Index">Vehiculos</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="CategoriasEdad" asp-action="Index">Categorías por Edad</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="CategoriaTamanno" asp-action="Index">Categorías por Tamaño</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="RolPersonal" asp-action="Index">Roles de Personal</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="Ingrediente" asp-action="Index">Ingredientes</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Personal" asp-action="Index">Personal</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="Inflable" asp-action="Index">Inflables</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="Capacitacion" asp-action="Index">Capacitaciones</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Index">ServiciosAdicionales</a></li>
@@ -95,6 +91,7 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+
             <partial name="_Notificaciones" />
             @RenderBody()
         </main>

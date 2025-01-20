@@ -7,7 +7,7 @@
 
 <header class="header">
     <div class="container pt-sm-5">
-        <div class="heading-primary">
+        <div class="heading-primary text-center">
             Los Mejores Productos & <br />
             Marcas en nuestra Tienda
         </div>
@@ -15,41 +15,55 @@
 </header>
 
 <section>
-    <div class="container my-2">
-        <div class="col-lg-6 col-md-6 col-sm-6 d-flex">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="button-addon2" />
-                <button class="btn btn-outline-primary">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
+    <!-- Barra de búsqueda -->
+    <div class="col-lg-6 col-md-6 col-sm-6 d-flex">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="button-addon2" />
+            <button class="btn btn-outline-primary">
+                <i class="bi bi-search"></i>
+            </button>
         </div>
+    </div>
 
+    <div class="container my-4">
+        <!-- Nuevo botón Evento -->
+        <div class="d-flex justify-content-center mb-4">
+            <a class="btn btn-primary btn-lg me-3" asp-area="Admin" asp-controller="Evento" asp-action="Index">
+                <i class="bi bi-calendar-event"></i> Evento
+            </a>
+
+            <!-- Botón Personal -->
+            <a class="btn btn-primary btn-lg me-3" asp-area="Admin" asp-controller="Personal" asp-action="Intermedia">
+                <i class="bi bi-people-fill"></i> Personal
+            </a>
+
+            <!-- Botón Transporte -->
+            <a class="btn btn-primary btn-lg" asp-area="Admin" asp-controller="Vehiculo" asp-action="Intermedia">
+                <i class="bi bi-car-front-fill"></i> Transporte
+            </a>
+        </div>
+    </div>
+
+
+
+        <!-- Listado de productos 
         <div class="row">
             @foreach (var inflable in Model)
             {
                 <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
                     <div class="card w-100 my-2">
-
-                        <img src="@DS.ImagenRutaInflable@inflable.ImageUrl" class="card-img-top" style="aspect-ratio: 1/1" />
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">@inflable.Nombre</h5>
                             <p class="card-text"> ₡ @String.Format("{0:#,##0.00}", inflable.Precio) </p>
                             <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto bg-white">
                                 <a href="#" class="btn btn-outline-primary">
                                     <i class="bi bi-tags-fill"></i> Detalle
-
                                 </a>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             }
-        </div>
-
-
+        </div> -->
     </div>
 </section>
-
