@@ -45,30 +45,72 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             // Crear el documento PDF
             using (var memoryStream = new MemoryStream())
             {
-                var document = new Document(PageSize.A4);
-                PdfWriter.GetInstance(document, memoryStream);
+                var document = new Document(PageSize.A4, 36, 36, 54, 54);
+                var writer = PdfWriter.GetInstance(document, memoryStream);
                 document.Open();
+                AddHeaderAndFooter(document, writer);
 
-                // Título del informe
-                // Crear el título del informe y centrarlo
-                Paragraph titulo = new Paragraph("Informe de inflables más solicitados", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14));
-                titulo.Alignment = Element.ALIGN_CENTER; // Centrar el texto
-                document.Add(titulo);
+                var baseFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+                var baseFont = BaseFont.CreateFont(baseFontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+                var titleFont = new Font(baseFont, 18, Font.BOLD);
+                var sectionFont = new Font(baseFont, 14, Font.BOLD);
+                var tableHeaderFont = new Font(baseFont, 12, Font.BOLD);
+                var tableCellFont = new Font(baseFont, 12);
+
+
+
+                document.Add(new Paragraph("Informe Inflables  -  Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
                 document.Add(new Paragraph(" "));
 
-                document.Add(new Paragraph($"Fecha: {DateTime.Now.ToShortDateString()}"));
+
+                var fechaParagraph = new Paragraph();
+                fechaParagraph.Add(new Chunk("Fecha: ", new Font(baseFont, 12, Font.BOLD))); // Texto en negrita
+                fechaParagraph.Add(new Chunk($"{DateTime.Now.ToShortDateString()}", new Font(baseFont, 12))); // Texto normal
+                document.Add(fechaParagraph);
+
                 document.Add(new Paragraph(" "));
 
-                // Crear la tabla para mostrar los inflables
-                PdfPTable table = new PdfPTable(2);
-                table.AddCell("Nombre del Inflable");
-                table.AddCell("Cantidad de veces solicitado");
 
-                // Agregar los inflables a la tabla
+                PdfPTable CreateTable(int columnCount, float[] columnWidths)
+                {
+                    var table = new PdfPTable(columnCount) { WidthPercentage = 100 };
+                    table.SetWidths(columnWidths);
+                    return table;
+                }
+
+                void AddTableHeaders(PdfPTable table, string[] headers)
+                {
+                    foreach (var header in headers)
+                    {
+                        var cell = new PdfPCell(new Phrase(header, tableHeaderFont))
+                        {
+                            BackgroundColor = BaseColor.LIGHT_GRAY,
+                            HorizontalAlignment = Element.ALIGN_CENTER,
+                            Padding = 5
+                        };
+                        table.AddCell(cell);
+                    }
+                }
+
+                void AddCell(PdfPTable table, string content, bool isNumeric = false)
+                {
+                    var cell = new PdfPCell(new Phrase(content, tableCellFont))
+                    {
+                        HorizontalAlignment = isNumeric ? Element.ALIGN_RIGHT : Element.ALIGN_CENTER,
+                        Padding = 5
+                    };
+                    table.AddCell(cell);
+                }
+
+                var table = CreateTable(2, new float[] { 2, 2});
+                AddTableHeaders(table, new[] { "Nombre del Inflable", "Cantidad de veces solicitado" });
+
+
                 foreach (var inflable in inflablesMasSolicitados)
                 {
-                    table.AddCell(inflable.Nombre);
-                    table.AddCell(inflable.Cantidad.ToString());
+                    AddCell(table, inflable.Nombre );
+                    AddCell(table, inflable.Cantidad.ToString(), false);
                 }
 
                 document.Add(table);
@@ -85,29 +127,73 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             using (var memoryStream = new MemoryStream())
             {
-                var document = new Document(PageSize.A4);
-                PdfWriter.GetInstance(document, memoryStream);
+
+                var document = new Document(PageSize.A4, 36, 36, 54, 54);
+                var writer = PdfWriter.GetInstance(document, memoryStream);
                 document.Open();
+                AddHeaderAndFooter(document, writer);
 
-                // Título del informe
-                // Crear el título del informe y centrarlo
-                Paragraph titulo = new Paragraph("Informe de alimentación más solicitada", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14));
-                titulo.Alignment = Element.ALIGN_CENTER; // Centrar el texto
-                document.Add(titulo);
+
+                var baseFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+                var baseFont = BaseFont.CreateFont(baseFontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+                var titleFont = new Font(baseFont, 18, Font.BOLD);
+                var sectionFont = new Font(baseFont, 14, Font.BOLD);
+                var tableHeaderFont = new Font(baseFont, 12, Font.BOLD);
+                var tableCellFont = new Font(baseFont, 12);
+
+
+
+                document.Add(new Paragraph("Informe Alimentos  -  Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
                 document.Add(new Paragraph(" "));
 
-                document.Add(new Paragraph($"Fecha: {DateTime.Now.ToShortDateString()}"));
+
+                var fechaParagraph = new Paragraph();
+                fechaParagraph.Add(new Chunk("Fecha: ", new Font(baseFont, 12, Font.BOLD))); // Texto en negrita
+                fechaParagraph.Add(new Chunk($"{DateTime.Now.ToShortDateString()}", new Font(baseFont, 12))); // Texto normal
+                document.Add(fechaParagraph);
+
                 document.Add(new Paragraph(" "));
 
-                // Crear la tabla para mostrar los alimentos
-                PdfPTable table = new PdfPTable(2);
-                table.AddCell("Nombre del Alimento");
-                table.AddCell("Cantidad de veces solicitado");
+
+                PdfPTable CreateTable(int columnCount, float[] columnWidths)
+                {
+                    var table = new PdfPTable(columnCount) { WidthPercentage = 100 };
+                    table.SetWidths(columnWidths);
+                    return table;
+                }
+
+                void AddTableHeaders(PdfPTable table, string[] headers)
+                {
+                    foreach (var header in headers)
+                    {
+                        var cell = new PdfPCell(new Phrase(header, tableHeaderFont))
+                        {
+                            BackgroundColor = BaseColor.LIGHT_GRAY,
+                            HorizontalAlignment = Element.ALIGN_CENTER,
+                            Padding = 5
+                        };
+                        table.AddCell(cell);
+                    }
+                }
+
+                void AddCell(PdfPTable table, string content, bool isNumeric = false)
+                {
+                    var cell = new PdfPCell(new Phrase(content, tableCellFont))
+                    {
+                        HorizontalAlignment = isNumeric ? Element.ALIGN_RIGHT : Element.ALIGN_CENTER,
+                        Padding = 5
+                    };
+                    table.AddCell(cell);
+                }
+
+                var table = CreateTable(2, new float[] { 2, 2 });
+                AddTableHeaders(table, new[] { "Nombre del Alimento", "Cantidad de veces solicitado" });
 
                 foreach (var alimento in alimentosMasSolicitados)
                 {
-                    table.AddCell(alimento.Nombre);
-                    table.AddCell(alimento.Cantidad.ToString());
+                    AddCell(table, alimento.Nombre);
+                    AddCell(table, alimento.Cantidad.ToString(), false);
                 }
 
                 document.Add(table);
@@ -123,29 +209,73 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             using (var memoryStream = new MemoryStream())
             {
-                var document = new Document(PageSize.A4);
-                PdfWriter.GetInstance(document, memoryStream);
+                var document = new Document(PageSize.A4, 36, 36, 54, 54);
+                var writer = PdfWriter.GetInstance(document, memoryStream);
                 document.Open();
+                AddHeaderAndFooter(document, writer);
 
-                // Título del informe
-                // Crear el título del informe y centrarlo
-                Paragraph titulo = new Paragraph("Informe de mobiliario más solicitado", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14));
-                titulo.Alignment = Element.ALIGN_CENTER; // Centrar el texto
-                document.Add(titulo);
+
+                var baseFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+                var baseFont = BaseFont.CreateFont(baseFontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+                var titleFont = new Font(baseFont, 18, Font.BOLD);
+                var sectionFont = new Font(baseFont, 14, Font.BOLD);
+                var tableHeaderFont = new Font(baseFont, 12, Font.BOLD);
+                var tableCellFont = new Font(baseFont, 12);
+
+
+
+                document.Add(new Paragraph("Informe Mobiliario  -  Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
                 document.Add(new Paragraph(" "));
 
-                document.Add(new Paragraph($"Fecha: {DateTime.Now.ToShortDateString()}"));
+
+                var fechaParagraph = new Paragraph();
+                fechaParagraph.Add(new Chunk("Fecha: ", new Font(baseFont, 12, Font.BOLD))); // Texto en negrita
+                fechaParagraph.Add(new Chunk($"{DateTime.Now.ToShortDateString()}", new Font(baseFont, 12))); // Texto normal
+                document.Add(fechaParagraph);
+
                 document.Add(new Paragraph(" "));
 
-                // Crear la tabla para mostrar los mobiliarios
-                PdfPTable table = new PdfPTable(2);
-                table.AddCell("Nombre del Mobiliario");
-                table.AddCell("Cantidad de veces solicitado");
+
+                PdfPTable CreateTable(int columnCount, float[] columnWidths)
+                {
+                    var table = new PdfPTable(columnCount) { WidthPercentage = 100 };
+                    table.SetWidths(columnWidths);
+                    return table;
+                }
+
+                void AddTableHeaders(PdfPTable table, string[] headers)
+                {
+                    foreach (var header in headers)
+                    {
+                        var cell = new PdfPCell(new Phrase(header, tableHeaderFont))
+                        {
+                            BackgroundColor = BaseColor.LIGHT_GRAY,
+                            HorizontalAlignment = Element.ALIGN_CENTER,
+                            Padding = 5
+                        };
+                        table.AddCell(cell);
+                    }
+                }
+
+                void AddCell(PdfPTable table, string content, bool isNumeric = false)
+                {
+                    var cell = new PdfPCell(new Phrase(content, tableCellFont))
+                    {
+                        HorizontalAlignment = isNumeric ? Element.ALIGN_RIGHT : Element.ALIGN_CENTER,
+                        Padding = 5
+                    };
+                    table.AddCell(cell);
+                }
+
+                var table = CreateTable(2, new float[] { 2, 2 });
+                AddTableHeaders(table, new[] { "Nombre del Mobiliario", "Cantidad de veces solicitado" });
+
 
                 foreach (var mobiliario in mobiliariosMasSolicitados)
                 {
-                    table.AddCell(mobiliario.Nombre);
-                    table.AddCell(mobiliario.Cantidad.ToString());
+                    AddCell(table, mobiliario.Nombre);
+                    AddCell(table, mobiliario.Cantidad.ToString(), false);
                 }
 
                 document.Add(table);
@@ -153,6 +283,70 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                 return File(memoryStream.ToArray(), "application/pdf", "InformeMobiliariosSolicitados.pdf");
             }
+        }
+
+
+        private void AddHeaderAndFooter(Document document, PdfWriter writer)
+        {
+            // Agregar encabezado
+            var headerTable = new PdfPTable(2) { WidthPercentage = 100 };
+            float[] columnWidths = { 1f, 3f };
+            headerTable.SetWidths(columnWidths);
+
+
+            var logoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes", "UI","LOGO.jpeg");
+            if (System.IO.File.Exists(logoPath))
+            {
+                var logo = Image.GetInstance(logoPath);
+                logo.ScaleToFit(150f, 150f);
+                var logoCell = new PdfPCell(logo)
+                {
+                    Border = Rectangle.NO_BORDER,
+                    HorizontalAlignment = Element.ALIGN_LEFT,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                };
+                headerTable.AddCell(logoCell);
+            }
+            else
+            {
+                var emptyCell = new PdfPCell(new Phrase(" ")) { Border = Rectangle.NO_BORDER };
+                headerTable.AddCell(emptyCell);
+            }
+
+            // Título del encabezado
+            var baseFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+            var baseFont = BaseFont.CreateFont(baseFontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            var headerFont = new Font(baseFont, 16, Font.BOLD);
+
+            var companyName = new Phrase("", headerFont);
+            var companyCell = new PdfPCell(companyName)
+            {
+                Border = Rectangle.NO_BORDER,
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                VerticalAlignment = Element.ALIGN_MIDDLE
+            };
+            headerTable.AddCell(companyCell);
+
+            // Posicionar el encabezado manualmente en la parte superior
+            headerTable.TotalWidth = document.PageSize.Width - document.LeftMargin - document.RightMargin;
+            headerTable.WriteSelectedRows(0, -1, document.LeftMargin, document.PageSize.Height - 10, writer.DirectContent);
+
+
+            document.Add(new Paragraph(" "));
+
+            // Agregar pie de página
+            var footerTable = new PdfPTable(1) { WidthPercentage = 100 };
+            var footerText = new Phrase("Página generada automáticamente - © Sal-ticos", FontFactory.GetFont(FontFactory.HELVETICA, 10, Font.ITALIC));
+            var footerCell = new PdfPCell(footerText)
+            {
+                Border = Rectangle.NO_BORDER,
+                HorizontalAlignment = Element.ALIGN_CENTER
+            };
+            footerTable.AddCell(footerCell);
+
+            // Posicionar el pie de página manualmente en la parte inferior
+            footerTable.TotalWidth = document.PageSize.Width - document.LeftMargin - document.RightMargin;
+            footerTable.WriteSelectedRows(0, -1, document.LeftMargin, document.BottomMargin, writer.DirectContent);
         }
 
     }
