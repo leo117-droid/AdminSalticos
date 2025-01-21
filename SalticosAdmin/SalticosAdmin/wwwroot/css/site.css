@@ -124,12 +124,36 @@ body {
             color: white; /* Icono en blanco al hacer hover */
         }
 
+
+.custom-btn-servicios-inverso {
+    background-color: #16d600;
+    border: 2px solid white; /* Borde verde #16d600*/
+    color: white; /* Texto e icono en verde */
+    transition: all 0.3s ease; /* Animación para el efecto hover */
+}
+
+    /* Icono del botón */
+    .custom-btn-servicios-inverso i {
+        color: white; /* Color del icono en verde */
+    }
+
+    /* Efecto hover: fondo verde y texto blanco */
+    .custom-btn-servicios-inverso:hover {
+        background-color: white; /* Fondo verde */
+        color: #16d600; /* Texto e icono en blanco */
+        border-color: #16d600; /* Mantener el borde verde */
+    }
+
+        .custom-btn-servicios-inverso:hover i {
+            color: #16d600; /* Icono en blanco al hacer hover */
+        }
+
 /* Estilo del botón con bordes verdes */
 .custom-btn-personal {
     background-color: white;
-    border: 2px solid #8a2bff; /* Borde verde */
-    color: #8a2bff; /* Texto e icono en verde */
-    transition: all 0.3s ease; /* Animación para el efecto hover */
+    border: 2px solid #8a2bff; 
+    color: #8a2bff; 
+    transition: all 0.3s ease;
 }
 
     /* Icono del botón */
@@ -146,6 +170,27 @@ body {
 
         .custom-btn-personal:hover i {
             color: white; /* Icono en blanco al hacer hover */
+        }
+
+.custom-btn-personal-inverso {
+    background-color: #8a2bff;
+    border: 2px solid white; 
+    color: white; 
+    transition: all 0.3s ease; 
+}
+
+    .custom-btn-personal-inverso i {
+        color: white; 
+    }
+
+    .custom-btn-personal-inverso:hover {
+        background-color: white; 
+        color: #8a2bff; 
+        border-color: #8a2bff;
+    }
+
+        .custom-btn-personal-inverso:hover i {
+            color: #8a2bff;/
         }
 
 /* Estilo del botón con bordes verdes */
