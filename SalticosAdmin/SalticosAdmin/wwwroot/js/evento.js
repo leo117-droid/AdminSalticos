@@ -82,9 +82,16 @@ function loadDataTable() {
                     `;
                 },
             }
+        ],
+        "columnDefs": [
+            {
+                "targets": -1, // Aplica el cambio a la última columna (botones)
+                "width": "250px" // Ajusta el ancho de la columna
+            }
         ]
     });
 }
+
 
 
 function Delete(url) {
