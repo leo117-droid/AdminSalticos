@@ -100,4 +100,138 @@ body {
     flex-direction: column;
 }
 
+/* Estilo del botón con bordes verdes */
+.custom-btn-servicios {
+    background-color: white;
+    border: 2px solid #16d600; /* Borde verde */
+    color: #16d600; /* Texto e icono en verde */
+    transition: all 0.3s ease; /* Animación para el efecto hover */
+}
+
+    /* Icono del botón */
+    .custom-btn-servicios i {
+        color: #16d600; /* Color del icono en verde */
+    }
+
+    /* Efecto hover: fondo verde y texto blanco */
+    .custom-btn-servicios:hover {
+        background-color: #16d600; /* Fondo verde */
+        color: white; /* Texto e icono en blanco */
+        border-color: #16d600; /* Mantener el borde verde */
+    }
+
+        .custom-btn-servicios:hover i {
+            color: white; /* Icono en blanco al hacer hover */
+        }
+
+/* Estilo del botón con bordes verdes */
+.custom-btn-personal {
+    background-color: white;
+    border: 2px solid #8a2bff; /* Borde verde */
+    color: #8a2bff; /* Texto e icono en verde */
+    transition: all 0.3s ease; /* Animación para el efecto hover */
+}
+
+    /* Icono del botón */
+    .custom-btn-personal i {
+        color: #8a2bff; /* Color del icono en verde */
+    }
+
+    /* Efecto hover: fondo verde y texto blanco */
+    .custom-btn-personal:hover {
+        background-color: #8a2bff; /* Fondo verde */
+        color: white; /* Texto e icono en blanco */
+        border-color: #8a2bff; /* Mantener el borde verde */
+    }
+
+        .custom-btn-personal:hover i {
+            color: white; /* Icono en blanco al hacer hover */
+        }
+
+/* Estilo del botón con bordes verdes */
+.custom-btn-evento {
+    background-color: white;
+    border: 2px solid #ff6a00; /* Borde verde */
+    color: #ff6a00; /* Texto e icono en verde */
+    transition: all 0.3s ease; /* Animación para el efecto hover */
+}
+
+    /* Icono del botón */
+    .custom-btn-evento i {
+        color: #ff6a00; /* Color del icono en verde */
+    }
+
+    /* Efecto hover: fondo verde y texto blanco */
+    .custom-btn-evento:hover {
+        background-color: #ff6a00; /* Fondo verde */
+        color: white; /* Texto e icono en blanco */
+        border-color: #ff6a00; /* Mantener el borde verde */
+    }
+
+        .custom-btn-evento:hover i {
+            color: white; /* Icono en blanco al hacer hover */
+        }
+
+
+.custom-btn-transporte {
+    background-color: white;
+    border: 2px solid #ffd621; /* Borde verde */
+    color: #ffd621; /* Texto e icono en verde */
+    transition: all 0.3s ease; /* Animación para el efecto hover */
+}
+
+    /* Icono del botón */
+    .custom-btn-transporte i {
+        color: #ffd621; /* Color del icono en verde */
+    }
+
+    /* Efecto hover: fondo verde y texto blanco */
+    .custom-btn-transporte:hover {
+        background-color: #ffd621; /* Fondo verde */
+        color: white; /* Texto e icono en blanco */
+        border-color: #ffd621; /* Mantener el borde verde */
+    }
+
+        .custom-btn-transporte:hover i {
+            color: white; /* Icono en blanco al hacer hover */
+        }
+
+
+.custom-btn-otros {
+    background-color: white;
+    border: 2px solid #19c2ff; /* Borde verde */
+    color: #19c2ff; /* Texto e icono en verde */
+    transition: all 0.3s ease; /* Animación para el efecto hover */
+}
+
+    /* Icono del botón */
+    .custom-btn-otros i {
+        color: #19c2ff; /* Color del icono en verde */
+    }
+
+    /* Efecto hover: fondo verde y texto blanco */
+    .custom-btn-otros:hover {
+        background-color: #19c2ff; /* Fondo verde */
+        color: white; /* Texto e icono en blanco */
+        border-color: #19c2ff; /* Mantener el borde verde */
+    }
+
+        .custom-btn-otros:hover i {
+            color: white; /* Icono en blanco al hacer hover */
+        }
+
+
+
+/* Estilo para el botón */
+.btn-regresar {
+    background-color: #6c757d; /* Gris oscuro */
+    border-color: #6c757d;
+    color: white;
+}
+
+    .btn-regresar:hover {
+        background-color: white; /* Fondo blanco en hover */
+        color: #6c757d; /* Letra gris oscuro en hover */
+        border-color: #6c757d; /* Borde gris oscuro en hover */
+    }
 
