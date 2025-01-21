@@ -20,10 +20,10 @@
             <input type="date" id="fechaFin" class="form-control" />
         </div>
         <div class="col-lg-6 d-flex align-items-end">
-            <button id="btnBuscar" class="btn btn-primary me-3">
+            <button id="btnBuscar" class="btn shadow-sm custom-btn-otros">
                 <i class="bi bi-search"></i> Filtrar
             </button>
-            <button type="button" class="btn btn-secondary ms-3" id="btnLimpiarFiltro">
+            <button type="button" class="btn shadow-sm btn-regresar" id="btnLimpiarFiltro">
                 <i class="bi bi-arrow-counterclockwise"></i> Limpiar Filtro
             </button>
         </div>
@@ -31,9 +31,9 @@
 
     <br />
 
-    <div class="p-4 border rounded bg-light table-responsive">
-        <table id="tblDatos" class="table table-hover">
-            <thead class="table-dark">
+    <div class="p-4 border rounded bg-white shadow-sm">
+        <table id="tblDatos" class="table table-hover align-middle">
+            <thead style="background-color: #e9ecef;" class="text-center">
                 <tr>
                     <th>Fecha</th>
                     <th>Hora</th>
@@ -50,8 +50,8 @@
 <br />
 
 <div class="row mt-3">
-    <div class="col-lg-6">
-        <a class="btn btn-success" href="/Admin/Bitacora/Intermedia">
+    <div class="col-lg-6 ms-auto text-end">
+        <a class="btn shadow-sm btn-regresar" href="/Admin/Bitacora/Intermedia">
             <i class="bi bi-arrow-return-left"></i> Regresar
         </a>
     </div>
