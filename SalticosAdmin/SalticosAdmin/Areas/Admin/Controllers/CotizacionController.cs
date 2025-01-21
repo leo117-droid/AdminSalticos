@@ -222,7 +222,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var tarifaTransporteSeleccionada = transportes.Where(i => transporteIds.Contains(i.Id)).ToList();
             var montoTransporte = tarifaTransporteSeleccionada.Sum(i => i.Precio);
 
-
             var cotizacion = new CotizacionVM
             {
                 InflablesSeleccionados = inflablesSeleccionados.Any() ? inflablesSeleccionados : null,
@@ -241,147 +240,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         }
 
 
-        //public byte[] CrearPDF(CotizacionVM cotizacionActual)
-        //{
-
-        //    using (var memoryStream = new MemoryStream())
-        //    {
-        //        var document = new Document();
-        //        var writer = PdfWriter.GetInstance(document, memoryStream);
-        //        document.Open();
-        //        AddHeaderAndFooter(document, writer);
-        //        // Agregar título
-        //        document.Add(new Paragraph("Resumen de Cotización"));
-        //        document.Add(new Paragraph($"Monto Total: ₡{cotizacionActual.MontoTotal:N2}"));
-        //        document.Add(new Paragraph($"Monto Total con IVA: ₡{cotizacionActual.MontoTotalIVA:N2}"));
-        //        document.Add(new Paragraph(" "));
-
-        //        // Inflables seleccionados
-        //        if (cotizacionActual.InflablesSeleccionados != null && cotizacionActual.InflablesSeleccionados.Any())
-        //        {
-        //            document.Add(new Paragraph("Inflables Seleccionados:"));
-        //            document.Add(new Paragraph(" "));
-
-        //            var table = new PdfPTable(6); // Nombre, Descripción, Precio Base, Horas Adicionales, Precio Total
-        //            table.AddCell("Nombre");
-        //            table.AddCell("Descripción");
-        //            table.AddCell("Precio Base");
-        //            table.AddCell("Precio / Hora Adicional");
-        //            table.AddCell("Horas Adicionales");
-        //            table.AddCell("Precio Total");
-
-        //            foreach (var inflable in cotizacionActual.InflablesSeleccionados)
-        //            {
-        //                table.AddCell(inflable.Inflable.Nombre);
-        //                table.AddCell(inflable.Inflable.Descripcion);
-        //                table.AddCell($"₡{inflable.Inflable.Precio:N2}");
-        //                table.AddCell($"₡{inflable.Inflable.PrecioHoraAdicional:N2}");
-        //                table.AddCell(inflable.HorasAdicionales.ToString());
-        //                var precioTotal = inflable.Inflable.Precio + inflable.HorasAdicionales * inflable.Inflable.PrecioHoraAdicional;
-        //                table.AddCell($"₡{precioTotal:N2}");
-        //            }
-        //            document.Add(table);
-        //        }
-
-        //        document.Add(new Paragraph(" "));
-
-        //        // Mobiliarios seleccionados
-        //        if (cotizacionActual.MobiliariosSeleccionados != null && cotizacionActual.MobiliariosSeleccionados.Any())
-        //        {
-        //            document.Add(new Paragraph("Mobiliarios Seleccionados:"));
-        //            document.Add(new Paragraph(" "));
-
-        //            var table = new PdfPTable(5); // Nombre, Descripción, Cantidad, Precio Total
-        //            table.AddCell("Nombre");
-        //            table.AddCell("Descripción");
-        //            table.AddCell("Precio / Unidad");
-        //            table.AddCell("Cantidad");
-        //            table.AddCell("Precio Total");
-
-        //            foreach (var mobiliario in cotizacionActual.MobiliariosSeleccionados)
-        //            {
-        //                table.AddCell(mobiliario.Mobiliario.Nombre);
-        //                table.AddCell(mobiliario.Mobiliario.Descripcion);
-        //                table.AddCell($"₡{mobiliario.Mobiliario.Precio:N2}");
-        //                table.AddCell(mobiliario.Cantidad.ToString());
-        //                var precioTotal = mobiliario.Mobiliario.Precio * mobiliario.Cantidad;
-        //                table.AddCell($"₡{precioTotal:N2}");
-        //            }
-        //            document.Add(table);
-        //        }
-
-        //        document.Add(new Paragraph(" "));
-
-        //        // Servicios seleccionados
-        //        if (cotizacionActual.ServiciosSeleccionados != null && cotizacionActual.ServiciosSeleccionados.Any())
-        //        {
-        //            document.Add(new Paragraph("Servicios Adicionales Seleccionados:"));
-        //            document.Add(new Paragraph(" "));
-
-        //            var table = new PdfPTable(4); // Nombre, Cantidad, Precio Total
-        //            table.AddCell("Nombre");
-        //            table.AddCell("Precio / Unidad");
-        //            table.AddCell("Cantidad");
-        //            table.AddCell("Precio Total");
-
-        //            foreach (var servicio in cotizacionActual.ServiciosSeleccionados)
-        //            {
-        //                table.AddCell(servicio.Servicio.Nombre);
-        //                table.AddCell($"₡{servicio.Servicio.Precio:N2}");
-        //                table.AddCell(servicio.Cantidad.ToString());
-        //                var precioTotal = servicio.Servicio.Precio * servicio.Cantidad;
-        //                table.AddCell($"₡{precioTotal:N2}");
-        //            }
-        //            document.Add(table);
-        //        }
-
-        //        document.Add(new Paragraph(" "));
-
-        //        // Alimentación seleccionada
-        //        if (cotizacionActual.AlimentacionSeleccionada != null && cotizacionActual.AlimentacionSeleccionada.Any())
-        //        {
-        //            document.Add(new Paragraph("Alimentación Seleccionada:"));
-        //            document.Add(new Paragraph(" "));
-
-        //            var table = new PdfPTable(4); // Nombre, Cantidad, Precio Total
-        //            table.AddCell("Nombre");
-        //            table.AddCell("Precio / Unidad");
-        //            table.AddCell("Cantidad");
-        //            table.AddCell("Precio Total");
-
-        //            foreach (var opcion in cotizacionActual.AlimentacionSeleccionada)
-        //            {
-        //                table.AddCell(opcion.Alimentacion.Nombre);
-        //                table.AddCell($"₡{opcion.Alimentacion.Precio:N2}");
-        //                table.AddCell(opcion.Cantidad.ToString());
-        //                var precioTotal = opcion.Alimentacion.Precio * opcion.Cantidad;
-        //                table.AddCell($"₡{precioTotal:N2}");
-        //            }
-        //            document.Add(table);
-        //        }
-
-        //        document.Add(new Paragraph(" "));
-
-        //        // Transporte seleccionado
-        //        if (cotizacionActual.TarifaTransporteSeleccionada != null && cotizacionActual.TarifaTransporteSeleccionada.Any())
-        //        {
-        //            document.Add(new Paragraph("Transporte Seleccionado:"));
-        //            document.Add(new Paragraph(" "));
-
-        //            foreach (var tarifa in cotizacionActual.TarifaTransporteSeleccionada)
-        //            {
-        //                document.Add(new Paragraph($"Provincia: {tarifa.Provincia}, Precio: ₡{tarifa.Precio:N2}"));
-        //            }
-        //        }
-
-        //        document.Close();
-        //        var pdfContent = memoryStream.ToArray();
-
-        //        // Devolver el archivo PDF
-        //        return pdfContent;
-        //    }
-        //}
-
         public byte[] CrearPDF(CotizacionVM cotizacionActual)
         {
             using (var memoryStream = new MemoryStream())
@@ -391,16 +249,33 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 document.Open();
                 AddHeaderAndFooter(document, writer);
 
+                var baseFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+                var baseFont = BaseFont.CreateFont(baseFontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+
+
                 // Título principal
-                var titleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 18);
-                var sectionFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14);
-                var tableHeaderFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
-                var tableCellFont = FontFactory.GetFont(FontFactory.HELVETICA, 10);
+
+                var titleFont = new Font(baseFont, 18, Font.BOLD);
+                var sectionFont = new Font(baseFont, 14, Font.BOLD);
+                var tableHeaderFont = new Font(baseFont, 12, Font.BOLD);
+                var tableCellFont = new Font(baseFont, 12);
+
+                
 
                 document.Add(new Paragraph("Cotización Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
                 document.Add(new Paragraph(" "));
-                document.Add(new Paragraph($"Monto Total: ₡{cotizacionActual.MontoTotal:N2}", sectionFont));
-                document.Add(new Paragraph($"Monto Total con IVA: ₡{cotizacionActual.MontoTotalIVA:N2}", sectionFont));
+
+                var montoTotalParagraph = new Paragraph();
+                montoTotalParagraph.Add(new Chunk("Monto Total: ", new Font(baseFont, 12, Font.BOLD))); // Texto en negrita
+                montoTotalParagraph.Add(new Chunk($"₡{cotizacionActual.MontoTotal:N2}", new Font(baseFont, 12))); // Texto normal
+                document.Add(montoTotalParagraph);
+
+                var montoTotalIVAParagraph = new Paragraph();
+                montoTotalIVAParagraph.Add(new Chunk("Monto Total con IVA: ", new Font(baseFont, 12, Font.BOLD))); // Texto en negrita
+                montoTotalIVAParagraph.Add(new Chunk($"₡{cotizacionActual.MontoTotalIVA:N2}", new Font(baseFont, 12))); // Texto normal
+                document.Add(montoTotalIVAParagraph);
+
                 document.Add(new Paragraph(" "));
 
                 // Métodos para tablas
@@ -429,7 +304,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 {
                     var cell = new PdfPCell(new Phrase(content, tableCellFont))
                     {
-                        HorizontalAlignment = isNumeric ? Element.ALIGN_RIGHT : Element.ALIGN_LEFT,
+                        HorizontalAlignment = isNumeric ? Element.ALIGN_RIGHT : Element.ALIGN_CENTER,
                         Padding = 5
                     };
                     table.AddCell(cell);
@@ -450,7 +325,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                         AddCell(table, inflable.Inflable.Descripcion);
                         AddCell(table, $"₡{inflable.Inflable.Precio:N2}", true);
                         AddCell(table, $"₡{inflable.Inflable.PrecioHoraAdicional:N2}", true);
-                        AddCell(table, inflable.HorasAdicionales.ToString(), true);
+                        AddCell(table, inflable.HorasAdicionales.ToString(), false);
                         var precioTotal = inflable.Inflable.Precio + inflable.HorasAdicionales * inflable.Inflable.PrecioHoraAdicional;
                         AddCell(table, $"₡{precioTotal:N2}", true);
                     }
@@ -471,7 +346,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     {
                         AddCell(table, mobiliario.Mobiliario.Nombre);
                         AddCell(table, mobiliario.Mobiliario.Descripcion);
-                        AddCell(table, mobiliario.Cantidad.ToString(), true);
+                        AddCell(table, mobiliario.Cantidad.ToString(), false);
                         var precioTotal = mobiliario.Mobiliario.Precio * mobiliario.Cantidad;
                         AddCell(table, $"₡{precioTotal:N2}", true);
                     }
@@ -492,7 +367,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     {
                         AddCell(table, servicio.Servicio.Nombre);
                         AddCell(table, $"₡{servicio.Servicio.Precio:N2}", true);
-                        AddCell(table, servicio.Cantidad.ToString(), true);
+                        AddCell(table, servicio.Cantidad.ToString(), false);
                         var precioTotal = servicio.Servicio.Precio * servicio.Cantidad;
                         AddCell(table, $"₡{precioTotal:N2}", true);
                     }
@@ -513,7 +388,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     {
                         AddCell(table, opcion.Alimentacion.Nombre);
                         AddCell(table, $"₡{opcion.Alimentacion.Precio:N2}", true);
-                        AddCell(table, opcion.Cantidad.ToString(), true);
+                        AddCell(table, opcion.Cantidad.ToString(), false);
                         var precioTotal = opcion.Alimentacion.Precio * opcion.Cantidad;
                         AddCell(table, $"₡{precioTotal:N2}", true);
                     }
@@ -563,6 +438,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
 
             var pdfContent = CrearPDF(cotizacionActual);
+            TempData["CotizacionActual"] = JsonConvert.SerializeObject(cotizacionActual);
+            TempData["CotizacionActualCorreo"] = JsonConvert.SerializeObject(cotizacionActual);
+            TempData.Keep("CotizacionActual");
+            TempData.Keep("CotizacionActualCorreo");
             return File(pdfContent, "application/pdf", "Cotizacion.pdf");
         }
 
@@ -733,6 +612,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     );
 
                     
+
+
                 }
 
             }
@@ -743,8 +624,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
 
             // No se redirige, simplemente retorna NoContent para que no haya navegación
-            
-            return NoContent();
+            TempData["CotizacionActual"] = JsonConvert.SerializeObject(cotizacionActual);
+            TempData["CotizacionActualCorreo"] = JsonConvert.SerializeObject(cotizacionActual);
+            TempData.Keep("CotizacionActual");
+            TempData.Keep("CotizacionActualCorreo");
+            return NoContent(); ;
         }
 
 
@@ -752,15 +636,15 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         {
             // Agregar encabezado
             var headerTable = new PdfPTable(2) { WidthPercentage = 100 };
-            float[] columnWidths = { 1f, 3f }; // Tamaño relativo de las columnas (logo y texto)
+            float[] columnWidths = { 1f, 3f }; 
             headerTable.SetWidths(columnWidths);
 
-            // Logo de la empresa
+            
             var logoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes", "logo.jpg");
             if (System.IO.File.Exists(logoPath))
             {
                 var logo = Image.GetInstance(logoPath);
-                logo.ScaleToFit(100f, 100f); // Ajustar tamaño del logo
+                logo.ScaleToFit(150f, 150f); 
                 var logoCell = new PdfPCell(logo)
                 {
                     Border = Rectangle.NO_BORDER,
@@ -775,8 +659,12 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 headerTable.AddCell(emptyCell);
             }
 
-            // Texto del encabezado (nombre de la empresa)
-            var companyName = new Phrase("Cotización Sal-Ticos", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16));
+            // Título del encabezado
+            var baseFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+            var baseFont = BaseFont.CreateFont(baseFontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            var headerFont = new Font(baseFont, 16, Font.BOLD);
+
+            var companyName = new Phrase("", headerFont); 
             var companyCell = new PdfPCell(companyName)
             {
                 Border = Rectangle.NO_BORDER,
@@ -789,7 +677,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             headerTable.TotalWidth = document.PageSize.Width - document.LeftMargin - document.RightMargin;
             headerTable.WriteSelectedRows(0, -1, document.LeftMargin, document.PageSize.Height - 10, writer.DirectContent);
 
-            // Espaciado para que el contenido no se superponga al encabezado
+            
             document.Add(new Paragraph(" "));
 
             // Agregar pie de página

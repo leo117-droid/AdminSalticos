@@ -170,24 +170,43 @@
 
     <!-- Envio correo -->
 
-    <h2>Enviar Cotización por Correo</h2>
-    <form asp-action="EnviarCotizacionPorCorreo" method="post">
-        <div class="form-group">
-            <label for="correo">Correo Electrónico:</label>
-            <input type="email" id="correo" name="correo" class="form-control" required placeholder="Ingrese el correo electrónico">
+<div class="mt-4">
+    <div class="row align-items-center">
+        <!-- Botón Regresar -->
+        <div class="col-md-4 text-start">
+            <a asp-action="Index" class="btn btn-success" id="regresarBtn">
+                <i class="bi bi-arrow-return-left"></i> Regresar
+            </a>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar Correo</button>
-    </form>
 
+        <!-- Botón Descargar PDF -->
+        <div class="col-md-4 text-center">
+            <form asp-action="DescargarPDF" method="post">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-filetype-pdf"></i>
+                    Descargar PDF
+                </button>
+            </form>
+        </div>
 
-
-    <!-- Aquí se agregará un contenedor para alinear los botones a la derecha -->
-    <div class="mt-4 text-end">
-        <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>
-    <form asp-action="DescargarPDF" method="post">
-        <button type="submit" class="btn btn-primary">Descargar PDF</button>
-    </form>
+        <!-- Formulario Enviar Correo -->
+        <div class="col-md-4 text-end">
+            <form asp-action="EnviarCotizacionPorCorreo" method="post" class="d-flex align-items-center">
+                <input type="email"
+                       id="correo"
+                       name="correo"
+                       class="form-control me-2"
+                       placeholder="Correo Electrónico"
+                       required
+                       style="max-width: 250px;">
+                <button type="submit" class="btn btn-secondary">
+                    <i class="bi bi-envelope"></i>
+                    Enviar Correo
+                </button>
+            </form>
+        </div>
     </div>
+</div>
 
 
 
