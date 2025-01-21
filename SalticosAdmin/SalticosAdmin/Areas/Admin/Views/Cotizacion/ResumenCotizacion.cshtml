@@ -168,6 +168,19 @@
 
     <h3>Total con IVA: ₡@Model.MontoTotalIVA.ToString("N2")</h3>
 
+    <!-- Envio correo -->
+
+    <h2>Enviar Cotización por Correo</h2>
+    <form asp-action="EnviarCotizacionPorCorreo" method="post">
+        <div class="form-group">
+            <label for="correo">Correo Electrónico:</label>
+            <input type="email" id="correo" name="correo" class="form-control" required placeholder="Ingrese el correo electrónico">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar Correo</button>
+    </form>
+
+
+
     <!-- Aquí se agregará un contenedor para alinear los botones a la derecha -->
     <div class="mt-4 text-end">
         <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>

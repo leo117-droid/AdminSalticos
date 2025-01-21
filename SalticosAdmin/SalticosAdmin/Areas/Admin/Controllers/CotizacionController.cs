@@ -1,17 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using SalticosAdmin.Modelos;
 using SalticosAdmin.Modelos.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SalticosAdmin.Servicios;
 using System.IO;
 using System.Collections.Generic;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Newtonsoft.Json;
 using System.Data.SqlTypes;
+using static System.Formats.Asn1.AsnWriter;
+using System.Net.Mail;
+using MailKit.Net.Smtp;
+using MimeKit;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace SalticosAdmin.Areas.Admin.Controllers
 {
@@ -24,12 +30,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public List<ServicioAdicional> ServiciosSeleccionados { get; set; } = new List<ServicioAdicional>();
         public List<Alimentacion> AlimentacionSeleccionada { get; set; } = new List<Alimentacion>();
         public decimal MontoTotal { get; set; }
-
         public CotizacionVM cotizacionActual { get; set; }
 
-        public CotizacionController(IUnidadTrabajo unidadTrabajo)
+        private readonly IServiceProvider _serviceProvider;
+
+        public CotizacionController(IUnidadTrabajo unidadTrabajo, IServiceProvider serviceProvider)
         {
             _unidadTrabajo = unidadTrabajo;
+            _serviceProvider = serviceProvider;
 
         }
 
@@ -62,9 +70,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             List<int> servicioIds,
             List<int> servicioCantidades,
             List<int> alimentacionIds, // IDs de alimentación seleccionada
-            List<int> alimentacionCantidades, 
+            List<int> alimentacionCantidades,
             List<int> transporteIds,
-            IFormCollection form) 
+            IFormCollection form)
         {
             if ((inflableIds == null || !inflableIds.Any()) &&
                 (mobiliarioIds == null || !mobiliarioIds.Any()) &&
@@ -87,7 +95,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     var inflable = inflables.FirstOrDefault(m => m.Id == inflableIds[i]);
                     if (inflable != null)
                     {
-                        
+
                         /// ------ PRUEBA DE HORAS ADICIONALES
 
                         // Busca las horas adicionales asociadas al inflable
@@ -103,13 +111,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
 
 
-                        /// 
-
-                        // Si las horas adicionales no están especificadas, asigna 0 por defecto.
-                        //var horaAdicional = inflableHorasAdicionales.ElementAtOrDefault(i);
-
-                        //// Asegúrate de que horaAdicional no sea negativo.
-                        //horaAdicional = Math.Max(0, horaAdicional);
+     
 
                         // Agrega el inflable a la lista de seleccionados.
                         inflablesSeleccionados.Add((inflable, horaAdicional));
@@ -226,120 +228,18 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 MobiliariosSeleccionados = mobiliariosSeleccionados.Any() ? mobiliariosSeleccionados : null,
                 ServiciosSeleccionados = serviciosSeleccionados.Any() ? serviciosSeleccionados : null,
                 AlimentacionSeleccionada = alimentacionSeleccionada.Any() ? alimentacionSeleccionada : null,
-                TarifaTransporteSeleccionada = tarifaTransporteSeleccionada.Any() ? tarifaTransporteSeleccionada: null, 
+                TarifaTransporteSeleccionada = tarifaTransporteSeleccionada.Any() ? tarifaTransporteSeleccionada : null,
                 MontoTotal = montoInflables + montoMobiliarios + montoServicios + montoAlimentacion + montoTransporte
             };
-            
+
             TempData["CotizacionActual"] = JsonConvert.SerializeObject(cotizacion);
             TempData.Keep("CotizacionActual");
             return View("ResumenCotizacion", cotizacion);
         }
 
-        //public async Task<IActionResult> DescargarPDF(
-        //    List<int> inflableIds,
-        //    List<int> mobiliarioIds,
-        //    List<int> servicioIds,
-        //    List<int> alimentacionIds,
-        //    List<int> transporteIds)
-        //{
-        //    var inflables = await _unidadTrabajo.Inflable.ObtenerTodos();
-        //    var mobiliarios = await _unidadTrabajo.Mobiliario.ObtenerTodos();
-        //    var servicios = await _unidadTrabajo.ServicioAdicional.ObtenerTodos();
-        //    var alimentacion = await _unidadTrabajo.Alimentacion.ObtenerTodos();
-        //    var tarifas = await _unidadTrabajo.TarifasTransporte.ObtenerTodos();
-
-        //    var inflablesSeleccionados = inflables.Where(i => inflableIds.Contains(i.Id)).ToList();
-        //    var mobiliariosSeleccionados = mobiliarios.Where(m => mobiliarioIds.Contains(m.Id)).ToList();
-        //    var serviciosSeleccionados = servicios.Where(s => servicioIds.Contains(s.Id)).ToList();
-        //    var alimentacionSeleccionada = alimentacion.Where(a => alimentacionIds.Contains(a.Id)).ToList();
-        //    var transporteSeleccionado = tarifas.Where(t => transporteIds.Contains(t.Id)).ToList();
-
-        //    using (var ms = new MemoryStream())
-        //    {
-        //        var document = new Document();
-        //        PdfWriter.GetInstance(document, ms);
-        //        document.Open();
-
-        //        document.Add(new Paragraph("Resumen de Cotización"));
-        //        document.Add(new Paragraph(" "));
-
-        //        if (inflablesSeleccionados.Any())
-        //        {
-        //            document.Add(new Paragraph("Inflables Seleccionados"));
-        //            foreach (var inflable in inflablesSeleccionados)
-        //            {
-        //                document.Add(new Paragraph($"Nombre: {inflable.Nombre}, Descripción: {inflable.Descripcion}, Precio: ₡{inflable.Precio.ToString("N2")}"));
-        //            }
-        //        }
-
-        //        document.Add(new Paragraph(" "));
-
-        //        if (mobiliariosSeleccionados.Any())
-        //        {
-        //            document.Add(new Paragraph("Mobiliarios Seleccionados"));
-        //            foreach (var mobiliario in mobiliariosSeleccionados)
-        //            {
-        //                document.Add(new Paragraph($"Nombre: {mobiliario.Nombre}, Descripción: {mobiliario.Descripcion}, Precio: ₡{mobiliario.Precio.ToString("N2")}"));
-        //            }
-        //        }
-
-        //        document.Add(new Paragraph(" "));
-
-        //        if (serviciosSeleccionados.Any())
-        //        {
-        //            document.Add(new Paragraph("Servicios Adicionales Seleccionados"));
-        //            foreach (var servicio in serviciosSeleccionados)
-        //            {
-        //                document.Add(new Paragraph($"Nombre: {servicio.Nombre}, Descripción: {servicio.Descripcion}, Precio: ₡{servicio.Precio.ToString("N2")}"));
-        //            }
-        //        }
-
-        //        document.Add(new Paragraph(" "));
-
-        //        if (alimentacionSeleccionada.Any())
-        //        {
-        //            document.Add(new Paragraph("Alimentación Seleccionada"));
-        //            foreach (var opcion in alimentacionSeleccionada)
-        //            {
-        //                document.Add(new Paragraph($"Nombre: {opcion.Nombre}, Descripción: {opcion.Descripcion}, Precio: ₡{opcion.Precio.ToString("N2")}"));
-        //            }
-        //        }
-
-        //        document.Add(new Paragraph(" "));
-
-        //        if (transporteSeleccionado.Any())
-        //        {
-        //            document.Add(new Paragraph("Transporte Seleccionado"));
-        //            foreach (var tarifa in transporteSeleccionado)
-        //            {
-        //                document.Add(new Paragraph($"Provincia: {tarifa.Provincia}, Precio: ₡{tarifa.Precio.ToString("N2")}"));
-        //            }
-        //        }
-
-        //        document.Close();
-        //        var bytes = ms.ToArray();
-        //        return File(bytes, "application/pdf", "ResumenCotizacion.pdf");
-        //    }
-        //}
-
-
-        [HttpPost]
-        public IActionResult DescargarPDF()
+        
+        public byte[] CrearPDF(CotizacionVM cotizacionActual)
         {
-            if (TempData["CotizacionActual"] == null)
-            {
-                TempData["Error"] = "No se encontró una cotización activa.";
-                return RedirectToAction(nameof(Index));
-            }
-
-            var cotizacionJson = TempData["CotizacionActual"].ToString();
-            var cotizacionActual = JsonConvert.DeserializeObject<CotizacionVM>(cotizacionJson);
-
-            if (cotizacionActual == null)
-            {
-                TempData["Error"] = "Error al procesar los datos de la cotización.";
-                return RedirectToAction(nameof(Index));
-            }
 
             using (var memoryStream = new MemoryStream())
             {
@@ -475,8 +375,209 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 var pdfContent = memoryStream.ToArray();
 
                 // Devolver el archivo PDF
-                return File(pdfContent, "application/pdf", "Cotizacion.pdf");
+                return pdfContent;
             }
+        }
+
+        [HttpPost]
+        public IActionResult DescargarPDF()
+        {
+            if (TempData["CotizacionActual"] == null)
+            {
+                TempData["Error"] = "No se encontró una cotización activa.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var cotizacionJson = TempData["CotizacionActual"].ToString();
+            var cotizacionActual = JsonConvert.DeserializeObject<CotizacionVM>(cotizacionJson);
+
+            if (cotizacionActual == null)
+            {
+                TempData["Error"] = "Error al procesar los datos de la cotización.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var pdfContent = CrearPDF(cotizacionActual);
+            return File(pdfContent, "application/pdf", "Cotizacion.pdf");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EnviarCotizacionPorCorreo(string correo)
+        {
+            var cotizacionJson = TempData["CotizacionActual"].ToString();
+            var cotizacionActual = JsonConvert.DeserializeObject<CotizacionVM>(cotizacionJson);
+
+            // Construir el mensaje en formato HTML con tablas
+            // Construir el mensaje en formato HTML con tablas
+            var mensajeCotizacion = $@"
+                <h1 style='text-align: center;'>Cotización Sal-Ticos</h1>
+                <p><strong>Monto Total:</strong> ₡{cotizacionActual.MontoTotal:N2}</p>
+                <p><strong>Monto Total con IVA:</strong> ₡{cotizacionActual.MontoTotalIVA:N2}</p>
+                <hr>
+                <h2>Resumen de Cotización</h2>";
+
+            if (cotizacionActual.AlimentacionSeleccionada != null && cotizacionActual.AlimentacionSeleccionada.Any())
+            {
+                mensajeCotizacion += @"
+                <h3>Alimentación Seleccionada:</h3>
+                <table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Precio Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+                foreach (var opcion in cotizacionActual.AlimentacionSeleccionada)
+                {
+                    mensajeCotizacion += $@"
+                    <tr>
+                        <td>{opcion.Alimentacion.Nombre}</td>
+                        <td>{opcion.Cantidad}</td>
+                        <td>₡{opcion.Alimentacion.Precio * opcion.Cantidad:N2}</td>
+                    </tr>";
+                }
+                mensajeCotizacion += "</tbody></table>";
+            }
+
+            if (cotizacionActual.TarifaTransporteSeleccionada != null && cotizacionActual.TarifaTransporteSeleccionada.Any())
+            {
+                mensajeCotizacion += @"
+                <h3>Transporte Seleccionado:</h3>
+                <table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>
+                    <thead>
+                        <tr>
+                            <th>Provincia</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+                foreach (var tarifa in cotizacionActual.TarifaTransporteSeleccionada)
+                {
+                    mensajeCotizacion += $@"
+                    <tr>
+                        <td>{tarifa.Provincia}</td>
+                        <td>₡{tarifa.Precio:N2}</td>
+                    </tr>";
+                }
+                mensajeCotizacion += "</tbody></table>";
+            }
+
+            if (cotizacionActual.ServiciosSeleccionados != null && cotizacionActual.ServiciosSeleccionados.Any())
+            {
+                mensajeCotizacion += @"
+                <h3>Servicios Adicionales Seleccionados:</h3>
+                <table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>
+                    <thead>
+                        <tr>
+                            <th>Cantidad</th>
+                            <th>Servicio</th>
+                            <th>Precio Unitario</th>
+                            <th>Precio Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+                foreach (var servicio in cotizacionActual.ServiciosSeleccionados)
+                {
+                    mensajeCotizacion += $@"
+                    <tr>
+                        <td>{servicio.Cantidad}</td>
+                        <td>{servicio.Servicio.Nombre}</td>
+                        <td>₡{servicio.Servicio.Precio:N2}</td>
+                        <td>₡{servicio.Servicio.Precio * servicio.Cantidad:N2}</td>
+                    </tr>";
+                }
+                mensajeCotizacion += "</tbody></table>";
+            }
+
+            if (cotizacionActual.InflablesSeleccionados != null && cotizacionActual.InflablesSeleccionados.Any())
+            {
+                mensajeCotizacion += @"
+                <h3>Inflables Seleccionados:</h3>
+                <table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Horas Adicionales</th>
+                            <th>Precio Base</th>
+                            <th>Precio por Hora Adicional</th>
+                            <th>Precio Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+                foreach (var inflable in cotizacionActual.InflablesSeleccionados)
+                {
+                    var precioTotal = inflable.Inflable.Precio + inflable.HorasAdicionales * inflable.Inflable.PrecioHoraAdicional;
+                    mensajeCotizacion += $@"
+                    <tr>
+                        <td>{inflable.Inflable.Nombre}</td>
+                        <td>{inflable.HorasAdicionales}</td>
+                        <td>₡{inflable.Inflable.Precio:N2}</td>
+                        <td>₡{inflable.Inflable.PrecioHoraAdicional:N2}</td>
+                        <td>₡{precioTotal:N2}</td>
+                    </tr>";
+                }
+                mensajeCotizacion += "</tbody></table>";
+            }
+
+            if (cotizacionActual.MobiliariosSeleccionados != null && cotizacionActual.MobiliariosSeleccionados.Any())
+            {
+                mensajeCotizacion += @"
+            <h3>Mobiliarios Seleccionados:</h3>
+            <table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Precio Total</th>
+                    </tr>
+                </thead>
+                <tbody>";
+                foreach (var mobiliario in cotizacionActual.MobiliariosSeleccionados)
+                {
+                    var precioTotal = mobiliario.Mobiliario.Precio * mobiliario.Cantidad;
+                    mensajeCotizacion += $@"
+                <tr>
+                    <td>{mobiliario.Mobiliario.Nombre}</td>
+                    <td>{mobiliario.Cantidad}</td>
+                    <td>₡{mobiliario.Mobiliario.Precio:N2}</td>
+                    <td>₡{precioTotal:N2}</td>
+                </tr>";
+                }
+                mensajeCotizacion += "</tbody></table>";
+            }
+
+            mensajeCotizacion += $@"
+            <hr>
+            <p style='text-align: center;'>© Sal-Ticos</p>
+            <p><strong>Total con IVA:</strong> ₡{cotizacionActual.MontoTotalIVA:N2}</p>";
+
+
+
+            try
+            {
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var emailSender = scope.ServiceProvider.GetRequiredService<IEmailSender>();
+
+                    // Enviar el correo con el mensaje HTML
+                    await emailSender.SendEmailAsync(
+                        correo,
+                        "Cotización",
+                        mensajeCotizacion
+                    );
+
+                    TempData["Success"] = "El correo se envió correctamente.";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al enviar el correo: {ex.Message}";
+            }
+
+            return RedirectToAction("");
         }
 
 
