@@ -1,166 +1,175 @@
 ﻿@{
-    ViewData["Title"] = "Informe de Productos Más Solicitados";
+    ViewData["Title"] = "Informe de productos más solicitados";
     var inflablesMasSolicitados = ViewBag.InflablesMasSolicitados as List<SalticosAdmin.Modelos.InflableConCantidad>;
     var alimentosMasSolicitados = ViewBag.AlimentosMasSolicitados as List<SalticosAdmin.Modelos.AlimentoConCantidad>;
     var mobiliariosMasSolicitados = ViewBag.MobiliariosMasSolicitados as List<SalticosAdmin.Modelos.MobiliarioConCantidad>;
 }
 
-<div class="container">
-    <h1>@ViewData["Title"]</h1>
-    <p>Descarga el informe con los productos más solicitados:</p>
+<div class="container mt-4">
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <p class="text-center">Descarga el informe con los productos más solicitados en formato PDF.</p>
 
-    <h2>Inflables Más Solicitados</h2>
-    @if (inflablesMasSolicitados != null && inflablesMasSolicitados.Any())
-    {
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Nombre del Inflable</th>
-                    <th>Cantidad de Veces Solicitado</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var inflable in inflablesMasSolicitados)
-                {
-                    <tr>
-                        <td>@inflable.Nombre</td>
-                        <td>@inflable.Cantidad</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <canvas id="chartInflables" width="100" height="50"></canvas>
-    }
-    else
-    {
-        <p>No hay inflables solicitados para mostrar.</p>
-    }
-    <br />
-    <br />
-    <form method="post" action="@Url.Action("GenerarInformeInflables", "Informe")">
-        <button type="submit" class="btn btn-primary">Descargar Informe Inflables en PDF</button>
-    </form>
+    <!-- Inflables Section -->
+    <div class="card mt-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Inflables más solicitados</h4>
+        </div>
+        <div class="card-body">
+            @if (inflablesMasSolicitados != null && inflablesMasSolicitados.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Nombre del inflable</th>
+                                <th>Cantidad de veces solicitado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var inflable in inflablesMasSolicitados)
+                            {
+                                <tr>
+                                    <td>@inflable.Nombre</td>
+                                    <td>@inflable.Cantidad</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: center;">
+                    <div style="display: inline-block; width: 500px; height: 500px;">
+                        <canvas id="chartInflables"></canvas>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">No hay inflables solicitados para mostrar.</p>
+            }
+            <form method="post" action="@Url.Action("GenerarInformeInflables", "Informe")" class="mt-3">
+                <button type="submit" class="btn btn-primary">Descargar Informe Inflables en PDF</button>
+            </form>
+        </div>
+    </div>
 
-    <h2>Alimentos Más Solicitados</h2>
-    @if (alimentosMasSolicitados != null && alimentosMasSolicitados.Any())
-    {
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Nombre del Alimento</th>
-                    <th>Cantidad de Veces Solicitado</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var alimento in alimentosMasSolicitados)
-                {
-                    <tr>
-                        <td>@alimento.Nombre</td>
-                        <td>@alimento.Cantidad</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <canvas id="chartAlimentos" width="100" height="50"></canvas>
-    }
-    else
-    {
-        <p>No hay alimentos solicitados para mostrar.</p>
-    }
-    <br />
-    <br />
-    <form method="post" action="@Url.Action("GenerarInformeAlimentos", "Informe")">
-        <button type="submit" class="btn btn-primary">Descargar Informe Alimentacion en PDF</button>
-    </form>
+    <!-- Alimentos Section -->
+    <div class="card mt-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Alimentos más solicitados</h4>
+        </div>
+        <div class="card-body">
+            @if (alimentosMasSolicitados != null && alimentosMasSolicitados.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Nombre del alimento</th>
+                                <th>Cantidad de veces solicitado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var alimento in alimentosMasSolicitados)
+                            {
+                                <tr>
+                                    <td>@alimento.Nombre</td>
+                                    <td>@alimento.Cantidad</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: center;">
+                    <div style="display: inline-block; width: 500px; height: 500px;">
+                        <canvas id="chartAlimentos"></canvas>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">No hay alimentos solicitados para mostrar.</p>
+            }
+            <form method="post" action="@Url.Action("GenerarInformeAlimentos", "Informe")" class="mt-3">
+                <button type="submit" class="btn btn-primary">Descargar Informe Alimentación en PDF</button>
+            </form>
+        </div>
+    </div>
 
-    <h2>Mobiliarios Más Solicitados</h2>
-    @if (mobiliariosMasSolicitados != null && mobiliariosMasSolicitados.Any())
-    {
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Nombre del Mobiliario</th>
-                    <th>Cantidad de Veces Solicitado</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var mobiliario in mobiliariosMasSolicitados)
-                {
-                    <tr>
-                        <td>@mobiliario.Nombre</td>
-                        <td>@mobiliario.Cantidad</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <canvas id="chartMobiliarios" width="100" height="50"></canvas>
-    }
-    else
-    {
-        <p>No hay mobiliarios solicitados para mostrar.</p>
-    }
-
-    <br />
-    <br />
-
-    <form method="post" action="@Url.Action("GenerarInformeMobiliarios", "Informe")">
-        <button type="submit" class="btn btn-primary">Descargar Informe Mobiliario en PDF</button>
-    </form>
-
+    <!-- Mobiliarios Section -->
+    <div class="card mt-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Mobiliario más solicitado</h4>
+        </div>
+        <div class="card-body">
+            @if (mobiliariosMasSolicitados != null && mobiliariosMasSolicitados.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Nombre del mobiliario</th>
+                                <th>Cantidad de veces solicitado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var mobiliario in mobiliariosMasSolicitados)
+                            {
+                                <tr>
+                                    <td>@mobiliario.Nombre</td>
+                                    <td>@mobiliario.Cantidad</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: center;">
+                    <div style="display: inline-block; width: 500px; height: 500px;">
+                        <canvas id="chartMobiliarios"></canvas>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">No hay mobiliarios solicitados para mostrar.</p>
+            }
+            <form method="post" action="@Url.Action("GenerarInformeMobiliarios", "Informe")" class="mt-3">
+                <button type="submit" class="btn btn-primary">Descargar Informe Mobiliario en PDF</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        function generateColors(count) {
-            const colors = [];
-            for (let i = 0; i < count; i++) {
-                const red = Math.floor(Math.random() * 255);
-                const green = Math.floor(Math.random() * 255);
-                const blue = Math.floor(Math.random() * 255);
-                colors.push(`rgb(${red}, ${green}, ${blue})`);
-            }
-            return colors;
+        function generateColor(index) {
+            const hue = (190 + index * 10) % 360; // Tonos alrededor del 190° (celeste)
+            return `hsl(${hue}, 60%, 70%)`; // Saturación media, luminosidad más alta
         }
 
-        const inflablesData = {
-            labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(inflablesMasSolicitados?.Select(i => i.Nombre))),
-            datasets: [{
-                label: 'Inflables Más Solicitados',
-                data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(inflablesMasSolicitados?.Select(i => i.Cantidad))),
-                backgroundColor: generateColors(@inflablesMasSolicitados?.Count() ?? 0),
-                borderColor: 'rgba(0, 0, 0, 0.1)',
-                borderWidth: 1
-            }]
-        };
+        function generateChartData(items) {
+            return {
+                labels: items.map(i => i.Nombre),
+                datasets: [{
+                    data: items.map(i => i.Cantidad),
+                    backgroundColor: items.map((_, idx) => generateColor(idx)),
+                    hoverBackgroundColor: items.map((_, idx) => generateColor(idx))
+                }]
+            };
+        }
 
-        const alimentosData = {
-            labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(alimentosMasSolicitados?.Select(a => a.Nombre))),
-            datasets: [{
-                label: 'Alimentos Más Solicitados',
-                data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(alimentosMasSolicitados?.Select(a => a.Cantidad))),
-                backgroundColor: generateColors(@alimentosMasSolicitados?.Count() ?? 0),
-                borderColor: 'rgba(0, 0, 0, 0.1)',
-                borderWidth: 1
-            }]
-        };
-
-        const mobiliariosData = {
-            labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(mobiliariosMasSolicitados?.Select(m => m.Nombre))),
-            datasets: [{
-                label: 'Mobiliarios Más Solicitados',
-                data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(mobiliariosMasSolicitados?.Select(m => m.Cantidad))),
-                backgroundColor: generateColors(@mobiliariosMasSolicitados?.Count() ?? 0),
-                borderColor: 'rgba(0, 0, 0, 0.1)',
-                borderWidth: 1
-            }]
-        };
+        const inflablesData = generateChartData(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(
+        inflablesMasSolicitados ?? new List<SalticosAdmin.Modelos.InflableConCantidad>()
+        )));
+        const alimentosData = generateChartData(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(
+        alimentosMasSolicitados ?? new List<SalticosAdmin.Modelos.AlimentoConCantidad>()
+        )));
+        const mobiliariosData = generateChartData(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(
+        mobiliariosMasSolicitados ?? new List<SalticosAdmin.Modelos.MobiliarioConCantidad>()
+        )));
 
         new Chart(document.getElementById('chartInflables'), { type: 'pie', data: inflablesData });
-        new Chart(document.getElementById('chartAlimentos'), { type: 'bar', data: alimentosData });
-        new Chart(document.getElementById('chartMobiliarios'), { type: 'bar', data: mobiliariosData });
+        new Chart(document.getElementById('chartAlimentos'), { type: 'pie', data: alimentosData });
+        new Chart(document.getElementById('chartMobiliarios'), { type: 'pie', data: mobiliariosData });
     </script>
 }
-
-
-
