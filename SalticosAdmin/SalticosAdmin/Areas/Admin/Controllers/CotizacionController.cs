@@ -18,6 +18,7 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using Newtonsoft.Json;
 using System.Text;
+using SalticosAdmin.Utilidades;
 
 namespace SalticosAdmin.Areas.Admin.Controllers
 {
@@ -233,149 +234,313 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             };
 
             TempData["CotizacionActual"] = JsonConvert.SerializeObject(cotizacion);
+            TempData["CotizacionActualCorreo"] = JsonConvert.SerializeObject(cotizacion);
             TempData.Keep("CotizacionActual");
+            TempData.Keep("CotizacionActualCorreo");
             return View("ResumenCotizacion", cotizacion);
         }
 
-        
+
+        //public byte[] CrearPDF(CotizacionVM cotizacionActual)
+        //{
+
+        //    using (var memoryStream = new MemoryStream())
+        //    {
+        //        var document = new Document();
+        //        var writer = PdfWriter.GetInstance(document, memoryStream);
+        //        document.Open();
+        //        AddHeaderAndFooter(document, writer);
+        //        // Agregar título
+        //        document.Add(new Paragraph("Resumen de Cotización"));
+        //        document.Add(new Paragraph($"Monto Total: ₡{cotizacionActual.MontoTotal:N2}"));
+        //        document.Add(new Paragraph($"Monto Total con IVA: ₡{cotizacionActual.MontoTotalIVA:N2}"));
+        //        document.Add(new Paragraph(" "));
+
+        //        // Inflables seleccionados
+        //        if (cotizacionActual.InflablesSeleccionados != null && cotizacionActual.InflablesSeleccionados.Any())
+        //        {
+        //            document.Add(new Paragraph("Inflables Seleccionados:"));
+        //            document.Add(new Paragraph(" "));
+
+        //            var table = new PdfPTable(6); // Nombre, Descripción, Precio Base, Horas Adicionales, Precio Total
+        //            table.AddCell("Nombre");
+        //            table.AddCell("Descripción");
+        //            table.AddCell("Precio Base");
+        //            table.AddCell("Precio / Hora Adicional");
+        //            table.AddCell("Horas Adicionales");
+        //            table.AddCell("Precio Total");
+
+        //            foreach (var inflable in cotizacionActual.InflablesSeleccionados)
+        //            {
+        //                table.AddCell(inflable.Inflable.Nombre);
+        //                table.AddCell(inflable.Inflable.Descripcion);
+        //                table.AddCell($"₡{inflable.Inflable.Precio:N2}");
+        //                table.AddCell($"₡{inflable.Inflable.PrecioHoraAdicional:N2}");
+        //                table.AddCell(inflable.HorasAdicionales.ToString());
+        //                var precioTotal = inflable.Inflable.Precio + inflable.HorasAdicionales * inflable.Inflable.PrecioHoraAdicional;
+        //                table.AddCell($"₡{precioTotal:N2}");
+        //            }
+        //            document.Add(table);
+        //        }
+
+        //        document.Add(new Paragraph(" "));
+
+        //        // Mobiliarios seleccionados
+        //        if (cotizacionActual.MobiliariosSeleccionados != null && cotizacionActual.MobiliariosSeleccionados.Any())
+        //        {
+        //            document.Add(new Paragraph("Mobiliarios Seleccionados:"));
+        //            document.Add(new Paragraph(" "));
+
+        //            var table = new PdfPTable(5); // Nombre, Descripción, Cantidad, Precio Total
+        //            table.AddCell("Nombre");
+        //            table.AddCell("Descripción");
+        //            table.AddCell("Precio / Unidad");
+        //            table.AddCell("Cantidad");
+        //            table.AddCell("Precio Total");
+
+        //            foreach (var mobiliario in cotizacionActual.MobiliariosSeleccionados)
+        //            {
+        //                table.AddCell(mobiliario.Mobiliario.Nombre);
+        //                table.AddCell(mobiliario.Mobiliario.Descripcion);
+        //                table.AddCell($"₡{mobiliario.Mobiliario.Precio:N2}");
+        //                table.AddCell(mobiliario.Cantidad.ToString());
+        //                var precioTotal = mobiliario.Mobiliario.Precio * mobiliario.Cantidad;
+        //                table.AddCell($"₡{precioTotal:N2}");
+        //            }
+        //            document.Add(table);
+        //        }
+
+        //        document.Add(new Paragraph(" "));
+
+        //        // Servicios seleccionados
+        //        if (cotizacionActual.ServiciosSeleccionados != null && cotizacionActual.ServiciosSeleccionados.Any())
+        //        {
+        //            document.Add(new Paragraph("Servicios Adicionales Seleccionados:"));
+        //            document.Add(new Paragraph(" "));
+
+        //            var table = new PdfPTable(4); // Nombre, Cantidad, Precio Total
+        //            table.AddCell("Nombre");
+        //            table.AddCell("Precio / Unidad");
+        //            table.AddCell("Cantidad");
+        //            table.AddCell("Precio Total");
+
+        //            foreach (var servicio in cotizacionActual.ServiciosSeleccionados)
+        //            {
+        //                table.AddCell(servicio.Servicio.Nombre);
+        //                table.AddCell($"₡{servicio.Servicio.Precio:N2}");
+        //                table.AddCell(servicio.Cantidad.ToString());
+        //                var precioTotal = servicio.Servicio.Precio * servicio.Cantidad;
+        //                table.AddCell($"₡{precioTotal:N2}");
+        //            }
+        //            document.Add(table);
+        //        }
+
+        //        document.Add(new Paragraph(" "));
+
+        //        // Alimentación seleccionada
+        //        if (cotizacionActual.AlimentacionSeleccionada != null && cotizacionActual.AlimentacionSeleccionada.Any())
+        //        {
+        //            document.Add(new Paragraph("Alimentación Seleccionada:"));
+        //            document.Add(new Paragraph(" "));
+
+        //            var table = new PdfPTable(4); // Nombre, Cantidad, Precio Total
+        //            table.AddCell("Nombre");
+        //            table.AddCell("Precio / Unidad");
+        //            table.AddCell("Cantidad");
+        //            table.AddCell("Precio Total");
+
+        //            foreach (var opcion in cotizacionActual.AlimentacionSeleccionada)
+        //            {
+        //                table.AddCell(opcion.Alimentacion.Nombre);
+        //                table.AddCell($"₡{opcion.Alimentacion.Precio:N2}");
+        //                table.AddCell(opcion.Cantidad.ToString());
+        //                var precioTotal = opcion.Alimentacion.Precio * opcion.Cantidad;
+        //                table.AddCell($"₡{precioTotal:N2}");
+        //            }
+        //            document.Add(table);
+        //        }
+
+        //        document.Add(new Paragraph(" "));
+
+        //        // Transporte seleccionado
+        //        if (cotizacionActual.TarifaTransporteSeleccionada != null && cotizacionActual.TarifaTransporteSeleccionada.Any())
+        //        {
+        //            document.Add(new Paragraph("Transporte Seleccionado:"));
+        //            document.Add(new Paragraph(" "));
+
+        //            foreach (var tarifa in cotizacionActual.TarifaTransporteSeleccionada)
+        //            {
+        //                document.Add(new Paragraph($"Provincia: {tarifa.Provincia}, Precio: ₡{tarifa.Precio:N2}"));
+        //            }
+        //        }
+
+        //        document.Close();
+        //        var pdfContent = memoryStream.ToArray();
+
+        //        // Devolver el archivo PDF
+        //        return pdfContent;
+        //    }
+        //}
+
         public byte[] CrearPDF(CotizacionVM cotizacionActual)
         {
-
             using (var memoryStream = new MemoryStream())
             {
-                var document = new Document();
+                var document = new Document(PageSize.A4, 36, 36, 54, 54);
                 var writer = PdfWriter.GetInstance(document, memoryStream);
                 document.Open();
                 AddHeaderAndFooter(document, writer);
-                // Agregar título
-                document.Add(new Paragraph("Resumen de Cotización"));
-                document.Add(new Paragraph($"Monto Total: ₡{cotizacionActual.MontoTotal:N2}"));
-                document.Add(new Paragraph($"Monto Total con IVA: ₡{cotizacionActual.MontoTotalIVA:N2}"));
+
+                // Título principal
+                var titleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 18);
+                var sectionFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14);
+                var tableHeaderFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
+                var tableCellFont = FontFactory.GetFont(FontFactory.HELVETICA, 10);
+
+                document.Add(new Paragraph("Cotización Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
+                document.Add(new Paragraph(" "));
+                document.Add(new Paragraph($"Monto Total: ₡{cotizacionActual.MontoTotal:N2}", sectionFont));
+                document.Add(new Paragraph($"Monto Total con IVA: ₡{cotizacionActual.MontoTotalIVA:N2}", sectionFont));
                 document.Add(new Paragraph(" "));
 
-                // Inflables seleccionados
-                if (cotizacionActual.InflablesSeleccionados != null && cotizacionActual.InflablesSeleccionados.Any())
+                // Métodos para tablas
+                PdfPTable CreateTable(int columnCount, float[] columnWidths)
                 {
-                    document.Add(new Paragraph("Inflables Seleccionados:"));
+                    var table = new PdfPTable(columnCount) { WidthPercentage = 100 };
+                    table.SetWidths(columnWidths);
+                    return table;
+                }
+
+                void AddTableHeaders(PdfPTable table, string[] headers)
+                {
+                    foreach (var header in headers)
+                    {
+                        var cell = new PdfPCell(new Phrase(header, tableHeaderFont))
+                        {
+                            BackgroundColor = BaseColor.LIGHT_GRAY,
+                            HorizontalAlignment = Element.ALIGN_CENTER,
+                            Padding = 5
+                        };
+                        table.AddCell(cell);
+                    }
+                }
+
+                void AddCell(PdfPTable table, string content, bool isNumeric = false)
+                {
+                    var cell = new PdfPCell(new Phrase(content, tableCellFont))
+                    {
+                        HorizontalAlignment = isNumeric ? Element.ALIGN_RIGHT : Element.ALIGN_LEFT,
+                        Padding = 5
+                    };
+                    table.AddCell(cell);
+                }
+
+                // Inflables seleccionados
+                if (cotizacionActual.InflablesSeleccionados?.Any() == true)
+                {
+                    document.Add(new Paragraph("Inflables Seleccionados:", sectionFont));
                     document.Add(new Paragraph(" "));
 
-                    var table = new PdfPTable(6); // Nombre, Descripción, Precio Base, Horas Adicionales, Precio Total
-                    table.AddCell("Nombre");
-                    table.AddCell("Descripción");
-                    table.AddCell("Precio Base");
-                    table.AddCell("Precio / Hora Adicional");
-                    table.AddCell("Horas Adicionales");
-                    table.AddCell("Precio Total");
+                    var table = CreateTable(6, new float[] { 2, 3, 2, 2, 2, 2 });
+                    AddTableHeaders(table, new[] { "Nombre", "Descripción", "Precio Base", "Precio / Hora Adicional", "Horas Adicionales", "Precio Total" });
 
                     foreach (var inflable in cotizacionActual.InflablesSeleccionados)
                     {
-                        table.AddCell(inflable.Inflable.Nombre);
-                        table.AddCell(inflable.Inflable.Descripcion);
-                        table.AddCell($"₡{inflable.Inflable.Precio:N2}");
-                        table.AddCell($"₡{inflable.Inflable.PrecioHoraAdicional:N2}");
-                        table.AddCell(inflable.HorasAdicionales.ToString());
+                        AddCell(table, inflable.Inflable.Nombre);
+                        AddCell(table, inflable.Inflable.Descripcion);
+                        AddCell(table, $"₡{inflable.Inflable.Precio:N2}", true);
+                        AddCell(table, $"₡{inflable.Inflable.PrecioHoraAdicional:N2}", true);
+                        AddCell(table, inflable.HorasAdicionales.ToString(), true);
                         var precioTotal = inflable.Inflable.Precio + inflable.HorasAdicionales * inflable.Inflable.PrecioHoraAdicional;
-                        table.AddCell($"₡{precioTotal:N2}");
+                        AddCell(table, $"₡{precioTotal:N2}", true);
                     }
                     document.Add(table);
+                    document.Add(new Paragraph(" "));
                 }
 
-                document.Add(new Paragraph(" "));
-
                 // Mobiliarios seleccionados
-                if (cotizacionActual.MobiliariosSeleccionados != null && cotizacionActual.MobiliariosSeleccionados.Any())
+                if (cotizacionActual.MobiliariosSeleccionados?.Any() == true)
                 {
-                    document.Add(new Paragraph("Mobiliarios Seleccionados:"));
+                    document.Add(new Paragraph("Mobiliarios Seleccionados:", sectionFont));
                     document.Add(new Paragraph(" "));
 
-                    var table = new PdfPTable(5); // Nombre, Descripción, Cantidad, Precio Total
-                    table.AddCell("Nombre");
-                    table.AddCell("Descripción");
-                    table.AddCell("Precio / Unidad");
-                    table.AddCell("Cantidad");
-                    table.AddCell("Precio Total");
+                    var table = CreateTable(4, new float[] { 3, 2, 2, 2 });
+                    AddTableHeaders(table, new[] { "Nombre", "Descripción", "Cantidad", "Precio Total" });
 
                     foreach (var mobiliario in cotizacionActual.MobiliariosSeleccionados)
                     {
-                        table.AddCell(mobiliario.Mobiliario.Nombre);
-                        table.AddCell(mobiliario.Mobiliario.Descripcion);
-                        table.AddCell($"₡{mobiliario.Mobiliario.Precio:N2}");
-                        table.AddCell(mobiliario.Cantidad.ToString());
+                        AddCell(table, mobiliario.Mobiliario.Nombre);
+                        AddCell(table, mobiliario.Mobiliario.Descripcion);
+                        AddCell(table, mobiliario.Cantidad.ToString(), true);
                         var precioTotal = mobiliario.Mobiliario.Precio * mobiliario.Cantidad;
-                        table.AddCell($"₡{precioTotal:N2}");
+                        AddCell(table, $"₡{precioTotal:N2}", true);
                     }
                     document.Add(table);
+                    document.Add(new Paragraph(" "));
                 }
 
-                document.Add(new Paragraph(" "));
-
                 // Servicios seleccionados
-                if (cotizacionActual.ServiciosSeleccionados != null && cotizacionActual.ServiciosSeleccionados.Any())
+                if (cotizacionActual.ServiciosSeleccionados?.Any() == true)
                 {
-                    document.Add(new Paragraph("Servicios Adicionales Seleccionados:"));
+                    document.Add(new Paragraph("Servicios Adicionales Seleccionados:", sectionFont));
                     document.Add(new Paragraph(" "));
 
-                    var table = new PdfPTable(4); // Nombre, Cantidad, Precio Total
-                    table.AddCell("Nombre");
-                    table.AddCell("Precio / Unidad");
-                    table.AddCell("Cantidad");
-                    table.AddCell("Precio Total");
+                    var table = CreateTable(4, new float[] { 3, 2, 2, 2 });
+                    AddTableHeaders(table, new[] { "Servicio", "Precio / Unidad", "Cantidad", "Precio Total" });
 
                     foreach (var servicio in cotizacionActual.ServiciosSeleccionados)
                     {
-                        table.AddCell(servicio.Servicio.Nombre);
-                        table.AddCell($"₡{servicio.Servicio.Precio:N2}");
-                        table.AddCell(servicio.Cantidad.ToString());
+                        AddCell(table, servicio.Servicio.Nombre);
+                        AddCell(table, $"₡{servicio.Servicio.Precio:N2}", true);
+                        AddCell(table, servicio.Cantidad.ToString(), true);
                         var precioTotal = servicio.Servicio.Precio * servicio.Cantidad;
-                        table.AddCell($"₡{precioTotal:N2}");
+                        AddCell(table, $"₡{precioTotal:N2}", true);
                     }
                     document.Add(table);
+                    document.Add(new Paragraph(" "));
                 }
 
-                document.Add(new Paragraph(" "));
-
                 // Alimentación seleccionada
-                if (cotizacionActual.AlimentacionSeleccionada != null && cotizacionActual.AlimentacionSeleccionada.Any())
+                if (cotizacionActual.AlimentacionSeleccionada?.Any() == true)
                 {
-                    document.Add(new Paragraph("Alimentación Seleccionada:"));
+                    document.Add(new Paragraph("Alimentación Seleccionada:", sectionFont));
                     document.Add(new Paragraph(" "));
 
-                    var table = new PdfPTable(4); // Nombre, Cantidad, Precio Total
-                    table.AddCell("Nombre");
-                    table.AddCell("Precio / Unidad");
-                    table.AddCell("Cantidad");
-                    table.AddCell("Precio Total");
+                    var table = CreateTable(4, new float[] { 3, 2, 2, 2 });
+                    AddTableHeaders(table, new[] { "Alimento", "Precio / Unidad", "Cantidad", "Precio Total" });
 
                     foreach (var opcion in cotizacionActual.AlimentacionSeleccionada)
                     {
-                        table.AddCell(opcion.Alimentacion.Nombre);
-                        table.AddCell($"₡{opcion.Alimentacion.Precio:N2}");
-                        table.AddCell(opcion.Cantidad.ToString());
+                        AddCell(table, opcion.Alimentacion.Nombre);
+                        AddCell(table, $"₡{opcion.Alimentacion.Precio:N2}", true);
+                        AddCell(table, opcion.Cantidad.ToString(), true);
                         var precioTotal = opcion.Alimentacion.Precio * opcion.Cantidad;
-                        table.AddCell($"₡{precioTotal:N2}");
+                        AddCell(table, $"₡{precioTotal:N2}", true);
                     }
                     document.Add(table);
+                    document.Add(new Paragraph(" "));
                 }
 
-                document.Add(new Paragraph(" "));
-
                 // Transporte seleccionado
-                if (cotizacionActual.TarifaTransporteSeleccionada != null && cotizacionActual.TarifaTransporteSeleccionada.Any())
+                if (cotizacionActual.TarifaTransporteSeleccionada?.Any() == true)
                 {
-                    document.Add(new Paragraph("Transporte Seleccionado:"));
+                    document.Add(new Paragraph("Transporte Seleccionado:", sectionFont));
                     document.Add(new Paragraph(" "));
+
+                    var table = CreateTable(2, new float[] { 3, 2 });
+                    AddTableHeaders(table, new[] { "Provincia", "Precio" });
 
                     foreach (var tarifa in cotizacionActual.TarifaTransporteSeleccionada)
                     {
-                        document.Add(new Paragraph($"Provincia: {tarifa.Provincia}, Precio: ₡{tarifa.Precio:N2}"));
+                        AddCell(table, tarifa.Provincia);
+                        AddCell(table, $"₡{tarifa.Precio:N2}", true);
                     }
+                    document.Add(table);
+                    document.Add(new Paragraph(" "));
                 }
 
                 document.Close();
-                var pdfContent = memoryStream.ToArray();
-
-                // Devolver el archivo PDF
-                return pdfContent;
+                return memoryStream.ToArray();
             }
         }
 
@@ -404,7 +569,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> EnviarCotizacionPorCorreo(string correo)
         {
-            var cotizacionJson = TempData["CotizacionActual"].ToString();
+            var cotizacionJson = TempData["CotizacionActualCorreo"].ToString();
             var cotizacionActual = JsonConvert.DeserializeObject<CotizacionVM>(cotizacionJson);
 
             // Construir el mensaje en formato HTML con tablas
@@ -551,8 +716,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             mensajeCotizacion += $@"
             <hr>
-            <p style='text-align: center;'>© Sal-Ticos</p>
-            <p><strong>Total con IVA:</strong> ₡{cotizacionActual.MontoTotalIVA:N2}</p>";
+            <p style='text-align: center;'>© Sal-Ticos</p>";
 
 
 
@@ -562,22 +726,25 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 {
                     var emailSender = scope.ServiceProvider.GetRequiredService<IEmailSender>();
 
-                    // Enviar el correo con el mensaje HTML
                     await emailSender.SendEmailAsync(
                         correo,
                         "Cotización",
                         mensajeCotizacion
                     );
 
-                    TempData["Success"] = "El correo se envió correctamente.";
+                    
                 }
+
             }
             catch (Exception ex)
             {
-                TempData["Error"] = $"Error al enviar el correo: {ex.Message}";
+                // Manejo de errores (opcional)
+                TempData["Error"] = "Error al enviar correo";
             }
 
-            return RedirectToAction("");
+            // No se redirige, simplemente retorna NoContent para que no haya navegación
+            
+            return NoContent();
         }
 
 
