@@ -1,6 +1,6 @@
 ﻿@model SalticosAdmin.Modelos.ViewModels.CotizacionVM
 @using SalticosAdmin.Utilidades
-
+@using Newtonsoft.Json
 
 @{
     ViewData["Title"] = "Resumen de Cotización";
@@ -17,6 +17,7 @@
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Precio Base</th>
+                <th>Precio / Hora Adicional</th>
                 <th>Horas Adicionales</th>
                 <th>Precio Total</th>
             </tr>
@@ -32,6 +33,7 @@
                     <td>@inflable.Nombre</td>
                     <td>@inflable.Descripcion</td>
                     <td>₡@inflable.Precio.ToString("N2")</td>
+                    <td>₡@inflable.PrecioHoraAdicional.ToString("N2")</td>
                     <td>@horasAdicionales</td>
                     <td>₡@precioTotal.ToString("N2")</td>
                 </tr>
@@ -166,10 +168,48 @@
 
     <h3>Total con IVA: ₡@Model.MontoTotalIVA.ToString("N2")</h3>
 
-    <!-- Aquí se agregará un contenedor para alinear los botones a la derecha -->
-    <div class="mt-4 text-end">
-        <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+    <!-- Envio correo -->
+
+<div class="mt-4">
+    <div class="row align-items-center">
+        <!-- Botón Regresar -->
+        <div class="col-md-4 text-start">
+            <a asp-action="Index" class="btn btn-success" id="regresarBtn">
+                <i class="bi bi-arrow-return-left"></i> Regresar
+            </a>
+        </div>
+
+        <!-- Botón Descargar PDF -->
+        <div class="col-md-4 text-center">
+            <form asp-action="DescargarPDF" method="post">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-filetype-pdf"></i>
+                    Descargar PDF
+                </button>
+            </form>
+        </div>
+
+        <!-- Formulario Enviar Correo -->
+        <div class="col-md-4 text-end">
+            <form asp-action="EnviarCotizacionPorCorreo" method="post" class="d-flex align-items-center">
+                <input type="email"
+                       id="correo"
+                       name="correo"
+                       class="form-control me-2"
+                       placeholder="Correo Electrónico"
+                       required
+                       style="max-width: 250px;">
+                <button type="submit" class="btn btn-secondary">
+                    <i class="bi bi-envelope"></i>
+                    Enviar Correo
+                </button>
+            </form>
+        </div>
     </div>
+</div>
+
+
+
 
 </div>
 

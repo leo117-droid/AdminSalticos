@@ -43,6 +43,7 @@ builder.Services.AddHostedService(sp => sp.GetRequiredService<RecordatorioBackgr
 builder.Services.AddScoped<InformeServicio>();
 
 
+
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddScoped<IUnidadTrabajo, UnidadTrabajo>();
