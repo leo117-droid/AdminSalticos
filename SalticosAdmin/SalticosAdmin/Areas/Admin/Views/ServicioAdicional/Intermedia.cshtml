@@ -6,36 +6,55 @@
     <h1 class="fw-bold">Gestión de Servicios</h1>
 </header>
 
+<section class="py-5">
+    <div class="container">
+        <!-- Primera fila -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-balloon display-1"></i>
+                        <h5 class="card-title mt-3">Inflables</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de inflables.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Inflable" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
+            </div>
 
-<section>
-    <div class="container my-4 text-center">
+            <div class="col-md-6">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-house display-1"></i>
+                        <h5 class="card-title mt-3">Mobiliario</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de mobiliario.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Mobiliario" asp-action="Index">Ir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Segunda fila -->
         <div class="row justify-content-center">
-            <!-- Botón Inflable -->
-            <div class="col-md-6 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Inflable" asp-action="Intermedia">
-                    <i class="bi bi-balloon"></i> Inflables
-                </a>
+            <div class="col-md-6">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-basket2-fill display-1"></i>
+                        <h5 class="card-title mt-3">Alimentación</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de alimentación.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Alimentacion" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Botón Mobiliario -->
-            <div class="col-md-6 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Mobiliario" asp-action="Index">
-                    <i class="bi bi-house"></i> Mobiliario
-                </a>
-            </div>
-
-            <!-- Botón Alimentación -->
-            <div class="col-md-6 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Alimentacion" asp-action="Intermedia">
-                    <i class="bi bi-basket2-fill"></i> Alimentación
-                </a>
-            </div>
-
-            <!-- Botón Servicios Adicionales -->
-            <div class="col-md-6 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Index">
-                    <i class="bi bi-plus-square-fill"></i> Servicios Adicionales
-                </a>
+            <div class="col-md-6">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-plus-square-fill display-1"></i>
+                        <h5 class="card-title mt-3">Servicios Adicionales</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de servicios adicionales.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

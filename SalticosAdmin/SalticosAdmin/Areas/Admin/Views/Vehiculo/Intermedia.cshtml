@@ -6,21 +6,29 @@
     <h1 class="fw-bold">Gestión de Transporte</h1>
 </header>
 
-
-<section>
-    <div class="container my-4 text-center">
+<section class="py-5">
+    <div class="container">
         <div class="row justify-content-center">
-            <!-- Botón Vehiculo -->
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Vehiculo" asp-action="Index">
-                    <i class="bi bi-car-front-fill"></i> Vehiculo
-                </a>
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-transporte">
+                    <div class="card-body">
+                        <i class="bi bi-car-front-fill display-1"></i>
+                        <h5 class="card-title mt-3">Vehículos</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de vehículos.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Vehiculo" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
-            <!-- Botón Transporte -->
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="TarifasTransporte" asp-action="Index">
-                    <i class="bi bi-cash-coin"></i> Tarifas Transporte
-                </a>
+
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-transporte">
+                    <div class="card-body">
+                        <i class="bi bi-cash-coin display-1"></i>
+                        <h5 class="card-title mt-3">Tarifas de Transporte</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de las tarifas de transporte.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="TarifasTransporte" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
