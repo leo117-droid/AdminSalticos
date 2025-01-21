@@ -7,24 +7,33 @@
 </header>
 
 
-<section>
-    <div class="container my-4 text-center">
+<section class="py-5">
+    <div class="container">
         <div class="row justify-content-center">
-
-            <!-- Botón Evento -->
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Evento" asp-action="Index">
-                    <i class="bi bi-calendar-plus"></i> Eventos
-                </a>
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-evento">
+                    <div class="card-body">
+                        <i class="bi bi-calendar-plus display-1"></i>
+                        <h5 class="card-title mt-3">Eventos</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de evento.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Evento" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Botón Cliente -->
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Cliente" asp-action="Index">
-                    <i class="bi bi-person-circle"></i> Clientes
-                </a>
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-evento">
+                    <div class="card-body">
+                        <i class="bi bi-person-circle display-1"></i>
+                        <h5 class="card-title mt-3">Clientes</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de clientes.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Cliente" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 </section>
+
+
+

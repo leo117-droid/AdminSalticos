@@ -91,3 +91,13 @@ body {
     color: #19c2ff;
 }
 
+.card {
+    height: 100%; /* Asegura que todas las tarjetas usen toda la altura disponible */
+}
+
+.row > .col-md-4 {
+    display: flex;
+    flex-direction: column;
+}
+
+

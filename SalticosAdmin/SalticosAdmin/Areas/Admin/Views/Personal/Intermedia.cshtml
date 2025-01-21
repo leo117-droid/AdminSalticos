@@ -6,30 +6,43 @@
     <h1 class="fw-bold">Gestión de Personal</h1>
 </header>
 
-
-<section>
-    <div class="container my-4 text-center">
+<section class="py-5">
+    <div class="container">
         <div class="row justify-content-center">
-            <!-- Botón Personal -->
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Personal" asp-action="Index">
-                    <i class="bi bi-people-fill"></i> Personal
-                </a>
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-personal">
+                    <div class="card-body">
+                        <i class="bi bi-people-fill display-1"></i>
+                        <h5 class="card-title mt-3">Personal</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información sobre el personal.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Personal" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Botón RolPersonal -->
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="RolPersonal" asp-action="Index">
-                    <i class="bi bi-person-gear"></i> Roles de Personal
-                </a>
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-personal">
+                    <div class="card-body">
+                        <i class="bi bi-person-gear display-1"></i>
+                        <h5 class="card-title mt-3">Roles de Personal</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información sobre roles de personal.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="RolPersonal" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Botón Capacitaciones -->
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Capacitacion" asp-action="Index">
-                    <i class="bi bi-mortarboard"></i> Capacitaciones
-                </a>
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-personal">
+                    <div class="card-body">
+                        <i class="bi bi-mortarboard display-1"></i>
+                        <h5 class="card-title mt-3">Capacitaciones</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de capacitaciones.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Capacitacion" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+

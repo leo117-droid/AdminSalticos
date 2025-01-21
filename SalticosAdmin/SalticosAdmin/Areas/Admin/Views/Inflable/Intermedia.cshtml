@@ -6,29 +6,40 @@
     <h1 class="fw-bold">Gestión de Inflables</h1>
 </header>
 
-
-<section>
-    <div class="container my-4 text-center">
+<section class="py-5">
+    <div class="container">
         <div class="row justify-content-center">
-            <!-- Botón Inflable -->
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="Inflable" asp-action="Index">
-                    <i class="bi bi-person-badge"></i> Inflables
-                </a>
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-balloon display-1"></i>
+                        <h5 class="card-title mt-3">Inflables</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información sobre el inflables.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Inflable" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Botón Categoría por Edad -->
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="CategoriasEdad" asp-action="Index">
-                    <i class="bi bi-journal"></i> Categoría por Edad
-                </a>
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-filter display-1"></i>
+                        <h5 class="card-title mt-3">Categorías por Edad</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información sobre categorías por edad.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="CategoriasEdad" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Botón Categoría por Tamaño -->
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-primary btn-lg w-100" asp-area="Admin" asp-controller="CategoriaTamanno" asp-action="Index">
-                    <i class="bi bi-journal"></i> Categoría por Tamaño
-                </a>
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-filter display-1"></i>
+                        <h5 class="card-title mt-3">Categorías por Tamaño</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información sobre categorías por tamaño.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="CategoriaTamanno" asp-action="Index">Ir</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
