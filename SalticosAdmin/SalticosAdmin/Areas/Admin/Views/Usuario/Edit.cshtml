@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var titulo = "Crear Cliente";
+    var titulo = "Crear usuario";
 
 }
 
@@ -16,7 +16,7 @@
 
         @if (Model.Id != null)
         {
-            titulo = "Actualizar Usuario";
+            titulo = "Actualizar usuario";
             <input type="hidden" asp-for="Id" id="id" />
         }
 
