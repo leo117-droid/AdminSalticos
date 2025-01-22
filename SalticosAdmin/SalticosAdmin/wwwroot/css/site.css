@@ -265,7 +265,27 @@ body {
             color: white; /* Icono en blanco al hacer hover */
         }
 
+.custom-btn-otros-inverso {
+    background-color: #19c2ff;
+    border: 2px solid white;
+    color: white;
+    transition: all 0.3s ease;
+}
 
+    .custom-btn-otros-inverso i {
+        color: white;
+    }
+
+    .custom-btn-otros-inverso:hover {
+        background-color: white;
+        color: #19c2ff;
+        border-color: #19c2ff;
+    }
+
+        .custom-btn-otros-inverso:hover i {
+            color: #19c2ff;
+            
+        }
 
 /* Estilo para el botón */
 .btn-regresar {
