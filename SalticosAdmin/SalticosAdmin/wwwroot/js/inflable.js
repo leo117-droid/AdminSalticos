@@ -13,7 +13,7 @@ function loadDataTable() {
 
     datatable = $('#tblDatos').DataTable({
         "language": {
-            "lengthMenu": "Mostrar _MENU_ Registros Por Pagina",
+            "lengthMenu": "Mostrar _MENU_ Registros por página",
             "zeroRecords": "Ningun Registro",
             "info": "Mostrar page _PAGE_ de _PAGES_",
             "infoEmpty": "no hay registros",
@@ -61,20 +61,23 @@ function loadDataTable() {
 
             {
                 "data": "id",
+                "width": "250px", // Define un ancho fijo para la columna
                 "render": function (data) {
                     return `
-                        <div class = "text-center">
-                            <a href="/Admin/Inflable/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer"> 
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            <a onclick = Delete("/Admin/Inflable/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
-                                <i class = "bi bi-trash3-fill"></i>
-                            </a>
-
-                        </div>
-                    `;
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="/Admin/Inflable/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer; width: 70px;"> 
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a onclick="Delete('/Admin/Inflable/Delete/${data}')" class="btn btn-danger text-white" style="cursor:pointer; width: 70px;"> 
+                            <i class="bi bi-trash3-fill"></i> Eliminar
+                        </a>
+                    </div>
+                `;
                 }
             }
+
+
+
         ]
     });
 }
