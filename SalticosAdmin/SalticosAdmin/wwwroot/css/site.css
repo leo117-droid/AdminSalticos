@@ -190,7 +190,7 @@ body {
     }
 
         .custom-btn-personal-inverso:hover i {
-            color: #8a2bff;/
+            color: #8a2bff;
         }
 
 /* Estilo del botón con bordes verdes */
@@ -266,6 +266,26 @@ body {
             color: white; /* Icono en blanco al hacer hover */
         }
 
+.custom-btn-transporte-inverso {
+    background-color: #ffd621;
+    border: 2px solid white;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+    .custom-btn-transporte-inverso i {
+        color: white;
+    }
+
+    .custom-btn-transporte-inverso:hover {
+        background-color: white;
+        color: #ffd621;
+        border-color: #ffd621;
+    }
+
+        .custom-btn-transporte-inverso:hover i {
+            color: #ffd621;
+        }
 
 .custom-btn-otros {
     background-color: white;
@@ -326,8 +346,61 @@ body {
     }
 
 
+.custom-btn-tarea {
+    background-color: white;
+    border: 2px solid #5d6268; /* Borde verde */
+    color: #5d6268; /* Texto e icono en verde */
+    transition: all 0.3s ease; /* Animación para el efecto hover */
+}
+
+    /* Icono del botón */
+    .custom-btn-tarea i {
+        color: #5d6268; /* Color del icono en verde */
+    }
+
+    /* Efecto hover: fondo verde y texto blanco */
+    .custom-btn-tarea:hover {
+        background-color: #5d6268; /* Fondo verde */
+        color: white; /* Texto e icono en blanco */
+        border-color: #5d6268; /* Mantener el borde verde */
+    }
+
+        .custom-btn-tarea:hover i {
+            color: white; /* Icono en blanco al hacer hover */
+        }
+
+.custom-btn-tarea-inverso {
+    background-color: #329A32;
+    border-color: #329A32; /* Borde verde */
+    color: white; /* Texto e icono en verde */
+    transition: all 0.3s ease; /* Animación para el efecto hover */
+}
+
+    /* Icono del botón */
+    .custom-btn-tarea-inverso i {
+        color: white; /* Color del icono en verde */
+    }
+
+    /* Efecto hover: fondo verde y texto blanco */
+    .custom-btn-tarea-inverso:hover {
+        background-color: white; /* Fondo verde */
+        color: #329A32; /* Texto e icono en blanco */
+        border-color: #329A32; /* Mantener el borde verde */
+    }
+
+        .custom-btn-tarea-inverso:hover i {
+            color: #329A32; /* Icono en blanco al hacer hover */
+        }
+
 .card-tarea {
-    border-radius: 12px;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-tarea:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 .card-tarea-title {
@@ -345,4 +418,54 @@ body {
 
 #task-list {
     padding-bottom: 2rem;
+}
+
+.card-tarea.bg-pendiente {
+    background-color: #fff3cd; 
+    border-left: 5px solid #ffc107; 
+}
+
+.card-tarea.bg-en-progreso {
+    background-color: #d1ecf1; 
+    border-left: 5px solid #17a2b8; 
+}
+
+.card-tarea.bg-completada {
+    background-color: #d4edda; 
+    border-left: 5px solid #28a745; 
+}
+
+.badge.bg-pendiente {
+    background-color: #fbc02d; 
+    color: white;
+}
+
+.badge.bg-en-progreso {
+    background-color: #0288d1; 
+    color: white;
+}
+
+.badge.bg-completado {
+    background-color: #388e3c; 
+    color: white;
+}
+
+.badge.bg-default {
+    background-color: #6c757d; 
+    color: white;
+}
+
+.badge.bg-alto {
+    background-color: #e40101; 
+    color: white;
+}
+
+.badge.bg-bajo {
+    background-color: #ff6d00; 
+    color: white;
+}
+
+.badge.bg-medio {
+    background-color: #19c2ff; 
+    color: white;
 }

@@ -139,7 +139,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> ObtenerTodos()
         {
             var todos = await _unidadTrabajo.Tareas.ObtenerTodos();
-            todos = todos.Where(t => !t.Estado.Equals("Completada"));
+            todos = todos.OrderBy(t =>
+                t.Estado == "Pendiente" ? 0 :
+                t.Estado == "En Progreso" ? 1 : 2);
             return Json(new { data = todos });
         }
 
