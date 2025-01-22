@@ -13,9 +13,10 @@ function cargarTareas() {
             if (response.data && response.data.length > 0) {
                 response.data.forEach(tarea => {
                     const card = `
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card-tarea shadow-sm">
+                        <div class="col-md-6 col-lg-4" id="tarea-${tarea.id}">
+                            <div class="card-tarea shadow-sm ${getEstadoClase(tarea.estado)}">
                                 <div class="card-body">
+                                    <button class="btn-close float-end" aria-label="Close" onclick="EliminarTarea(${tarea.id})"></button>
                                     <h5 class="card-tarea-title">${tarea.titulo}</h5>
                                     <p class="card-text">${tarea.descripcion}</p>
                                     <p>
@@ -54,6 +55,17 @@ function getEstadoBadge(estado) {
     return estado === "Pendiente" ? "warning" : "success";
 }
 
+
+function getEstadoClase(estado) {
+    switch (estado) {
+        case "Pendiente": return "bg-pendiente";
+        case "En Progreso": return "bg-en-progreso";
+        case "Completada": return "bg-completada";
+        default: return "";
+    }
+}
+
+
 function getPrioridadBadge(prioridad) {
     switch (prioridad) {
         case "Alta": return "danger";
@@ -62,6 +74,7 @@ function getPrioridadBadge(prioridad) {
         default: return "light";
     }
 }
+
 function ActualizarEstado(id) {
     swal({
         title: "¿Está seguro de marcar esta tarea como completada?",
@@ -77,8 +90,8 @@ function ActualizarEstado(id) {
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.message);
-                        // Recargar o actualizar la lista de tareas si es necesario
-                        datatable.ajax.reload();
+                        // Refrescar la página automáticamente
+                        location.reload();
                     } else {
                         toastr.error(data.message);
                     }
@@ -91,3 +104,37 @@ function ActualizarEstado(id) {
     });
 }
 
+function EliminarTarea(id) {
+    swal({
+        title: "¿Está seguro de eliminar esta tarea?",
+        text: "¡No podrás deshacer esta acción!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then((confirmar) => {
+        if (confirmar) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Tarea/Delete",
+                data: { id: id },
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        // Eliminar la tarjeta del DOM
+                        $(`#tarea-${id}`).remove();
+
+                        // Si no hay más tareas, mostrar el mensaje de vacío
+                        if ($("#task-list").children().length === 0) {
+                            $("#task-list").html('<p class="text-center text-muted">No hay tareas pendientes</p>');
+                        }
+                    } else {
+                        toastr.error(data.message);
+                    }
+                },
+                error: function () {
+                    toastr.error("Hubo un error al intentar eliminar la tarea.");
+                }
+            });
+        }
+    });
+}
