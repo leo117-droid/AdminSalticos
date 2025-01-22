@@ -14,9 +14,9 @@ function cargarTareas() {
                 response.data.forEach(tarea => {
                     const card = `
                         <div class="col-md-6 col-lg-4">
-                            <div class="card shadow-sm">
+                            <div class="card-tarea shadow-sm">
                                 <div class="card-body">
-                                    <h5 class="card-title">${tarea.titulo}</h5>
+                                    <h5 class="card-tarea-title">${tarea.titulo}</h5>
                                     <p class="card-text">${tarea.descripcion}</p>
                                     <p>
                                         <span class="badge bg-${getEstadoBadge(tarea.estado)}">${tarea.estado}</span>
