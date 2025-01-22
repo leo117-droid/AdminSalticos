@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var titulo = "Crear Nuevo Seguro";
+    var titulo = "Crear nuevo seguro";
 
 }
 
@@ -16,12 +16,15 @@
 
         @if (Model.Id != 0)
         { // Actualizar
-            titulo = "Actualizar Seguro";
+            titulo = "Actualizar seguro";
             <input type="hidden" asp-for="Id" id="id" />
         }
 
         <div class="col-12 border-bottom p-0">
-            <h2 class="text-primary">@titulo</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
+            </div>
         </div>
 
         <div class="row mb-2 mt-2">
@@ -34,7 +37,7 @@
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Nombre Aseguradora</label>
+                <label>Nombre aseguradora</label>
                 <input type="text" asp-for="NombreAseguradora" class="form-control" placeholder="NombreAseguradora" />
                 <span asp-validation-for="NombreAseguradora" class="text-danger"></span>
             </div>
@@ -43,7 +46,7 @@
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Numero Poliza</label>
+                <label>Número de póliza</label>
                 <input type="number" asp-for="NumeroPoliza" class="form-control" placeholder="Numero Poliza" id="poliza" />
                 <span asp-validation-for="NumeroPoliza" class="text-danger"></span>
             </div>
@@ -54,7 +57,7 @@
         {
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Fecha Inicio</label>
+                    <label>Fecha inicio</label>
                     <input asp-for="FechaInicio" class="form-control" type="date" />
                     <span asp-validation-for="FechaInicio" class="text-danger"></span>
                 </div>
@@ -64,7 +67,7 @@
         {
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Fecha Inicio</label>
+                    <label>Fecha inicio</label>
                     <input asp-for="FechaInicio" class="form-control" type="date"
                            value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="FechaInicio" class="text-danger"></span>
@@ -77,7 +80,7 @@
         {
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Fecha Vencimiento</label>
+                    <label>Fecha vencimiento</label>
                     <input asp-for="FechaVencimiento" class="form-control" type="date" />
                     <span asp-validation-for="FechaVencimiento" class="text-danger"></span>
                 </div>
@@ -87,7 +90,7 @@
         {
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Fecha Vencimiento</label>
+                    <label>Fecha vencimiento</label>
                     <input asp-for="FechaVencimiento" class="form-control" type="date"
                            value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="FechaVencimiento" class="text-danger"></span>
@@ -111,14 +114,30 @@
         <br />
 
         <div>
+
             @if (Model.Id != 0)
             {
-                <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+                <div class="d-flex justify-content-start gap-2">
+                    <button type="submit" onclick="return validarPoliza()" class="custom-btn-otros-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                        <i class="bi bi-pencil-square"></i> Guardar Cambios
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Seguro/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
             }
             else
             {
-                <partial name="_BotonesCrearYRegresar" />
+                <div class="d-flex justify-content-start gap-2 mt-3">
+                    <button type="submit" onclick="return validarPoliza()" class="custom-btn-otros-inverso btn btn-primary" onfocus="false">
+                        <i class="bi bi-plus-square-fill"></i> Crear
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Seguro/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
             }
+
         </div>
 
 
@@ -134,10 +153,10 @@
     <script>
 
         document.getElementById("poliza").addEventListener('change', function () {
-            validarPlaca();
+            validarPoliza();
         });
 
-        function validarPlaca() {
+        function validarPoliza() {
             var url = '@Url.Content("~/")' + "Admin/Seguro/ValidarPoliza";
             var id = '#id';
             var poliza = '#poliza';
