@@ -1,4 +1,4 @@
-﻿﻿@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -6,31 +6,46 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
-            <h2 class="text-prim">Lista de Registros de Bitácora</h2>
+            <h2 class="text-prim">Registros de bitácora</h2>
         </div>
     </div>
 
-    <div class="row mb-3">
-        <div class="col-lg-3">
-            <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
-            <input type="date" id="fechaInicio" class="form-control" />
+    <!-- Filtros -->
+    <div class="row g-3 align-items-end mt-4">
+        <!-- Fecha de inicio -->
+        <div class="col-lg-3 col-md-4">
+            <div class="form-group">
+                <label for="fechaInicio" class="form-label">Fecha de inicio</label>
+                <input type="date" id="fechaInicio" class="form-control" />
+            </div>
         </div>
-        <div class="col-lg-3">
-            <label for="fechaFin" class="form-label">Fecha de Fin</label>
-            <input type="date" id="fechaFin" class="form-control" />
+
+        <!-- Fecha de fin -->
+        <div class="col-lg-3 col-md-4">
+            <div class="form-group">
+                <label for="fechaFin" class="form-label">Fecha de fin</label>
+                <input type="date" id="fechaFin" class="form-control" />
+            </div>
         </div>
-        <div class="col-lg-6 d-flex align-items-end">
-            <button id="btnBuscar" class="btn shadow-sm custom-btn-otros">
-                <i class="bi bi-search"></i> Filtrar
+
+        <!-- Botón Filtrar -->
+        <div class="col-lg-2 col-md-3">
+            <button id="btnBuscar" class="btn shadow-sm custom-btn-otros-inverso w-100">
+                <i class="bi bi-search"></i> Buscar
             </button>
-            <button type="button" class="btn shadow-sm btn-regresar" id="btnLimpiarFiltro">
-                <i class="bi bi-arrow-counterclockwise"></i> Limpiar Filtro
+        </div>
+
+        <!-- Botón Limpiar -->
+        <div class="col-lg-2 col-md-3">
+            <button type="button" class="btn shadow-sm btn-regresar w-100" id="btnLimpiarFiltro">
+                <i class="bi bi-arrow-counterclockwise"></i> Limpiar
             </button>
         </div>
     </div>
 
     <br />
 
+    <!-- Tabla -->
     <div class="p-4 border rounded bg-white shadow-sm">
         <table id="tblDatos" class="table table-hover align-middle">
             <thead style="background-color: #e9ecef;" class="text-center">
@@ -49,6 +64,7 @@
 <br />
 <br />
 
+<!-- Botón Regresar -->
 <div class="row mt-3">
     <div class="col-lg-6 ms-auto text-end">
         <a class="btn shadow-sm btn-regresar" href="/Admin/Bitacora/Intermedia">
