@@ -31,8 +31,8 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "nombre" },
-            { "data": "descripcion"  },
-            { "data": "dimensiones"},
+            { "data": "descripcion" },
+            { "data": "dimensiones" },
             {
                 "data": "estado",
                 "render": function (data) {
@@ -43,41 +43,40 @@ function loadDataTable() {
                         return "Inactivo";
                     }
                 },
-            }, 
+            },
             {
                 "data": "precio", "className": "text-end",
                 "render": function (data) {
                     var d = `₡${data.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
                     return d
-                } },
+                }
+            },
             {
                 "data": "precioHoraAdicional", "className": "text-end",
                 "render": function (data) {
                     var d = `₡${data.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
                     return d
-                } },
+                }
+            },
             { "data": "categoriaTamanno.nombre" },
-            { "data": "categoriasEdad.nombre"},
+            { "data": "categoriasEdad.nombre" },
 
             {
                 "data": "id",
-                "width": "250px", // Define un ancho fijo para la columna
                 "render": function (data) {
                     return `
-                    <div class="d-flex justify-content-center gap-2">
-                        <a href="/Admin/Inflable/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer; width: 70px;"> 
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <a onclick="Delete('/Admin/Inflable/Delete/${data}')" class="btn btn-danger text-white" style="cursor:pointer; width: 70px;"> 
-                            <i class="bi bi-trash3-fill"></i> Eliminar
-                        </a>
-                    </div>
-                `;
+                        <div class = "text-center">
+                            <a href="/Admin/Inflable/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer"> 
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a onclick = Delete("/Admin/Inflable/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer"> 
+                                <i class = "bi bi-trash3-fill"></i>
+                            </a>
+
+                        </div>
+                    `;
                 }
             }
-
-
-
         ]
     });
 }

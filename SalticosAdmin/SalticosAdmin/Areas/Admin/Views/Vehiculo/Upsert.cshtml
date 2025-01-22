@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var titulo = "Crear Nuevo Vehiculo";
+    var titulo = "Crear nuevo vehiculo";
 
 }
 
@@ -16,12 +16,15 @@
 
         @if (Model.Id != 0)
         { // Actualizar
-            titulo = "Actualizar Vehiculo";
+            titulo = "Actualizar vehiculo";
             <input type="hidden" asp-for="Id" id="id" />
         }
 
         <div class="col-12 border-bottom p-0">
-            <h2 class="text-primary">@titulo</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
+            </div>
         </div>
 
         <div class="row mb-2 mt-2">
@@ -63,16 +66,28 @@
 
         <br />
 
-        <div>
-            @if (Model.Id != 0)
-            {
-                <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
-            }
-            else
-            {
-                <partial name="_BotonesCrearYRegresar" />
-            }
-        </div>
+        @if (Model.Id != 0)
+        {
+            <div class="d-flex justify-content-start gap-2">
+                <button type="submit" onclick="return validarPlaca()" class="custom-btn-transporte-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                    <i class="bi bi-pencil-square"></i> Guardar Cambios
+                </button>
+                <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Vehiculo/Index">
+                    <i class="bi bi-arrow-return-left"></i> Regresar
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="d-flex justify-content-start gap-2 mt-3">
+                <button type="submit" onclick="return validarPlaca()" class="custom-btn-transporte-inverso btn btn-primary" onfocus="false">
+                    <i class="bi bi-plus-square-fill"></i> Crear
+                </button>
+                <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Vehiculo/Index">
+                    <i class="bi bi-arrow-return-left"></i> Regresar
+                </a>
+            </div>
+        }
 
 
     </div>
