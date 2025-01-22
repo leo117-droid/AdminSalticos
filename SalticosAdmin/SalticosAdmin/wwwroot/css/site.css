@@ -300,3 +300,24 @@ body {
         border-color: #6c757d; /* Borde gris oscuro en hover */
     }
 
+
+.card {
+    border-radius: 12px;
+}
+
+.card-title {
+    font-weight: bold;
+    color: #333;
+}
+
+.card .badge {
+    font-size: 0.85rem;
+}
+
+.card .btn {
+    border-radius: 20px;
+}
+
+#task-list {
+    padding-bottom: 2rem;
+}

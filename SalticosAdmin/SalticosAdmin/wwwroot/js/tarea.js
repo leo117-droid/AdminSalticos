@@ -1,74 +1,67 @@
-﻿let datatable;
-
-$(document).ready(function () {
-    loadDataTable();
+﻿$(document).ready(function () {
+    cargarTareas();
 });
 
-function loadDataTable() {
-    datatable = $('#tblDatos').DataTable({
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ Registros por página",
-            "zeroRecords": "Sin tareas pendientes",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay tareas disponibles",
-            "infoFiltered": "(filtrado de _MAX_ registros totales)",
-            "search": "Buscar",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        },
-        "ajax": {
-            "url": "/Admin/Tarea/ObtenerTodos"
-        },
-        "columns": [
-            {
-                "data": "id", "render": function (data) {
-                    return `
-                        <div class="text-center">
-                            <a onclick="ActualizarEstado(${data})" class="btn btn-primary text-white" style="cursor:pointer">
-                                <i class="bi bi-check-circle"></i>
-                            </a>
+function cargarTareas() {
+    $.ajax({
+        url: "/Admin/Tarea/ObtenerTodos",
+        method: "GET",
+        success: function (response) {
+            const contenedor = $("#task-list");
+            contenedor.empty();
+
+            if (response.data && response.data.length > 0) {
+                response.data.forEach(tarea => {
+                    const card = `
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">${tarea.titulo}</h5>
+                                    <p class="card-text">${tarea.descripcion}</p>
+                                    <p>
+                                        <span class="badge bg-${getEstadoBadge(tarea.estado)}">${tarea.estado}</span>
+                                        <span class="badge bg-${getPrioridadBadge(tarea.prioridad)}">${tarea.prioridad}</span>
+                                    </p>
+                                    <p class="text-muted">
+                                        <i class="bi bi-calendar-event"></i> ${moment(tarea.fecha).format("DD/MM/YYYY")} 
+                                        <i class="bi bi-clock"></i> ${moment(tarea.hora, "HH:mm:ss").format("hh:mm A")}
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-primary" onclick="ActualizarEstado(${tarea.id})">
+                                            <i class="bi bi-check-circle"></i> Completar
+                                        </button>
+                                        <a href="/Admin/Tarea/Upsert/${tarea.id}" class="btn btn-success">
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     `;
-                },
-                "width": "10%"
-            },
-            { "data": "titulo" },
-            { "data": "descripcion" },
-            { "data": "estado" },
-            { "data": "prioridad" },
-            {
-                "data": "fecha",
-                "render": function (data) {
-                    return moment(data).format("DD/MM/YYYY");
-                }
-            },
-            {
-                "data": "hora",
-                "render": function (data) {
-                    return moment(data, "HH:mm:ss").format("hh:mm A");
-                }
-            },
-            {
-                "data": "id",
-                "render": function (data) {
-                    return `
-                        <div class="text-center">
-                            <a href="/Admin/Tarea/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                        </div>
-                    `;
-                },
-                "width": "10%"
+                    contenedor.append(card);
+                });
+            } else {
+                contenedor.html('<p class="text-center text-muted">No hay tareas pendientes</p>');
             }
-        ]
+        },
+        error: function () {
+            toastr.error("No se pudieron cargar las tareas.");
+        }
     });
 }
 
+function getEstadoBadge(estado) {
+    return estado === "Pendiente" ? "warning" : "success";
+}
+
+function getPrioridadBadge(prioridad) {
+    switch (prioridad) {
+        case "Alta": return "danger";
+        case "Media": return "primary";
+        case "Baja": return "secondary";
+        default: return "light";
+    }
+}
 function ActualizarEstado(id) {
     swal({
         title: "¿Está seguro de marcar esta tarea como completada?",
