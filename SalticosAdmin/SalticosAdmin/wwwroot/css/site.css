@@ -217,6 +217,31 @@ body {
             color: white; /* Icono en blanco al hacer hover */
         }
 
+/* Estilo del botón con bordes verdes */
+.custom-btn-evento-inverso {
+    background-color: #ff6a00;
+    border: 2px solid white; /* Borde verde */
+    color: white; /* Texto e icono en verde */
+    transition: all 0.3s ease; /* Animación para el efecto hover */
+}
+
+    /* Icono del botón */
+    .custom-btn-evento-inverso i {
+        color: white; /* Color del icono en verde */
+    }
+
+    /* Efecto hover: fondo verde y texto blanco */
+    .custom-btn-evento-inverso:hover {
+        background-color: white; /* Fondo verde */
+        color: #ff6a00; /* Texto e icono en blanco */
+        border-color: white; /* Mantener el borde verde */
+    }
+
+        .custom-btn-evento-inverso:hover i {
+            color: #ff6a00; /* Icono en blanco al hacer hover */
+        }
+
+
 
 .custom-btn-transporte {
     background-color: white;
