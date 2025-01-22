@@ -28,10 +28,10 @@ function cargarTareas() {
                                         <i class="bi bi-clock"></i> ${moment(tarea.hora, "HH:mm:ss").format("hh:mm A")}
                                     </p>
                                     <div class="d-flex justify-content-between">
-                                        <button class="btn btn-primary" onclick="ActualizarEstado(${tarea.id})">
+                                        <button class="btn btn-success" onclick="ActualizarEstado(${tarea.id})">
                                             <i class="bi bi-check-circle"></i> Completar
                                         </button>
-                                        <a href="/Admin/Tarea/Upsert/${tarea.id}" class="btn btn-success">
+                                        <a href="/Admin/Tarea/Upsert/${tarea.id}" class="btn btn-primary">
                                             <i class="bi bi-pencil-square"></i> Editar
                                         </a>
                                     </div>
@@ -52,7 +52,12 @@ function cargarTareas() {
 }
 
 function getEstadoBadge(estado) {
-    return estado === "Pendiente" ? "warning" : "success";
+    switch (estado) {
+        case "Pendiente": return "pendiente";
+        case "En Progreso": return "en-progreso";
+        case "Completada": return "completado";
+        default: return "default";
+    }
 }
 
 
@@ -68,9 +73,9 @@ function getEstadoClase(estado) {
 
 function getPrioridadBadge(prioridad) {
     switch (prioridad) {
-        case "Alta": return "danger";
-        case "Media": return "primary";
-        case "Baja": return "secondary";
+        case "Alta": return "alto";
+        case "Media": return "bajo";
+        case "Baja": return "medio";
         default: return "light";
     }
 }

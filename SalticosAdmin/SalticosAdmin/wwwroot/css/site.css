@@ -369,6 +369,29 @@ body {
             color: white; /* Icono en blanco al hacer hover */
         }
 
+.custom-btn-tarea-inverso {
+    background-color: #329A32;
+    border-color: #329A32; /* Borde verde */
+    color: white; /* Texto e icono en verde */
+    transition: all 0.3s ease; /* Animación para el efecto hover */
+}
+
+    /* Icono del botón */
+    .custom-btn-tarea-inverso i {
+        color: white; /* Color del icono en verde */
+    }
+
+    /* Efecto hover: fondo verde y texto blanco */
+    .custom-btn-tarea-inverso:hover {
+        background-color: white; /* Fondo verde */
+        color: #329A32; /* Texto e icono en blanco */
+        border-color: #329A32; /* Mantener el borde verde */
+    }
+
+        .custom-btn-tarea-inverso:hover i {
+            color: #329A32; /* Icono en blanco al hacer hover */
+        }
+
 .card-tarea {
     margin-bottom: 1rem;
     border-radius: 0.5rem;
@@ -398,16 +421,51 @@ body {
 }
 
 .card-tarea.bg-pendiente {
-    background-color: #fff3cd; /* Amarillo claro */
-    border-left: 5px solid #ffc107; /* Amarillo oscuro */
+    background-color: #fff3cd; 
+    border-left: 5px solid #ffc107; 
 }
 
 .card-tarea.bg-en-progreso {
-    background-color: #d1ecf1; /* Azul claro */
-    border-left: 5px solid #17a2b8; /* Azul oscuro */
+    background-color: #d1ecf1; 
+    border-left: 5px solid #17a2b8; 
 }
 
 .card-tarea.bg-completada {
-    background-color: #d4edda; /* Verde claro */
-    border-left: 5px solid #28a745; /* Verde oscuro */
+    background-color: #d4edda; 
+    border-left: 5px solid #28a745; 
+}
+
+.badge.bg-pendiente {
+    background-color: #fbc02d; 
+    color: white;
+}
+
+.badge.bg-en-progreso {
+    background-color: #0288d1; 
+    color: white;
+}
+
+.badge.bg-completado {
+    background-color: #388e3c; 
+    color: white;
+}
+
+.badge.bg-default {
+    background-color: #6c757d; 
+    color: white;
+}
+
+.badge.bg-alto {
+    background-color: #e40101; 
+    color: white;
+}
+
+.badge.bg-bajo {
+    background-color: #ff6d00; 
+    color: white;
+}
+
+.badge.bg-medio {
+    background-color: #19c2ff; 
+    color: white;
 }
