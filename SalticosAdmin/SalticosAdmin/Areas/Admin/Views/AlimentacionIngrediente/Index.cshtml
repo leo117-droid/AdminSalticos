@@ -8,7 +8,7 @@
         <h2 style="font-weight: bold; color: #000000;">Ingredientes asignados a un producto de alimentación</h2>
     </div>
     <div class="col-lg-6 text-end">
-        <a class="btn shadow-sm custom-btn-servicios" asp-action="Upsert">
+        <a class="btn shadow-sm custom-btn-servicios" asp-action="Upsert" asp-route-alimentacionID="@ViewData["Id"]">
             <i class="bi bi-plus-square-fill"></i> Agregar nuevo ingrediente
         </a>
     </div>

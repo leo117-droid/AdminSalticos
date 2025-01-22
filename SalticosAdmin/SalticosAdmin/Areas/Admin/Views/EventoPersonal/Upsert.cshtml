@@ -16,7 +16,10 @@
         <input type="hidden" asp-for="IdEvento" id="idEvento" />
 
         <div class="col-12 border-bottom p-0">
-            <h2 class="text-primary">@titulo</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
+            </div>
         </div>
 
         
@@ -39,10 +42,10 @@
         <div class="d-grid gap-2 d-md-block">
             @if (Model.IdRelacion != 0)
             {
-                <button type="submit" class="btn btn-primary" onfocus="false" asp-route-id="@Model" asp-action="Upsert">
+                <button type="submit" class="custom-btn-evento-inverso btn btn-success" onfocus="false" asp-route-id="@Model" asp-action="Upsert">
                     <i class="bi bi-pencil-square"></i> Guardar Cambios
                 </button>
-                <a asp-action="Index" class="btn btn-success" id="regresarBtn">
+                <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/EventoPersonal/Index">
                     <i class="bi bi-arrow-return-left"></i> Regresar
                 </a>
             }
@@ -50,9 +53,11 @@
             {
                 @if (Model.ListaPersonal.Any())
                 {
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
+                    <button type="submit" class="custom-btn-evento-inverso btn btn-success"><i class="bi bi-plus-square-fill"></i> Crear</button>
                 }
-                <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+                <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/EventoPersonal/Index">
+                    <i class="bi bi-arrow-return-left"></i> Regresar
+                </a>
             }
         </div>
 
