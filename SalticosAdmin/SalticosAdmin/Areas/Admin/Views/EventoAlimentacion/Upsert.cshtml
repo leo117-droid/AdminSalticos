@@ -28,7 +28,7 @@
                 <div class="form-group col-md-6">
                     <label>Lista de productos de alimentación</label>
                     <select asp-for="IdAlimentacion" asp-items="@Model.ListaAlimentacion" class="form-control">
-                        <option disabled selected value="">-- Seleccione producto de alimentación --</option>
+                        <option disabled selected >-- Seleccione producto de alimentación --</option>
                     </select>
                     <span asp-validation-for="IdAlimentacion" class="text-danger"></span>
                 </div>

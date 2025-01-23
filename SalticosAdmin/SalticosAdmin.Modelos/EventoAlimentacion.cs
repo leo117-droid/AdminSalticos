@@ -12,10 +12,14 @@ namespace SalticosAdmin.Modelos
     {
         [Key]
         public int Id { get; set; }
+       
+        [Required(ErrorMessage = "Alimentación es requerida")]
 
         public int IdAlimentacion { get; set; }
 
         [ForeignKey("IdAlimentacion")]
+        [Required(ErrorMessage = "Alimentación es requerida")]
+
         public Alimentacion Alimentacion { get; set; }
 
         public int IdEvento { get; set; }
@@ -27,7 +31,7 @@ namespace SalticosAdmin.Modelos
         [Range(1, int.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0")]
         public int Cantidad { get; set; }
 
-        [NotMapped] // Nose agrega a la base de datos
+        [NotMapped] 
         public string? NombreIngrediente { get; set; }
     }
 }

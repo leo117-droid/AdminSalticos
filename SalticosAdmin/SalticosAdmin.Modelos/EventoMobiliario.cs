@@ -27,7 +27,7 @@ namespace SalticosAdmin.Modelos
         [Range(1, int.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0")]
         public int Cantidad { get; set; }
 
-        [NotMapped] // Nose agrega a la base de datos
+        [NotMapped] 
         public string? NombreMobiliario { get; set; }
 
     }
