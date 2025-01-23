@@ -40,7 +40,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Cantidad</label>
-                <input type="number" asp-for="Cantidad" class="form-control" placeholder="Cantidad del servicio adicional" />
+                <input type="number" asp-for="Cantidad" class="form-control" placeholder="Cantidad del servicio adicional" min="1" />
                 <span asp-validation-for="Cantidad" class="text-danger"></span>
             </div>
         </div>
