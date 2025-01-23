@@ -93,7 +93,7 @@
                         else
                         {
                             <div class="d-flex justify-content-start gap-2 mt-3">
-                                <button type="submit" onclick="return validarFormulario()" class="custom-btn-servicios-inverso btn btn-success">
+                                <button type="submit" onclick="return validarImagen()" class="custom-btn-servicios-inverso btn btn-success">
                                     <i class="bi bi-plus-square-fill"></i> Crear
                                 </button>
                                 <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Mobiliario/Index">
@@ -130,12 +130,18 @@
 
     <script>
 
-        function validarFormulario() {
-            if (!validarImagen()) {
-                return false;
-            }
-            return validarNombreAntesDeEnviar();
-        }
+
+        document.getElementById("nombre").addEventListener('change', function () {
+            validarNombre();
+        });
+
+
+        document.getElementById("formMobiliario").addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarNombreAntesDeEnviar();
+        });
+
+
 
 
         function validarImagen() {
@@ -156,14 +162,36 @@
                 $.each(data, function (key, value) {
                     if (value) {
                         var nombreInput = document.getElementById("nombre");
-                        swal("Error", "Nombre ya Existe", "error");
+                        swal("Error", "Nombre ya existe", "error");
                         nombreInput.value = "";
-                        return false;
+                        return;
                     } else {
-                        return true;
+                        document.getElementById("formMobiliario").submit();
                     }
                 });
             });
+        }
+
+
+
+        function validarNombre() {
+            var url = '@Url.Content("~/")' + "Admin/Mobiliario/ValidarNombre";
+            var id = '#id';
+            var nombre = '#nombre';
+
+            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
+
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var nombre = document.getElementById("nombre");
+                        swal("Error", "Nombre ya existe", "error");
+                        nombre.value = "";
+                        return;
+                    }
+                });
+
+            })
+
         }
 
     </script>

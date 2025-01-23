@@ -6,7 +6,7 @@
 
 }
 
-<form method="post">
+<form method="post" id="formSeguro">
     <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
 
         <div class="row border-0">
@@ -29,7 +29,7 @@
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Tipo Seguro</label>
+                <label>Tipo seguro</label>
                 <input type="text" asp-for="TipoSeguro" class="form-control" placeholder="Tipo Seguro" id="TipoSeguro" />
                 <span asp-validation-for="TipoSeguro" class="text-danger"></span>
             </div>
@@ -118,7 +118,7 @@
             @if (Model.Id != 0)
             {
                 <div class="d-flex justify-content-start gap-2">
-                    <button type="submit" onclick="return validarPoliza()" class="custom-btn-otros-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                    <button type="submit" class="custom-btn-otros-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
                         <i class="bi bi-pencil-square"></i> Guardar cambios
                     </button>
                     <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Seguro/Index">
@@ -129,7 +129,7 @@
             else
             {
                 <div class="d-flex justify-content-start gap-2 mt-3">
-                    <button type="submit" onclick="return validarPoliza()" class="custom-btn-otros-inverso btn btn-primary" onfocus="false">
+                    <button type="submit" class="custom-btn-otros-inverso btn btn-primary" onfocus="false">
                         <i class="bi bi-plus-square-fill"></i> Crear
                     </button>
                     <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Seguro/Index">
@@ -155,6 +155,32 @@
         document.getElementById("poliza").addEventListener('change', function () {
             validarPoliza();
         });
+
+
+        document.getElementById("formSeguro").addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarPolizaAntesDeEnviar();
+        });
+
+
+        function validarPolizaAntesDeEnviar() {
+            var url = '@Url.Content("~/")' + "Admin/RolPersonal/ValidarNombre";
+            var id = '#id';
+            var poliza = '#poliza';
+
+            $.getJSON(url, { id: $(id).val(), poliza: $(poliza).val() }, function (data) {
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var polizaInput = document.getElementById("poliza");
+                        swal("Error", "Poliza ya existe", "error");
+                        polizaInput.value = "";
+                        return;
+                    } else {
+                        document.getElementById("formSeguro").submit();
+                    }
+                });
+            });
+        }
 
         function validarPoliza() {
             var url = '@Url.Content("~/")' + "Admin/Seguro/ValidarPoliza";

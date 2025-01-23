@@ -33,7 +33,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Descripcion</label>
+                            <label>Descripción</label>
                             <input asp-for="Inflable.Descripcion" class="form-control" />
                             <span asp-validation-for="Inflable.Descripcion" class="text-danger"></span>
                         </div>
@@ -78,7 +78,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Precio Hora Adicional</label>
+                            <label>Precio hora adicional</label>
                             <div class="input-group">
                                 <span class="input-group-text">₡</span>
                                 <input asp-for="Inflable.PrecioHoraAdicional" class="form-control" type="number" min="0" />
@@ -88,9 +88,9 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Categoria Tamaño</label>
+                            <label>Categoría tamaño</label>
                             <select asp-for="Inflable.CategoriaTamannoId" asp-items="@Model.CategoriaTamannoLista" class="form-select">
-                                <option disabled selected>-- Seleccione una Categoria por Tamaño --</option>
+                                <option disabled selected>-- Seleccione una Categoría por Tamaño --</option>
                             </select>
                             <span asp-validation-for="Inflable.CategoriaTamannoId" class="text-danger"></span>
                         </div>
@@ -98,9 +98,9 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Categoria Edad</label>
+                            <label>Categoría edad</label>
                             <select asp-for="Inflable.CategoriaEdadId" asp-items="@Model.CategoriaEdadLista" class="form-select">
-                                <option disabled selected>-- Seleccione una Categoria por Edad --</option>
+                                <option disabled selected>-- Seleccione una Categoría por Edad --</option>
                             </select>
                             <span asp-validation-for="Inflable.CategoriaEdadId" class="text-danger"></span>
                         </div>

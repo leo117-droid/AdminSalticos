@@ -37,8 +37,8 @@
 
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Descripcion</label>
-                    <input type="text" asp-for="Descripcion" class="form-control" placeholder="Descripcion de la herramienta"/>
+                    <label>Descripción</label>
+                    <input type="text" asp-for="Descripcion" class="form-control" placeholder="Descripción de la herramienta"/>
                     <span asp-validation-for="Descripcion" class="text-danger"></span>
                 </div>
             </div>
@@ -59,7 +59,7 @@
             @if (Model.Id != 0)
             {
                 <div class="d-flex justify-content-start gap-2">
-                    <button type="submit" onclick="return validarNombreAntesDeEnviar()" class="custom-btn-otros-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                    <button type="submit" class="custom-btn-otros-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
                         <i class="bi bi-pencil-square"></i> Guardar cambios
                     </button>
                     <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Herramienta/Index">
@@ -70,7 +70,7 @@
             else
             {
                 <div class="d-flex justify-content-start gap-2 mt-3">
-                    <button type="submit" onclick="return validarNombreAntesDeEnviar()" class="custom-btn-otros-inverso btn btn-primary" onfocus="false">
+                    <button type="submit" class="custom-btn-otros-inverso btn btn-primary" onfocus="false">
                         <i class="bi bi-plus-square-fill"></i> Crear
                     </button>
                     <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Herramienta/Index">
