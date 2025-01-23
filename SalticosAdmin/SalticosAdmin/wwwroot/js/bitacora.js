@@ -32,7 +32,10 @@ function loadDataTable() {
         },
         "ajax": {
             "url": "/Admin/Bitacora/ConsultarConFiltro",
-            type: "GET"
+            "data": function (d) {
+                d.fechainicial = $('#fechaInicio').val();
+                d.fechafinal = $('#fechaFin').val();
+            }
         },
         "columns": [
             {

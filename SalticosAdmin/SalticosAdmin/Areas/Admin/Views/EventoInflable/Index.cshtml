@@ -8,7 +8,7 @@
         <h2 style="font-weight: bold; color: #000000;">Gestión de inflables del evento</h2>
     </div>
     <div class="col-lg-6 text-end">
-        <a class="btn shadow-sm custom-btn-servicios" asp-action="Upsert">
+        <a class="btn shadow-sm custom-btn-servicios" asp-action="Upsert" asp-route-eventoID="@ViewData["Id"]">
             <i class="bi bi-plus-square-fill"></i> Agregar nuevo inflable
         </a>
     </div>
