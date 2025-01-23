@@ -18,7 +18,7 @@ function loadDataTable() {
     datatable = $('#tblDatos').DataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ Registros por página",
-            "zeroRecords": "Ningun Registro",
+            "zeroRecords": "Ningún Registro",
             "info": "Mostrar page _PAGE_ de _PAGES_",
             "infoEmpty": "no hay registros",
             "infoFiltered": "(filtered from _MAX_ total registros)",
@@ -32,10 +32,7 @@ function loadDataTable() {
         },
         "ajax": {
             "url": "/Admin/Bitacora/ConsultarConFiltro",
-            "data": function (d) {
-                d.fechainicial = $('#fechaInicio').val();
-                d.fechafinal = $('#fechaFin').val();
-            }
+            type: "GET"
         },
         "columns": [
             {
@@ -63,7 +60,8 @@ function loadDataTable() {
             },
             { "data": "accion", "width": "50%" },
             { "data": "usuario", "width": "20%" }
-        ]
+        ],
+        "order": [[0, "desc"]] // Ordenar por la primera columna (fecha) en orden descendente
     });
 }
 
