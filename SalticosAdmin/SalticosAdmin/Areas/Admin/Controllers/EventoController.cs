@@ -47,7 +47,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             EventoVM eventoVM = new EventoVM()
             {
                 Evento = new Evento(),
-                ClienteLista = _unidadTrabajo.Evento.ObtenerTodosDropdownLista("Cliente"),
+                ClienteLista = _unidadTrabajo.Evento.ObtenerTodosDropdownLista("Cliente"), //
             };
 
             if (id == null)
@@ -73,9 +73,16 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(EventoVM eventoVM)
         {
-
             if (ModelState.IsValid)
             {
+
+                var horaInicio = eventoVM.Evento.HoraInicio;
+                if (horaInicio >= eventoVM.Evento.HoraFinal) {
+                    ModelState.AddModelError("Evento.HoraInicio", "La hora inicio no puede ser posterior o igual al la de fin");
+                    eventoVM.ClienteLista = _unidadTrabajo.Evento.ObtenerTodosDropdownLista("Cliente");
+                    return View(eventoVM);
+                }
+
                 var usuarioNombre = User.Identity.Name;
 
 
