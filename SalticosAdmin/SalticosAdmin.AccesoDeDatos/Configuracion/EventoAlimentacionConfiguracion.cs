@@ -16,10 +16,8 @@ namespace SalticosAdmin.AccesoDeDatos.Configuracion
             builder.Property(x => x.Id).IsRequired();
             builder.Property(x => x.IdAlimentacion).IsRequired();
             builder.Property(x => x.IdEvento).IsRequired();
-            builder.Property(x => x.Cantidad).IsRequired().HasDefaultValue(1); 
+            builder.Property(x => x.Cantidad).IsRequired(); 
 
-            // Restricción para asegurar que la cantidad sea mayor a 0
-            builder.HasCheckConstraint("CK_EventoAlimentacion_Cantidad", "Cantidad > 0");
 
             builder.HasOne(x => x.Alimentacion).WithMany()
                 .HasForeignKey(x => x.IdAlimentacion).

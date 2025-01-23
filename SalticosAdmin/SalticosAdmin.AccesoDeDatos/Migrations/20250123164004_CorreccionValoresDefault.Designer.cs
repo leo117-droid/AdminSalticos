@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalticosAdmin.AccesoDeDatos.Data;
 
@@ -11,9 +12,11 @@ using SalticosAdmin.AccesoDeDatos.Data;
 namespace SalticosAdmin.AccesoDeDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250123164004_CorreccionValoresDefault")]
+    partial class CorreccionValoresDefault
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -545,7 +548,10 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
 
                     b.HasIndex("IdEvento");
 
-                    b.ToTable("EventoAlimentacion");
+                    b.ToTable("EventoAlimentacion", t =>
+                        {
+                            t.HasCheckConstraint("CK_EventoAlimentacion_Cantidad", "Cantidad > 0");
+                        });
                 });
 
             modelBuilder.Entity("SalticosAdmin.Modelos.EventoInflable", b =>
@@ -594,7 +600,10 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
 
                     b.HasIndex("IdMobiliario");
 
-                    b.ToTable("EventoMobiliario");
+                    b.ToTable("EventoMobiliario", t =>
+                        {
+                            t.HasCheckConstraint("CK_EventoMobiliario_Cantidad", "Cantidad > 0");
+                        });
                 });
 
             modelBuilder.Entity("SalticosAdmin.Modelos.EventoPersonal", b =>
@@ -643,7 +652,10 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
 
                     b.HasIndex("IdServicioAdicional");
 
-                    b.ToTable("EventoServicioAdicional");
+                    b.ToTable("EventoServicioAdicional", t =>
+                        {
+                            t.HasCheckConstraint("CK_EventoServicioAdicional_Cantidad", "Cantidad > 0");
+                        });
                 });
 
             modelBuilder.Entity("SalticosAdmin.Modelos.EventoVehiculo", b =>
