@@ -114,11 +114,17 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var lista = await _unidadTrabajo.CategoriasEdad.ObtenerTodos();
             if (id == 0)
             {
-                valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim());
+                if(nombre != null)
+                {
+                    valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim());
+                }
             }
             else
             {
-                valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim() && b.Id != id);
+                if (nombre != null)
+                {
+                    valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim() && b.Id != id);
+                }
             }
             if (valor)
             {
