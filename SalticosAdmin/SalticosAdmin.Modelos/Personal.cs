@@ -17,7 +17,7 @@ namespace SalticosAdmin.Modelos
         [MaxLength(50, ErrorMessage = "Nombre debe ser máximo 50 caracteres")]
         public string Nombre { get; set; }
 
-
+        [Required(ErrorMessage = "Apellidos es requerido")]
         [MaxLength(50, ErrorMessage = "Apellidos debe ser máximo 50 caracteres")]
         public string Apellidos { get; set; }
 

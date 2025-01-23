@@ -8,8 +8,8 @@ function loadDataTable() {
     datatable = $('#tblDatos').DataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ Registros por página",
-            "zeroRecords": "Ningun Registro",
-            "info": "Mostrar page _PAGE_ de _PAGES_",
+            "zeroRecords": "Ningun registro",
+            "info": "Mostrar página _PAGE_ de _PAGES_",
             "infoEmpty": "no hay registros",
             "infoFiltered": "(filtrado de _MAX_ registros totales)",
             "search": "Buscar",
@@ -58,7 +58,7 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el Ingrediente?",
+        title: "Esta seguro de eliminar el mobiliario?",
         text: "Este registro no se podra recuperar",
         icon: "warning",
         buttons: true,
