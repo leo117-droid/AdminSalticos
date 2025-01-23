@@ -13,27 +13,27 @@ namespace SalticosAdmin.Modelos
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Tipo del seguro es requerido")]
-        [MaxLength(50, ErrorMessage = "Tipo del seguro debe ser maximo 50 caracteres")]
+        [MaxLength(50, ErrorMessage = "Tipo del seguro debe ser máximo 50 caracteres")]
         public string TipoSeguro { get; set; }
 
-        [Required(ErrorMessage = "Nombre Aseguradora es requerido")]
-        [MaxLength(50, ErrorMessage = "Nombre Aseguradora debe ser maximo 50 caracteres")]
+        [Required(ErrorMessage = "Nombre aseguradora es requerido")]
+        [MaxLength(50, ErrorMessage = "Nombre Aseguradora debe ser máximo 50 caracteres")]
         public string NombreAseguradora { get; set; }
 
-        [Required(ErrorMessage = "NumeroPoliza es requerido")]
-        [Range(0, int.MaxValue, ErrorMessage = "Numero Poliza no puede ser negativo.")]
+        [Required(ErrorMessage = "Número de poliza es requerido")]
+        [Range(0, int.MaxValue, ErrorMessage = "Número de poliza no puede ser negativo.")]
         public int NumeroPoliza { get; set; }
 
-        [Required(ErrorMessage = "Fecha Inicio es requerida")]
+        [Required(ErrorMessage = "Fecha inicio es requerida")]
         [DataType(DataType.Date, ErrorMessage = "Formato de fecha no válido")]
         public DateTime FechaInicio { get; set; }
 
-        [Required(ErrorMessage = "Fecha Vencimiento es requerida")]
+        [Required(ErrorMessage = "Fecha vencimiento es requerida")]
         [DataType(DataType.Date, ErrorMessage = "Formato de fecha no válido")]
         public DateTime FechaVencimiento { get; set; }
 
 
-        [Required(ErrorMessage = "Estado es Requerido")]
+        [Required(ErrorMessage = "Estado es requerido")]
         public bool Estado { get; set; }
 
     }
