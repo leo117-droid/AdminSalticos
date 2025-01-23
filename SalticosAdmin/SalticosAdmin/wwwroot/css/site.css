@@ -1,19 +1,17 @@
 body {
-    background-color: #f8f9fa; /* Cambia este valor por el color que desees */
+    background-color: #f8f9fa; 
 }
 
 .custom-btn {
-    background-color: #8a2bff; /* Fondo blanco */
-    color: #f8f9fa; /* Texto naranja */
+    background-color: #8a2bff;
+    color: #f8f9fa; 
 }
 
     .custom-btn:hover {
-        background-color: #8a2bff; /* Fondo naranja al pasar el cursor */
-        color: white; /* Texto blanco en hover */
+        background-color: #8a2bff; 
+        color: white; 
     }
 
-
-/* CSS */
 .full-width-image {
     margin: 0;
     padding: 0;
@@ -26,73 +24,68 @@ body {
         display: block;
     }
 
-/* Cambio del borde de las tarjetas a negro */
+/* Modificaciones en las Tarjetas */
 .card {
-    border: 1px  #000000; /* Borde negro */
+    border: 1px  #000000; 
 }
 
-/* Color para la tarjeta "Evento" */
+/* Tarjetas Evento */
 .card-evento .btn {
-    background-color: #ff6a00; /* Mismo color que el icono */
-    border-color: #ff6a00; /* Mismo color que el icono */
-    color: white; /* Texto blanco */
+    background-color: #ff6a00; 
+    border-color: #ff6a00; 
+    color: white; 
 }
 
-/* Icono dentro de la tarjeta "Evento" */
 .card-evento .bi {
-    color: #ff6a00; /* Mismo color que el fondo y el borde del botón */
+    color: #ff6a00; 
 }
 
-/* Color para la tarjeta "Personal" */
+/* Tarjetas Personal */
 .card-personal .btn {
     background-color: #8a2bff;
     border-color: #8a2bff;
     color: white;
 }
 
-/* Icono dentro de la tarjeta "Personal" */
 .card-personal .bi {
     color: #8a2bff;
 }
 
-/* Color para la tarjeta "Servicios" */
+/* Tarjetas Servicios */
 .card-servicios .btn {
     background-color: #16d600;
     border-color: #16d600;
     color: white;
 }
 
-/* Icono dentro de la tarjeta "Servicios" */
 .card-servicios .bi {
     color: #16d600;
 }
 
-/* Color para la tarjeta "Transporte" */
+/* Tarjetas Transporte */
 .card-transporte .btn {
     background-color: #ffd621;
     border-color: #ffd621;
     color: white;
 }
 
-/* Icono dentro de la tarjeta "Transporte" */
 .card-transporte .bi {
     color: #ffd621;
 }
 
-/* Color para la tarjeta "Otros" */
+/* Tarjetas Otros */
 .card-otros .btn {
     background-color: #19c2ff;
     border-color: #19c2ff;
     color: white;
 }
 
-/* Icono dentro de la tarjeta "Otros" */
 .card-otros .bi {
     color: #19c2ff;
 }
 
 .card {
-    height: 100%; /* Asegura que todas las tarjetas usen toda la altura disponible */
+    height: 100%; 
 }
 
 .row > .col-md-4 {
@@ -100,55 +93,51 @@ body {
     flex-direction: column;
 }
 
-/* Estilo del botón con bordes verdes */
+/* Botones Servicio */
 .custom-btn-servicios {
     background-color: white;
-    border: 2px solid #16d600; /* Borde verde */
-    color: #16d600; /* Texto e icono en verde */
-    transition: all 0.3s ease; /* Animación para el efecto hover */
+    border: 2px solid #16d600; 
+    color: #16d600; 
+    transition: all 0.3s ease; 
 }
 
-    /* Icono del botón */
     .custom-btn-servicios i {
-        color: #16d600; /* Color del icono en verde */
+        color: #16d600; 
     }
 
-    /* Efecto hover: fondo verde y texto blanco */
     .custom-btn-servicios:hover {
-        background-color: #16d600; /* Fondo verde */
-        color: white; /* Texto e icono en blanco */
-        border-color: #16d600; /* Mantener el borde verde */
+        background-color: #16d600; 
+        color: white; 
+        border-color: #16d600; 
     }
 
         .custom-btn-servicios:hover i {
-            color: white; /* Icono en blanco al hacer hover */
+            color: white; 
         }
 
 
 .custom-btn-servicios-inverso {
     background-color: #16d600;
-    border: 2px solid white; /* Borde verde #16d600*/
-    color: white; /* Texto e icono en verde */
-    transition: all 0.3s ease; /* Animación para el efecto hover */
+    border: 2px solid #16d600; 
+    color: white; 
+    transition: all 0.3s ease; 
 }
 
-    /* Icono del botón */
     .custom-btn-servicios-inverso i {
-        color: white; /* Color del icono en verde */
+        color: white; 
     }
 
-    /* Efecto hover: fondo verde y texto blanco */
     .custom-btn-servicios-inverso:hover {
-        background-color: white; /* Fondo verde */
-        color: #16d600; /* Texto e icono en blanco */
-        border-color: #16d600; /* Mantener el borde verde */
+        background-color: white; 
+        color: #16d600; 
+        border-color: #16d600;
     }
 
         .custom-btn-servicios-inverso:hover i {
-            color: #16d600; /* Icono en blanco al hacer hover */
+            color: #16d600; 
         }
 
-/* Estilo del botón con bordes verdes */
+/* Botones Personal */
 .custom-btn-personal {
     background-color: white;
     border: 2px solid #8a2bff; 
@@ -156,27 +145,25 @@ body {
     transition: all 0.3s ease;
 }
 
-    /* Icono del botón */
     .custom-btn-personal i {
-        color: #8a2bff; /* Color del icono en verde */
+        color: #8a2bff;
     }
 
-    /* Efecto hover: fondo verde y texto blanco */
     .custom-btn-personal:hover {
-        background-color: #8a2bff; /* Fondo verde */
-        color: white; /* Texto e icono en blanco */
-        border-color: #8a2bff; /* Mantener el borde verde */
+        background-color: #8a2bff; 
+        color: white; 
+        border-color: #8a2bff; 
     }
 
         .custom-btn-personal:hover i {
-            color: white; /* Icono en blanco al hacer hover */
+            color: white; 
         }
 
 .custom-btn-personal-inverso {
     background-color: #8a2bff;
-    border: 2px solid white; 
-    color: white; 
-    transition: all 0.3s ease; 
+    border: 2px solid #8a2bff;
+    color: white;
+    transition: all 0.3s ease;
 }
 
     .custom-btn-personal-inverso i {
@@ -193,77 +180,71 @@ body {
             color: #8a2bff;
         }
 
-/* Estilo del botón con bordes verdes */
+/* Botones Evento */
 .custom-btn-evento {
     background-color: white;
-    border: 2px solid #ff6a00; /* Borde verde */
-    color: #ff6a00; /* Texto e icono en verde */
-    transition: all 0.3s ease; /* Animación para el efecto hover */
+    border: 2px solid #ff6a00; 
+    color: #ff6a00; 
+    transition: all 0.3s ease;
 }
 
-    /* Icono del botón */
     .custom-btn-evento i {
-        color: #ff6a00; /* Color del icono en verde */
+        color: #ff6a00; 
     }
 
-    /* Efecto hover: fondo verde y texto blanco */
     .custom-btn-evento:hover {
-        background-color: #ff6a00; /* Fondo verde */
-        color: white; /* Texto e icono en blanco */
-        border-color: #ff6a00; /* Mantener el borde verde */
+        background-color: #ff6a00; 
+        color: white; 
+        border-color: #ff6a00; 
     }
 
         .custom-btn-evento:hover i {
-            color: white; /* Icono en blanco al hacer hover */
+            color: white; 
         }
 
-/* Estilo del botón con bordes verdes */
 .custom-btn-evento-inverso {
     background-color: #ff6a00;
-    border: 2px solid white; /* Borde verde */
-    color: white; /* Texto e icono en verde */
-    transition: all 0.3s ease; /* Animación para el efecto hover */
+    border: 2px solid #ff6a00; 
+    color: white; 
+    transition: all 0.3s ease; 
 }
 
-    /* Icono del botón */
     .custom-btn-evento-inverso i {
-        color: white; /* Color del icono en verde */
+        color: white; 
     }
 
-    /* Efecto hover: fondo verde y texto blanco */
     .custom-btn-evento-inverso:hover {
-        background-color: white; /* Fondo verde */
-        color: #ff6a00; /* Texto e icono en blanco */
-        border-color: white; /* Mantener el borde verde */
+        background-color: white; 
+        color: #ff6a00; 
+        border-color: #ff6a00; 
     }
 
         .custom-btn-evento-inverso:hover i {
-            color: #ff6a00; /* Icono en blanco al hacer hover */
+            color: #ff6a00; 
         }
 
 
-
+/* Botones Transporte */
 .custom-btn-transporte {
     background-color: white;
-    border: 2px solid #ffd621; /* Borde verde */
-    color: #ffd621; /* Texto e icono en verde */
-    transition: all 0.3s ease; /* Animación para el efecto hover */
+    border: 2px solid #ffd621; 
+    color: #ffd621; 
+    transition: all 0.3s ease; 
 }
 
-    /* Icono del botón */
     .custom-btn-transporte i {
-        color: #ffd621; /* Color del icono en verde */
+        color: #ffd621; 
     }
 
-    /* Efecto hover: fondo verde y texto blanco */
+   
     .custom-btn-transporte:hover {
-        background-color: #ffd621; /* Fondo verde */
-        color: white; /* Texto e icono en blanco */
-        border-color: #ffd621; /* Mantener el borde verde */
+        background-color: #ffd621;
+        color: white; 
+        border-color: #ffd621;
     }
 
         .custom-btn-transporte:hover i {
-            color: white; /* Icono en blanco al hacer hover */
+            color: white; 
         }
 
 .custom-btn-transporte-inverso {
@@ -287,32 +268,31 @@ body {
             color: #ffd621;
         }
 
+/* Botones Otros */
 .custom-btn-otros {
     background-color: white;
-    border: 2px solid #19c2ff; /* Borde verde */
-    color: #19c2ff; /* Texto e icono en verde */
-    transition: all 0.3s ease; /* Animación para el efecto hover */
+    border: 2px solid #19c2ff; 
+    color: #19c2ff; 
+    transition: all 0.3s ease; 
 }
 
-    /* Icono del botón */
     .custom-btn-otros i {
-        color: #19c2ff; /* Color del icono en verde */
+        color: #19c2ff; 
     }
 
-    /* Efecto hover: fondo verde y texto blanco */
     .custom-btn-otros:hover {
-        background-color: #19c2ff; /* Fondo verde */
-        color: white; /* Texto e icono en blanco */
-        border-color: #19c2ff; /* Mantener el borde verde */
+        background-color: #19c2ff; 
+        color: white; 
+        border-color: #19c2ff;
     }
 
         .custom-btn-otros:hover i {
-            color: white; /* Icono en blanco al hacer hover */
+            color: white; 
         }
 
 .custom-btn-otros-inverso {
     background-color: #19c2ff;
-    border: 2px solid white;
+    border: 2px solid #19c2ff;
     color: white;
     transition: all 0.3s ease;
 }
@@ -332,66 +312,63 @@ body {
             
         }
 
-/* Estilo para el botón */
+/* Botones Regresar */
 .btn-regresar {
-    background-color: #6c757d; /* Gris oscuro */
-    border-color: #6c757d;
+    background-color: #6c757d; 
+    border: 2px solid #6c757d;
     color: white;
 }
 
     .btn-regresar:hover {
-        background-color: white; /* Fondo blanco en hover */
-        color: #6c757d; /* Letra gris oscuro en hover */
-        border-color: #6c757d; /* Borde gris oscuro en hover */
+        background-color: white; 
+        color: #6c757d; 
+        border-color: #6c757d; 
     }
 
-
+/* Botones Tarea */
 .custom-btn-tarea {
     background-color: white;
-    border: 2px solid #5d6268; /* Borde verde */
-    color: #5d6268; /* Texto e icono en verde */
-    transition: all 0.3s ease; /* Animación para el efecto hover */
+    border: 2px solid #5d6268; 
+    color: #5d6268; 
+    transition: all 0.3s ease; 
 }
 
-    /* Icono del botón */
     .custom-btn-tarea i {
-        color: #5d6268; /* Color del icono en verde */
+        color: #5d6268; 
     }
 
-    /* Efecto hover: fondo verde y texto blanco */
     .custom-btn-tarea:hover {
-        background-color: #5d6268; /* Fondo verde */
-        color: white; /* Texto e icono en blanco */
-        border-color: #5d6268; /* Mantener el borde verde */
+        background-color: #5d6268;
+        color: white; 
+        border-color: #5d6268; 
     }
 
         .custom-btn-tarea:hover i {
-            color: white; /* Icono en blanco al hacer hover */
+            color: white;
         }
 
 .custom-btn-tarea-inverso {
     background-color: #329A32;
-    border-color: #329A32; /* Borde verde */
-    color: white; /* Texto e icono en verde */
-    transition: all 0.3s ease; /* Animación para el efecto hover */
+    border-color: #329A32; 
+    color: white; 
+    transition: all 0.3s ease; 
 }
 
-    /* Icono del botón */
     .custom-btn-tarea-inverso i {
-        color: white; /* Color del icono en verde */
+        color: white; 
     }
 
-    /* Efecto hover: fondo verde y texto blanco */
     .custom-btn-tarea-inverso:hover {
-        background-color: white; /* Fondo verde */
-        color: #329A32; /* Texto e icono en blanco */
-        border-color: #329A32; /* Mantener el borde verde */
+        background-color: white;
+        color: #329A32;
+        border-color: #329A32; 
     }
 
         .custom-btn-tarea-inverso:hover i {
-            color: #329A32; /* Icono en blanco al hacer hover */
+            color: #329A32; 
         }
 
+/* Tarjetas y utilidades de Tarea */
 .card-tarea {
     margin-bottom: 1rem;
     border-radius: 0.5rem;
