@@ -249,7 +249,7 @@ body {
 
 .custom-btn-transporte-inverso {
     background-color: #ffd621;
-    border: 2px solid white;
+    border: 2px solid #ffd621;
     color: white;
     transition: all 0.3s ease;
 }
