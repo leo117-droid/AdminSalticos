@@ -10,7 +10,7 @@
     @if (Model.Id != 0)
     {
         titulo = "Editar mobiliario";
-        <input asp-for="Id" hidden />
+        <input asp-for="Id" id="id" hidden />
         <input asp-for="ImageUrl" hidden />
     }
 
@@ -62,6 +62,8 @@
                             <div class="input-group">
                                 <span class="input-group-text">₡</span>
                                 <input asp-for="Precio" class="form-control" type="number" />
+                                <span asp-validation-for="Precio" class="text-danger"></span>
+
                             </div>
                             <span asp-validation-for="Precio" class="text-danger"></span>
 
@@ -84,7 +86,7 @@
                         @if (Model.Id != 0)
                         {
                             <div class="d-flex justify-content-start gap-2">
-                                <button type="submit" class="custom-btn-servicios-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                                <button type="submit" class="custom-btn-servicios-inverso btn btn-primary" onfocus="false" asp-route-id="@Model.Id">
                                     <i class="bi bi-pencil-square"></i> Guardar cambios
                                 </button>
                                 <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Mobiliario/Index">
