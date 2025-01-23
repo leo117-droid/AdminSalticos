@@ -43,7 +43,7 @@
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Cedula</label>
+                <label>Cédula</label>
                 <input type="text" asp-for="Cedula" class="form-control" placeholder="Cédula del cliente" id="cedula" />
                 <span asp-validation-for="Cedula" class="text-danger"></span>
             </div>
@@ -52,7 +52,7 @@
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Telefono</label>
+                <label>Teléfono</label>
                 <input type="text" asp-for="Telefono" class="form-control" placeholder="Teléfono del cliente" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
@@ -75,7 +75,7 @@
             @if (Model.Id != 0)
             {
                 <div class="d-flex justify-content-start gap-2">
-                    <button type="submit" onclick="return validarCedulaAntesDeEnviar()" class="custom-btn-evento-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                    <button type="submit" class="custom-btn-evento-inverso btn btn-primary" onfocus="false" asp-route-id="@Model.Id">
                         <i class="bi bi-pencil-square"></i> Guardar cambios
                     </button>
                     <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Cliente/Index">
@@ -86,7 +86,7 @@
             else
             {
                 <div class="d-flex justify-content-start gap-2 mt-3">
-                    <button type="submit" onclick="return validarCedulaAntesDeEnviar()" class="custom-btn-evento-inverso btn btn-primary" onfocus="false">
+                    <button type="submit" class="custom-btn-evento-inverso btn btn-primary" onfocus="false">
                         <i class="bi bi-plus-square-fill"></i> Crear
                     </button>
                     <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Cliente/Index">

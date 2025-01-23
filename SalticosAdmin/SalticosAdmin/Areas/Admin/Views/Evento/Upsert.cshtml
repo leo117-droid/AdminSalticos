@@ -52,13 +52,13 @@
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Hora de Inicio</label>
+                <label>Hora de inicio</label>
                 <input asp-for="Evento.HoraInicio" class="form-control" type="time" />
                 <span asp-validation-for="Evento.HoraInicio" class="text-danger"></span>
             </div>
 
             <div class="form-group col-md-6">
-                <label>Hora de Fin</label>
+                <label>Hora de fin</label>
                 <input asp-for="Evento.HoraFinal" class="form-control" type="time" />
                 <span asp-validation-for="Evento.HoraFinal" class="text-danger"></span>
             </div>
@@ -129,7 +129,7 @@
             else
             {
                 <div class="d-flex justify-content-start gap-2 mt-3">
-                    <button type="submit" onclick="return validarImagen()" class="custom-btn-evento-inverso btn btn-success">
+                    <button type="submit" class="custom-btn-evento-inverso btn btn-success">
                         <i class="bi bi-plus-square-fill"></i> Crear
                     </button>
                     <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Evento/Index">
