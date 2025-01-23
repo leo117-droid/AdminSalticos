@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SalticosAdmin.Modelos
 {
-    public class TarifasTransporte : IValidatableObject
+    public class TarifasTransporte 
     {
         [Key]
         public int Id { get; set; }
