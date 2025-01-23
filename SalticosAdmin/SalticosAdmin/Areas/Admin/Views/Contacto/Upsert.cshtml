@@ -47,7 +47,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Tipo servicio</label>
-                <input type="text" asp-for="TipoServicio" class="form-control" placeholder="Tipo de Servicio del contacto" />
+                <input type="text" asp-for="TipoServicio" class="form-control" placeholder="Tipo de servicio del contacto" />
                 <span asp-validation-for="TipoServicio" class="text-danger"></span>
             </div>
         </div>
@@ -63,7 +63,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Teléfono</label>
-                <input type="text" asp-for="Telefono" class="form-control" placeholder="Telefono del contacto" />
+                <input type="text" asp-for="Telefono" class="form-control" placeholder="Teléfono del contacto" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
         </div>
@@ -87,7 +87,7 @@
             {
                 <div class="d-flex justify-content-start gap-2">
                     <button type="submit" class="custom-btn-otros-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
-                        <i class="bi bi-pencil-square"></i> Guardar Cambios
+                        <i class="bi bi-pencil-square"></i> Guardar cambios
                     </button>
                     <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Contacto/Index">
                         <i class="bi bi-arrow-return-left"></i> Regresar

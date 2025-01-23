@@ -105,7 +105,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Correo Electrónico del Recordatorio</label>
-                <input asp-for="Evento.Correo" class="form-control" placeholder="Ingrese el email" />
+                <input asp-for="Evento.Correo" class="form-control" placeholder="Ingrese el correo electrónico" />
                 <span asp-validation-for="Evento.Correo" class="text-danger"></span>
             </div>
             
@@ -119,7 +119,7 @@
             {
                 <div class="d-flex justify-content-start gap-2">
                     <button type="submit" class="custom-btn-evento-inverso btn btn-primary" onfocus="false" asp-route-id="@Model.Evento.Id">
-                        <i class="bi bi-pencil-square"></i> Guardar Cambios
+                        <i class="bi bi-pencil-square"></i> Guardar cambios
                     </button>
                     <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Evento/Index">
                         <i class="bi bi-arrow-return-left"></i> Regresar

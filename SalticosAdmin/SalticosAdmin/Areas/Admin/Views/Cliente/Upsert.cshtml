@@ -56,7 +56,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Teléfono</label>
-                <input type="text" asp-for="Telefono" class="form-control" placeholder="Telefono del cliente" />
+                <input type="text" asp-for="Telefono" class="form-control" placeholder="Teléfono del cliente" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
         </div>
@@ -79,7 +79,7 @@
             {
                 <div class="d-flex justify-content-start gap-2">
                     <button type="submit" onclick="return validarCedulaAntesDeEnviar()"  class="custom-btn-evento-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
-                        <i class="bi bi-pencil-square"></i> Guardar Cambios
+                        <i class="bi bi-pencil-square"></i> Guardar cambios
                     </button>
                     <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Cliente/Index">
                         <i class="bi bi-arrow-return-left"></i> Regresar
