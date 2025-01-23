@@ -30,7 +30,7 @@
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
                     <label>Lista de vehiculos</label>
-                    <select asp-for="IdVehiculo" asp-items="@Model.ListaVehiculo" class="form-control">
+                    <select asp-for="IdVehiculo" asp-items="@Model.ListaVehiculo" class="form-control" required>
                         <option disabled selected value="">-- Seleccione vehículo --</option>
                     </select>
                     <span asp-validation-for="IdVehiculo" class="text-danger"></span>

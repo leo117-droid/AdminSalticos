@@ -29,7 +29,7 @@
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
                     <label>Lista de servicios adicionales</label>
-                    <select asp-for="IdServicioAdicional" asp-items="@Model.ListaServicioAdicional" class="form-control">
+                    <select asp-for="IdServicioAdicional" asp-items="@Model.ListaServicioAdicional" class="form-control" required>
                         <option disabled selected value="">-- Seleccione servicio --</option>
                     </select>
                     <span asp-validation-for="IdServicioAdicional" class="text-danger"></span>
