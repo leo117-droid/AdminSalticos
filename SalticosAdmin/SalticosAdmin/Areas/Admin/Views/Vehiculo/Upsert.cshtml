@@ -6,7 +6,7 @@
 
 }
 
-<form method="post">
+<form method="post" id="formVehiculo">
     <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
 
         <div class="row border-0">
@@ -69,7 +69,7 @@
         @if (Model.Id != 0)
         {
             <div class="d-flex justify-content-start gap-2">
-                <button type="submit" onclick="return validarPlaca()" class="custom-btn-transporte-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                <button type="submit" onclick="return validarPlacaAntesDeEnviar()" class="custom-btn-transporte-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
                     <i class="bi bi-pencil-square"></i> Guardar Cambios
                 </button>
                 <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Vehiculo/Index">
@@ -80,7 +80,7 @@
         else
         {
             <div class="d-flex justify-content-start gap-2 mt-3">
-                <button type="submit" onclick="return validarPlaca()" class="custom-btn-transporte-inverso btn btn-primary" onfocus="false">
+                <button type="submit" onclick="return validarPlacaAntesDeEnviar()" class="custom-btn-transporte-inverso btn btn-primary" onfocus="false">
                     <i class="bi bi-plus-square-fill"></i> Crear
                 </button>
                 <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Vehiculo/Index">
@@ -105,6 +105,30 @@
             validarPlaca();
         });
 
+        document.getElementById("formVehiculo").addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarPlacaAntesDeEnviar();
+        });
+
+        function validarPlacaAntesDeEnviar(){
+            var url = '@Url.Content("~/")' + "Admin/Vehiculo/ValidarPlaca";
+            var id = '#id';
+            var cedula = '#placa';
+
+            $.getJSON(url, { id: $(id).val(), placa: $(placa).val() }, function (data) {
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var placaInput = document.getElementById("placa");
+                        swal("Error", "Placa ya existe", "error");
+                        placaInput.value = "";
+                        return;
+                    } else {
+                        document.getElementById("formVehiculo").submit();
+                    }
+                });
+            });
+        }
+
         function validarPlaca() {
             var url = '@Url.Content("~/")' + "Admin/Vehiculo/ValidarPlaca";
             var id = '#id';
@@ -115,7 +139,7 @@
                 $.each(data, function (key, value) {
                     if (value) {
                         var placa = document.getElementById("placa");
-                        swal("Error", "Placa ya Existe", "error");
+                        swal("Error", "Placa ya existe", "error");
                         placa.value = "";
                     }
                 });
