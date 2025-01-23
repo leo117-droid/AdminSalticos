@@ -94,10 +94,20 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error al borrar Cliente" });
             }
-            _unidadTrabajo.Cliente.Remover(clienteBd);
-            await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el cliente '{clienteBd.Nombre}' '{clienteBd.Apellidos}'", usuarioNombre);
+            try
+            {
+                _unidadTrabajo.Cliente.Remover(clienteBd);
+                await _unidadTrabajo.Guardar();
+                await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el cliente '{clienteBd.Nombre}' '{clienteBd.Apellidos}'", usuarioNombre);
+                return Json(new { success = true, message = "Cliente borrado exitosamente" });
+            }
+            catch
+            {
+                return Json(new { success = false, message = "Cliente asignado a un evento" });
+            }
+
+            
 
             return Json(new { success = true, message = "Cliente borrada exitosamente" });
         }
