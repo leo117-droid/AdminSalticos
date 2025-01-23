@@ -73,6 +73,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                // Validación de rol personal
+                if (personalVM.Personal.RolPersonalId == 0)
+                {
+                    ModelState.AddModelError("Personal.RolPersonalId", "Debe seleccionar un rol.");
+                    personalVM.RolPersonalLista = _unidadTrabajo.Personal.ObtenerTodosDropdownLista("RolPersonal");
+                    return View(personalVM);
+                }
+
                 // Validación de edad mínima (18 años)
                 var fechaMinima = DateTime.Now.AddYears(-18);
                 if (personalVM.Personal.FechaNacimiento > fechaMinima)
