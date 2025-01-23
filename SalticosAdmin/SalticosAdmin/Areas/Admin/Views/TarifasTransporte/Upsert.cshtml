@@ -49,7 +49,9 @@
                 <label>Precio</label>
                 <div class="input-group">
                     <span class="input-group-text">₡</span>
-                    <input asp-for="Precio" class="form-control" type="number" min="0" />
+                    <input asp-for="Precio" class="form-control" type="number" />
+                    <span asp-validation-for="Precio" class="text-danger"></span>
+
                 </div>
             </div>
         </div>

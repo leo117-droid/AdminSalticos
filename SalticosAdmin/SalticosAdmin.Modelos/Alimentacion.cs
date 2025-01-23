@@ -25,7 +25,6 @@ namespace SalticosAdmin.Modelos
 
         [Required(ErrorMessage = "Precio es requerido")]
         [Range(0, int.MaxValue, ErrorMessage = "El precio no puede ser negativo.")]
-
         public double Precio { get; set; }
 
     }
