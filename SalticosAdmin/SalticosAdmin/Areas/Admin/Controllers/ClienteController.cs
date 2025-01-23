@@ -109,7 +109,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var lista = await _unidadTrabajo.Cliente.ObtenerTodos();
             if (id == 0)
             {
-                valor = lista.Any(b => b.Cedula.Trim() == cedula.Trim());
+                if (cedula != null)
+                {
+                    valor = lista.Any(b => b.Cedula.Trim() == cedula.Trim());
+                }
+                
             }
             else
             {
