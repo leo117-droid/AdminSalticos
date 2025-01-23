@@ -14,17 +14,17 @@ namespace SalticosAdmin.Modelos
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Nombre es requerido")]
-        [MaxLength(50, ErrorMessage = "Nombre debe ser maximo 50 caracteres")]
+        [MaxLength(50, ErrorMessage = "Nombre debe ser máximo 50 caracteres")]
         public string Nombre { get; set; }
 
 
-        [MaxLength(50, ErrorMessage = "Apellidos debe ser maximo 50 caracteres")]
+        [MaxLength(50, ErrorMessage = "Apellidos debe ser máximo 50 caracteres")]
         public string Apellidos { get; set; }
 
 
-        [Required(ErrorMessage = "Telefono es requerido")]
-        [StringLength(8, ErrorMessage = "La Telefono debe tener exactamente 8 caracteres", MinimumLength = 8)]
-        [RegularExpression(@"^\d+$", ErrorMessage = "El Telefono solo debe contener números")]
+        [Required(ErrorMessage = "Teléfono es requerido")]
+        [StringLength(8, ErrorMessage = "El teléfono debe tener exactamente 8 caracteres", MinimumLength = 8)]
+        [RegularExpression(@"^\d+$", ErrorMessage = "El teléfono solo debe contener números")]
         public string Telefono { get; set; }
 
 
@@ -34,23 +34,23 @@ namespace SalticosAdmin.Modelos
         public string Correo { get; set; }
 
 
-        [Required(ErrorMessage = "Cedula es requerido")]
-        [MaxLength(11, ErrorMessage = "Cedula debe ser máximo 11 dígitos")]
-        [RegularExpression(@"^\d+$", ErrorMessage = "La Cedula solo debe contener números")]
+        [Required(ErrorMessage = "Cédula es requerido")]
+        [MaxLength(11, ErrorMessage = "Cédula debe ser máximo 11 dígitos")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "La cédula solo debe contener números")]
         public string Cedula { get; set; }
 
 
-        [Required(ErrorMessage = "Fecha de Nacimiento es requerida")]
+        [Required(ErrorMessage = "Fecha de nacimiento es requerida")]
         [DataType(DataType.Date, ErrorMessage = "Formato de fecha no válido")]
         public DateTime FechaNacimiento { get; set; }
 
 
-        [Required(ErrorMessage = "Fecha de Entrada es requerida")]
+        [Required(ErrorMessage = "Fecha de entrada es requerida")]
         [DataType(DataType.Date, ErrorMessage = "Formato de fecha no válido")]
         public DateTime FechaEntrada { get; set; }
 
 
-        [Required(ErrorMessage = "Rol Personal es Requerido")]
+        [Required(ErrorMessage = "Rol personal es requerido")]
         public int RolPersonalId { get; set; }
 
 

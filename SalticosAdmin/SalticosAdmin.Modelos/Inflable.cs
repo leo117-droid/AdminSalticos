@@ -49,7 +49,7 @@ namespace SalticosAdmin.Modelos
         public CategoriaTamanno CategoriaTamanno { get; set; }
 
 
-        [Required(ErrorMessage = "Categoria Edad es Requerido")]
+        [Required(ErrorMessage = "Categoría edad es requerida")]
         public int CategoriaEdadId { get; set; }
 
         [ForeignKey("CategoriaEdadId")]

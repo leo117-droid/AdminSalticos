@@ -13,7 +13,7 @@ namespace SalticosAdmin.Modelos
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Nombre es requerido")]
-        [MaxLength(50, ErrorMessage = "Nombre debe ser maximo 50 caracteres")]
+        [MaxLength(50, ErrorMessage = "Nombre debe ser máximo 50 caracteres")]
         public string Nombre { get; set; }
 
     }
