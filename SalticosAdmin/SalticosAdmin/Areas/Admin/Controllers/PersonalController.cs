@@ -185,7 +185,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
             else
             {
-                valor = lista.Any(b => b.Cedula.ToLower().Trim() == cedula.ToLower().Trim() && b.Id != id);
+                if (cedula != null)
+                {
+                    valor = lista.Any(b => b.Cedula.ToLower().Trim() == cedula.ToLower().Trim() && b.Id != id);
+                }
             }
             if (valor)
             {
