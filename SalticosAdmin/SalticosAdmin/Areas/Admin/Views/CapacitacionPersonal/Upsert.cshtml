@@ -27,8 +27,8 @@
         {
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Listado de Personal</label>
-                    <select asp-for="IdPersonal" asp-items="@Model.ListaPersonal" class="form-control">
+                    <label>Listado de personal</label>
+                    <select asp-for="IdPersonal" asp-items="@Model.ListaPersonal" class="form-control" required>
                         <option disabled selected value="">-- Seleccione personal --</option>
                     </select>
                     <span asp-validation-for="IdPersonal" class="text-danger"></span>
