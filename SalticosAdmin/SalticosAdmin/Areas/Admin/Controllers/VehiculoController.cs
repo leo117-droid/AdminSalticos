@@ -120,11 +120,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var lista = await _unidadTrabajo.Vehiculo.ObtenerTodos();
             if (id == 0)
             {
-                valor = lista.Any(b => b.Placa.ToLower().Trim() == placa.ToLower().Trim());
+                if (placa != null)
+                {
+                    valor = lista.Any(b => b.Placa.ToLower().Trim() == placa.ToLower().Trim());
+                }
+                
             }
             else
             {
-                valor = lista.Any(b => b.Placa.ToLower().Trim() == placa.ToLower().Trim() && b.Id != id);
+                if (placa != null)
+                {
+                    valor = lista.Any(b => b.Placa.ToLower().Trim() == placa.ToLower().Trim() && b.Id != id);
+                }
+
             }
             if (valor)
             {
