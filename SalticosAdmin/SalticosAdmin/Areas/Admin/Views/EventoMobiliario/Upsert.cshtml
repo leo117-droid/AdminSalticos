@@ -29,7 +29,7 @@
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
                     <label>Lista de mobiliarios</label>
-                    <select asp-for="IdMobiliario" asp-items="@Model.ListaMobiliario" class="form-control">
+                    <select asp-for="IdMobiliario" asp-items="@Model.ListaMobiliario" class="form-control" required>
                         <option disabled selected value="">-- Seleccione mobiliario --</option>
                     </select>
                     <span asp-validation-for="IdMobiliario" class="text-danger"></span>
