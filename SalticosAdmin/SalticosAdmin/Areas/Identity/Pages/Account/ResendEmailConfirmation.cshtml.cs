@@ -64,7 +64,7 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+                ModelState.AddModelError(string.Empty, "Se ha enviado el correo de verificación. Por favor, revisa tu correo.");
                 return Page();
             }
 
@@ -76,13 +76,30 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
                 pageHandler: null,
                 values: new { userId = userId, code = code },
                 protocol: Request.Scheme);
+
+            // Crear contenido del correo
+            var emailBody = $@"
+                <div style='font-family: Arial, sans-serif; line-height: 1.6;'>
+                    <h2 style='color: #333;'>Confirmación de Correo Electrónico</h2>
+                    <p>Hola,</p>
+                    <p>Hemos recibido una solicitud para confirmar tu correo electrónico. Si fuiste tú quien realizó esta solicitud, haz clic en el siguiente enlace para confirmar:</p>
+                    <p style='text-align: center;'>
+                        <a href='{HtmlEncoder.Default.Encode(callbackUrl)}' 
+                           style='background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-size: 16px;'>Confirmar Correo Electrónico</a>
+                    </p>
+                    <p>Si no realizaste esta solicitud, puedes ignorar este correo. Tu cuenta permanecerá segura.</p>
+                    <hr style='border: 0; border-top: 1px solid #ccc;' />
+                </div>";
+
+            // Enviar el correo
             await _emailSender.SendEmailAsync(
                 Input.Email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Confirma tu correo electrónico",
+                emailBody);
 
-            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+            ModelState.AddModelError(string.Empty, "Se ha enviado el correo de verificación. Por favor, revisa tu correo.");
             return Page();
         }
+
     }
 }
