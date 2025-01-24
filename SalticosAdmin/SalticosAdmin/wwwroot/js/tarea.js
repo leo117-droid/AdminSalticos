@@ -12,13 +12,17 @@ function cargarTareas() {
 
             if (response.data && response.data.length > 0) {
                 response.data.forEach(tarea => {
+                    const descripcion = tarea.descripcion && tarea.descripcion.trim() !== ""
+                        ? tarea.descripcion
+                        : "<em>Sin descripción</em>";
+
                     const card = `
                         <div class="col-md-6 col-lg-4" id="tarea-${tarea.id}">
                             <div class="card-tarea shadow-sm ${getEstadoClase(tarea.estado)}">
                                 <div class="card-body">
                                     <button class="btn-close float-end" aria-label="Close" onclick="EliminarTarea(${tarea.id})"></button>
                                     <h5 class="card-tarea-title">${tarea.titulo}</h5>
-                                    <p class="card-text">${tarea.descripcion}</p>
+                                    <p class="card-text">${descripcion}</p>
                                     <p>
                                         <span class="badge bg-${getEstadoBadge(tarea.estado)}">${tarea.estado}</span>
                                         <span class="badge bg-${getPrioridadBadge(tarea.prioridad)}">${tarea.prioridad}</span>
