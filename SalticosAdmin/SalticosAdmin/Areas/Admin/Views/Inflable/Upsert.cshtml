@@ -72,6 +72,8 @@
                             <div class="input-group">
                                 <span class="input-group-text">₡</span>
                                 <input asp-for="Inflable.Precio" class="form-control" type="number" min="0"/>
+                                <span asp-validation-for="Inflable.Precio" class="text-danger"></span>
+
                             </div>
                         </div>
                     </div>
@@ -82,6 +84,8 @@
                             <div class="input-group">
                                 <span class="input-group-text">₡</span>
                                 <input asp-for="Inflable.PrecioHoraAdicional" class="form-control" type="number" min="0" />
+                                <span asp-validation-for="Inflable.PrecioHoraAdicional" class="text-danger"></span>
+
                             </div>
                         </div>
                     </div>
