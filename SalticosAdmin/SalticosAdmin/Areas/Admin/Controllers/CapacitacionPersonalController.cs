@@ -173,11 +173,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error al borrar Personal de Capacitacion" });
             }
 
-            var capacitacionPersonal = await _unidadTrabajo.CapacitacionPersonal.ObtenerTodos(ea => ea.IdCapacitacion == id);
-            if (capacitacionPersonal != null)
-            {
-                _unidadTrabajo.CapacitacionPersonal.RemoverRango(capacitacionPersonal);
-            }
+            
 
             _unidadTrabajo.CapacitacionPersonal.Remover(CapacitacionPersonalBd);
             await _unidadTrabajo.Guardar();
