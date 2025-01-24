@@ -12,7 +12,7 @@ function loadDataTable() {
     datatable = $('#tblDatos').DataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ Registros por página",
-            "zeroRecords": "Ningun registro",
+            "zeroRecords": "Ningún registro",
             "info": "Mostrar página _PAGE_ de _PAGES_",
             "infoEmpty": "no hay registros",
             "infoFiltered": "(filtrado de _MAX_ registros totales)",
