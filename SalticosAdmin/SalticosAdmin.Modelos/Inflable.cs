@@ -14,20 +14,20 @@ namespace SalticosAdmin.Modelos
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Nombre es requerido")]
-        [MaxLength(50, ErrorMessage = "Nombre debe ser maximo 50 caracteres")]
+        [MaxLength(50, ErrorMessage = "Nombre debe ser máximo 50 caracteres")]
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = "Descripcion es requerido")]
-        [MaxLength(100, ErrorMessage = "Descripcion debe ser maximo 100 caracteres")]
+        [MaxLength(100, ErrorMessage = "Descripcion debe ser máximo 100 caracteres")]
         public string Descripcion { get; set; }
 
 
         [Required(ErrorMessage = "Dimensiones es requerido")]
-        [MaxLength(100, ErrorMessage = "La Dimensiones debe ser maximo 100 caracteres")]
+        [MaxLength(100, ErrorMessage = "La dimensiones debe ser máximo 100 caracteres")]
         public string Dimensiones { get; set; }
 
 
-        [Required(ErrorMessage = "Estado es Requerido")]
+        [Required(ErrorMessage = "Estado es requerido")]
         public bool Estado { get; set; }
 
         public string ImageUrl { get; set; }
@@ -41,7 +41,7 @@ namespace SalticosAdmin.Modelos
 
         public double PrecioHoraAdicional { get; set; }
 
-        [Required(ErrorMessage = "Categoria Tamanno es Requerido")]
+        [Required(ErrorMessage = "Categoría tamaño es requerido")]
         public int CategoriaTamannoId { get; set; }
 
 
@@ -49,7 +49,7 @@ namespace SalticosAdmin.Modelos
         public CategoriaTamanno CategoriaTamanno { get; set; }
 
 
-        [Required(ErrorMessage = "Categoria Edad es Requerido")]
+        [Required(ErrorMessage = "Categoría edad es requerida")]
         public int CategoriaEdadId { get; set; }
 
         [ForeignKey("CategoriaEdadId")]

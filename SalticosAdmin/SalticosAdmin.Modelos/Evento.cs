@@ -18,17 +18,17 @@ namespace SalticosAdmin.Modelos
         [DataType(DataType.Date, ErrorMessage = "Formato de fecha no válido")]
         public DateTime Fecha { get; set; }
 
-        [Required(ErrorMessage = "Hora Inicio es requerida")]
+        [Required(ErrorMessage = "Hora inicio es requerida")]
         [DataType(DataType.Time, ErrorMessage = "Formato de hora no válido")]
         public TimeSpan HoraInicio { get; set; }
 
-        [Required(ErrorMessage = "Hora Final es requerida")]
+        [Required(ErrorMessage = "Hora final es requerida")]
         [DataType(DataType.Time, ErrorMessage = "Formato de hora no válido")]
         public TimeSpan HoraFinal { get; set; }
 
 
-        [Required(ErrorMessage = "Direccion es requerido")]
-        [MaxLength(120, ErrorMessage = "Direccion debe ser maximo 120 caracteres")]
+        [Required(ErrorMessage = "Dirección es requerido")]
+        [MaxLength(120, ErrorMessage = "Dirección debe ser máximo 120 caracteres")]
         public string Direccion { get; set; }
 
         [Required(ErrorMessage = "El nombre de la provincia es requerido")]
@@ -42,13 +42,12 @@ namespace SalticosAdmin.Modelos
         [ForeignKey("ClienteId")]
         public Cliente Cliente { get; set; }
 
-        //Nueva propiedad para el recordatorio
         [Required(ErrorMessage = "Correo es requerido")]
         [MaxLength(50, ErrorMessage = "Correo debe ser máximo 50 caracteres")]
         [EmailAddress(ErrorMessage = "El formato del correo no es válido")]
         public string Correo { get; set; }
 
-        [Required(ErrorMessage = "Estado es Requerido")]
+        [Required(ErrorMessage = "Estado es requerido")]
         [DefaultValue(false)]
         public bool EstadoRecordatorio { get; set; }
 

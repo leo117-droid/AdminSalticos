@@ -2,7 +2,7 @@
 @using SalticosAdmin.Utilidades
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var titulo = "Crear Nuevo Evento";
+    var titulo = "Crear nuevo evento";
 }
 
 <form method="post" id="formEvento">
@@ -16,12 +16,12 @@
 
         @if (Model.Evento.Id != 0)
         {
-            titulo = "Editar Evento";
+            titulo = "Editar evento";
             <input asp-for="Evento.Id" hidden />
         }
 
         <div class="col-12 border-bottom p-0">
-            <h2 class="text-primary">@titulo</h2>
+            <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
         </div>
 
         @if (Model.Evento.Id != 0)
@@ -52,13 +52,13 @@
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Hora de Inicio</label>
+                <label>Hora de inicio</label>
                 <input asp-for="Evento.HoraInicio" class="form-control" type="time" />
                 <span asp-validation-for="Evento.HoraInicio" class="text-danger"></span>
             </div>
 
             <div class="form-group col-md-6">
-                <label>Hora de Fin</label>
+                <label>Hora de fin</label>
                 <input asp-for="Evento.HoraFinal" class="form-control" type="time" />
                 <span asp-validation-for="Evento.HoraFinal" class="text-danger"></span>
             </div>
@@ -105,7 +105,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Correo Electrónico del Recordatorio</label>
-                <input asp-for="Evento.Correo" class="form-control" placeholder="Ingrese el email" />
+                <input asp-for="Evento.Correo" class="form-control" placeholder="Ingrese el correo electrónico" />
                 <span asp-validation-for="Evento.Correo" class="text-danger"></span>
             </div>
             
@@ -114,16 +114,29 @@
 
         <br />
 
-        <div class="d-grid gap-2 d-md-block">
+        <div class="d-flex justify-content-start align-items-center gap-2">
             @if (Model.Evento.Id != 0)
             {
-                <partial name="_BotonesActualizarYRegresar" model="Model.Evento.Id" />
+                <div class="d-flex justify-content-start gap-2">
+                    <button type="submit" class="custom-btn-evento-inverso btn btn-primary" onfocus="false" asp-route-id="@Model.Evento.Id">
+                        <i class="bi bi-pencil-square"></i> Guardar cambios
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Evento/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
             }
             else
             {
-                <partial name="_BotonesCrearYRegresar" />
+                <div class="d-flex justify-content-start gap-2 mt-3">
+                    <button type="submit" class="custom-btn-evento-inverso btn btn-success">
+                        <i class="bi bi-plus-square-fill"></i> Crear
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Evento/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
             }
-
         </div>
 
 

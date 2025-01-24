@@ -175,6 +175,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             _unidadTrabajo.AlimentacionIngrediente.Remover(AlimentacionIngredienteBd);
             await _unidadTrabajo.Guardar();
+
+            // Cargar manualmente las relaciones necesarias
+            AlimentacionIngredienteBd.Ingrediente = await _unidadTrabajo.Ingrediente.ObtenerPrimero(x => x.Id == AlimentacionIngredienteBd.IdIngrediente);
+            AlimentacionIngredienteBd.Alimentacion = await _unidadTrabajo.Alimentacion.ObtenerPrimero(x => x.Id == AlimentacionIngredienteBd.IdAlimentacion);
+
             await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el ingrediente '{AlimentacionIngredienteBd.Ingrediente.Nombre}' del producto de alimentación '{AlimentacionIngredienteBd.Alimentacion.Nombre}'", usuarioNombre);
 
 

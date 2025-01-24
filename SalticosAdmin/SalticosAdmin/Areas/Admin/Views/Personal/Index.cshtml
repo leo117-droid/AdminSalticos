@@ -5,19 +5,22 @@
 }
 
 <div class="row">
-    <div class "col-lg-6">
-        <h2 class="text-primary">Personal de la Empresa</h2>
-    </div>
     <div class="col-lg-6">
-        <a class="btn btn-outline-primary" asp-action="Upsert"> <i class="bi bi-plus-square-fill"></i> Crear Nuevo Personal </a>
+        <h2 style="font-weight: bold; color: #000000;">Gestión del personal</h2>
+    </div>
+    <div class="col-lg-6 text-end">
+        <a class="btn shadow-sm custom-btn-personal" asp-action="Upsert">
+            <i class="bi bi-plus-square-fill"></i> Crear nuevo personal
+        </a>
     </div>
 
 
-    <form id="formFiltrar" method="get" class=" " action="@Url.Action("Index", "Personal")">
+
+    <form id="formFiltrar" method="get" class="mt-4 " action="@Url.Action("Index", "Personal")">
 
 
-        <div class="row filter-row">
-            <div class="col-md-4">
+        <div class="row g-3 align-items-end">
+            <div class="col-lg-4 col-md-6">
                 <div class="form-group">
                     <label>Rol</label>
                     <select asp-for="Personal.RolPersonalId" id="rolPersonalSelect" name="idRolPersonal" asp-items="@Model.RolPersonalLista" class="form-select">
@@ -25,34 +28,37 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-primary" onclick="refreshDataTable()">
-                    <i class="bi bi-search"></i> Buscar Personal
+
+            <!-- Botón Buscar -->
+            <div class="col-lg-2 col-md-3">
+                <button type="button" class="btn shadow-sm custom-btn-personal-inverso w-100" onclick="refreshDataTable()">
+                    <i class="bi bi-search"></i> Buscar
                 </button>
             </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-secondary" onclick="clearDataTable()">
-                    <i class="bi bi-arrow-counterclockwise"></i> Limpiar Filtro
+
+            <!-- Botón Limpiar -->
+            <div class="col-lg-2 col-md-3">
+                <button type="button" class="btn shadow-sm btn-regresar w-100" onclick="clearDataTable()">
+                    <i class="bi bi-arrow-counterclockwise"></i> Limpiar
                 </button>
             </div>
         </div>
     </form>
-
-
 </div>
+
+
 
 <br />
 
-<div class="p-4 border rounded bg-light">
-
-    <table id="tblDatos" class="table table-responsive table-hover">
-        <thead class="table-dark">
+<div class="p-4 border rounded bg-white shadow-sm">
+    <table id="tblDatos" class="table table-hover align-middle">
+        <thead style="background-color: #e9ecef;" class="text-center">
             <tr>
                 <th>Nombre</th>
                 <th>Apellidos</th>
-                <th>Telefono</th>
+                <th>Teléfono</th>
                 <th>Correo</th>
-                <th>Cedula</th>
+                <th>Cédula</th>
                 <th>Fecha de Nacimiento</th>
                 <th>Fecha de Entrada</th>
                 <th>Rol</th>
@@ -60,15 +66,14 @@
             </tr>
         </thead>
     </table>
+</div>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <a class="btn btn-return stbgreen-btn" href="/">
-                <i class="bi bi-arrow-return-left"></i> Regresar
-            </a>
-        </div>
+<div class="row mt-3">
+    <div class="col-lg-6 ms-auto text-end">
+        <a class="btn shadow-sm btn-regresar" href="/Admin/Personal/Intermedia">
+            <i class="bi bi-arrow-return-left"></i> Regresar
+        </a>
     </div>
-
 </div>
 
 @section Scripts {

@@ -1,5 +1,5 @@
 ﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
     {
         Layout = parentLayout.ToString();
     }
@@ -9,10 +9,10 @@
     }
 }
 
-<h1>Manage your account</h1>
+<h1 class=" text-dark mb-4"><i class="bi bi-gear-fill me-3"></i>Gestiona tu cuenta</h1>
 
 <div>
-    <h2>Change your account settings</h2>
+    <h2 class="text-dark"><i class=" me-2"></i>Cambiar la configuración de tu cuenta</h2>
     <hr />
     <div class="row">
         <div class="col-md-3">
@@ -27,3 +27,19 @@
 @section Scripts {
     @RenderSection("Scripts", required: false)
 }
+
+<style>
+    /* Estilo para el título */
+    h1, h2 {
+        color: #000; /* Color negro */
+    }
+
+    /* Estilo para los iconos */
+    .bi {
+        font-size: 1.5rem;
+    }
+
+    .text-dark {
+        color: #000;
+    }
+</style>

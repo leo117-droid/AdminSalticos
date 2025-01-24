@@ -14,18 +14,17 @@ namespace SalticosAdmin.Modelos
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Nombre es requerido")]
-        [MaxLength(50, ErrorMessage = "Nombre debe ser maximo 50 caracteres")]
+        [MaxLength(50, ErrorMessage = "Nombre debe ser máximo 50 caracteres")]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage = "Descripcion es requerido")]
-        [MaxLength(100, ErrorMessage = "Descripcion debe ser maximo 100 caracteres")]
+        [Required(ErrorMessage = "Descripción es requerido")]
+        [MaxLength(100, ErrorMessage = "Descripción debe ser máximo 100 caracteres")]
         public string Descripcion { get; set; }
 
         public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = "Precio es requerido")]
         [Range(0, int.MaxValue, ErrorMessage = "El precio no puede ser negativo.")]
-
         public double Precio { get; set; }
 
     }

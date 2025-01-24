@@ -23,7 +23,7 @@ namespace SalticosAdmin.Modelos
         [ForeignKey("IdAlimentacion")]
         public Alimentacion Alimentacion { get; set; }
 
-        [NotMapped] // Nose agrega a la base de datos
+        [NotMapped] 
         public string? NombreIngrediente { get; set; }
     }
 }

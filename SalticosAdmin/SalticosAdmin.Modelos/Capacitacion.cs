@@ -17,11 +17,11 @@ namespace SalticosAdmin.Modelos
         public DateTime Fecha { get; set; }
 
         [Required(ErrorMessage = "Tema es requerido")]
-        [MaxLength(50, ErrorMessage = "Tema debe ser maximo 50 caracteres")]
+        [MaxLength(50, ErrorMessage = "Tema debe ser máximo 50 caracteres")]
         public string Tema { get; set; }
 
-        [Required(ErrorMessage = "Duracion es requerido")]
-        [MaxLength(50, ErrorMessage = "Duracion debe ser maximo 50 caracteres")]
+        [Required(ErrorMessage = "Duración es requerido")]
+        [MaxLength(50, ErrorMessage = "Duración debe ser máximo 50 caracteres")]
         public string Duracion { get; set; }
 
     }

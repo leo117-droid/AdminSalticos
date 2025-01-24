@@ -21,13 +21,18 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return View();
         }
 
+        public IActionResult Intermedia()
+        {
+            return View();
+        }
 
         #region API
         [HttpGet]
         public async Task<IActionResult> ObtenerTodos()
         {
             var todos = await _unidadTrabajo.Bitacora.ObtenerTodos();
-            return Json(new { data = todos });
+            var ordenados = todos.OrderByDescending(b => b.Fecha).ToList();
+            return Json(new { data = ordenados });
         }
 
        

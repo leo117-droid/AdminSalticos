@@ -531,9 +531,7 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Cantidad")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("IdAlimentacion")
                         .HasColumnType("int");
@@ -547,10 +545,7 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
 
                     b.HasIndex("IdEvento");
 
-                    b.ToTable("EventoAlimentacion", t =>
-                        {
-                            t.HasCheckConstraint("CK_EventoAlimentacion_Cantidad", "Cantidad > 0");
-                        });
+                    b.ToTable("EventoAlimentacion");
                 });
 
             modelBuilder.Entity("SalticosAdmin.Modelos.EventoInflable", b =>
@@ -585,9 +580,7 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Cantidad")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("IdEvento")
                         .HasColumnType("int");
@@ -601,10 +594,7 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
 
                     b.HasIndex("IdMobiliario");
 
-                    b.ToTable("EventoMobiliario", t =>
-                        {
-                            t.HasCheckConstraint("CK_EventoMobiliario_Cantidad", "Cantidad > 0");
-                        });
+                    b.ToTable("EventoMobiliario");
                 });
 
             modelBuilder.Entity("SalticosAdmin.Modelos.EventoPersonal", b =>
@@ -639,9 +629,7 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Cantidad")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("IdEvento")
                         .HasColumnType("int");
@@ -655,10 +643,7 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
 
                     b.HasIndex("IdServicioAdicional");
 
-                    b.ToTable("EventoServicioAdicional", t =>
-                        {
-                            t.HasCheckConstraint("CK_EventoServicioAdicional_Cantidad", "Cantidad > 0");
-                        });
+                    b.ToTable("EventoServicioAdicional");
                 });
 
             modelBuilder.Entity("SalticosAdmin.Modelos.EventoVehiculo", b =>
@@ -900,10 +885,12 @@ namespace SalticosAdmin.AccesoDeDatos.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Direccion")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 

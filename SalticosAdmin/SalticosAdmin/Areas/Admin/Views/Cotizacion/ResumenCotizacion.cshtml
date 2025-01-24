@@ -3,7 +3,7 @@
 @using Newtonsoft.Json
 
 @{
-    ViewData["Title"] = "Resumen de Cotización";
+    ViewData["Title"] = "Resumen de cotización";
 }
 
 <h1>Resumen de Cotización</h1>
@@ -60,8 +60,8 @@
             <tbody>
                 @foreach (var item in Model.MobiliariosSeleccionados)
                 {
-                    var mobiliario = item.Mobiliario; // El mobiliario
-                    var cantidad = item.Cantidad; // La cantidad
+                    var mobiliario = item.Mobiliario; 
+                    var cantidad = item.Cantidad;
 
                     <tr>
                         <td>@mobiliario.Nombre</td>
@@ -92,8 +92,8 @@
             <tbody>
                 @foreach (var item in Model.ServiciosSeleccionados)
                 {
-                    var servicio = item.Servicio; // El servicio adicional
-                    var cantidad = item.Cantidad; // La cantidad seleccionada
+                    var servicio = item.Servicio; 
+                    var cantidad = item.Cantidad; 
 
                     <tr>
                         <td>@servicio.Nombre</td>

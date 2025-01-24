@@ -159,7 +159,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         }
 
-        
+
 
 
         [HttpPost]
@@ -168,13 +168,19 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var usuarioNombre = User.Identity.Name;
 
             var CapacitacionPersonalBd = await _unidadTrabajo.CapacitacionPersonal.Obtener(id);
-            if(CapacitacionPersonalBd == null)
+            if (CapacitacionPersonalBd == null)
             {
                 return Json(new { success = false, message = "Error al borrar Personal de Capacitacion" });
             }
 
+            
+
             _unidadTrabajo.CapacitacionPersonal.Remover(CapacitacionPersonalBd);
             await _unidadTrabajo.Guardar();
+            CapacitacionPersonalBd.Capacitacion = await _unidadTrabajo.Capacitacion.ObtenerPrimero(x => x.Id == CapacitacionPersonalBd.IdCapacitacion);
+            CapacitacionPersonalBd.Personal = await _unidadTrabajo.Personal.ObtenerPrimero(x => x.Id == CapacitacionPersonalBd.IdPersonal);
+
+
             await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el personal '{CapacitacionPersonalBd.Personal.Nombre}' de la capacitación '{CapacitacionPersonalBd.Capacitacion.Tema}'", usuarioNombre);
 
 

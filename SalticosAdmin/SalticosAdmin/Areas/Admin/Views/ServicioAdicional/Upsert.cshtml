@@ -2,14 +2,14 @@
 @using SalticosAdmin.Utilidades
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var titulo = "Crear Nuevo Servicio Adicional";
+    var titulo = "Crear nuevo servicio adicional";
 }
 
 <form method="post" id="formServicioAdicional" enctype="multipart/form-data">
 
     @if (Model.Id != 0)
     {
-        titulo = "Editar Servicio Adicional";
+        titulo = "Editar servicio adicional";
         <input asp-for="Id" hidden />
         <input asp-for="ImageUrl" hidden />
     }
@@ -17,7 +17,7 @@
     <div class="border p-3">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
-            <h2 class="text-info">@titulo</h2>
+            <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
         </div>
 
         <div class="row">
@@ -66,17 +66,29 @@
 
                     <br />
 
-                    <div class="d-grid gap-2 d-md-block">
+                    <div class="d-flex justify-content-start align-items-center gap-2">
                         @if (Model.Id != 0)
                         {
-                            <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+                            <div class="d-flex justify-content-start gap-2">
+                                <button type="submit" class="custom-btn-servicios-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                                    <i class="bi bi-pencil-square"></i> Guardar cambios
+                                </button>
+                                <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/ServicioAdicional/Index">
+                                    <i class="bi bi-arrow-return-left"></i> Regresar
+                                </a>
+                            </div>
                         }
                         else
                         {
-                            <button type="submit" onclick="return validarImagen()" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
-                            <a asp-action="Index" class="btn btn-success "><i class="bi bi-arrow-return-left"></i> Regresar</a>
+                            <div class="d-flex justify-content-start gap-2 mt-3">
+                                <button type="submit" onclick="return validarImagen()" class="custom-btn-servicios-inverso btn btn-success">
+                                    <i class="bi bi-plus-square-fill"></i> Crear
+                                </button>
+                                <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/ServicioAdicional/Index">
+                                    <i class="bi bi-arrow-return-left"></i> Regresar
+                                </a>
+                            </div>
                         }
-
                     </div>
 
 

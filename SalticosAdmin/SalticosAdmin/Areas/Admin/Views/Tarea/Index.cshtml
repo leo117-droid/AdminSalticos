@@ -1,36 +1,23 @@
-﻿﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Lista de Tareas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class "col-lg-6">
-        <h2 class="text-primary">Lista de Tareas</h2>
+<div class="container mt-4">
+    <div class="row align-items-center mb-4">
+        <div class="col-lg-6">
+            <h2 style="font-weight: bold; color: #000000;">Lista de tareas</h2>
+        </div>
+        <div class="col-lg-6 text-end">
+            <a class="btn shadow-sm custom-btn-tarea" asp-action="Upsert">
+                <i class="bi bi-plus-square-fill"></i> Crear nueva tarea
+            </a>
+        </div>
     </div>
-    <div class="col-lg-6">
-        <a class="btn btn-outline-primary" asp-action="Upsert"> <i class="bi bi-plus-square-fill"></i> Crear Nueva Tarea </a>
+
+    <div id="task-list" class="row gy-3">
+        <!-- Aquí se cargarán las tareas como tarjetas -->
     </div>
-</div>
-
-<br />
-
-<div class="p-4 border rounded bg-light">
-
-    <table id="tblDatos" class="table table-responsive table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>Titulo</th>
-                <th>Descripcion</th>
-                <th>Estado</th>
-                <th>Prioridad</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th></th>
-            </tr>
-        </thead>
-    </table>
-
 </div>
 
 @section Scripts {

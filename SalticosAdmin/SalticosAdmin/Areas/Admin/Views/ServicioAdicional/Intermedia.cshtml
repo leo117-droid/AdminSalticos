@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Servicios";
+}
+
+<header class="my-4 text-center">
+    <h1 class="fw-bold">Gestión de servicios</h1>
+</header>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Primera fila -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-balloon display-1"></i>
+                        <h5 class="card-title mt-3">Inflables</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de inflables.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Inflable" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-house display-1"></i>
+                        <h5 class="card-title mt-3">Mobiliario</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de mobiliario.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Mobiliario" asp-action="Index">Ir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Segunda fila -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-basket2-fill display-1"></i>
+                        <h5 class="card-title mt-3">Alimentación</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de alimentación.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Alimentacion" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-plus-square-fill display-1"></i>
+                        <h5 class="card-title mt-3">Servicios Adicionales</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de servicios adicionales.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Index">Ir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row mt-3">
+    <div class="col-lg-6 ms-auto text-end">
+        <a class="btn shadow-sm btn-regresar" href="/">
+            <i class="bi bi-arrow-return-left"></i> Regresar
+        </a>
+    </div>
+</div>

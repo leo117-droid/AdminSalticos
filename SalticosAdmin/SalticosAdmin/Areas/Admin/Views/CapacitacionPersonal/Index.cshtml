@@ -5,18 +5,18 @@
 
 <div class="row mb-4">
     <div class="col-lg-6">
-        <h2 class="text-primary">Personal Asignado a Capacitación</h2>
+        <h2 style="font-weight: bold; color: #000000;">Personal asignado a capacitación</h2>
     </div>
     <div class="col-lg-6 text-end">
-        <a class="btn btn-outline-primary" asp-action="Upsert" asp-route-capacitacionID="@ViewData["Id"]">
-            <i class="bi bi-plus-square-fill"></i> Agregar Nuevo Personal
+        <a class="btn shadow-sm custom-btn-personal" asp-action="Upsert" asp-route-capacitacionID="@ViewData["Id"]">
+            <i class="bi bi-plus-square-fill"></i> Agregar nuevo personal
         </a>
     </div>
 </div>
 
 <div class="p-4 border rounded bg-light">
-    <table id="tblDatos" class="table table-responsive table-hover">
-        <thead class="table-dark">
+    <table id="tblDatos" class="table table-hover align-middle">
+        <thead style="background-color: #e9ecef;" class="text-center">
             <tr>
                 <th>Nombre</th>
                 <th>Apellidos</th>
@@ -27,12 +27,14 @@
     </table>
 
     <div class="row mt-3">
-        <div class="col-lg-6">
-            <a class="btn btn-success" href="/Admin/Capacitacion">
+        <div class="col-lg-6 ms-auto text-end">
+            <a class="btn shadow-sm btn-regresar" href="/Admin/Capacitacion">
                 <i class="bi bi-arrow-return-left"></i> Regresar
             </a>
         </div>
     </div>
+
+
 </div>
 
 @section Scripts {

@@ -23,7 +23,7 @@ namespace SalticosAdmin.Modelos
         [ForeignKey("IdEvento")]
         public Evento Evento { get; set; }
 
-        [NotMapped] // Nose agrega a la base de datos
+        [NotMapped] 
         public string? NombreVehiculo { get; set; }
     }
 }

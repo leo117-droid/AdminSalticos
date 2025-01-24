@@ -2,7 +2,7 @@
 @using SalticosAdmin.Utilidades
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var titulo = "Crear Nueva Tarea";
+    var titulo = "Crear nueva tarea";
 }
 
 <form method="post" id="formTareas" enctype="multipart/form-data">
@@ -15,19 +15,19 @@
 
         @if (Model.Id != 0)
         {
-            titulo = "Editar Tarea";
+            titulo = "Editar tarea";
             <input asp-for="Id" hidden />
         }
 
 
         <div class="col-12 border-bottom p-0">
-            <h2 class="text-primary">@titulo</h2>
+            <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
         </div>
 
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Titulo</label>
+                <label>Título</label>
                 <input asp-for="Titulo" class="form-control" id="titulo" />
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
@@ -35,8 +35,8 @@
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Descripcion</label>
-                <input asp-for="Descripcion" class="form-control" />
+                <label>Descripción</label>
+                <input asp-for="Descripcion" class="form-control" value=""/>
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
         </div>
@@ -112,11 +112,29 @@
         <div>
             @if (Model.Id != 0)
             {
-                <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+
+                <div class="d-flex justify-content-start gap-2">
+                    <button type="submit" class="btn shadow-sm custom-btn-tarea-inverso " onfocus="false" asp-route-id="@Model">
+                        <i class="bi bi-pencil-square"></i> Guardar cambios
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Tarea/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
+
+                @* <partial name="_BotonesActualizarYRegresar" model="Model.Id" /> *@
             }
             else
             {
-                <partial name="_BotonesCrearYRegresar" />
+                <div class="d-flex justify-content-start gap-2 mt-3">
+                    <button type="submit" class="btn shadow-sm custom-btn-tarea-inverso ">
+                        <i class="bi bi-plus-square-fill"></i> Crear
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Tarea/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
+                @* <partial name="_BotonesCrearYRegresar" /> *@
             }
         </div>
 

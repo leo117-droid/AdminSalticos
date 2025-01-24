@@ -139,7 +139,7 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("~/Admin/Usuario/Index");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -163,7 +163,7 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
                     TempData[DS.Exitosa] = "Usuario registrado exitosamente";
                     await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se registró el usuario '{user.Nombre}' '{user.Apellido}' ", User.Identity.Name);
 
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("El usuario creó una nueva cuenta con contraseña.\"");
 
                     var userId = await _userManager.GetUserIdAsync(user);
 
@@ -231,9 +231,9 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                throw new InvalidOperationException($"No se puede crear una instancia de '{nameof(IdentityUser)}'. " +
+                    $"Asegúrate de que '{nameof(IdentityUser)}' no sea una clase abstracta y tenga un constructor sin parámetros, o " +
+                    $"alterna registrando una página personalizada en /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
@@ -241,7 +241,7 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
         {
             if (!_userManager.SupportsUserEmail)
             {
-                throw new NotSupportedException("The default UI requires a user store with email support.");
+                throw new NotSupportedException("La interfaz predeterminada requiere un almacén de usuarios con soporte para correos electrónicos.");
             }
             return (IUserEmailStore<IdentityUser>)_userStore;
         }

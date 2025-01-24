@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Vehiculo";
+}
+
+<header class="my-4 text-center">
+    <h1 class="fw-bold">Gestión de transporte</h1>
+</header>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-transporte">
+                    <div class="card-body">
+                        <i class="bi bi-car-front-fill display-1"></i>
+                        <h5 class="card-title mt-3">Vehículos</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de vehículos.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Vehiculo" asp-action="Index">Ir</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-transporte">
+                    <div class="card-body">
+                        <i class="bi bi-cash-coin display-1"></i>
+                        <h5 class="card-title mt-3">Tarifas de transporte</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información de las tarifas de transporte.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="TarifasTransporte" asp-action="Index">Ir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row mt-3">
+    <div class="col-lg-6 ms-auto text-end">
+        <a class="btn shadow-sm btn-regresar" href="/">
+            <i class="bi bi-arrow-return-left"></i> Regresar
+        </a>
+    </div>
+</div>

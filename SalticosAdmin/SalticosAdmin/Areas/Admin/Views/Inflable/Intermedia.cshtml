@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Inflable";
+}
+
+<header class="my-4 text-center">
+    <h1 class="fw-bold">Gestión de inflables</h1>
+</header>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-balloon display-1"></i>
+                        <h5 class="card-title mt-3">Inflables</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información sobre el inflables.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Inflable" asp-action="Index">Ir</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-filter display-1"></i>
+                        <h5 class="card-title mt-3">Categorías por Edad</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información sobre categorías por edad.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="CategoriasEdad" asp-action="Index">Ir</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-filter display-1"></i>
+                        <h5 class="card-title mt-3">Categorías por Tamaño</h5>
+                        <p class="card-text">Accede al módulo para crear, editar, actualizar y eliminar información sobre categorías por tamaño.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="CategoriaTamanno" asp-action="Index">Ir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row mt-3">
+    <div class="col-lg-6 ms-auto text-end">
+        <a class="btn shadow-sm btn-regresar" href="/Admin/ServicioAdicional/Intermedia">
+            <i class="bi bi-arrow-return-left"></i> Regresar
+        </a>
+    </div>
+</div>

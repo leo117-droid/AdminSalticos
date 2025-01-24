@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var titulo = "Crear Proveedor";
+    var titulo = "Crear proveedor";
 
 }
 
@@ -16,18 +16,21 @@
 
         @if (Model.Id != 0)
         { // Actualizar
-            titulo = "Actualizar Proveedor";
+            titulo = "Actualizar proveedor";
             <input type="hidden" asp-for="Id" id="id" />
         }
 
         <div class="col-12 border-bottom p-0">
-            <h2 class="text-primary">@titulo</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
+            </div>
         </div>
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Nombre Empresa</label>
-                <input type="text" asp-for="NombreEmpresa" class="form-control" placeholder="Nombre de la Empresa" />
+                <label>Nombre empresa</label>
+                <input type="text" asp-for="NombreEmpresa" class="form-control" placeholder="Nombre de la empresa" />
                 <span asp-validation-for="NombreEmpresa" class="text-danger"></span>
             </div>
         </div>
@@ -35,7 +38,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Contacto</label>
-                <input type="text" asp-for="Contacto" class="form-control" placeholder="Nombre del Contacto" />
+                <input type="text" asp-for="Contacto" class="form-control" placeholder="Nombre del contacto" />
                 <span asp-validation-for="Contacto" class="text-danger"></span>
             </div>
         </div>
@@ -43,7 +46,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Teléfono</label>
-                <input type="tel" asp-for="Telefono" class="form-control" placeholder="Teléfono del Proveedor" />
+                <input type="tel" asp-for="Telefono" class="form-control" placeholder="Teléfono del proveedor" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
         </div>
@@ -51,7 +54,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Correo</label>
-                <input type="email" asp-for="Correo" class="form-control" placeholder="Correo Electrónico" />
+                <input type="email" asp-for="Correo" class="form-control" placeholder="Correo electrónico" />
                 <span asp-validation-for="Correo" class="text-danger"></span>
             </div>
         </div>
@@ -59,7 +62,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Dirección</label>
-                <input type="text" asp-for="Direccion" class="form-control" placeholder="Dirección del Proveedor" />
+                <input type="text" asp-for="Direccion" class="form-control" placeholder="Dirección del proveedor" />
                 <span asp-validation-for="Direccion" class="text-danger"></span>
             </div>
         </div>
@@ -67,7 +70,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Descripción</label>
-                <textarea asp-for="Descripcion" class="form-control" placeholder="Descripción del Proveedor"></textarea>
+                <textarea asp-for="Descripcion" class="form-control" placeholder="Descripción del proveedor"></textarea>
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
         </div>
@@ -93,14 +96,30 @@
         <br />
 
         <div>
+
             @if (Model.Id != 0)
             {
-                <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+                <div class="d-flex justify-content-start gap-2">
+                    <button type="submit" class="custom-btn-otros-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                        <i class="bi bi-pencil-square"></i> Guardar cambios
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Proveedor/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
             }
             else
             {
-                <partial name="_BotonesCrearYRegresar" />
+                <div class="d-flex justify-content-start gap-2 mt-3">
+                    <button type="submit" class="custom-btn-otros-inverso btn btn-primary" onfocus="false">
+                        <i class="bi bi-plus-square-fill"></i> Crear
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Proveedor/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
             }
+
         </div>
 
 

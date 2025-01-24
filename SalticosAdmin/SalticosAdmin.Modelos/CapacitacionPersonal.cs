@@ -23,7 +23,7 @@ namespace SalticosAdmin.Modelos
         [ForeignKey("IdCapacitacion")]
         public Capacitacion Capacitacion { get; set; }
 
-        [NotMapped] // Nose agrega a la base de datos
+        [NotMapped] 
         public string? NombrePersonal { get; set; }
     }
 }

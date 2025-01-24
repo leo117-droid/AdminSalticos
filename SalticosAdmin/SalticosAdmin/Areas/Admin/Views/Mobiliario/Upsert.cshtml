@@ -2,23 +2,24 @@
 @using SalticosAdmin.Utilidades
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var titulo = "Crear Nuevo Mobiliario";
+    var titulo = "Crear nuevo mobiliario";
 }
 
 <form method="post" id="formMobiliario" enctype="multipart/form-data">
 
     @if (Model.Id != 0)
     {
-        titulo = "Editar Mobiliario";
-        <input asp-for="Id" hidden />
+        titulo = "Editar mobiliario";
+        <input asp-for="Id" id="id" hidden />
         <input asp-for="ImageUrl" hidden />
     }
 
     <div class="border p-3">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
-            <h2 class="text-info">@titulo</h2>
+            <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
         </div>
+
 
         <div class="row">
             <div class="col-8">
@@ -61,7 +62,11 @@
                             <div class="input-group">
                                 <span class="input-group-text">₡</span>
                                 <input asp-for="Precio" class="form-control" type="number" />
+                                <span asp-validation-for="Precio" class="text-danger"></span>
+
                             </div>
+                            <span asp-validation-for="Precio" class="text-danger"></span>
+
                         </div>
                     </div>
 
@@ -77,15 +82,28 @@
 
                     <br />
 
-                    <div class="d-grid gap-2 d-md-block">
+                    <div class="d-flex justify-content-start align-items-center gap-2">
                         @if (Model.Id != 0)
                         {
-                            <partial name="_BotonesActualizarYRegresar" model="Model.Id" />
+                            <div class="d-flex justify-content-start gap-2">
+                                <button type="submit" class="custom-btn-servicios-inverso btn btn-primary" onfocus="false" asp-route-id="@Model.Id">
+                                    <i class="bi bi-pencil-square"></i> Guardar cambios
+                                </button>
+                                <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Mobiliario/Index">
+                                    <i class="bi bi-arrow-return-left"></i> Regresar
+                                </a>
+                            </div>
                         }
                         else
                         {
-                            <button type="submit" onclick="return validarFormulario()" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
-                            <a asp-action="Index" class="btn btn-success "><i class="bi bi-arrow-return-left"></i> Regresar</a>
+                            <div class="d-flex justify-content-start gap-2 mt-3">
+                                <button type="submit" onclick="return validarImagen()" class="custom-btn-servicios-inverso btn btn-success">
+                                    <i class="bi bi-plus-square-fill"></i> Crear
+                                </button>
+                                <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Mobiliario/Index">
+                                    <i class="bi bi-arrow-return-left"></i> Regresar
+                                </a>
+                            </div>
                         }
 
                     </div>
@@ -116,12 +134,18 @@
 
     <script>
 
-        function validarFormulario() {
-            if (!validarImagen()) {
-                return false;
-            }
-            return validarNombreAntesDeEnviar();
-        }
+
+        document.getElementById("nombre").addEventListener('change', function () {
+            validarNombre();
+        });
+
+
+        document.getElementById("formMobiliario").addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarNombreAntesDeEnviar();
+        });
+
+
 
 
         function validarImagen() {
@@ -142,14 +166,36 @@
                 $.each(data, function (key, value) {
                     if (value) {
                         var nombreInput = document.getElementById("nombre");
-                        swal("Error", "Nombre ya Existe", "error");
+                        swal("Error", "Nombre ya existe", "error");
                         nombreInput.value = "";
-                        return false;
+                        return;
                     } else {
-                        return true;
+                        document.getElementById("formMobiliario").submit();
                     }
                 });
             });
+        }
+
+
+
+        function validarNombre() {
+            var url = '@Url.Content("~/")' + "Admin/Mobiliario/ValidarNombre";
+            var id = '#id';
+            var nombre = '#nombre';
+
+            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
+
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var nombre = document.getElementById("nombre");
+                        swal("Error", "Nombre ya existe", "error");
+                        nombre.value = "";
+                        return;
+                    }
+                });
+
+            })
+
         }
 
     </script>

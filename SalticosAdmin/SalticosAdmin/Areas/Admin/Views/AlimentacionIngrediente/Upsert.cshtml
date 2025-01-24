@@ -10,19 +10,22 @@
     <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
         @if (Model.IdRelacion != 0)
         {
-            titulo = "Editar Ingrediente en producto de Alimentación";
+            titulo = "Editar ingrediente en producto de Alimentación";
             <input asp-for="IdRelacion" hidden />
         }
         <input asp-for="IdAlimentacion" hidden />
 
         <div class="col-12 border-bottom p-0">
-            <h2 class="text-primary">@titulo</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
+            </div>
         </div>
         @if(Model.IdRelacion == 0)
         {
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Listado de Ingredientes</label>
+                    <label>Lista de ingredientes</label>
                     <select asp-for="IdIngrediente" asp-items="@Model.ListaIngrediente" class="form-select" required>
                         <option disabled selected value=""> -- Seleccione ingrediente --</option>
                     </select>
@@ -36,21 +39,26 @@
             {
                 @if (Model.ListaIngrediente.Any())
                 {
-                    <button type="submit" class="btn btn-primary" onfocus="false" asp-route-id="@Model" asp-action="Upsert">
-                        <i class="bi bi-pencil-square"></i> Guardar Cambios
+                    <button type="submit" class="custom-btn-servicios-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                        <i class="bi bi-pencil-square"></i> Guardar cambios
                     </button>
                 }
-                <a asp-action="Index" class="btn btn-success" id="regresarBtn">
-                    <i class="bi bi-arrow-return-left"></i> Regresar
-                </a>
+
+                <a class="btn shadow-sm btn-regresar btn-md" id="regresarBtn">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
             }
             else
             {
                 @if (Model.ListaIngrediente.Any())
                 {
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-plus-square-fill"></i> Crear</button>
+                    <button type="submit" class="custom-btn-servicios-inverso btn btn-success">
+                        <i class="bi bi-plus-square-fill"></i> Crear
+                    </button>
                 }
-                <a asp-action="Index" class="btn btn-success" id="regresarBtn"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+                <a class="btn shadow-sm btn-regresar btn-md" id="regresarBtn">
+                    <i class="bi bi-arrow-return-left"></i> Regresar
+                </a>
             }
         </div>
     </div>

@@ -29,48 +29,11 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        
 
                         @* Verifica si el usuario está autenticado antes de mostrar el dropdown *@
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Contenido
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Herramienta" asp-action="Index">Herramientas</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Cliente" asp-action="Index">Clientes</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Contacto" asp-action="Index">Contactos</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="TarifasTransporte" asp-action="Index">Tarifas Transporte</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Vehiculo" asp-action="Index">Vehiculos</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="CategoriasEdad" asp-action="Index">Categorías por Edad</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="CategoriaTamanno" asp-action="Index">Categorías por Tamaño</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="RolPersonal" asp-action="Index">Roles de Personal</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Ingrediente" asp-action="Index">Ingredientes</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Personal" asp-action="Index">Personal</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Inflable" asp-action="Index">Inflables</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Capacitacion" asp-action="Index">Capacitaciones</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Index">ServiciosAdicionales</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Mobiliario" asp-action="Index">Mobiliarios</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Alimentacion" asp-action="Index">Alimentacion</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Bitacora" asp-action="Index">Bitacora</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Evento" asp-action="Index">Evento</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Usuario" asp-action="Index">Usuarios</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Tarea" asp-action="Index">Tareas</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Cotizacion" asp-action="Index">Cotización</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Informe" asp-action="Informe">Informes</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Proveedor" asp-action="Index">Proveedores</a></li>       
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Seguro" asp-action="Index">Seguros</a></li>
-
-
-                                </ul>
-                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Cotizacion" asp-action="Index">
@@ -79,9 +42,16 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Informe" asp-action="Index">
-                                    <i class="bi bi-reception-4"></i>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Informe" asp-action="Informe">
+                                    <i class="bi bi-graph-up-arrow"></i>
                                     Informe
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Tarea" asp-action="Index">
+                                    <i class="bi bi-check2-square"></i>
+                                    Tarea
                                 </a>
                             </li>
 
@@ -95,16 +65,13 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+
             <partial name="_Notificaciones" />
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - SalticosAdmin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+   
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

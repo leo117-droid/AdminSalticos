@@ -107,11 +107,17 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var lista = await _unidadTrabajo.TarifasTransporte.ObtenerTodos();
             if (id == 0)
             {
-                valor = lista.Any(b => b.Provincia.ToLower().Trim() == provincia.ToLower().Trim());
+                if(provincia != null)
+                {
+                    valor = lista.Any(b => b.Provincia.ToLower().Trim() == provincia.ToLower().Trim());
+                }
             }
             else
             {
-                valor = lista.Any(b => b.Provincia.ToLower().Trim() == provincia.ToLower().Trim() && b.Id != id);
+                if (provincia != null)
+                {
+                    valor = lista.Any(b => b.Provincia.ToLower().Trim() == provincia.ToLower().Trim() && b.Id != id);
+                }
             }
             if (valor)
             {

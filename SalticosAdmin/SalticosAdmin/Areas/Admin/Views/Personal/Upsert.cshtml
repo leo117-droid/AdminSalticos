@@ -2,7 +2,7 @@
 @using SalticosAdmin.Utilidades
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var titulo = "Crear Nuevo Personal";
+    var titulo = "Crear nuevo personal";
 }
 
 <form method="post" id="formPersonal">
@@ -16,12 +16,15 @@
 
         @if (Model.Personal.Id != 0)
         {
-            titulo = "Editar Personal";
+            titulo = "Editar personal";
             <input asp-for="Personal.Id" hidden />
         }
 
         <div class="col-12 border-bottom p-0">
-            <h2 class="text-primary">@titulo</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
+            </div>
         </div>
 
         <div class="row mb-2 mt-2">
@@ -60,7 +63,7 @@
 
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
-                <label>Cedula</label>
+                <label>Cédula</label>
                 <input asp-for="Personal.Cedula" class="form-control" id="cedula" />
                 <span asp-validation-for="Personal.Cedula" class="text-danger"></span>
             </div>
@@ -73,7 +76,7 @@
         {
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Fecha de Nacimiento</label>
+                    <label>Fecha de nacimiento</label>
                     <input asp-for="Personal.FechaNacimiento" class="form-control" type="date"
                            min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="Personal.FechaNacimiento" class="text-danger"></span>
@@ -82,7 +85,7 @@
 
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Fecha de Entrada</label>
+                    <label>Fecha de entrada</label>
                     <input asp-for="Personal.FechaEntrada" class="form-control" type="date"
                            min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="Personal.FechaEntrada" class="text-danger"></span>
@@ -93,7 +96,7 @@
         {
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Fecha de Nacimiento</label>
+                    <label>Fecha de nacimiento</label>
                     <input asp-for="Personal.FechaNacimiento" class="form-control" type="date"
                            value="@DateTime.Now.ToString("yyyy-MM-dd")"
                            min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
@@ -103,7 +106,7 @@
 
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Fecha de Entrada</label>
+                    <label>Fecha de entrada</label>
                     <input asp-for="Personal.FechaEntrada" class="form-control" type="date"
                            value="@DateTime.Now.ToString("yyyy-MM-dd")"
                            min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
@@ -129,11 +132,25 @@
         <div class="d-grid gap-2 d-md-block">
             @if (Model.Personal.Id != 0)
             {
-                <partial name="_BotonesActualizarYRegresar" model="Model.Personal.Id" />
+                <div class="d-flex justify-content-start gap-2">
+                    <button type="submit" class="custom-btn-personal-inverso btn btn-primary" onfocus="false" asp-route-id="@Model.Personal.Id">
+                        <i class="bi bi-pencil-square"></i> Guardar cambios
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Personal/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
             }
             else
             {
-                <partial name="_BotonesCrearYRegresar" />
+                <div class="d-flex justify-content-start gap-2 mt-3">
+                    <button type="submit" class="custom-btn-personal-inverso btn btn-primary" onfocus="false">
+                        <i class="bi bi-plus-square-fill"></i> Crear
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Personal/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
             }
 
         </div>

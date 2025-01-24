@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var titulo = "Crear Herramienta";
+    var titulo = "Crear herramienta";
 
 }
 
@@ -16,26 +16,29 @@
 
             @if (Model.Id != 0)
             { // Actualizar
-                titulo = "Actualizar Herramienta";
+                titulo = "Actualizar herramienta";
                 <input type ="hidden" asp-for="Id" id="id"/>
             }
 
             <div class="col-12 border-bottom p-0">
-                <h2 class="text-primary">@titulo</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <h2 style="font-weight: bold; color: #000000;">@titulo</h2>
             </div>
+        </div>
 
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
                     <label>Nombre</label>
-                    <input type ="text" asp-for="Nombre" class="form-control" placeholder="Nombre de la Herramienta" id="nombre"/>
+                    <input type ="text" asp-for="Nombre" class="form-control" placeholder="Nombre de la herramienta" id="nombre"/>
                     <span asp-validation-for="Nombre" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
-                    <label>Descripcion</label>
-                    <input type="text" asp-for="Descripcion" class="form-control" placeholder="Descripcion de la Herramienta"/>
+                    <label>Descripción</label>
+                    <input type="text" asp-for="Descripcion" class="form-control" placeholder="Descripción de la herramienta"/>
                     <span asp-validation-for="Descripcion" class="text-danger"></span>
                 </div>
             </div>
@@ -43,7 +46,7 @@
             <div class="row mb-2 mt-2">
                 <div class="form-group col-md-6">
                     <label>Cantidad</label>
-                    <input type="number" asp-for="Cantidad" class="form-control" placeholder="Cantidad de la Herramienta" />
+                    <input type="number" asp-for="Cantidad" class="form-control" placeholder="Cantidad de la herramienta" />
                     <span asp-validation-for="Cantidad" class="text-danger"></span>
                 </div>
             </div>
@@ -52,14 +55,30 @@
             <br />
 
             <div>
-                @if(Model.Id != 0)
-                {
-                    <partial name ="_BotonesActualizarYRegresar" model="Model.Id" />
-                }
-                else
-                {
-                    <partial name="_BotonesCrearYRegresar" />
-                }
+
+            @if (Model.Id != 0)
+            {
+                <div class="d-flex justify-content-start gap-2">
+                    <button type="submit" class="custom-btn-otros-inverso btn btn-primary" onfocus="false" asp-route-id="@Model">
+                        <i class="bi bi-pencil-square"></i> Guardar cambios
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Herramienta/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex justify-content-start gap-2 mt-3">
+                    <button type="submit" class="custom-btn-otros-inverso btn btn-primary" onfocus="false">
+                        <i class="bi bi-plus-square-fill"></i> Crear
+                    </button>
+                    <a class="btn shadow-sm btn-regresar btn-md" href="/Admin/Herramienta/Index">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
+                </div>
+            }
+
         </div>
         
 

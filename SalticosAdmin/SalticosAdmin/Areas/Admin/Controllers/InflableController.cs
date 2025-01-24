@@ -36,6 +36,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             return View(inflableVM);
         }
 
+        public IActionResult Intermedia()
+        {
+            return View();
+        }
+
 
         public async Task<IActionResult> Upsert(int? id)
         {
@@ -221,7 +226,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             }
             else
             {
-                valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim() && b.Id != id);
+                if(nombre != null)
+                {
+                    valor = lista.Any(b => b.Nombre.ToLower().Trim() == nombre.ToLower().Trim() && b.Id != id);
+                }
             }
             if (valor)
             {

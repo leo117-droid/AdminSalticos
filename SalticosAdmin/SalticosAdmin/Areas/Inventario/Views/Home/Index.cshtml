@@ -5,51 +5,72 @@
     ViewData["Title"] = "Home Page";
 }
 
-<header class="header">
-    <div class="container pt-sm-5">
-        <div class="heading-primary">
-            Los Mejores Productos & <br />
-            Marcas en nuestra Tienda
-        </div>
-    </div>
-</header>
+<div class="full-width-image">
+    <img src="~/imagenes/UI/InflableBanner.jpeg" alt="Imagen decorativa" class="img-banner">
+</div>
 
-<section>
-    <div class="container my-2">
-        <div class="col-lg-6 col-md-6 col-sm-6 d-flex">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="button-addon2" />
-                <button class="btn btn-outline-primary">
-                    <i class="bi bi-search"></i>
-                </button>
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-evento">
+                    <div class="card-body">
+                        <i class="bi bi-calendar-event display-1"></i> 
+                        <h5 class="card-title mt-3">Evento</h5>
+                        <p class="card-text">Gestiona y organiza todos los eventos incluyendo sus clientes.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Evento" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-personal">
+                    <div class="card-body">
+                        <i class="bi bi-people-fill display-1"></i>
+                        <h5 class="card-title mt-3">Personal</h5>
+                        <p class="card-text">Administra eficientemente al personal, incluyendo roles y capacitaciones.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Personal" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-servicios">
+                    <div class="card-body">
+                        <i class="bi bi-tools display-1"></i>
+                        <h5 class="card-title mt-3">Servicios</h5>
+                        <p class="card-text">Coordina y gestiona servicios que complementen los eventos.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="ServicioAdicional" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="row">
-            @foreach (var inflable in Model)
-            {
-                <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
-                    <div class="card w-100 my-2">
-
-                        <img src="@DS.ImagenRutaInflable@inflable.ImageUrl" class="card-img-top" style="aspect-ratio: 1/1" />
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">@inflable.Nombre</h5>
-                            <p class="card-text"> ₡ @String.Format("{0:#,##0.00}", inflable.Precio) </p>
-                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto bg-white">
-                                <a href="#" class="btn btn-outline-primary">
-                                    <i class="bi bi-tags-fill"></i> Detalle
-
-                                </a>
-                            </div>
-                        </div>
-
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-transporte">
+                    <div class="card-body">
+                        <i class="bi bi-car-front-fill display-1"></i>
+                        <h5 class="card-title mt-3">Transporte</h5>
+                        <p class="card-text">Organiza los vehículos y tarifas de transporte necesarios para garantizar la logística eficiente en los eventos.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Vehiculo" asp-action="Intermedia">Ir</a>
                     </div>
-
                 </div>
-            }
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center border-primary shadow card-otros">
+                    <div class="card-body">
+                        <i class="bi bi-journal-text display-1"></i>
+                        <h5 class="card-title mt-3">Otros</h5>
+                        <p class="card-text">Registra y controla información adicional, para mantener todos los detalles organizados.</p>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Bitacora" asp-action="Intermedia">Ir</a>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
     </div>
 </section>
+
+
 

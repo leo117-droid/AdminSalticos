@@ -5,21 +5,21 @@
 
 <div class="row mb-4">
     <div class="col-lg-6">
-        <h2 class="text-primary">Ingrediente asignado a producto de Alimentación</h2>
+        <h2 style="font-weight: bold; color: #000000;">Ingredientes asignados a un producto de alimentación</h2>
     </div>
     <div class="col-lg-6 text-end">
-        <a class="btn btn-outline-primary" asp-action="Upsert" asp-route-alimentacionID="@ViewData["Id"]">
-            <i class="bi bi-plus-square-fill"></i> Agregar Nuevo Ingrediente
+        <a class="btn shadow-sm custom-btn-servicios" asp-action="Upsert" asp-route-alimentacionID="@ViewData["Id"]">
+            <i class="bi bi-plus-square-fill"></i> Agregar nuevo ingrediente
         </a>
     </div>
 </div>
 
-<div class="p-4 border rounded bg-light">
-    <table id="tblDatos" class="table table-responsive table-hover">
-        <thead class="table-dark">
+<div class="p-4 border rounded bg-white shadow-sm">
+    <table id="tblDatos" class="table table-hover align-middle">
+        <thead style="background-color: #e9ecef;" class="text-center">
             <tr>
                 <th>Nombre</th>
-                <th>Descripcion</th>
+                <th>Descripción</th>
                 <th>Precio</th>
                 <th></th>
             </tr>
@@ -27,12 +27,13 @@
     </table>
 
     <div class="row mt-3">
-        <div class="col-lg-6">
-            <a class="btn btn-success" href="/Admin/Alimentacion">
+        <div class="col-lg-6 ms-auto text-end">
+            <a class="btn shadow-sm btn-regresar" href="/Admin/Alimentacion">
                 <i class="bi bi-arrow-return-left"></i> Regresar
             </a>
         </div>
     </div>
+
 </div>
 
 @section Scripts {

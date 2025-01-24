@@ -1,125 +1,448 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 60px;
+    background-color: #f8f9fa; 
 }
 
-.logo-container {
+.custom-btn {
+    background-color: #8a2bff;
+    color: #f8f9fa; 
+}
+
+    .custom-btn:hover {
+        background-color: #8a2bff; 
+        color: white; 
+    }
+
+.full-width-image {
+    margin: 0;
+    padding: 0;
     width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
 }
 
-.full-screen-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    .full-width-image .img-banner {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+/* Modificaciones en las Tarjetas */
+.card {
+    border: 1px  #000000; 
 }
 
-img {
-    display: inline-block;
-    vertical-align: middle;
+/* Tarjetas Evento */
+.card-evento .btn {
+    background-color: #ff6a00; 
+    border-color: #ff6a00; 
+    color: white; 
 }
 
-.header {
-    height: 20vh;
-    background: linear-gradient(to right, #2b34bae3, #d1d4f1ea);
-    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+.card-evento .bi {
+    color: #ff6a00; 
 }
 
-.heading-primary {
-    font-weight: 900;
+/* Tarjetas Personal */
+.card-personal .btn {
+    background-color: #8a2bff;
+    border-color: #8a2bff;
     color: white;
-    text-transform: uppercase;
-    letter-spacing: 0.50rem;
 }
 
-
-@media only screen and (max-width: 51.25rem) {
-    .heading-primary {
-        font-weight: 400;
-        letter-spacing: 0.1rem;
-    }
-
-    .header {
-        height: 13vh;
-        background: linear-gradient(to right, #2b34bae3, #d1d4f1ea);
-        clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
-    }
+.card-personal .bi {
+    color: #8a2bff;
 }
 
-@media only screen and (max-width: 57rem) {
-    .heading-primary {
-        font-weight: 400;
-        letter-spacing: 0.1rem;
-    }
-
-    .header {
-        height: 13vh;
-        background: linear-gradient(to right, #2b34bae3, #d1d4f1ea);
-        clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
-    }
+/* Tarjetas Servicios */
+.card-servicios .btn {
+    background-color: #16d600;
+    border-color: #16d600;
+    color: white;
 }
 
-@media only screen and (max-width: 37.5rem) {
-    .heading-primary {
-        font-weight: 400;
-        letter-spacing: 0.1rem;
-    }
-
-    .header {
-        height: 13vh;
-        background: linear-gradient(to right, #2b34bae3, #d1d4f1ea);
-        clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
-    }
+.card-servicios .bi {
+    color: #16d600;
 }
 
-@media only screen and (max-width: 25.9rem) {
-    .heading-primary {
-        font-weight: 400;
-        font-size: 0.7rem;
-        padding-top: 0.5rem;
-        letter-spacing: 0.1rem;
-    }
-
-    .header {
-        height: 10vh;
-        background: linear-gradient(to right, #2b34bae3, #d1d4f1ea);
-        clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
-    }
+/* Tarjetas Transporte */
+.card-transporte .btn {
+    background-color: #ffd621;
+    border-color: #ffd621;
+    color: white;
 }
 
-@media only screen and (max-width: 23.5rem) {
-    .heading-primary {
-        font-weight: 400;
-        font-size: 0.7rem;
-        padding-top: 0.5rem;
-        letter-spacing: 0.1rem;
+.card-transporte .bi {
+    color: #ffd621;
+}
+
+/* Tarjetas Otros */
+.card-otros .btn {
+    background-color: #19c2ff;
+    border-color: #19c2ff;
+    color: white;
+}
+
+.card-otros .bi {
+    color: #19c2ff;
+}
+
+.card {
+    height: 100%; 
+}
+
+.row > .col-md-4 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Botones Servicio */
+.custom-btn-servicios {
+    background-color: white;
+    border: 2px solid #16d600; 
+    color: #16d600; 
+    transition: all 0.3s ease; 
+}
+
+    .custom-btn-servicios i {
+        color: #16d600; 
     }
 
-    .header {
-        height: 10vh;
-        background: linear-gradient(to right, #2b34bae3, #d1d4f1ea);
-        clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+    .custom-btn-servicios:hover {
+        background-color: #16d600; 
+        color: white; 
+        border-color: #16d600; 
     }
+
+        .custom-btn-servicios:hover i {
+            color: white; 
+        }
+
+
+.custom-btn-servicios-inverso {
+    background-color: #16d600;
+    border: 2px solid #16d600; 
+    color: white; 
+    transition: all 0.3s ease; 
+}
+
+    .custom-btn-servicios-inverso i {
+        color: white; 
+    }
+
+    .custom-btn-servicios-inverso:hover {
+        background-color: white; 
+        color: #16d600; 
+        border-color: #16d600;
+    }
+
+        .custom-btn-servicios-inverso:hover i {
+            color: #16d600; 
+        }
+
+/* Botones Personal */
+.custom-btn-personal {
+    background-color: white;
+    border: 2px solid #8a2bff; 
+    color: #8a2bff; 
+    transition: all 0.3s ease;
+}
+
+    .custom-btn-personal i {
+        color: #8a2bff;
+    }
+
+    .custom-btn-personal:hover {
+        background-color: #8a2bff; 
+        color: white; 
+        border-color: #8a2bff; 
+    }
+
+        .custom-btn-personal:hover i {
+            color: white; 
+        }
+
+.custom-btn-personal-inverso {
+    background-color: #8a2bff;
+    border: 2px solid #8a2bff;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+    .custom-btn-personal-inverso i {
+        color: white; 
+    }
+
+    .custom-btn-personal-inverso:hover {
+        background-color: white; 
+        color: #8a2bff; 
+        border-color: #8a2bff;
+    }
+
+        .custom-btn-personal-inverso:hover i {
+            color: #8a2bff;
+        }
+
+/* Botones Evento */
+.custom-btn-evento {
+    background-color: white;
+    border: 2px solid #ff6a00; 
+    color: #ff6a00; 
+    transition: all 0.3s ease;
+}
+
+    .custom-btn-evento i {
+        color: #ff6a00; 
+    }
+
+    .custom-btn-evento:hover {
+        background-color: #ff6a00; 
+        color: white; 
+        border-color: #ff6a00; 
+    }
+
+        .custom-btn-evento:hover i {
+            color: white; 
+        }
+
+.custom-btn-evento-inverso {
+    background-color: #ff6a00;
+    border: 2px solid #ff6a00; 
+    color: white; 
+    transition: all 0.3s ease; 
+}
+
+    .custom-btn-evento-inverso i {
+        color: white; 
+    }
+
+    .custom-btn-evento-inverso:hover {
+        background-color: white; 
+        color: #ff6a00; 
+        border-color: #ff6a00; 
+    }
+
+        .custom-btn-evento-inverso:hover i {
+            color: #ff6a00; 
+        }
+
+
+/* Botones Transporte */
+.custom-btn-transporte {
+    background-color: white;
+    border: 2px solid #ffd621; 
+    color: #ffd621; 
+    transition: all 0.3s ease; 
+}
+
+    .custom-btn-transporte i {
+        color: #ffd621; 
+    }
+
+   
+    .custom-btn-transporte:hover {
+        background-color: #ffd621;
+        color: white; 
+        border-color: #ffd621;
+    }
+
+        .custom-btn-transporte:hover i {
+            color: white; 
+        }
+
+.custom-btn-transporte-inverso {
+    background-color: #ffd621;
+    border: 2px solid #ffd621;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+    .custom-btn-transporte-inverso i {
+        color: white;
+    }
+
+    .custom-btn-transporte-inverso:hover {
+        background-color: white;
+        color: #ffd621;
+        border-color: #ffd621;
+    }
+
+        .custom-btn-transporte-inverso:hover i {
+            color: #ffd621;
+        }
+
+/* Botones Otros */
+.custom-btn-otros {
+    background-color: white;
+    border: 2px solid #19c2ff; 
+    color: #19c2ff; 
+    transition: all 0.3s ease; 
+}
+
+    .custom-btn-otros i {
+        color: #19c2ff; 
+    }
+
+    .custom-btn-otros:hover {
+        background-color: #19c2ff; 
+        color: white; 
+        border-color: #19c2ff;
+    }
+
+        .custom-btn-otros:hover i {
+            color: white; 
+        }
+
+.custom-btn-otros-inverso {
+    background-color: #19c2ff;
+    border: 2px solid #19c2ff;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+    .custom-btn-otros-inverso i {
+        color: white;
+    }
+
+    .custom-btn-otros-inverso:hover {
+        background-color: white;
+        color: #19c2ff;
+        border-color: #19c2ff;
+    }
+
+        .custom-btn-otros-inverso:hover i {
+            color: #19c2ff;
+            
+        }
+
+/* Botones Regresar */
+.btn-regresar {
+    background-color: #6c757d; 
+    border: 2px solid #6c757d;
+    color: white;
+}
+
+    .btn-regresar:hover {
+        background-color: white; 
+        color: #6c757d; 
+        border-color: #6c757d; 
+    }
+
+/* Botones Tarea */
+.custom-btn-tarea {
+    background-color: white;
+    border: 2px solid #5d6268; 
+    color: #5d6268; 
+    transition: all 0.3s ease; 
+}
+
+    .custom-btn-tarea i {
+        color: #5d6268; 
+    }
+
+    .custom-btn-tarea:hover {
+        background-color: #5d6268;
+        color: white; 
+        border-color: #5d6268; 
+    }
+
+        .custom-btn-tarea:hover i {
+            color: white;
+        }
+
+.custom-btn-tarea-inverso {
+    background-color: #329A32;
+    border-color: #329A32; 
+    color: white; 
+    transition: all 0.3s ease; 
+}
+
+    .custom-btn-tarea-inverso i {
+        color: white; 
+    }
+
+    .custom-btn-tarea-inverso:hover {
+        background-color: white;
+        color: #329A32;
+        border-color: #329A32; 
+    }
+
+        .custom-btn-tarea-inverso:hover i {
+            color: #329A32; 
+        }
+
+/* Tarjetas y utilidades de Tarea */
+.card-tarea {
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-tarea:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.card-tarea-title {
+    font-weight: bold;
+    color: #333;
+}
+
+.card-tarea .badge {
+    font-size: 0.85rem;
+}
+
+.card-tarea .btn {
+    border-radius: 20px;
+}
+
+#task-list {
+    padding-bottom: 2rem;
+}
+
+.card-tarea.bg-pendiente {
+    background-color: #fff3cd; 
+    border-left: 5px solid #ffc107; 
+}
+
+.card-tarea.bg-en-progreso {
+    background-color: #d1ecf1; 
+    border-left: 5px solid #17a2b8; 
+}
+
+.card-tarea.bg-completada {
+    background-color: #d4edda; 
+    border-left: 5px solid #28a745; 
+}
+
+.badge.bg-pendiente {
+    background-color: #fbc02d; 
+    color: white;
+}
+
+.badge.bg-en-progreso {
+    background-color: #0288d1; 
+    color: white;
+}
+
+.badge.bg-completado {
+    background-color: #388e3c; 
+    color: white;
+}
+
+.badge.bg-default {
+    background-color: #6c757d; 
+    color: white;
+}
+
+.badge.bg-alto {
+    background-color: #e40101; 
+    color: white;
+}
+
+.badge.bg-bajo {
+    background-color: #ff6d00; 
+    color: white;
+}
+
+.badge.bg-medio {
+    background-color: #19c2ff; 
+    color: white;
 }

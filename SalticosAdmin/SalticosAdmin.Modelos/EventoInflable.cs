@@ -24,7 +24,7 @@ namespace SalticosAdmin.Modelos
         public Evento Evento { get; set; }
 
 
-        [NotMapped] // Nose agrega a la base de datos
+        [NotMapped]
         public string? NombreInflable{ get; set; }
 
     }
