@@ -223,7 +223,48 @@ body {
             color: #ff6a00; 
         }
 
+/* Botones Cotizacion */
+.custom-btn-cotizacion {
+    background-color: #ffac00;
+    border: 2px solid #ffac00;
+    color: white;
+    transition: all 0.3s ease;
+}
 
+    .custom-btn-cotizacion i {
+        color: white;
+    }
+
+    .custom-btn-cotizacion:hover {
+        background-color: white;
+        color: #ffac00;
+        border-color: #ffac00;
+    }
+
+        .custom-btn-cotizacion:hover i {
+            color: #ffac00;
+        }
+
+.custom-btn-cotizacion-inverso {
+    background-color: white;
+    border: 2px solid white;
+    color: #ffac00;
+    transition: all 0.3s ease;
+}
+
+    .custom-btn-cotizacion-inverso i {
+        color: #ffac00;
+    }
+
+    .custom-btn-cotizacion-inverso:hover {
+        background-color: #ffac00;
+        color: white;
+        border-color: #ffac00;
+    }
+
+        .custom-btn-cotizacion-inverso:hover i {
+            color: white;
+        }
 /* Botones Transporte */
 .custom-btn-transporte {
     background-color: white;

@@ -6,20 +6,20 @@
     ViewData["Title"] = "Resumen de cotización";
 }
 
-<h1>Resumen de Cotización</h1>
+<h1>Resumen de cotización</h1>
 
 @if (Model.InflablesSeleccionados != null && Model.InflablesSeleccionados.Any())
 {
-    <h2>Inflables Seleccionados</h2>
+    <h2>Inflables seleccionados</h2>
     <table class="table">
         <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Precio Base</th>
-                <th>Precio / Hora Adicional</th>
-                <th>Horas Adicionales</th>
-                <th>Precio Total</th>
+                <th>Precio base</th>
+                <th>Precio / hora adicional</th>
+                <th>Horas adicionales</th>
+                <th>Precio total</th>
             </tr>
         </thead>
         <tbody>
@@ -46,7 +46,7 @@
     <!-- Mobiliarios Seleccionados -->
     @if (Model.MobiliariosSeleccionados != null && Model.MobiliariosSeleccionados.Any())
     {
-        <h2>Mobiliarios Seleccionados</h2>
+        <h2>Mobiliario seleccionado</h2>
         <table class="table">
             <thead>
                 <tr>
@@ -78,7 +78,7 @@
     <!-- Servicios Adicionales Seleccionados -->
     @if (Model.ServiciosSeleccionados != null && Model.ServiciosSeleccionados.Any())
     {
-        <h2>Servicios Adicionales Seleccionados</h2>
+        <h2>Servicios adicionales seleccionados</h2>
         <table class="table">
             <thead>
                 <tr>
@@ -142,7 +142,7 @@
     <!-- Transporte -->
     @if (Model.TarifaTransporteSeleccionada != null && Model.TarifaTransporteSeleccionada.Any())
     {
-        <h2>Transporte Seleccionado</h2>
+        <h2>Transporte seleccionado</h2>
         <table class="table">
             <thead>
                 <tr>
@@ -174,7 +174,7 @@
     <div class="row align-items-center">
         <!-- Botón Regresar -->
         <div class="col-md-4 text-start">
-            <a asp-action="Index" class="btn btn-success" id="regresarBtn">
+            <a asp-action="Index" class="btn shadow-sm btn-regresar btn-md" id="regresarBtn">
                 <i class="bi bi-arrow-return-left"></i> Regresar
             </a>
         </div>
@@ -182,7 +182,7 @@
         <!-- Botón Descargar PDF -->
         <div class="col-md-4 text-center">
             <form asp-action="DescargarPDF" method="post">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn shadow-sm custom-btn-cotizacion">
                     <i class="bi bi-filetype-pdf"></i>
                     Descargar PDF
                 </button>
@@ -196,12 +196,12 @@
                        id="correo"
                        name="correo"
                        class="form-control me-2"
-                       placeholder="Correo Electrónico"
+                       placeholder="Correo electrónico"
                        required
                        style="max-width: 250px;">
-                <button type="submit" class="btn btn-secondary">
+                <button type="submit" class="btn shadow-sm custom-btn-cotizacion-inverso">
                     <i class="bi bi-envelope"></i>
-                    Enviar Correo
+                    Enviar correo
                 </button>
             </form>
         </div>

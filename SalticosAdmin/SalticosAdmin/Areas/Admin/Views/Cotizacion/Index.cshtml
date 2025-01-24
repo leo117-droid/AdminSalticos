@@ -4,7 +4,7 @@
     ViewData["Title"] = "Generar cotización";
 }
 
-<h1>Generar Cotización</h1>
+<h1 class="text-center my-4 text-primary">Generar cotización</h1>
 
 <div>
     <h2>Inflables</h2>
@@ -16,8 +16,8 @@
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Precio</th>
-                    <th>Precio Hora Extra</th>
-                    <th>Horas Extras</th>
+                    <th>Precio hora extra</th>
+                    <th>Horas extras</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,7 +43,7 @@
             </tbody>
         </table>
 
-        <h2>Mobiliarios</h2>
+        <h2>Mobiliario</h2>
         <table class="table">
             <thead>
                 <tr>
@@ -76,7 +76,7 @@
             </tbody>
         </table>
 
-        <h2>Servicios Adicionales</h2>
+        <h2>Servicios adicionales</h2>
         <table class="table">
             <thead>
                 <tr>
@@ -142,11 +142,11 @@
             </tbody>
         </table>
 
-        <h2>Tarifa Transporte</h2>
+        <h2>Tarifa transporte</h2>
         <div class="form-group col-md-3">
-            <label for="transporteIds">Seleccionar Provincia de Transporte</label>
+            <label for="transporteIds">Seleccionar provincia de transporte</label>
             <select id="transporteIds" name="transporteIds" class="form-select">
-                <option value="">-- Selecciona una provincia --</option>
+                <option value="">-- Seleccione una provincia --</option>
                 @foreach (var tarifaTransporte in Model.TarifasTransporte)
                 {
                     <option value="@tarifaTransporte.Id">@tarifaTransporte.Provincia - ₡@tarifaTransporte.Precio</option>
@@ -157,8 +157,8 @@
 
 
         <div class="text-end">
-            <button type="submit" class="btn btn-primary">
-                <i class="bi bi-calculator-fill"></i> Generar Cotización
+            <button type="submit" class="btn shadow-sm custom-btn-cotizacion">
+                <i class="bi bi-calculator-fill"></i> Generar cotización
             </button>
             <a class="btn shadow-sm btn-regresar btn-md" href="/">
                 <i class="bi bi-arrow-return-left"></i> Regresar
