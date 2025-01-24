@@ -52,7 +52,7 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar la Capacitacion?",
+        title: "Esta seguro de eliminar el Proveedor?",
         text: "Este registro no se podra recuperar",
         icon: "warning",
         buttons: true,
