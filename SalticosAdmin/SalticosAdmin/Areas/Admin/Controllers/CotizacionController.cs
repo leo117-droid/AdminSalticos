@@ -267,12 +267,12 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 document.Add(new Paragraph(" "));
 
                 var montoTotalParagraph = new Paragraph();
-                montoTotalParagraph.Add(new Chunk("Monto Total: ", new Font(baseFont, 12, Font.BOLD))); // Texto en negrita
+                montoTotalParagraph.Add(new Chunk("Monto total: ", new Font(baseFont, 12, Font.BOLD))); // Texto en negrita
                 montoTotalParagraph.Add(new Chunk($"₡{cotizacionActual.MontoTotal:N2}", new Font(baseFont, 12))); // Texto normal
                 document.Add(montoTotalParagraph);
 
                 var montoTotalIVAParagraph = new Paragraph();
-                montoTotalIVAParagraph.Add(new Chunk("Monto Total con IVA: ", new Font(baseFont, 12, Font.BOLD))); // Texto en negrita
+                montoTotalIVAParagraph.Add(new Chunk("Monto total con IVA: ", new Font(baseFont, 12, Font.BOLD))); // Texto en negrita
                 montoTotalIVAParagraph.Add(new Chunk($"₡{cotizacionActual.MontoTotalIVA:N2}", new Font(baseFont, 12))); // Texto normal
                 document.Add(montoTotalIVAParagraph);
 
@@ -313,11 +313,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 // Inflables seleccionados
                 if (cotizacionActual.InflablesSeleccionados?.Any() == true)
                 {
-                    document.Add(new Paragraph("Inflables Seleccionados:", sectionFont));
+                    document.Add(new Paragraph("Inflables seleccionados:", sectionFont));
                     document.Add(new Paragraph(" "));
 
                     var table = CreateTable(6, new float[] { 2, 3, 2, 2, 2, 2 });
-                    AddTableHeaders(table, new[] { "Nombre", "Descripción", "Precio Base", "Precio / Hora Adicional", "Horas Adicionales", "Precio Total" });
+                    AddTableHeaders(table, new[] { "Nombre", "Descripción", "Precio base", "Precio / hora adicional", "Horas adicionales", "Precio total" });
 
                     foreach (var inflable in cotizacionActual.InflablesSeleccionados)
                     {
@@ -336,11 +336,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 // Mobiliarios seleccionados
                 if (cotizacionActual.MobiliariosSeleccionados?.Any() == true)
                 {
-                    document.Add(new Paragraph("Mobiliarios Seleccionados:", sectionFont));
+                    document.Add(new Paragraph("Mobiliarios seleccionados:", sectionFont));
                     document.Add(new Paragraph(" "));
 
                     var table = CreateTable(4, new float[] { 3, 2, 2, 2 });
-                    AddTableHeaders(table, new[] { "Nombre", "Descripción", "Cantidad", "Precio Total" });
+                    AddTableHeaders(table, new[] { "Nombre", "Descripción", "Cantidad", "Precio total" });
 
                     foreach (var mobiliario in cotizacionActual.MobiliariosSeleccionados)
                     {
@@ -357,11 +357,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 // Servicios seleccionados
                 if (cotizacionActual.ServiciosSeleccionados?.Any() == true)
                 {
-                    document.Add(new Paragraph("Servicios Adicionales Seleccionados:", sectionFont));
+                    document.Add(new Paragraph("Servicios adicionales seleccionados:", sectionFont));
                     document.Add(new Paragraph(" "));
 
                     var table = CreateTable(4, new float[] { 3, 2, 2, 2 });
-                    AddTableHeaders(table, new[] { "Servicio", "Precio / Unidad", "Cantidad", "Precio Total" });
+                    AddTableHeaders(table, new[] { "Servicio", "Precio / unidad", "Cantidad", "Precio total" });
 
                     foreach (var servicio in cotizacionActual.ServiciosSeleccionados)
                     {
@@ -378,11 +378,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 // Alimentación seleccionada
                 if (cotizacionActual.AlimentacionSeleccionada?.Any() == true)
                 {
-                    document.Add(new Paragraph("Alimentación Seleccionada:", sectionFont));
+                    document.Add(new Paragraph("Alimentación seleccionada:", sectionFont));
                     document.Add(new Paragraph(" "));
 
                     var table = CreateTable(4, new float[] { 3, 2, 2, 2 });
-                    AddTableHeaders(table, new[] { "Alimento", "Precio / Unidad", "Cantidad", "Precio Total" });
+                    AddTableHeaders(table, new[] { "Alimento", "Precio / unidad", "Cantidad", "Precio total" });
 
                     foreach (var opcion in cotizacionActual.AlimentacionSeleccionada)
                     {
@@ -399,7 +399,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 // Transporte seleccionado
                 if (cotizacionActual.TarifaTransporteSeleccionada?.Any() == true)
                 {
-                    document.Add(new Paragraph("Transporte Seleccionado:", sectionFont));
+                    document.Add(new Paragraph("Transporte seleccionado:", sectionFont));
                     document.Add(new Paragraph(" "));
 
                     var table = CreateTable(2, new float[] { 3, 2 });
@@ -455,21 +455,21 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             // Construir el mensaje en formato HTML con tablas
             var mensajeCotizacion = $@"
                 <h1 style='text-align: center;'>Cotización Sal-Ticos</h1>
-                <p><strong>Monto Total:</strong> ₡{cotizacionActual.MontoTotal:N2}</p>
-                <p><strong>Monto Total con IVA:</strong> ₡{cotizacionActual.MontoTotalIVA:N2}</p>
+                <p><strong>Monto total:</strong> ₡{cotizacionActual.MontoTotal:N2}</p>
+                <p><strong>Monto total con IVA:</strong> ₡{cotizacionActual.MontoTotalIVA:N2}</p>
                 <hr>
-                <h2>Resumen de Cotización</h2>";
+                <h2>Resumen de cotización</h2>";
 
             if (cotizacionActual.AlimentacionSeleccionada != null && cotizacionActual.AlimentacionSeleccionada.Any())
             {
                 mensajeCotizacion += @"
-                <h3>Alimentación Seleccionada:</h3>
+                <h3>Alimentación seleccionada:</h3>
                 <table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>
                     <thead>
                         <tr>
                             <th>Nombre</th>
                             <th>Cantidad</th>
-                            <th>Precio Total</th>
+                            <th>Precio total</th>
                         </tr>
                     </thead>
                     <tbody>";
@@ -488,7 +488,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             if (cotizacionActual.TarifaTransporteSeleccionada != null && cotizacionActual.TarifaTransporteSeleccionada.Any())
             {
                 mensajeCotizacion += @"
-                <h3>Transporte Seleccionado:</h3>
+                <h3>Transporte seleccionado:</h3>
                 <table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>
                     <thead>
                         <tr>
@@ -511,14 +511,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             if (cotizacionActual.ServiciosSeleccionados != null && cotizacionActual.ServiciosSeleccionados.Any())
             {
                 mensajeCotizacion += @"
-                <h3>Servicios Adicionales Seleccionados:</h3>
+                <h3>Servicios adicionales seleccionados:</h3>
                 <table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>
                     <thead>
                         <tr>
                             <th>Cantidad</th>
                             <th>Servicio</th>
-                            <th>Precio Unitario</th>
-                            <th>Precio Total</th>
+                            <th>Precio unitario</th>
+                            <th>Precio total</th>
                         </tr>
                     </thead>
                     <tbody>";
@@ -538,15 +538,15 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             if (cotizacionActual.InflablesSeleccionados != null && cotizacionActual.InflablesSeleccionados.Any())
             {
                 mensajeCotizacion += @"
-                <h3>Inflables Seleccionados:</h3>
+                <h3>Inflables seleccionados:</h3>
                 <table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Horas Adicionales</th>
-                            <th>Precio Base</th>
-                            <th>Precio por Hora Adicional</th>
-                            <th>Precio Total</th>
+                            <th>Horas adicionales</th>
+                            <th>Precio base</th>
+                            <th>Precio por hora adicional</th>
+                            <th>Precio total</th>
                         </tr>
                     </thead>
                     <tbody>";
@@ -568,14 +568,14 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             if (cotizacionActual.MobiliariosSeleccionados != null && cotizacionActual.MobiliariosSeleccionados.Any())
             {
                 mensajeCotizacion += @"
-            <h3>Mobiliarios Seleccionados:</h3>
+            <h3>Mobiliarios seleccionados:</h3>
             <table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Cantidad</th>
-                        <th>Precio Unitario</th>
-                        <th>Precio Total</th>
+                        <th>Precio unitario</th>
+                        <th>Precio total</th>
                     </tr>
                 </thead>
                 <tbody>";
