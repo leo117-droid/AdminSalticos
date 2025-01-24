@@ -7,11 +7,11 @@
 <h1 class="text-center my-4 text-primary">Generar cotización</h1>
 
 <div>
-    <h2>Inflables</h2>
+    <h2 class="text-white bg-primary p-2">Inflables</h2>
     <form asp-action="GenerarCotizacion" method="post">
         <table class="table">
             <thead>
-                <tr>
+                <tr class="table-primary">
                     <th>Seleccionar</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
@@ -33,9 +33,9 @@
                         <td>₡@inflable.PrecioHoraAdicional.ToString("N2")</td>
                         <td>
                             <div class="input-group" style="max-width: 120px;">
-                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="this.nextElementSibling.stepDown()">-</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="this.nextElementSibling.stepDown()">-</button>
                                 <input type="number" name="inflableHorasAdicionales_@inflable.Id" class="form-control text-center" value="0" min="0" />
-                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="this.previousElementSibling.stepUp()">+</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="this.previousElementSibling.stepUp()">+</button>
                             </div>
                         </td>
                     </tr>
@@ -43,10 +43,10 @@
             </tbody>
         </table>
 
-        <h2>Mobiliario</h2>
+        <h2 class="text-white bg-primary p-2">Mobiliario</h2>
         <table class="table">
             <thead>
-                <tr>
+                <tr class="table-primary">
                     <th>Seleccionar</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
@@ -66,9 +66,9 @@
                         <td>₡@mobiliario.Precio.ToString("N2")</td>
                         <td>
                             <div class="input-group" style="max-width: 120px;">
-                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="this.nextElementSibling.stepDown()">-</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="this.nextElementSibling.stepDown()">-</button>
                                 <input type="number" name="mobiliarioCantidades_@mobiliario.Id" class="form-control text-center" value="1" min="1" />
-                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="this.previousElementSibling.stepUp()">+</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="this.previousElementSibling.stepUp()">+</button>
                             </div>
                         </td>
                     </tr>
@@ -76,10 +76,10 @@
             </tbody>
         </table>
 
-        <h2>Servicios adicionales</h2>
+        <h2 class="text-white bg-primary p-2">Servicios adicionales</h2>
         <table class="table">
             <thead>
-                <tr>
+                <tr class="table-primary">
                     <th>Seleccionar</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
@@ -99,9 +99,9 @@
                         <td>₡@Model.ServiciosAdicionales[i].Precio.ToString("N2")</td>
                         <td>
                             <div class="input-group" style="max-width: 120px;">
-                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="this.nextElementSibling.stepDown()">-</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="this.nextElementSibling.stepDown()">-</button>
                                 <input type="number" name="servicioCantidades_@Model.ServiciosAdicionales[i].Id" class="form-control text-center" min="1" value="1" />
-                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="this.previousElementSibling.stepUp()">+</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="this.previousElementSibling.stepUp()">+</button>
                             </div>
                         </td>
                     </tr>
@@ -109,10 +109,10 @@
             </tbody>
         </table>
 
-        <h2>Alimentación</h2>
+        <h2 class="text-white bg-primary p-2">Alimentación</h2>
         <table class="table">
             <thead>
-                <tr>
+                <tr class="table-primary">
                     <th>Seleccionar</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
@@ -132,9 +132,9 @@
                         <td>₡@alimentacion.Precio.ToString("N2")</td>
                         <td>
                             <div class="input-group" style="max-width: 120px;">
-                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="this.nextElementSibling.stepDown()">-</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="this.nextElementSibling.stepDown()">-</button>
                                 <input type="number" name="alimentacionCantidades_@alimentacion.Id" class="form-control text-center" value="1" min="1" />
-                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="this.previousElementSibling.stepUp()">+</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="this.previousElementSibling.stepUp()">+</button>
                             </div>
                         </td>
                     </tr>
@@ -142,7 +142,7 @@
             </tbody>
         </table>
 
-        <h2>Tarifa transporte</h2>
+        <h2 class="text-white bg-primary p-2">Tarifa transporte</h2>
         <div class="form-group col-md-3">
             <label for="transporteIds">Seleccionar provincia de transporte</label>
             <select id="transporteIds" name="transporteIds" class="form-select">
@@ -152,18 +152,15 @@
                     <option value="@tarifaTransporte.Id">@tarifaTransporte.Provincia - ₡@tarifaTransporte.Precio</option>
                 }
             </select>
-
         </div>
 
-
         <div class="text-end">
-            <button type="submit" class="btn shadow-sm custom-btn-cotizacion">
+            <button type="submit" class="btn shadow-sm btn-outline-primary">
                 <i class="bi bi-calculator-fill"></i> Generar cotización
             </button>
-            <a class="btn shadow-sm btn-regresar btn-md" href="/">
+            <a class="btn shadow-sm btn-outline-primary btn-md" href="/">
                 <i class="bi bi-arrow-return-left"></i> Regresar
             </a>
         </div>
-
     </form>
 </div>
