@@ -1,4 +1,5 @@
 ﻿using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -75,7 +76,7 @@ public class RecordatorioBackgroundService : BackgroundService
                 }
             }
 
-            ////// Esperar un intervalo antes de la próxima ejecución (por ejemplo, 30 minutos)
+            // Esperar un intervalo antes de la próxima ejecución (por ejemplo, 30 minutos)
             await Task.Delay(TimeSpan.FromMinutes(0.1), stoppingToken);
         }
     }

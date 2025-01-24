@@ -126,7 +126,7 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
             }
 
             var user = await _userManager.FindByEmailAsync(Input.Email);
-            if (user == null)
+            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
             {
                 // No revelar si el usuario no existe o no está confirmado
                 return RedirectToPage("./ForgotPasswordConfirmation");
@@ -142,17 +142,27 @@ namespace SalticosAdmin.Areas.Identity.Pages.Account
 
             // Crear contenido del correo
             var emailBody = $@"
-                <div style='font-family: Arial, sans-serif; line-height: 1.6;'>
-                    <h2 style='color: #333;'>Restablecimiento de Contraseña</h2>
-                    <p>Hola,</p>
-                    <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Si fuiste tú quien realizó esta solicitud, haz clic en el siguiente botón para continuar:</p>
-                    <p style='text-align: center;'>
-                        <a href='{HtmlEncoder.Default.Encode(callbackUrl)}' 
-                           style='background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-size: 16px;'>Restablecer Contraseña</a>
+                <div style='font-family: Arial, sans-serif; line-height: 1.6; background-color: #f9f9f9; padding: 20px; border-radius: 10px; max-width: 600px; margin: auto;'>
+                    <h2 style='color: #4CAF50; text-align: center;'>Restablecimiento de Contraseña</h2>
+                    <p style='font-size: 16px; color: #333;'>Hola,</p>
+                    <p style='font-size: 16px; color: #333;'>
+                        Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Si fuiste tú quien realizó esta solicitud, haz clic en el siguiente botón para continuar:
                     </p>
-                    <p>Si no realizaste esta solicitud, puedes ignorar este correo. Tu cuenta permanecerá segura.</p>
-                    <hr style='border: 0; border-top: 1px solid #ccc;' />
+                    <div style='text-align: center; margin: 20px 0;'>
+                        <a href='{HtmlEncoder.Default.Encode(callbackUrl)}' 
+                           style='background-color: #007bff; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-size: 16px;'>
+                            Restablecer Contraseña
+                        </a>
+                    </div>
+                    <p style='font-size: 14px; color: #555;'>
+                        Si no realizaste esta solicitud, puedes ignorar este correo. Tu cuenta permanecerá segura.
+                    </p>
+                    <hr style='border: none; border-top: 1px solid #ccc; margin: 20px 0;' />
+                    <p style='font-size: 12px; color: #999; text-align: center;'>
+                        Este es un mensaje automático. Por favor, no respondas a este correo.
+                    </p>
                 </div>";
+
 
             // Enviar el correo
             await _emailSender.SendEmailAsync(
