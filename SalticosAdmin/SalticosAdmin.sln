@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalticosAdmin.Modelos", "Sa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalticosAdmin.Utilidades", "SalticosAdmin.Utilidades\SalticosAdmin.Utilidades.csproj", "{BA30D8FF-CAC6-48AC-B330-C157AAE32168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalticosAdminTest", "SalticosAdminTest\SalticosAdminTest.csproj", "{7976CDEC-D6AF-4A01-9C73-F6DF65772FAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalticosAdminTest", "SalticosAdminTest\SalticosAdminTest.csproj", "{7976CDEC-D6AF-4A01-9C73-F6DF65772FAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalticosAdminAutomatedTest", "SalticosAdminAutomatedTest\SalticosAdminAutomatedTest.csproj", "{6120C41F-8523-4A69-9643-A14A887F283F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{7976CDEC-D6AF-4A01-9C73-F6DF65772FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7976CDEC-D6AF-4A01-9C73-F6DF65772FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7976CDEC-D6AF-4A01-9C73-F6DF65772FAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6120C41F-8523-4A69-9643-A14A887F283F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6120C41F-8523-4A69-9643-A14A887F283F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6120C41F-8523-4A69-9643-A14A887F283F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6120C41F-8523-4A69-9643-A14A887F283F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
