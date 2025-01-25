@@ -93,5 +93,19 @@ namespace SalticosAdminAutomatedTest
             driver.FindElement(locator).Clear();
         }
 
+        public void ScrollToElement(By elementLocator)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            var element = driver.FindElement(elementLocator);
+            js.ExecuteScript("arguments[0].scrollIntoView(true);", element);
+        }
+
+        public void ClickElementUsingJS(By elementLocator)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            var element = driver.FindElement(elementLocator);
+            js.ExecuteScript("arguments[0].click();", element);
+        }
+
     }
 }

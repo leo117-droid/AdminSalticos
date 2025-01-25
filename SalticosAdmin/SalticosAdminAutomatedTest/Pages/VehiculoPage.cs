@@ -35,15 +35,18 @@ namespace SalticosAdminAutomatedTest.Pages
         {
         }
 
-        //public void EnsureLoggedIn(string username, string password)
-        //{
-        //    LoginPage loginPage = new LoginPage(driver);
-        //    loginPage.Login(username, password);
-        //}
+
+        public void IniciarSesion(String usuario, String contrasenna)
+        {
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Login(usuario, contrasenna);
+            
+        }
 
         public void GestionVehiculos()
         {
-            Click(IrBtnLocator);
+            ClickElementUsingJS(IrBtnLocator);
+            Thread.Sleep(2000);
             Click(IrVehiculosBtnLocator);
         }
 
@@ -55,6 +58,8 @@ namespace SalticosAdminAutomatedTest.Pages
             Type(modelo, ModeloLocator);
             Type(placa, PlacaLocator);
             Type(tipoVehiculo, TipoVehiculoLocator);
+            Thread.Sleep(2000);
+
             Click(CrearBtnLocator);
         }
 
@@ -90,13 +95,15 @@ namespace SalticosAdminAutomatedTest.Pages
             Thread.Sleep(2000);
 
         }
-        public void RegistrarVehiculoConPlacaRepetida(String marca, String modelo, String placa, String tipoVehiculo)
+        public void RegistrarVehiculoConPlacaRepetida(String marca, String modelo, String placa)
         {
             Click(CrearNuevoVehiculoBtnLocator);
             Thread.Sleep(2000);
             Type(marca, MarcaLocator);
             Type(modelo, ModeloLocator);
-            Type(placa, PlacaLocator);
+            Type(placa + "\n", PlacaLocator);
+
+
         }
 
         public Boolean MensajeErrorPlacaRepetidaDesplegado()
