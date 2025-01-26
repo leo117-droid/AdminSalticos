@@ -108,7 +108,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         }
 
 
-        // Verifica que el método Upsert cree un nuevo proveedor cuando el modelo no tiene un ID.
+        // Verifica que el método Upsert cree un nuevo contacto cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_Post_CrearContacto()
         {
@@ -134,7 +134,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Contacto.Agregar(It.IsAny<Contacto>()), Times.Once);
         }
 
-        // Verifica que el método Upsert actualice un proveedor existente.
+        // Verifica que el método Upsert actualice un contacto existente.
         [Test]
         public async Task Upsert_Post_ActualizarContacto()
         {
@@ -172,7 +172,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Contacto.Actualizar(It.IsAny<Contacto>()), Times.Once); 
         }
 
-        // Verifica que el método Delete elimine correctamente un proveedor.
+        // Verifica que el método Delete elimine correctamente un contacto.
         [Test]
         public async Task Delete_RetornaExito_CuandoElContactoSeEliminaCorrectamente()
         {
@@ -207,7 +207,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once);
         }
 
-        // Verifica que se retorne un error cuando se intenta eliminar un proveedor que no existe.
+        // Verifica que se retorne un error cuando se intenta eliminar un contacto que no existe.
         [Test]
         public async Task Delete_RetornaError_CuandoElProveedorNoExiste()
         {
