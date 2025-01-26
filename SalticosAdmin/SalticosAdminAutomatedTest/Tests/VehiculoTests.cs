@@ -20,9 +20,9 @@ namespace SalticosAdminAutomatedTest.Tests
             vehiculoPage = new VehiculoPage(driver);
             driver = vehiculoPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            vehiculoPage.Visit("http://localhost:5270/");
+            vehiculoPage.Visit("http://localhost:7033/");
 
-            vehiculoPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            vehiculoPage.IniciarSesion("leomora641@gmail.com", "Hola123.");
         }
 
         [TearDown]
