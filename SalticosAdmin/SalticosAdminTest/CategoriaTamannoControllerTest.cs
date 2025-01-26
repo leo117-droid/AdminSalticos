@@ -105,7 +105,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 
         // Verifica que el método Upsert cree una nueva categoría por tamaño cuando el modelo no tiene un ID.
         [Test]
-        public async Task Upsert_Post_CreaCategoriaEdad()
+        public async Task Upsert_Post_CreaCategoriaTamanno()
         {
             var categoriaTamannoId = 0;
             var categoriaTamanno = new CategoriaTamanno
@@ -126,7 +126,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 
         // Verifica que el método Upsert actualice una categoría por tamaño existente.
         [Test]
-        public async Task Upsert_Post_ActualizaCategoriasEdad()
+        public async Task Upsert_Post_ActualizaCategoriaTamanno()
         {
             var categoriaTamannoId = 1;
             var categoriaTamannoExistente = new CategoriaTamanno
@@ -154,7 +154,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 
         // Verifica que el método Delete elimine correctamente una categoría por tamaño.
         [Test]
-        public async Task Delete_RetornaExito_CuandoLaCategoriaEdadSeEliminaCorrectamente()
+        public async Task Delete_RetornaExito_CuandoLaCategoriaTamannoSeEliminaCorrectamente()
         {
             var categoriaTamannoId = 1;
             var categoriaTamanno = new CategoriaTamanno

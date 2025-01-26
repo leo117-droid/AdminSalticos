@@ -94,7 +94,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.Proveedor.Remover(proveedorBd);
             await _unidadTrabajo.Guardar();
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó la capacitación '{proveedorBd.NombreEmpresa}'", usuarioNombre);
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el proveedor '{proveedorBd.NombreEmpresa}'", usuarioNombre);
 
             return Json(new { success = true, message = "Proveedor borrados exitosamente" });
         }
