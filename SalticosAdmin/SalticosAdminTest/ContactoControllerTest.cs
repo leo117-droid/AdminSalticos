@@ -19,12 +19,12 @@ using SalticosAdmin.AccesoDeDatos.Repositorio;
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
     [TestFixture]
-    public class ProveedorControllerTest
+    public class ContactoControllerTest
     {
         // Configuración inicial antes de cada prueba
 
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
-        private ProveedorController _controller;
+        private ContactoController _controller;
         private Mock<HttpContext> _httpContextMock;
         private Mock<ITempDataDictionary> _tempDataMock;
 
@@ -33,7 +33,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         public void SetUp()
         {
             _unidadTrabajoMock = new Mock<IUnidadTrabajo>();
-            _controller = new ProveedorController(_unidadTrabajoMock.Object);
+            _controller = new ContactoController(_unidadTrabajoMock.Object);
             
             //Simula el login y creacion de un usuario
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
@@ -77,7 +77,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var resultado = await _controller.Upsert((int?)null); 
 
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
-            var modelo = (Proveedor)((ViewResult)resultado).Model;
+            var modelo = (Contacto)((ViewResult)resultado).Model;
             Assert.That(modelo, Is.Not.Null);
             Assert.That(modelo.Id, Is.EqualTo(0)); 
         }
@@ -86,132 +86,124 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
-            var proveedorId = 1;
-            var proveedor = new Proveedor
+            var contactoId = 1;
+            var contacto = new Contacto
             { 
-                Id = proveedorId,
-                NombreEmpresa = "Pricesmart",
-                Contacto = "Leonardo Mora",
-                Telefono = "88723468",
-                Correo = "leomora@gmail.com",
-                Direccion = "Alajuela",
-                Descripcion = "Proveedor de las sillas y mesas para adultos",
-                TipoProveedor = "Mobiliario"
-
+                Id = contactoId,
+                Nombre = "Ian",
+                Apellido = "Calvo",
+                TipoServicio = "Mecánico",
+                Direccion = "Santa Ana, San José",
+                Telefono = "89765469",
+                Correo = "ian@gmail.com"
             };
-            _unidadTrabajoMock.Setup(u => u.Proveedor.Obtener(proveedorId)).ReturnsAsync(proveedor);
+            _unidadTrabajoMock.Setup(u => u.Contacto.Obtener(contactoId)).ReturnsAsync(contacto);
 
-            var resultado = await _controller.Upsert(proveedorId);
+            var resultado = await _controller.Upsert(contactoId);
 
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
-            var modelo = (Proveedor)((ViewResult)resultado).Model;
+            var modelo = (Contacto)((ViewResult)resultado).Model;
             Assert.That(modelo, Is.Not.Null);  
-            Assert.That(modelo.Id, Is.EqualTo(proveedorId)); 
+            Assert.That(modelo.Id, Is.EqualTo(contactoId)); 
         }
 
 
         // Verifica que el método Upsert cree un nuevo proveedor cuando el modelo no tiene un ID.
         [Test]
-        public async Task Upsert_Post_CreaProveedor()
+        public async Task Upsert_Post_CrearContacto()
         {
-            var proveedorId = 0;
-            var proveedor = new Proveedor
+            var contactoId = 0;
+            var contacto = new Contacto
             {
-                Id = proveedorId,
-                NombreEmpresa = "Tips",
-                Contacto = "Jimena Solorzano",
-                Telefono = "65429081",
-                Correo = "solorzano@gmail.com",
-                Direccion = "San José",
-                Descripcion = "Proveedor de los colorantes comestibles en variedad de colores",
-                TipoProveedor = "Alimentación"
-
+                Id = contactoId,
+                Nombre = "Alejandro",
+                Apellido = "Campos",
+                TipoServicio = "Abogado",
+                Direccion = "Hacienda Rivera Belén",
+                Telefono = "65517892",
+                Correo = "alecampos@gmail.com"
             };
 
-            _unidadTrabajoMock.Setup(u => u.Proveedor.Agregar(It.IsAny<Proveedor>())).Returns(Task.CompletedTask);
+            _unidadTrabajoMock.Setup(u => u.Contacto.Agregar(It.IsAny<Contacto>())).Returns(Task.CompletedTask);
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
-            var resultado = await _controller.Upsert(proveedor);
+            var resultado = await _controller.Upsert(contacto);
 
             var redirectResult = resultado as RedirectToActionResult;
             Assert.That(redirectResult.ActionName, Is.EqualTo("Index")); 
-            _unidadTrabajoMock.Verify(u => u.Proveedor.Agregar(It.IsAny<Proveedor>()), Times.Once);
+            _unidadTrabajoMock.Verify(u => u.Contacto.Agregar(It.IsAny<Contacto>()), Times.Once);
         }
 
-        // Verifica que el método Upsert actualice un´proveedor existente.
+        // Verifica que el método Upsert actualice un proveedor existente.
         [Test]
-        public async Task Upsert_Post_ActualizaProveedor()
+        public async Task Upsert_Post_ActualizarContacto()
         {
-            var proveedorId = 1;
-            var proveedorExistente = new Proveedor
+            var contactoId = 1;
+            var contactoExistente = new Contacto
             {
-                Id = proveedorId,
-                NombreEmpresa = "Walmart",
-                Contacto = "Jose Chaves",
-                Telefono = "88765443",
-                Correo = "josech@gmail.com",
-                Direccion = "Heredia",
-                Descripcion = "Proveedor de los parlantes",
-                TipoProveedor = "Servicios Adicionales"
+                Id = contactoId,
+                Nombre = "Fabiana",
+                Apellido = "Rosales",
+                TipoServicio = "Contadora",
+                Direccion = "Condominio Agua Clara",
+                Telefono = "88904287",
+                Correo = "fabianarosales@gmail.com"
             };
 
-            var proveedorActualizado = new Proveedor
+            var contactoActualizado = new Contacto
             {
-                Id = proveedorId,
-                NombreEmpresa = "Walmart",
-                Contacto = "Jose Chaves",
-                Telefono = "88765443",
-                Correo = "josech@gmail.com",
-                Direccion = "Alajuela",
-                Descripcion = "Proveedor de los parlantes",
-                TipoProveedor = "Servicios Adicionales"
+                Id = contactoId,
+                Nombre = "Fabiana",
+                Apellido = "Rosales",
+                TipoServicio = "Contadora",
+                Direccion = "Condominio Agua Clara",
+                Telefono = "67890532",
+                Correo = "fabianarosales@gmail.com"
             };
 
-            _unidadTrabajoMock.Setup(u => u.Proveedor.Obtener(proveedorId)).ReturnsAsync(proveedorExistente);
-            _unidadTrabajoMock.Setup(u => u.Proveedor.Actualizar(It.IsAny<Proveedor>())).Verifiable();
+            _unidadTrabajoMock.Setup(u => u.Contacto.Obtener(contactoId)).ReturnsAsync(contactoExistente);
+            _unidadTrabajoMock.Setup(u => u.Contacto.Actualizar(It.IsAny<Contacto>())).Verifiable();
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
-            var resultado = await _controller.Upsert(proveedorActualizado);
+            var resultado = await _controller.Upsert(contactoActualizado);
 
             var redirectResult = resultado as RedirectToActionResult;
             Assert.That(redirectResult.ActionName, Is.EqualTo("Index")); 
-            _unidadTrabajoMock.Verify(u => u.Proveedor.Actualizar(It.IsAny<Proveedor>()), Times.Once); 
+            _unidadTrabajoMock.Verify(u => u.Contacto.Actualizar(It.IsAny<Contacto>()), Times.Once); 
         }
 
         // Verifica que el método Delete elimine correctamente un proveedor.
         [Test]
-        public async Task Delete_RetornaExito_CuandoElProveedorSeEliminaCorrectamente()
+        public async Task Delete_RetornaExito_CuandoElContactoSeEliminaCorrectamente()
         {
-            var proveedorId = 0;
-            var proveedor = new Proveedor
+            var contactoId = 1;
+            var contacto = new Contacto
             {
-                Id = proveedorId,
-                NombreEmpresa = "EPA",
-                Contacto = "Gabriel Garcia",
-                Telefono = "87651021",
-                Correo = "garcia@gmail.com",
-                Direccion = "Heredia",
-                Descripcion = "Proveedor de las herramientas",
-                TipoProveedor = "Otros"
-
+                Id = contactoId,
+                Nombre = "Gabriela",
+                Apellido = "Chaves",
+                TipoServicio = "Diseñadora gráfica",
+                Direccion = "La Trinidad, Alajuela",
+                Telefono = "82309123",
+                Correo = "gabychaves.com"
             };
 
-            _unidadTrabajoMock.Setup(u => u.Proveedor.Obtener(proveedorId)).ReturnsAsync(proveedor);
+            _unidadTrabajoMock.Setup(u => u.Contacto.Obtener(contactoId)).ReturnsAsync(contacto);
 
-            _unidadTrabajoMock.Setup(u => u.Proveedor.Remover(It.IsAny<Proveedor>())).Verifiable();
+            _unidadTrabajoMock.Setup(u => u.Contacto.Remover(It.IsAny<Contacto>())).Verifiable();
 
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
             _unidadTrabajoMock.Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
 
-            var resultado = await _controller.Delete(proveedorId);
+            var resultado = await _controller.Delete(contactoId);
 
-            _unidadTrabajoMock.Setup(u => u.Proveedor.Obtener(proveedorId)).ReturnsAsync((Proveedor)null);
+            _unidadTrabajoMock.Setup(u => u.Contacto.Obtener(contactoId)).ReturnsAsync((Contacto)null);
 
-            var proveedorEliminado = await _unidadTrabajoMock.Object.Proveedor.Obtener(proveedorId);
+            var contactoEliminado = await _unidadTrabajoMock.Object.Contacto.Obtener(contactoId);
 
-            Assert.That(proveedorEliminado, Is.Null);
-            _unidadTrabajoMock.Verify(u => u.Proveedor.Remover(It.IsAny<Proveedor>()), Times.Once);
+            Assert.That(contactoEliminado, Is.Null);
+            _unidadTrabajoMock.Verify(u => u.Contacto.Remover(It.IsAny<Contacto>()), Times.Once);
             _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once);
         }
 
@@ -219,19 +211,19 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [Test]
         public async Task Delete_RetornaError_CuandoElProveedorNoExiste()
         {
-            var proveedorId = 999;
-            Proveedor proveedorBd = null;
+            var contactoId = 999;
+            Contacto contactoBd = null;
 
-            _unidadTrabajoMock.Setup(u => u.Proveedor.Obtener(proveedorId)).ReturnsAsync(proveedorBd);
+            _unidadTrabajoMock.Setup(u => u.Contacto.Obtener(contactoId)).ReturnsAsync(contactoBd);
 
-            var resultado = await _controller.Delete(proveedorId);
+            var resultado = await _controller.Delete(contactoId);
 
             Assert.That(resultado, Is.InstanceOf<JsonResult>());
             var jsonResult = resultado as JsonResult;
 
             var contenido = JObject.FromObject(jsonResult.Value);
 
-            Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar proveedor"));  
+            Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Contacto"));  
         }
 
         [TearDown]
