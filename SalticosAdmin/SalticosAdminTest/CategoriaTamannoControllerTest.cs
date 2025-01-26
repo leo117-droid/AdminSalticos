@@ -19,12 +19,12 @@ using SalticosAdmin.AccesoDeDatos.Repositorio;
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
     [TestFixture]
-    public class CategoriaEdadControllerTests
+    public class CategoriaTamannoControllerTests
     {
         // Configuración inicial antes de cada prueba
 
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
-        private CategoriasEdadController _controller;
+        private CategoriaTamannoController _controller;
         private Mock<HttpContext> _httpContextMock;
         private Mock<ITempDataDictionary> _tempDataMock;
 
@@ -33,7 +33,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         public void SetUp()
         {
             _unidadTrabajoMock = new Mock<IUnidadTrabajo>();
-            _controller = new CategoriasEdadController(_unidadTrabajoMock.Object);
+            _controller = new CategoriaTamannoController(_unidadTrabajoMock.Object);
             
             //Simula el login y creacion de un usuario
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
@@ -77,7 +77,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var resultado = await _controller.Upsert((int?)null); 
 
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
-            var modelo = (CategoriasEdad)((ViewResult)resultado).Model;
+            var modelo = (CategoriaTamanno)((ViewResult)resultado).Model;
             Assert.That(modelo, Is.Not.Null);
             Assert.That(modelo.Id, Is.EqualTo(0)); 
         }
@@ -86,100 +86,99 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
-            var categoriasEdadId = 1;
-            var categoriasEdad = new CategoriasEdad 
+            var categoriasTamañoId = 1;
+            var categoriaTamanno = new CategoriaTamanno
             { 
-                Id = categoriasEdadId,
-                Nombre = "Menores 8 años" 
+                Id = categoriasTamañoId,
+                Nombre = "Mediano" 
             };
-            _unidadTrabajoMock.Setup(u => u.CategoriasEdad.Obtener(categoriasEdadId)).ReturnsAsync(categoriasEdad);
+            _unidadTrabajoMock.Setup(u => u.CategoriaTamanno.Obtener(categoriasTamañoId)).ReturnsAsync(categoriaTamanno);
 
-            var resultado = await _controller.Upsert(categoriasEdadId);
+            var resultado = await _controller.Upsert(categoriasTamañoId);
 
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
-            var modelo = (CategoriasEdad)((ViewResult)resultado).Model;
+            var modelo = (CategoriaTamanno)((ViewResult)resultado).Model;
             Assert.That(modelo, Is.Not.Null);  
-            Assert.That(modelo.Id, Is.EqualTo(categoriasEdadId)); 
+            Assert.That(modelo.Id, Is.EqualTo(categoriasTamañoId)); 
         }
 
 
-        // Verifica que el método Upsert cree una nueva categoría por edad cuando el modelo no tiene un ID.
+        // Verifica que el método Upsert cree una nueva categoría por tamaño cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_Post_CreaCategoriaEdad()
         {
-            var categoriasEdadId = 0;
-            var categoriasEdad = new CategoriasEdad
+            var categoriaTamannoId = 0;
+            var categoriaTamanno = new CategoriaTamanno
             {
-                Id = categoriasEdadId,
-                Nombre = "Menores 10 años"
+                Id = categoriaTamannoId,
+                Nombre = "Grandes"
             };
 
-            _unidadTrabajoMock.Setup(u => u.CategoriasEdad.Agregar(It.IsAny<CategoriasEdad>())).Returns(Task.CompletedTask);
+            _unidadTrabajoMock.Setup(u => u.CategoriaTamanno.Agregar(It.IsAny<CategoriaTamanno>())).Returns(Task.CompletedTask);
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
-            var resultado = await _controller.Upsert(categoriasEdad);
+            var resultado = await _controller.Upsert(categoriaTamanno);
 
             var redirectResult = resultado as RedirectToActionResult;
             Assert.That(redirectResult.ActionName, Is.EqualTo("Index")); 
-            _unidadTrabajoMock.Verify(u => u.CategoriasEdad.Agregar(It.IsAny<CategoriasEdad>()), Times.Once);
+            _unidadTrabajoMock.Verify(u => u.CategoriaTamanno.Agregar(It.IsAny<CategoriaTamanno>()), Times.Once);
         }
 
-        // Verifica que el método Upsert actualice una categoría por edad existente.
+        // Verifica que el método Upsert actualice una categoría por tamaño existente.
         [Test]
         public async Task Upsert_Post_ActualizaCategoriasEdad()
         {
-            var categoriasEdadId = 1;
-            var categoriasEdadExistente = new CategoriasEdad
+            var categoriaTamannoId = 1;
+            var categoriaTamannoExistente = new CategoriaTamanno
             {
-                Id = 1,
-                Nombre = "Todas las edades"
+                Id = categoriaTamannoId,
+                Nombre = "Mediano"
             };
 
-            var categoriasEdadActualizada = new CategoriasEdad
+            var categoriaTamannoActualizada = new CategoriaTamanno
             {
-                Id = categoriasEdadId,
-                Nombre = "Todas las edades"
+                Id = categoriaTamannoId,
+                Nombre = "Pequeño"
             };
 
-            _unidadTrabajoMock.Setup(u => u.CategoriasEdad.Obtener(categoriasEdadId)).ReturnsAsync(categoriasEdadExistente);
-            _unidadTrabajoMock.Setup(u => u.CategoriasEdad.Actualizar(It.IsAny<CategoriasEdad>())).Verifiable();
+            _unidadTrabajoMock.Setup(u => u.CategoriaTamanno.Obtener(categoriaTamannoId)).ReturnsAsync(categoriaTamannoExistente);
+            _unidadTrabajoMock.Setup(u => u.CategoriaTamanno.Actualizar(It.IsAny<CategoriaTamanno>())).Verifiable();
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
-            var resultado = await _controller.Upsert(categoriasEdadActualizada);
+            var resultado = await _controller.Upsert(categoriaTamannoActualizada);
 
             var redirectResult = resultado as RedirectToActionResult;
             Assert.That(redirectResult.ActionName, Is.EqualTo("Index")); 
-            _unidadTrabajoMock.Verify(u => u.CategoriasEdad.Actualizar(It.IsAny<CategoriasEdad>()), Times.Once); 
+            _unidadTrabajoMock.Verify(u => u.CategoriaTamanno.Actualizar(It.IsAny<CategoriaTamanno>()), Times.Once); 
         }
 
-        // Verifica que el método Delete elimine correctamente una categoría por edad.
+        // Verifica que el método Delete elimine correctamente una categoría por tamaño.
         [Test]
         public async Task Delete_RetornaExito_CuandoLaCategoriaEdadSeEliminaCorrectamente()
         {
-            // Arrange
-            var categoriaEdadId = 1;
-            var categoriaEdad = new CategoriasEdad
+            var categoriaTamannoId = 1;
+            var categoriaTamanno = new CategoriaTamanno
             {
-                Id = categoriaEdadId,
-                Nombre = "Menores 10 años"
+                Id = categoriaTamannoId,
+                Nombre = "Pequeño"
             };
 
-            _unidadTrabajoMock.Setup(u => u.CategoriasEdad.Obtener(categoriaEdadId)).ReturnsAsync(categoriaEdad);
+            _unidadTrabajoMock.Setup(u => u.CategoriaTamanno.Obtener(categoriaTamannoId)).ReturnsAsync(categoriaTamanno);
 
-            _unidadTrabajoMock.Setup(u => u.CategoriasEdad.Remover(It.IsAny<CategoriasEdad>())).Verifiable();
+            _unidadTrabajoMock.Setup(u => u.CategoriaTamanno.Remover(It.IsAny<CategoriaTamanno>())).Verifiable();
 
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
             _unidadTrabajoMock.Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
 
-            var resultado = await _controller.Delete(categoriaEdadId);
+            var resultado = await _controller.Delete(categoriaTamannoId);
 
-            _unidadTrabajoMock.Setup(u => u.CategoriasEdad.Obtener(categoriaEdadId)).ReturnsAsync((CategoriasEdad)null);
+            _unidadTrabajoMock.Setup(u => u.CategoriaTamanno.Obtener(categoriaTamannoId)).ReturnsAsync((CategoriaTamanno)null);
 
-            var categoriaEdadEliminada = await _unidadTrabajoMock.Object.CategoriasEdad.Obtener(categoriaEdadId);
+            var categoriaTamannoEliminada = await _unidadTrabajoMock.Object.CategoriaTamanno.Obtener(categoriaTamannoId);
 
-            Assert.That(categoriaEdadEliminada, Is.Null);
-            _unidadTrabajoMock.Verify(u => u.CategoriasEdad.Remover(It.IsAny<CategoriasEdad>()), Times.Once);
+            Assert.That(categoriaTamannoEliminada, Is.Null);
+            _unidadTrabajoMock.Verify(u => u.CategoriaTamanno.Remover(It.IsAny<CategoriaTamanno>()), Times.Once);
             _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once);
         }
 
@@ -187,14 +186,14 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [Test]
         public async Task ValidarNombre_NombreNoDuplicado_RetornaFalse()
         {
-            var nombreNuevo = "Menores 8 años";
-            var listaCategorias = new List<CategoriasEdad>
+            var nombreNuevo = "Mediano";
+            var listaCategorias = new List<CategoriaTamanno>
             {
-                new CategoriasEdad { Id = 1, Nombre = "Todas las edades" },
-                new CategoriasEdad { Id = 2, Nombre = "Menores 5 años" }
+                new CategoriaTamanno { Id = 1, Nombre = "Grande" },
+                new CategoriaTamanno { Id = 2, Nombre = "Pequeño  " }
             };
 
-            _unidadTrabajoMock.Setup(u => u.CategoriasEdad.ObtenerTodos(It.IsAny<Expression<Func<CategoriasEdad, bool>>>(), null, null, true))
+            _unidadTrabajoMock.Setup(u => u.CategoriaTamanno.ObtenerTodos(It.IsAny<Expression<Func<CategoriaTamanno, bool>>>(), null, null, true))
                 .ReturnsAsync(listaCategorias);
 
             var resultado = await _controller.ValidarNombre(nombreNuevo);
@@ -209,14 +208,14 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [Test]
         public async Task ValidarNombre_NombreDuplicado_RetornaTrue()
         {
-            var nombreNuevo = "Todas las edades";
-            var listaCategorias = new List<CategoriasEdad>
+            var nombreNuevo = "Pequeño";
+            var listaCategorias = new List<CategoriaTamanno>
             {
-                new CategoriasEdad { Id = 1, Nombre = "Todas las edades" },
-                new CategoriasEdad { Id = 2, Nombre = "Menores 5 años" }
+                new CategoriaTamanno { Id = 1, Nombre = "Pequeño" },
+                new CategoriaTamanno { Id = 2, Nombre = "Grande" }
             };
 
-            _unidadTrabajoMock.Setup(u => u.CategoriasEdad.ObtenerTodos(It.IsAny<Expression<Func<CategoriasEdad, bool>>>(), null, null, true))
+            _unidadTrabajoMock.Setup(u => u.CategoriaTamanno.ObtenerTodos(It.IsAny<Expression<Func<CategoriaTamanno, bool>>>(), null, null, true))
                 .ReturnsAsync(listaCategorias);
 
             var resultado = await _controller.ValidarNombre(nombreNuevo);
