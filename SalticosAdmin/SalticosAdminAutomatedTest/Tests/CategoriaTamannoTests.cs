@@ -33,7 +33,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
 
         [Test, Order(1)]
-        public void CrearCategoriaTamannooConDatosValidos_EsRegistrado()
+        public void CrearCategoriaTamannoConDatosValidos_EsRegistrado()
         {
             categoriaTamannoPage.GestionCategoriaTamanno();
             Thread.Sleep(2000);
@@ -44,7 +44,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
 
         [Test, Order(2)]
-        public void CrearCategoriaTamannooConNombreExistente_MuestraMensajeDeError()
+        public void CrearCategoriaTamannoConNombreExistente_MuestraMensajeDeError()
         {
             categoriaTamannoPage.GestionCategoriaTamanno();
             Thread.Sleep(2000);
