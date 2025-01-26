@@ -109,7 +109,6 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [Test]
         public async Task Upsert_Post_CreaCapacitacion()
         {
-            // Arrange
             var capacitacion = new Capacitacion
             {
                 Id = 0, 
