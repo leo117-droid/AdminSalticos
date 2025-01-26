@@ -21,6 +21,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
     [TestFixture]
     public class CapacitacionControllerTests
     {
+        // Configuración inicial antes de cada prueba
+
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private CapacitacionController _controller;
         private Mock<HttpContext> _httpContextMock;
@@ -32,6 +34,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         {
             _unidadTrabajoMock = new Mock<IUnidadTrabajo>();
             _controller = new CapacitacionController(_unidadTrabajoMock.Object);
+            
             //Simula el login y creacion de un usuario
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
@@ -44,7 +47,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 HttpContext = new DefaultHttpContext() { User = user }
             };
 
-            //Simula la existencia del TempData en forma de un Diccionario
+            //Simula la existencia del TempData 
             var tempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>())
             {
                 [DS.Exitosa] = "Success message",
@@ -52,209 +55,178 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             };
             _controller.TempData = tempData;
 
-            // Mocking methods for IBitacora and IBitacoraError
+            // Simula los metodo para Bitacora 
             _unidadTrabajoMock.Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
         }
 
 
-
+        // Verifica que el método Index retorne una vista correctamente.
         [Test]
         public async Task Index_RetornaVista()
         {
-            // Actuar
             var resultado = _controller.Index();
 
-            // Verificar
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
         }
 
+        // Verifica que, cuando el ID es null, el método Upsert retorne una vista con un modelo vacío.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloVacioCuandoIdEsNull()
         {
-            // Actuar
-            var resultado = await _controller.Upsert((int?)null); // Forzar el uso de la sobrecarga que recibe int?
+            var resultado = await _controller.Upsert((int?)null); 
 
-            // Verificar
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
             var modelo = (Capacitacion)((ViewResult)resultado).Model;
             Assert.That(modelo, Is.Not.Null);
-            Assert.That(modelo.Id, Is.EqualTo(0)); // Usar Is.EqualTo para comparar valores
+            Assert.That(modelo.Id, Is.EqualTo(0)); 
         }
 
-
+        // Verifica que, cuando se proporciona un ID válido, el método Upsert retorne una vista con el modelo correspondiente.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
-            // Arrange
             var capacitacionId = 1;
-            var capacitacion = new Capacitacion { Id = capacitacionId, Fecha = DateTime.Today.AddDays(1), Tema = "Limpieza de las máquinas de burbujas", Duracion = "2 horas" };
+            var capacitacion = new Capacitacion 
+            { 
+                Id = capacitacionId,
+                Fecha = DateTime.Today.AddDays(1),
+                Tema = "Limpieza de las máquinas de burbujas",
+                Duracion = "2 horas" 
+            };
             _unidadTrabajoMock.Setup(u => u.Capacitacion.Obtener(capacitacionId)).ReturnsAsync(capacitacion);
 
-            // Actuar
             var resultado = await _controller.Upsert(capacitacionId);
 
-            // Verificar
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
             var modelo = (Capacitacion)((ViewResult)resultado).Model;
-            Assert.That(modelo, Is.Not.Null);  // Verificamos que el modelo no sea nulo
-            Assert.That(modelo.Id, Is.EqualTo(capacitacionId));  // Comparación correcta con NUnit
+            Assert.That(modelo, Is.Not.Null);  
+            Assert.That(modelo.Id, Is.EqualTo(capacitacionId)); 
         }
 
+
+        // Verifica que el método Upsert cree una nueva capacitación cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_Post_CreaCapacitacion()
         {
-            // Arrange
             var capacitacion = new Capacitacion
             {
-                Id = 0, // Indicamos que es una nueva capacitación
-                Fecha = DateTime.Today.AddDays(1), // Asignamos la fecha de mañana
-                Tema = "Tema de Capacitación",
-                Duracion = "2 horas"
+                Id = 0, 
+                Fecha = DateTime.Today.AddDays(2), 
+                Tema = "Arreglos para los motores de los inflables",
+                Duracion = "3 horas"
             };
 
             _unidadTrabajoMock.Setup(u => u.Capacitacion.Agregar(It.IsAny<Capacitacion>())).Returns(Task.CompletedTask);
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
-            // Act
             var result = await _controller.Upsert(capacitacion);
 
-            // Assert
             var redirectResult = result as RedirectToActionResult;
-            Assert.That(redirectResult.ActionName, Is.EqualTo("Index")); // Verifica que la redirección sea a la acción Index
-            _unidadTrabajoMock.Verify(u => u.Capacitacion.Agregar(It.IsAny<Capacitacion>()), Times.Once); // Verifica que el método Agregar se haya llamado
+            Assert.That(redirectResult.ActionName, Is.EqualTo("Index")); 
+            _unidadTrabajoMock.Verify(u => u.Capacitacion.Agregar(It.IsAny<Capacitacion>()), Times.Once);
         }
 
+        // Verifica que el método Upsert actualice una capacitación existente.
         [Test]
         public async Task Upsert_Post_ActualizaCapacitacion()
         {
-            // Arrange
             var capacitacionId = 1;
             var capacitacionExistente = new Capacitacion
             {
                 Id = capacitacionId,
-                Fecha = DateTime.Today.AddDays(1),
-                Tema = "Capacitación Inicial",
-                Duracion = "1 hora"
+                Fecha = DateTime.Today.AddDays(2),
+                Tema = "Cambio de llanta",
+                Duracion = "2 horas"
             };
 
             var capacitacionActualizada = new Capacitacion
             {
                 Id = capacitacionId,
-                Fecha = DateTime.Today.AddDays(2), // Actualizamos la fecha
-                Tema = "Capacitación Avanzada",
-                Duracion = "2 horas"
+                Fecha = DateTime.Today.AddDays(2), 
+                Tema = "Cambio de llanta",
+                Duracion = "2 horas y media"
             };
 
-            // Mock para obtener la capacitación existente
             _unidadTrabajoMock.Setup(u => u.Capacitacion.Obtener(capacitacionId)).ReturnsAsync(capacitacionExistente);
             _unidadTrabajoMock.Setup(u => u.Capacitacion.Actualizar(It.IsAny<Capacitacion>())).Verifiable();
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
-            // Actuar
             var result = await _controller.Upsert(capacitacionActualizada);
 
-            // Assert
             var redirectResult = result as RedirectToActionResult;
-            Assert.That(redirectResult.ActionName, Is.EqualTo("Index")); // Verifica la redirección a Index
-            _unidadTrabajoMock.Verify(u => u.Capacitacion.Actualizar(It.IsAny<Capacitacion>()), Times.Once); // Verifica que Actualizar haya sido llamado
+            Assert.That(redirectResult.ActionName, Is.EqualTo("Index")); 
+            _unidadTrabajoMock.Verify(u => u.Capacitacion.Actualizar(It.IsAny<Capacitacion>()), Times.Once); 
         }
 
+        // Verifica que una capacitación sin personal asociado sea eliminada correctamente.
         [Test]
-        public async Task Delete_RetornaExito_CuandoLaCapacitacionNoTienePersonalAsociado_YNoExisteDespuesDeEliminarla()
+        public async Task Delete_RetornaExito_CuandoLaCapacitacionNoTienePersonalAsociado()
         {
-            // Arrange
-            var capacitacionId = 1;  // ID de la capacitación a eliminar
+            var capacitacionId = 1;  
             var capacitacionBd = new Capacitacion
             {
-                Fecha = DateTime.Today.AddDays(1),
-                Tema = "Capacitación Inicial",
+                Fecha = DateTime.Today.AddDays(7),
+                Tema = "Cambio de aceite en camiones pequeños",
                 Duracion = "1 hora"
             };
 
-            // Setup del mock para obtener la capacitación
             _unidadTrabajoMock.Setup(u => u.Capacitacion.Obtener(capacitacionId)).ReturnsAsync(capacitacionBd);
 
-            // Setup del mock para obtener los registros de capacitacionPersonal (sin personal asociado)
             _unidadTrabajoMock.Setup(u => u.CapacitacionPersonal.ObtenerTodos(It.IsAny<Expression<Func<CapacitacionPersonal, bool>>>(), null, null, true))
                 .ReturnsAsync(new List<CapacitacionPersonal>());
 
-            // Setup del mock para remover la capacitación (no hay que remover capacitacionPersonal)
             _unidadTrabajoMock.Setup(u => u.Capacitacion.Remover(It.IsAny<Capacitacion>())).Verifiable();
 
-            // Setup del mock para guardar los cambios
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
-            // Setup del mock para registrar la bitácora
             _unidadTrabajoMock.Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
 
-            // Act
             var resultado = await _controller.Delete(capacitacionId);
 
-            // Assert
-
-            // Simulamos que la capacitación no existe después de la eliminación
             _unidadTrabajoMock.Setup(u => u.Capacitacion.Obtener(capacitacionId)).ReturnsAsync((Capacitacion)null);
-
-            // Luego validamos que la capacitación ya no existe
             var capacitacionEliminada = await _unidadTrabajoMock.Object.Capacitacion.Obtener(capacitacionId);
-            Assert.That(capacitacionEliminada, Is.Null);  // Verifica que la capacitación eliminada sea nula
+            Assert.That(capacitacionEliminada, Is.Null);  
         }
 
+        // Verifica que se retorne un error cuando se intenta eliminar una capacitación que no existe.
         [Test]
         public async Task Delete_RetornaError_CuandoLaCapacitacionNoExiste()
         {
-            // Arrange
-            var capacitacionId = 999;  // ID de la capacitación que no existe
-            Capacitacion capacitacionBd = null;  // No existe en la base de datos
+            var capacitacionId = 999;  
+            Capacitacion capacitacionBd = null;  
 
-            // Setup del mock para obtener la capacitación (no existe)
             _unidadTrabajoMock.Setup(u => u.Capacitacion.Obtener(capacitacionId)).ReturnsAsync(capacitacionBd);
 
-            // Act
             var resultado = await _controller.Delete(capacitacionId);
 
-            // Assert
-            // Verificamos que el resultado sea un JsonResult
-            Assert.That(resultado, Is.InstanceOf<JsonResult>());  // Verifica que el resultado sea un JsonResult
-
+            Assert.That(resultado, Is.InstanceOf<JsonResult>());  
             var jsonResult = resultado as JsonResult;
 
-            // Deserializamos el JsonResult a un JObject para acceder a las propiedades
             var contenido = JObject.FromObject(jsonResult.Value);
 
-            // Verificamos que el mensaje dentro del JObject indique que hay un error al borrar
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar capacitacion"));  // Verifica que el mensaje sea el esperado
         }
-
 
 
         [TearDown]
         public void TearDown()
         {
-            // Limpiar los mocks configurados
+            // Limpia las configuraciones y recursos después de cada prueba.
             _unidadTrabajoMock.Reset();
 
-            // Liberar cualquier recurso adicional si es necesario
             if (_controller != null)
             {
-                // Limpiar el TempData si no es nulo
                 _controller.TempData?.Clear();
 
-                // No poner ControllerContext a null, ya que es necesario para el controlador
-                // Si el controlador implementa IDisposable, liberar los recursos
                 if (_controller is IDisposable disposableController)
                 {
                     disposableController.Dispose();
                 }
 
-                // Limpiar el controlador
                 _controller = null;
             }
         }
-
-
-
 
     }
 }
