@@ -13,12 +13,14 @@ namespace SalticosAdminAutomatedTest.Tests
         private IWebDriver driver;
 
         ContactoPage contactoPage;
+
+        [SetUp]
         public void SetUp()
         {
             contactoPage = new ContactoPage(driver);
             driver = contactoPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            contactoPage.Visit("http://localhost:7033/");
+            contactoPage.Visit("https://localhost:7033/");
 
             contactoPage.IniciarSesion("leomora641@gmail.com", "Hola123.");
         }

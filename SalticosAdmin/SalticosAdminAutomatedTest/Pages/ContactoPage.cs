@@ -53,7 +53,7 @@ namespace SalticosAdminAutomatedTest.Pages
 
         public void GestionContactos()
         {
-            Click(BtnIrOtros);
+            ClickElementUsingJS(BtnIrOtros);
             Click(BtnIrContactos);
         }
 
