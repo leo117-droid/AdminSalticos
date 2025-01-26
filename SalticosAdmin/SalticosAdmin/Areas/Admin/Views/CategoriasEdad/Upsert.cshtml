@@ -27,7 +27,7 @@
         <div class="row mb-2 mt-2">
             <div class="form-group col-md-6">
                 <label>Nombre</label>
-                <input type="text" asp-for="Nombre" class="form-control" placeholder="Nombre de la Categoría por Edad" id="nombre" />
+                <input type="text" asp-for="Nombre" class="form-control" placeholder="Nombre de la categoría por edad" id="nombre" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
         </div>
@@ -95,7 +95,7 @@
                 $.each(data, function (key, value) {
                     if (value) {
                         var nombreInput = document.getElementById("nombre");
-                        swal("Error", "Nombre ya Existe", "error");
+                        swal("Error", "Nombre ya existe", "error");
                         nombreInput.value = "";
                         return;
                     } else {
@@ -115,7 +115,7 @@
                 $.each(data, function (key, value) {
                     if (value) {
                         var nombre = document.getElementById("nombre");
-                        swal("Error", "Nombre ya Existe", "error");
+                        swal("Error", "Nombre ya existe", "error");
                         nombre.value = "";
                         return;
                     }

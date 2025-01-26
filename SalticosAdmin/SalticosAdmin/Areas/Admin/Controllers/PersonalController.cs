@@ -175,12 +175,12 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         public async Task<IActionResult> ValidarCedula(string cedula, int id = 0)
         {
             bool valor = false;
-            var lista = await _unidadTrabajo.Cliente.ObtenerTodos();
+            var lista = await _unidadTrabajo.Personal.ObtenerTodos();
             if (id == 0)
             {
                 if (cedula != null)
                 {
-                    valor = lista.Any(b => b.Cedula.ToLower().Trim() == cedula.ToLower().Trim());
+                    valor = lista.Any(b => b.Cedula.Trim() == cedula.Trim());
                 }
             }
             else

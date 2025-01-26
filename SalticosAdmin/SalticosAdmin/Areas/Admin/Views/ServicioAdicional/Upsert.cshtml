@@ -125,6 +125,57 @@
             return true;
         }
 
+
+        document.getElementById("nombre").addEventListener('change', function () {
+            validarNombre();
+        });
+
+
+
+        document.getElementById("formServicioAdicional").addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarNombreAntesDeEnviar();
+        });
+
+        function validarNombreAntesDeEnviar() {
+            var url = '@Url.Content("~/")' + "Admin/ServicioAdicional/ValidarNombre";
+            var id = '#id';
+            var nombre = '#nombre';
+
+            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var nombreInput = document.getElementById("nombre");
+                        swal("Error", "Nombre ya existe", "error");
+                        nombreInput.value = "";
+                        return;
+                    } else {
+                        document.getElementById("formServicioAdicional").submit();
+                    }
+                });
+            });
+        }
+
+        function validarNombre() {
+            var url = '@Url.Content("~/")' + "Admin/ServicioAdicional/ValidarNombre";
+            var id = '#id';
+            var nombre = '#nombre';
+
+            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
+
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var nombre = document.getElementById("nombre");
+                        swal("Error", "Nombre ya existe", "error");
+                        nombre.value = "";
+                        return;
+                    }
+                });
+
+            })
+
+        }
+
     </script>
 }
 
