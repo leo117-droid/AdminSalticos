@@ -20,9 +20,9 @@ namespace SalticosAdminAutomatedTest.Tests
             vehiculoPage = new VehiculoPage(driver);
             driver = vehiculoPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            vehiculoPage.Visit("http://localhost:5270/");
+            vehiculoPage.Visit("http://localhost:5270/"); // Cambiar según el puerto local
 
-            vehiculoPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            vehiculoPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!"); // cambiar según el usuario en la BD
         }
 
         [TearDown]
@@ -31,7 +31,7 @@ namespace SalticosAdminAutomatedTest.Tests
             driver.Quit();
         }
 
-        [Test]
+        [Test, Order(1)]
         public void CrearVehiculoConDatosValidos_EsRegistrado()
         {
             vehiculoPage.GestionVehiculos();
@@ -41,7 +41,7 @@ namespace SalticosAdminAutomatedTest.Tests
             Assert.IsTrue(vehiculoPage.VehiculoEstaRegistrado("010203"));
         }
 
-        [Test]
+        [Test, Order(2)]
         public void CrearVehiculoConCedulaExistente_MuestraMensajeDeError()
         {
             vehiculoPage.GestionVehiculos();
@@ -52,7 +52,7 @@ namespace SalticosAdminAutomatedTest.Tests
         }
 
 
-        [Test]
+        [Test, Order(3)]
         public void ActualizarModeloVehiculo_EsActualizado()
         {
             vehiculoPage.GestionVehiculos();
@@ -62,7 +62,7 @@ namespace SalticosAdminAutomatedTest.Tests
             Assert.IsTrue(vehiculoPage.ModeloVehiculoActualizado("2010", "010203"));
         }
 
-        [Test]
+        [Test, Order(4)]
         public void EliminarVehiculo_EsEliminado()
         {
             vehiculoPage.GestionVehiculos();
