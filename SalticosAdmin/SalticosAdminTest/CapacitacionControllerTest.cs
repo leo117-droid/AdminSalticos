@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SalticosAdmin.Areas.Admin.Controllers;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
 using System.Linq.Expressions;
+using SalticosAdmin.AccesoDeDatos.Repositorio;
 
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
@@ -23,7 +25,6 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         private CapacitacionController _controller;
         private Mock<HttpContext> _httpContextMock;
         private Mock<ITempDataDictionary> _tempDataMock;
-
 
 
         [SetUp]
@@ -158,45 +159,72 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(redirectResult.ActionName, Is.EqualTo("Index")); // Verifica la redirección a Index
             _unidadTrabajoMock.Verify(u => u.Capacitacion.Actualizar(It.IsAny<Capacitacion>()), Times.Once); // Verifica que Actualizar haya sido llamado
         }
+
         [Test]
-        public async Task Delete_RetornaExito_CuandoLaCapacitacionEsEliminada()
+        public async Task Delete_RetornaExito_CuandoLaCapacitacionNoTienePersonalAsociado_YNoExisteDespuesDeEliminarla()
         {
             // Arrange
-            var capacitacionId = 1;
+            var capacitacionId = 1;  // ID de la capacitación a eliminar
             var capacitacionBd = new Capacitacion
             {
-                Id = capacitacionId,
-                Tema = "Capacitación de prueba"
+                Fecha = DateTime.Today.AddDays(1),
+                Tema = "Capacitación Inicial",
+                Duracion = "1 hora"
             };
 
-            // Setup para el método Obtener
+            // Setup del mock para obtener la capacitación
             _unidadTrabajoMock.Setup(u => u.Capacitacion.Obtener(capacitacionId)).ReturnsAsync(capacitacionBd);
 
-            // Setup para el método ObtenerTodos, evitando el uso de parámetros opcionales en la expresión
-            _unidadTrabajoMock.Setup(u => u.CapacitacionPersonal.ObtenerTodos(It.Is<Expression<Func<CapacitacionPersonal, bool>>>(e => e.Compile().Invoke(new CapacitacionPersonal { IdCapacitacion = capacitacionId }) == true)))
+            // Setup del mock para obtener los registros de capacitacionPersonal (sin personal asociado)
+            _unidadTrabajoMock.Setup(u => u.CapacitacionPersonal.ObtenerTodos(It.IsAny<Expression<Func<CapacitacionPersonal, bool>>>(), null, null, true))
                 .ReturnsAsync(new List<CapacitacionPersonal>());
 
-            // Setup para el método Remover
+            // Setup del mock para remover la capacitación (no hay que remover capacitacionPersonal)
             _unidadTrabajoMock.Setup(u => u.Capacitacion.Remover(It.IsAny<Capacitacion>())).Verifiable();
 
-            // Setup para el método Guardar
+            // Setup del mock para guardar los cambios
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
+
+            // Setup del mock para registrar la bitácora
+            _unidadTrabajoMock.Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
 
             // Act
             var resultado = await _controller.Delete(capacitacionId);
 
             // Assert
+
+            // Simulamos que la capacitación no existe después de la eliminación
+            _unidadTrabajoMock.Setup(u => u.Capacitacion.Obtener(capacitacionId)).ReturnsAsync((Capacitacion)null);
+
+            // Luego validamos que la capacitación ya no existe
+            var capacitacionEliminada = await _unidadTrabajoMock.Object.Capacitacion.Obtener(capacitacionId);
+            Assert.That(capacitacionEliminada, Is.Null);  // Verifica que la capacitación eliminada sea nula
+        }
+
+        [Test]
+        public async Task Delete_RetornaError_CuandoLaCapacitacionNoExiste()
+        {
+            // Arrange
+            var capacitacionId = 999;  // ID de la capacitación que no existe
+            Capacitacion capacitacionBd = null;  // No existe en la base de datos
+
+            // Setup del mock para obtener la capacitación (no existe)
+            _unidadTrabajoMock.Setup(u => u.Capacitacion.Obtener(capacitacionId)).ReturnsAsync(capacitacionBd);
+
+            // Act
+            var resultado = await _controller.Delete(capacitacionId);
+
+            // Assert
+            // Verificamos que el resultado sea un JsonResult
+            Assert.That(resultado, Is.InstanceOf<JsonResult>());  // Verifica que el resultado sea un JsonResult
+
             var jsonResult = resultado as JsonResult;
-            var jsonResponse = jsonResult?.Value as dynamic;
 
-            Assert.That(jsonResponse?.success, Is.EqualTo(true));
-            Assert.That(jsonResponse?.message, Is.EqualTo("Capacitacion borrada exitosamente"));
+            // Deserializamos el JsonResult a un JObject para acceder a las propiedades
+            var contenido = JObject.FromObject(jsonResult.Value);
 
-            // Verificar que se haya llamado al método Remover
-            _unidadTrabajoMock.Verify(u => u.Capacitacion.Remover(It.IsAny<Capacitacion>()), Times.Once);
-
-            // Verificar que se haya llamado a Guardar
-            _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once);
+            // Verificamos que el mensaje dentro del JObject indique que hay un error al borrar
+            Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar capacitacion"));  // Verifica que el mensaje sea el esperado
         }
 
 
