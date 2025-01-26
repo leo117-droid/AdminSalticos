@@ -19,7 +19,7 @@ using SalticosAdmin.AccesoDeDatos.Repositorio;
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
     [TestFixture]
-    public class ProveedorControllerTests
+    public class ProveedorControllerTest
     {
         // Configuración inicial antes de cada prueba
 
@@ -231,7 +231,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 
             var contenido = JObject.FromObject(jsonResult.Value);
 
-            Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar proveedor"));  // Verifica que el mensaje sea el esperado
+            Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar proveedor"));  
         }
 
         [TearDown]
