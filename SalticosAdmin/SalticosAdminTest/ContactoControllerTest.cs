@@ -209,7 +209,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 
         // Verifica que se retorne un error cuando se intenta eliminar un contacto que no existe.
         [Test]
-        public async Task Delete_RetornaError_CuandoElProveedorNoExiste()
+        public async Task Delete_RetornaError_CuandoElContactoNoExiste()
         {
             var contactoId = 999;
             Contacto contactoBd = null;
