@@ -93,7 +93,7 @@ namespace SalticosAdminAutomatedTest.Pages
                 {
                     return true;
                 }
-                Thread.Sleep(500); // Esperar un poco antes de volver a verificar
+                Thread.Sleep(500); 
             }
             return false;
         }
