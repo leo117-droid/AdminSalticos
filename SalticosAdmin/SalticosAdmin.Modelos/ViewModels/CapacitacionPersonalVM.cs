@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace SalticosAdmin.Modelos.ViewModels
 {
-    public class AlimentacionIngredienteVM
+    public class CapacitacionPersonalVM
     {
 
-        public int IdAlimentacion { get; set; }
+        public int IdCapacitacion { get; set; }
 
         public int IdRelacion { get; set; }
 
-        public int IdIngrediente { get; set; }
+        public int IdPersonal { get; set; }
 
-        public string IngredienteNombre { get; set; }
+        public string PersonalNombre { get; set; }
 
-        public IEnumerable<SelectListItem> ListaIngrediente { get; set; }
+        public IEnumerable<SelectListItem> ListaPersonal { get; set; }
 
 
     }
