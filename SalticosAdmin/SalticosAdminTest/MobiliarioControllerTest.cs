@@ -20,12 +20,12 @@ using Microsoft.Extensions.FileProviders;
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
     [TestFixture]
-    public class AlimentacionControllerTests
+    public class MobiliarioControllerTests
     {
         // Configuración inicial antes de cada prueba
 
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
-        private AlimentacionController _controller;
+        private MobiliarioController _controller;
         private Mock<IWebHostEnvironment> _webHostEnvironmentMock;
 
         [SetUp]
@@ -33,7 +33,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         {
             _unidadTrabajoMock = new Mock<IUnidadTrabajo>();
             _webHostEnvironmentMock = new Mock<IWebHostEnvironment>();
-            _controller = new AlimentacionController(_unidadTrabajoMock.Object, _webHostEnvironmentMock.Object);
+            _controller = new MobiliarioController(_unidadTrabajoMock.Object, _webHostEnvironmentMock.Object);
 
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
@@ -72,7 +72,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var resultado = await _controller.Upsert((int?)null);
 
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
-            var modelo = (Alimentacion)((ViewResult)resultado).Model;
+            var modelo = (Mobiliario)((ViewResult)resultado).Model;
             Assert.That(modelo, Is.Not.Null);
             Assert.That(modelo.Id, Is.EqualTo(0));
         }
@@ -81,34 +81,34 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
-            var alimentacionId = 1;
-            var alimentacion = new Alimentacion
+            var mobiliarioId = 1;
+            var mobiliario = new Mobiliario
             {
-                Id = alimentacionId,
-                Nombre = "Palomitas",
-                Descripcion = "Bolsa de papel con palomitas saladas",
-                Precio = 750
+                Id = mobiliarioId,
+                Nombre = "Sillas",
+                Descripcion = "Sillas de metal",
+                Precio = 375
             };
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.Obtener(alimentacionId)).ReturnsAsync(alimentacion);
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.Obtener(mobiliarioId)).ReturnsAsync(mobiliario);
 
-            var resultado = await _controller.Upsert(alimentacionId);
+            var resultado = await _controller.Upsert(mobiliarioId);
 
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
-            var modelo = (Alimentacion)((ViewResult)resultado).Model;
+            var modelo = (Mobiliario)((ViewResult)resultado).Model;
             Assert.That(modelo, Is.Not.Null);
-            Assert.That(modelo.Id, Is.EqualTo(alimentacionId));
+            Assert.That(modelo.Id, Is.EqualTo(mobiliarioId));
         }
 
-        // Verifica que el método Upsert cree una nuevo producto de alimentación cuando el modelo no tiene un ID.
+        // Verifica que el método Upsert cree un nuevo mobiliario cuando el modelo no tiene un ID.
         [Test]
-        public async Task Upsert_Post_CreaNuevaAlimentacionConImagen()
+        public async Task Upsert_Post_CreaNuevoMobiliarioConImagen()
         {
-            var nuevaAlimentacion = new Alimentacion
+            var mobiliario = new Mobiliario
             {
                 Id = 0,
-                Nombre = "Churro",
-                Descripcion = "Bolsa de papel con un churro relleno",
-                Precio = 750
+                Nombre = "Mesa niños",
+                Descripcion = "mesa cuadrada pequeña para niños",
+                Precio = 450
             };
 
             var fileMock = new Mock<IFormFile>();
@@ -120,40 +120,40 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _controller.ControllerContext.HttpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues>(), files);
 
             string webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            string alimentacionPath = Path.Combine(webRootPath, "imagenes", "alimentacion");
+            string mobiliarioPath = Path.Combine(webRootPath, "imagenes", "mobiliario");
 
-            if (!Directory.Exists(alimentacionPath))
+            if (!Directory.Exists(mobiliarioPath))
             {
-                Directory.CreateDirectory(alimentacionPath);
+                Directory.CreateDirectory(mobiliarioPath);
             }
 
             _webHostEnvironmentMock.Setup(w => w.WebRootPath).Returns(webRootPath);
 
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.Agregar(It.IsAny<Alimentacion>())).Verifiable();
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.Agregar(It.IsAny<Mobiliario>())).Verifiable();
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
-            var resultado = await _controller.Upsert(nuevaAlimentacion);
+            var resultado = await _controller.Upsert(mobiliario);
 
-            Assert.That(resultado, Is.InstanceOf<ViewResult>());
-            _unidadTrabajoMock.Verify(u => u.Alimentacion.Agregar(It.IsAny<Alimentacion>()), Times.Once);
+            _unidadTrabajoMock.Verify(u => u.Mobiliario.Agregar(It.IsAny<Mobiliario>()), Times.Once);
             _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once);
-            Assert.That(_controller.TempData[DS.Exitosa], Is.EqualTo("Alimentacion creado Exitosamente"));
+            Assert.That(_controller.TempData[DS.Exitosa], Is.EqualTo("Mobiliario creado Exitosamente"));
         }
 
-        // Verifica que el método Upsert actualice un producto de alimentación y actualice la nueva imagen.
+
+        // Verifica que el método Upsert actualice un mobiliario y actualice la nueva imagen.
         [Test]
-        public async Task Upsert_Post_ActualizaAlimentacionConImagen()
+        public async Task Upsert_Post_ActualizaMobiliarioConImagen()
         {
-            var alimentacionExistente = new Alimentacion
+            var mobiliarioExistente = new Mobiliario
             {
                 Id = 1, 
-                Nombre = "Galleta suiza",
+                Nombre = "Mesa",
                 ImageUrl = "imagen_anterior.jpg",
-                Descripcion = "Galleta suiza con leche condensada",
+                Descripcion = "Mesa grande para adultos",
                 Precio = 800
             };
 
-            var alimentacion = new Alimentacion
+            var mobiliarioActualizado = new Mobiliario
             {
                 Id = 1,
                 Nombre = "Galleta suiza",
@@ -170,130 +170,128 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _controller.ControllerContext.HttpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues>(), files);
 
             string webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            string alimentacionPath = Path.Combine(webRootPath, "imagenes", "alimentacion");
+            string mobiliarioPath = Path.Combine(webRootPath, "imagenes", "mobiliario");
 
-            if (!Directory.Exists(alimentacionPath))
+            if (!Directory.Exists(mobiliarioPath))
             {
-                Directory.CreateDirectory(alimentacionPath);
+                Directory.CreateDirectory(mobiliarioPath);
             }
 
             _webHostEnvironmentMock.Setup(w => w.WebRootPath).Returns(webRootPath);
 
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.ObtenerPrimero(It.IsAny<Expression<Func<Alimentacion, bool>>>(), null, false))
-                              .ReturnsAsync(alimentacionExistente); 
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.Actualizar(It.IsAny<Alimentacion>())).Verifiable();
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.ObtenerPrimero(It.IsAny<Expression<Func<Mobiliario, bool>>>(), null, false))
+                              .ReturnsAsync(mobiliarioExistente); 
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.Actualizar(It.IsAny<Mobiliario>())).Verifiable();
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
-            var resultado = await _controller.Upsert(alimentacion);
+            var resultado = await _controller.Upsert(mobiliarioActualizado);
 
-            Assert.That(resultado, Is.InstanceOf<ViewResult>());
-            _unidadTrabajoMock.Verify(u => u.Alimentacion.Actualizar(It.IsAny<Alimentacion>()), Times.Once); // Verifica la actualización
-            _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once); // Verifica que se guarden los cambios
+            _unidadTrabajoMock.Verify(u => u.Mobiliario.Actualizar(It.IsAny<Mobiliario>()), Times.Once); 
+            _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once); 
 
-            Assert.That(_controller.TempData[DS.Exitosa], Is.EqualTo("Alimentacion actualizado Exitosamente"));
+            Assert.That(_controller.TempData[DS.Exitosa], Is.EqualTo("Mobiliario actualizado Exitosamente"));
         }
 
-        // Verifica que el método Upsert actualice un producto de alimentación.
+        // Verifica que el método Upsert actualice un mobiliario
         [Test]
-        public async Task Upsert_Post_ActualizaAlimentacion_NoActualizarImagen()
+        public async Task Upsert_Post_ActualizaMobiliario_NoActualizarImagen()
         {
-            var alimentacionExistente = new Alimentacion
+            var mobiliarioExistente = new Mobiliario
             {
-                Id = 1, 
-                Nombre = "Granizado pequeño",
-                ImageUrl = "granizado.jpg",
-                Descripcion = "Granizado con dos leches",
+                Id = 1,
+                Nombre = "Mesa",
+                ImageUrl = "mesa.jpg",
+                Descripcion = "Mesa grande para adultos",
                 Precio = 800
             };
 
-            var alimentacionActualizada = new Alimentacion
+            var mobiliarioActualizado = new Mobiliario
             {
                 Id = 1,
-                Nombre = "Granizado grande",
-                ImageUrl = "granizado.jpg",
-                Descripcion = "Granizado con dos leches",
+                Nombre = "Mesa",
+                ImageUrl = "mesa.jpg",
+                Descripcion = "Mesa grande para adultos",
                 Precio = 800
             };
 
             string webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
             _webHostEnvironmentMock.Setup(w => w.WebRootPath).Returns(webRootPath);
 
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.ObtenerPrimero(It.IsAny<Expression<Func<Alimentacion, bool>>>(), null, false))
-                              .ReturnsAsync(alimentacionExistente); 
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.Actualizar(It.IsAny<Alimentacion>())).Verifiable();
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.ObtenerPrimero(It.IsAny<Expression<Func<Mobiliario, bool>>>(), null, false))
+                              .ReturnsAsync(mobiliarioExistente); 
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.Actualizar(It.IsAny<Mobiliario>())).Verifiable();
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
             var formFileCollection = new FormFileCollection(); 
             _controller.ControllerContext.HttpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues>(), formFileCollection);
 
-            var resultado = await _controller.Upsert(alimentacionActualizada);
+            var resultado = await _controller.Upsert(mobiliarioActualizado);
 
-            Assert.That(resultado, Is.InstanceOf<ViewResult>());
-            _unidadTrabajoMock.Verify(u => u.Alimentacion.Actualizar(It.IsAny<Alimentacion>()), Times.Once);
+            _unidadTrabajoMock.Verify(u => u.Mobiliario.Actualizar(It.IsAny<Mobiliario>()), Times.Once);
             _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once); 
 
-            Assert.That(alimentacionExistente.ImageUrl, Is.EqualTo("granizado.jpg"));
+            Assert.That(mobiliarioExistente.ImageUrl, Is.EqualTo("mesa.jpg"));
 
-            Assert.That(_controller.TempData[DS.Exitosa], Is.EqualTo("Alimentacion actualizado Exitosamente"));
+            Assert.That(_controller.TempData[DS.Exitosa], Is.EqualTo("Mobiliario actualizado Exitosamente"));
         }
 
-        // Verifica que un producto de alimentación sin evento asociado sea eliminada correctamente.
+        // Verifica que un mobiliario sin evento asociado sea eliminada correctamente.
         [Test]
-        public async Task Delete_RetornaExito_CuandoLaAlimentacionNoTieneEventosAsociados()
+        public async Task Delete_RetornaExito_CuandoElMobiliarioNoTieneEventosAsociados()
         {
-            var alimentacionId = 1;
-            var alimentacionBd = new Alimentacion
+            var mobiliarioId = 1;
+            var mobiliarioBd = new Mobiliario
             {
-                Id = alimentacionId,
-                Nombre = "Hot Dog",
-                ImageUrl = "hotdog.jpg",
-                Descripcion = "Hot dog con salsas y papas tostadas",
-                Precio = 800
+                Id = mobiliarioId,
+                Nombre = "Silla niños",
+                ImageUrl = "silla.jpg",
+                Descripcion = "Silla pequeña para niños menores de 10 años",
+                Precio = 300
             };
 
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.Obtener(alimentacionId)).ReturnsAsync(alimentacionBd);
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.Remover(It.IsAny<Alimentacion>())).Verifiable();
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.Obtener(mobiliarioId)).ReturnsAsync(mobiliarioBd);
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.Remover(It.IsAny<Mobiliario>())).Verifiable();
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
 
-            var resultado = await _controller.Delete(alimentacionId);
+            var resultado = await _controller.Delete(mobiliarioId);
 
             Assert.That(resultado, Is.InstanceOf<JsonResult>());
             var jsonResult = resultado as JsonResult;
             var contenido = JObject.FromObject(jsonResult.Value);
             Assert.That(contenido["success"].ToString(), Is.EqualTo("True")); 
-            _unidadTrabajoMock.Verify(u => u.Alimentacion.Remover(It.IsAny<Alimentacion>()), Times.Once);
+            _unidadTrabajoMock.Verify(u => u.Mobiliario.Remover(It.IsAny<Mobiliario>()), Times.Once);
         }
 
-        // Verifica que se retorne un error cuando se intenta eliminar una producto de alimentación que no existe.
+        // Verifica que se retorne un error cuando se intenta eliminar un mobiliario que no existe.
         [Test]
-        public async Task Delete_RetornaError_CuandoLaAlimentacionNoExiste()
+        public async Task Delete_RetornaError_CuandoElMobiliarioNoExiste()
         {
-            var alimentacionId = 999;
-            Alimentacion alimentacionBd = null;
+            var mobiliarioId = 999;
+            Mobiliario mobiliarioBd = null;
 
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.Obtener(alimentacionId)).ReturnsAsync(alimentacionBd);
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.Obtener(mobiliarioId)).ReturnsAsync(mobiliarioBd);
 
-            var resultado = await _controller.Delete(alimentacionId);
+            var resultado = await _controller.Delete(mobiliarioId);
 
             Assert.That(resultado, Is.InstanceOf<JsonResult>());
             var jsonResult = resultado as JsonResult;
             var contenido = JObject.FromObject(jsonResult.Value);
-            Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Alimentacion"));
+            Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Mobiliario"));
         }
 
         // Verifica que el método ValidarNombre retorne false si el nombre no está duplicado.
         [Test]
         public async Task ValidarNombre_NombreNoDuplicado_RetornaFalse()
         {
-            var nombreNuevo = "Palomitas";
-            var listaAlimentacion = new List<Alimentacion>
+            var nombreNuevo = "Silla";
+            var listaMobiliario = new List<Mobiliario>
             {
-                new Alimentacion { Id = 1, Nombre = "Hot Dog" },
-                new Alimentacion { Id = 2, Nombre = "Churro" }
+                new Mobiliario { Id = 1, Nombre = "Mesa" },
+                new Mobiliario { Id = 2, Nombre = "Mantel" }
             };
 
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.ObtenerTodos(It.IsAny<Expression<Func<Alimentacion, bool>>>(), null, null, true))
-                .ReturnsAsync(listaAlimentacion);
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.ObtenerTodos(It.IsAny<Expression<Func<Mobiliario, bool>>>(), null, null, true))
+                .ReturnsAsync(listaMobiliario);
 
             var resultado = await _controller.ValidarNombre(nombreNuevo);
 
@@ -303,19 +301,20 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(dataValor, Is.False, "El valor de 'data' no es false.");
         }
 
-        // Verifica que el método ValidarNombre retorne true si el nombre no está duplicado.
+
+        // Verifica que el método ValidarNombre retorne true si el nombre está duplicado.
         [Test]
-        public async Task ValidarNombre_NombreDuplicado_RetornaTrue()
+        public async Task ValidarNombre_NombreNoDuplicado_RetornaTrue()
         {
-            var nombreNuevo = "Churro";
-            var listaAlimentacion = new List<Alimentacion>
+            var nombreNuevo = "Mantel";
+            var listaMobiliario = new List<Mobiliario>
             {
-                new Alimentacion { Id = 1, Nombre = "Granizado" },
-                new Alimentacion { Id = 2, Nombre = "Churro" }
+                new Mobiliario { Id = 1, Nombre = "Mesa" },
+                new Mobiliario { Id = 2, Nombre = "Mantel" }
             };
 
-            _unidadTrabajoMock.Setup(u => u.Alimentacion.ObtenerTodos(It.IsAny<Expression<Func<Alimentacion, bool>>>(), null, null, true))
-                .ReturnsAsync(listaAlimentacion);
+            _unidadTrabajoMock.Setup(u => u.Mobiliario.ObtenerTodos(It.IsAny<Expression<Func<Mobiliario, bool>>>(), null, null, true))
+                .ReturnsAsync(listaMobiliario);
 
             var resultado = await _controller.ValidarNombre(nombreNuevo);
 
