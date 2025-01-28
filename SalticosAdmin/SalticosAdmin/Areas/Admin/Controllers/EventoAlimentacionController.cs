@@ -116,7 +116,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
 
 
-                        TempData[DS.Exitosa] = "Alimentacion agregado exitosamente";
+                        TempData[DS.Exitosa] = "Alimentación agregado exitosamente";
 
                        
                     }
@@ -183,7 +183,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var EventoAlimentacionBd = await _unidadTrabajo.EventoAlimentacion.Obtener(id);
             if(EventoAlimentacionBd == null)
             {
-                return Json(new { success = false, message = "Error al borrar alimentacion del evento" });
+                return Json(new { success = false, message = "Error al borrar alimentación del evento" });
             }
 
             _unidadTrabajo.EventoAlimentacion.Remover(EventoAlimentacionBd);
@@ -193,12 +193,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoAlimentacionBd.IdEvento);
             var alimentacionBitacora = await _unidadTrabajo.Alimentacion.Obtener(EventoAlimentacionBd.IdAlimentacion);
-            var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBitacora.ClienteId);
 
             await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento del {eventoBitacora.Fecha.ToString("dd/MM/yyyy")}" +
                 $" a las {eventoBitacora.HoraInicio} el producto de alimentación {alimentacionBitacora.Nombre}", usuarioNombre);
 
-            return Json(new { success = true, message = "Alimentacion borrado del evento exitosamente" });
+            return Json(new { success = true, message = "Alimentación borrado del evento exitosamente" });
 
         }
 
