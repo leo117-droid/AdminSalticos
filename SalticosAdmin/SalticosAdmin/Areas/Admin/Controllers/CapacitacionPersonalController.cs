@@ -170,7 +170,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var CapacitacionPersonalBd = await _unidadTrabajo.CapacitacionPersonal.Obtener(id);
             if (CapacitacionPersonalBd == null)
             {
-                return Json(new { success = false, message = "Error al borrar Personal de Capacitacion" });
+                return Json(new { success = false, message = "Error al borrar personal de una capacitación" });
             }
 
             
