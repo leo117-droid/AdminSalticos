@@ -109,11 +109,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         var usuarioNombre = User.Identity.Name;
 
-                        var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoInflable.Evento.ClienteId);
                         var inflableBitacora = await _unidadTrabajo.Inflable.Obtener(eventoInflable.IdInflable);
 
-                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                            $" para {eventoInflable.Evento.Fecha.ToString("dd/MM/yyyy")} el inflable {inflableBitacora.Nombre}", usuarioNombre);
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento del {eventoInflable.Evento.Fecha.ToString("dd/MM/yyyy")}" +
+                            $" a las {eventoInflable.Evento.HoraInicio} el inflable {inflableBitacora.Nombre}", usuarioNombre);
+
 
                     }
 
@@ -134,11 +134,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     var usuarioNombre = User.Identity.Name;
 
-                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoInflable.Evento.ClienteId);
                     var inflableBitacora = await _unidadTrabajo.Inflable.Obtener(eventoInflable.IdInflable);
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                        $" para {eventoInflable.Evento.Fecha.ToString("dd/MM/yyyy")} el inflable {inflableBitacora.Nombre}", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento del {eventoInflable.Evento.Fecha.ToString("dd/MM/yyyy")}" +
+                        $" a las {eventoInflable.Evento.HoraInicio} el inflable {inflableBitacora.Nombre}", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -185,10 +184,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoInflableBd.IdEvento);
             var inflableBitacora = await _unidadTrabajo.Inflable.Obtener(EventoInflableBd.IdInflable);
-            var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBitacora.ClienteId);
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                $" para {eventoBitacora.Fecha.ToString("dd/MM/yyyy")} el inflable {inflableBitacora.Nombre}", usuarioNombre);
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento del {eventoBitacora.Fecha.ToString("dd/MM/yyyy")}" +
+                $" a las {eventoBitacora.HoraInicio} el inflable {inflableBitacora.Nombre}", usuarioNombre);
 
             return Json(new { success = true, message = "Inflable borrado del evento exitosamente" });
 
