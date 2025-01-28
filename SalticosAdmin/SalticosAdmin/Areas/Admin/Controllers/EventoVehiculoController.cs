@@ -107,10 +107,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         var usuarioNombre = User.Identity.Name;
 
-                        var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVehiculo.Evento.ClienteId);
                         var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(eventoVehiculo.IdVehiculo);
 
-                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento de {eventoVehiculo.Evento.Fecha.ToString("dd/MM/yyyy")}" +
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento del {eventoVehiculo.Evento.Fecha.ToString("dd/MM/yyyy")}" +
                             $" a las {eventoVehiculo.Evento.HoraInicio} al carro con placa {vehiculoBitacora.Placa}", usuarioNombre);
 
 
@@ -135,7 +134,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(eventoVehiculo.IdVehiculo);
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento de {eventoVehiculo.Evento.Fecha.ToString("dd/MM/yyyy")}" +
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento del {eventoVehiculo.Evento.Fecha.ToString("dd/MM/yyyy")}" +
                             $" a las {eventoVehiculo.Evento.HoraInicio} al carro con placa {vehiculoBitacora.Placa}", usuarioNombre);
                 }
                 await _unidadTrabajo.Guardar();
@@ -183,7 +182,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoVehiculoBd.IdEvento);
             var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(EventoVehiculoBd.IdVehiculo);
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento de {eventoBitacora.Fecha.ToString("dd/MM/yyyy")}" +
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento del {eventoBitacora.Fecha.ToString("dd/MM/yyyy")}" +
                             $" a las {eventoBitacora.HoraInicio} al carro con placa {vehiculoBitacora.Placa}", usuarioNombre);
 
             return Json(new { success = true, message = "Vehiculo borrado del evento exitosamente" });

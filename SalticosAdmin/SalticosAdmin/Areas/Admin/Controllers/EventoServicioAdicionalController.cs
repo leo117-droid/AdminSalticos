@@ -165,10 +165,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                         var usuarioNombre = User.Identity.Name;
                         
                         var servicioAdicionalBitacora = await _unidadTrabajo.ServicioAdicional.Obtener(eventoServicioAdicional.IdServicioAdicional);
-                        var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoServicioAdicional.Evento.ClienteId);
+                        
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento del {eventoServicioAdicional.Evento.Fecha.ToString("dd/MM/yyyy")}" +
+                            $" a las {eventoServicioAdicional.Evento.HoraInicio} el servicio de {servicioAdicionalBitacora.Nombre}'", usuarioNombre);
 
-                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                            $" para {eventoServicioAdicional.Evento.Fecha.ToString("dd/MM/yyyy")} el servicio de {servicioAdicionalBitacora.Nombre}'", usuarioNombre);
+
 
                     }
 
@@ -191,10 +192,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     var usuarioNombre = User.Identity.Name;
 
                     var servicioAdicionalBitacora = await _unidadTrabajo.ServicioAdicional.Obtener(eventoServicioAdicional.IdServicioAdicional);
-                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoServicioAdicional.Evento.ClienteId);
+                    
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento del {eventoServicioAdicional.Evento.Fecha.ToString("dd/MM/yyyy")}" +
+                            $" a las {eventoServicioAdicional.Evento.HoraInicio} el servicio de {servicioAdicionalBitacora.Nombre}'", usuarioNombre);
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                        $" para {eventoServicioAdicional.Evento.Fecha.ToString("dd/MM/yyyy")} el servicio de {servicioAdicionalBitacora.Nombre}'", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -244,10 +245,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoServicioAdicionalBd.IdEvento);
             var servicioAdicionalBitacora = await _unidadTrabajo.ServicioAdicional.Obtener(EventoServicioAdicionalBd.IdServicioAdicional);
-            var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBitacora.ClienteId);
+            
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                $" para {eventoBitacora.Fecha.ToString("dd/MM/yyyy")} el servicio de {servicioAdicionalBitacora.Nombre}", usuarioNombre);
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento del {eventoBitacora.Fecha.ToString("dd/MM/yyyy")}" +
+                $" a las {eventoBitacora.HoraInicio} el servicio de {servicioAdicionalBitacora.Nombre}", usuarioNombre);
+            
 
 
             return Json(new { success = true, message = "Servicio borrado del evento exitosamente" });
