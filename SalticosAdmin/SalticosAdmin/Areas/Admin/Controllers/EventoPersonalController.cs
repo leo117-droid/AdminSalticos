@@ -86,12 +86,12 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 if (eventoPersonalVM.IdRelacion == 0)
                 {
-                    
+
                     EventoPersonal existePersonal = await _unidadTrabajo.EventoPersonal.ObtenerPrimero(X => X.IdEvento == eventoPersonalVM.IdEvento && X.IdPersonal == eventoPersonalVM.IdPersonal);
                     if (existePersonal != null)
                     {
                         TempData[DS.Error] = "Personal ya existente";
-                        
+
                     }
                     else
                     {
@@ -109,10 +109,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                         var usuarioNombre = User.Identity.Name;
 
                         var personalBitacora = await _unidadTrabajo.Personal.Obtener(eventoPersonal.IdPersonal);
-                        var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoPersonal.Evento.ClienteId);
 
-                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                            $" para {eventoPersonal.Evento.Fecha.ToString("dd/MM/yyyy")} a {personalBitacora.Nombre}", usuarioNombre);
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento del {eventoPersonal.Evento.Fecha.ToString("dd/MM/yyyy")}" +
+                            $" a las {eventoPersonal.Evento.HoraInicio} a {personalBitacora.Nombre}", usuarioNombre);
 
                     }
 
@@ -133,12 +132,11 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     TempData[DS.Exitosa] = "Evento actualizado exitosamente";
 
                     var usuarioNombre = User.Identity.Name;
-
-                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoPersonal.Evento.ClienteId);
+                
                     var personalBitacora = await _unidadTrabajo.Personal.Obtener(eventoPersonal.IdPersonal);
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                        $" para {eventoPersonal.Evento.Fecha.ToString("dd/MM/yyyy")} a {personalBitacora.Nombre}", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento del {eventoPersonal.Evento.Fecha.ToString("dd/MM/yyyy")}" +
+                        $" a las {eventoPersonal.Evento.HoraInicio} a {personalBitacora.Nombre}", usuarioNombre);
 
                 }
                 await _unidadTrabajo.Guardar();
@@ -185,10 +183,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoPersonalBd.IdEvento);
             var personalBitacora = await _unidadTrabajo.Personal.Obtener(EventoPersonalBd.IdPersonal);
-            var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBitacora.ClienteId);
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                $" para {eventoBitacora.Fecha.ToString("dd/MM/yyyy")} a {personalBitacora.Nombre}", usuarioNombre);
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento del {eventoBitacora.Fecha.ToString("dd/MM/yyyy")}" +
+                        $" a las {eventoBitacora.HoraInicio} a {personalBitacora.Nombre}", usuarioNombre);
 
 
             return Json(new { success = true, message = "Personal borrado del evento exitosamente" });
