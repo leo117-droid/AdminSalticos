@@ -125,8 +125,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 .Setup(x => x.Action(It.IsAny<UrlActionContext>()))
                 .Returns("fake-url"); 
 
-            _controller.Url = urlHelperMock.Object; // Asigna el mock al controlador.
-
+            _controller.Url = urlHelperMock.Object; 
             _unidadTrabajoMock.Setup(u => u.Personal.ObtenerPrimero(
                 It.IsAny<Expression<Func<Personal, bool>>>(),
                 null,

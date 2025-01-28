@@ -111,7 +111,6 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [Test]
         public async Task Upsert_Post_AgregarNuevoIngrediente_Exito()
         {
-            // Arrange
             var alimentacionIngredienteVM = new AlimentacionIngredienteVM
             {
                 IdAlimentacion = 1,
@@ -119,13 +118,12 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 IdIngrediente = 2
             };
 
-            // Mock de IUrlHelper
             var urlHelperMock = new Mock<IUrlHelper>();
             urlHelperMock
                 .Setup(x => x.Action(It.IsAny<UrlActionContext>()))
                 .Returns("fake-url"); 
 
-            _controller.Url = urlHelperMock.Object; // Asigna el mock al controlador.
+            _controller.Url = urlHelperMock.Object;
 
             _unidadTrabajoMock.Setup(u => u.Ingrediente.ObtenerPrimero(
                 It.IsAny<Expression<Func<Ingrediente, bool>>>(),
