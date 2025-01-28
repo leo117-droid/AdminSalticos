@@ -163,7 +163,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         await _unidadTrabajo.EventoMobiliario.Agregar(eventoMobiliario);
 
-                        TempData[DS.Exitosa] = "Mobilairio agregado exitosamente";
+                        TempData[DS.Exitosa] = "Mobiliario agregado exitosamente";
 
                         var usuarioNombre = User.Identity.Name;
 
