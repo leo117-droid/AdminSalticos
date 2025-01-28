@@ -160,8 +160,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
         }
 
         
-
-
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
