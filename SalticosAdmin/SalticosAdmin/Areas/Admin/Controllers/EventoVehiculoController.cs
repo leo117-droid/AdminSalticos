@@ -56,8 +56,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-
-                //  productoPrecioVM.tipoPrecioNombre = productoPrecioVM.ListaPrecios.Where(x => x.Value.Equals(productoPrecioOBJ.Idprecio.ToString())).Select(x=>x.Text).FirstOrDefault();
                 eventoVehiculoVM.IdVehiculo = eventoVehiculoOBJ.IdVehiculo;
 
 
@@ -87,7 +85,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             {
                 if (eventoVehiculoVM.IdRelacion == 0)
                 {
-                    //productoPrecioVM.productoPrecio.Idproducto = id;
+                    
                     EventoVehiculo existeVehiculo = await _unidadTrabajo.EventoVehiculo.ObtenerPrimero(X => X.IdEvento == eventoVehiculoVM.IdEvento && X.IdVehiculo == eventoVehiculoVM.IdVehiculo);
                     if (existeVehiculo != null)
                     {
@@ -112,8 +110,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                         var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVehiculo.Evento.ClienteId);
                         var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(eventoVehiculo.IdVehiculo);
 
-                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                            $" para {eventoVehiculo.Evento.Fecha.ToString("dd/MM/yyyy")} el vehiculo {vehiculoBitacora.Placa}'", usuarioNombre);
+                        await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó en evento de {eventoVehiculo.Evento.Fecha.ToString("dd/MM/yyyy")}" +
+                            $" a las {eventoVehiculo.Evento.HoraInicio} al carro con placa {vehiculoBitacora.Placa}", usuarioNombre);
+
 
                     }
 
@@ -134,12 +133,10 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                     var usuarioNombre = User.Identity.Name;
 
-                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVehiculo.Evento.ClienteId);
                     var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(eventoVehiculo.IdVehiculo);
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                        $" para {eventoVehiculo.Evento.Fecha.ToString("dd/MM/yyyy")} el vehiculo {vehiculoBitacora.Placa}'", usuarioNombre);
-
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó en evento de {eventoVehiculo.Evento.Fecha.ToString("dd/MM/yyyy")}" +
+                            $" a las {eventoVehiculo.Evento.HoraInicio} al carro con placa {vehiculoBitacora.Placa}", usuarioNombre);
                 }
                 await _unidadTrabajo.Guardar();
                 string returnUrl = Url.Action("Index", "EventoVehiculo", new { id = eventoVehiculoVM.IdEvento });
@@ -185,11 +182,9 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             var eventoBitacora = await _unidadTrabajo.Evento.Obtener(EventoVehiculoBd.IdEvento);
             var vehiculoBitacora = await _unidadTrabajo.Vehiculo.Obtener(EventoVehiculoBd.IdVehiculo);
-            var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBitacora.ClienteId);
 
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento de {clienteBitacora.Nombre} {clienteBitacora.Apellidos}" +
-                $" para {eventoBitacora.Fecha.ToString("dd/MM/yyyy")} el vehiculo {vehiculoBitacora.Placa}", usuarioNombre);
-
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó en evento de {eventoBitacora.Fecha.ToString("dd/MM/yyyy")}" +
+                            $" a las {eventoBitacora.HoraInicio} al carro con placa {vehiculoBitacora.Placa}", usuarioNombre);
 
             return Json(new { success = true, message = "Vehiculo borrado del evento exitosamente" });
 
