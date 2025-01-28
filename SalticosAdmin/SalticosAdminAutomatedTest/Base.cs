@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium.Support.UI;
 
 namespace SalticosAdminAutomatedTest
 {
@@ -105,6 +106,14 @@ namespace SalticosAdminAutomatedTest
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
             var element = driver.FindElement(elementLocator);
             js.ExecuteScript("arguments[0].click();", element);
+        }
+
+
+        public void SelectByText(String text, By locator)
+        {
+            IWebElement element = driver.FindElement(locator);
+            SelectElement selectElement = new SelectElement(element);
+            selectElement.SelectByText(text);
         }
 
     }

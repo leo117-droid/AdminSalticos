@@ -38,7 +38,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
 
         [Test, Order(1)]
-        public void CrearNuevoMobilairioConDatosValidos()
+        public void CrearNuevoMobilairioConDatosValidos_EsRegistrado()
         {
             mobiliarioPage.GestionMobiliario();
             mobiliarioPage.CrearMobiliario("Mesa de conferencias", "Mesa grande de madera para conferencias", "2m x 1m x 1.5m",
@@ -50,7 +50,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
 
         [Test, Order(2)]
-        public void ActualizarDescripcionMobiliario()
+        public void ActualizarDescripcionMobiliario_EsActualizado()
         {
             mobiliarioPage.GestionMobiliario();
             mobiliarioPage.ActualizarDescripcionMobiliario("Mesa de conferencias", "Mesa grande de plástico para conferencias");
@@ -61,7 +61,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
 
         [Test, Order(3)]
-        public void EliminarMobiliario()
+        public void EliminarMobiliario_EsEliminado()
         {
             mobiliarioPage.GestionMobiliario();
             mobiliarioPage.EliminarMobiliario("Mesa de conferencias");
