@@ -40,7 +40,7 @@ namespace SalticosAdminAutomatedTest.Pages
         }
 
 
-        public void IniciarSesion(String usuario, String contrasenna)
+        public void IniciarSesion(string usuario, string contrasenna)
         {
             LoginPage loginPage = new LoginPage(driver);
             loginPage.Login(usuario, contrasenna);
@@ -57,8 +57,8 @@ namespace SalticosAdminAutomatedTest.Pages
         }
 
 
-        public void CrearMobiliario(String nombre, String descripcion, String dimensiones, String imagen,
-            String precio, String inventario)
+        public void CrearMobiliario(string nombre, string descripcion, string dimensiones, string imagen,
+            string precio, string inventario)
         {
             Click(CrearNuevoMobiliarioLocator);
             Thread.Sleep(1500);
@@ -74,7 +74,7 @@ namespace SalticosAdminAutomatedTest.Pages
         }
 
 
-        public Boolean MobiliarioEstaRegistrado(String nombre)
+        public bool MobiliarioEstaRegistrado(string nombre)
         {
             Type(nombre, BuscarInputLocator);
             Thread.Sleep(1500);
@@ -82,7 +82,7 @@ namespace SalticosAdminAutomatedTest.Pages
         }
 
 
-        public void ActualizarDescripcionMobiliario(String nombre, String nuevaDescripcion)
+        public void ActualizarDescripcionMobiliario(string nombre, string nuevaDescripcion)
         {
             Type(nombre, BuscarInputLocator);
             Thread.Sleep(1500);
@@ -94,7 +94,7 @@ namespace SalticosAdminAutomatedTest.Pages
         }
 
 
-        public Boolean DescripcionMobiliarioActualizada(String nombre, String nuevaDescripcion)
+        public bool DescripcionMobiliarioActualizada(string nombre, string nuevaDescripcion)
         {
             Type(nombre, BuscarInputLocator);
             Thread.Sleep(1500);
@@ -103,7 +103,7 @@ namespace SalticosAdminAutomatedTest.Pages
         }
 
 
-        public void EliminarMobiliario(String nombre)
+        public void EliminarMobiliario(string nombre)
         {
             Type(nombre, BuscarInputLocator);
             Thread.Sleep(1500);
@@ -112,7 +112,7 @@ namespace SalticosAdminAutomatedTest.Pages
             Click(EliminarConfirmacionBtnLocator);
         }
 
-        public Boolean MobiliarioEliminado()
+        public bool MobiliarioEliminado()
         {
             return IsDisplayed(NingunRegistroLocator);
         }
