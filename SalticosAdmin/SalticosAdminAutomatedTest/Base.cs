@@ -109,6 +109,38 @@ namespace SalticosAdminAutomatedTest
         }
 
 
+        public void TypeUsingJS(string inputText, By elementLocator)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            var element = driver.FindElement(elementLocator);
+
+            js.ExecuteScript("arguments[0].value = arguments[1];", element, inputText);
+
+            
+            js.ExecuteScript(@"
+                var event = new Event('input', { bubbles: true });
+                arguments[0].dispatchEvent(event);
+            ", element);
+        }
+
+
+        public void SelectByVisibleTextUsingJS(string visibleText, By elementLocator)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            var dropdown = driver.FindElement(elementLocator);
+
+            js.ExecuteScript(@"
+                Array.from(arguments[0].options).forEach(option => {
+                    if (option.text === arguments[1]) {
+                        option.selected = true;
+                    }
+                });
+                var event = new Event('change', { bubbles: true });
+                arguments[0].dispatchEvent(event);
+            ", dropdown, visibleText);
+        }
+
+
         public void SelectByText(String text, By locator)
         {
             IWebElement element = driver.FindElement(locator);
