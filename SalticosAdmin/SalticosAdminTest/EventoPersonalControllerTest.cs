@@ -142,34 +142,30 @@ namespace SalticosAdminTest
         [Test]
         public async Task Upsert_PostModeloValido_CreaNuevoEventoPersonal()
         {
-            
+
             var eventoPersonalVM = new EventoPersonalVM
             {
                 IdEvento = 1,
                 IdRelacion = 0,
                 IdPersonal = 1
             };
-
             var urlHelperMock = new Mock<IUrlHelper>();
             urlHelperMock
                 .Setup(x => x.Action(It.IsAny<UrlActionContext>()))
                 .Returns("fake-url");
-
-            _controller.Url = urlHelperMock.Object; 
+            _controller.Url = urlHelperMock.Object;
             _mockUnidadTrabajo
                 .Setup(u => u.EventoPersonal.ObtenerPrimero(It.IsAny<Expression<Func<EventoPersonal, bool>>>(), null, false))
                 .ReturnsAsync((EventoPersonal)null);
 
-            
             _mockUnidadTrabajo
-                .Setup(u => u.Evento.ObtenerPrimero(It.IsAny<Expression<Func<Evento, bool>>>(), null, false))
+                .Setup(u => u.Evento.ObtenerPrimero(It.IsAny<Expression<Func<Evento, bool>>>(), null, true))
                 .ReturnsAsync(new Evento
                 {
                     Id = 1,
                     Fecha = DateTime.Now,
                     ClienteId = 2
                 });
-
             _mockUnidadTrabajo
                 .Setup(u => u.Personal.Obtener(It.IsAny<int>()))
                 .ReturnsAsync(new Personal
@@ -178,16 +174,12 @@ namespace SalticosAdminTest
                     Nombre = "Ian Mora"
                 });
 
-            
             _mockUnidadTrabajo
                 .Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
-
             var tempDataMock = new Mock<ITempDataDictionary>();
             _controller.TempData = tempDataMock.Object;
-
             var result = await _controller.Upsert(eventoPersonalVM);
-
             tempDataMock.VerifySet(tempData => tempData[DS.Exitosa] = "Evento agregado exitosamente", Times.Once);
             _mockUnidadTrabajo.Verify(u => u.EventoPersonal.Agregar(It.IsAny<EventoPersonal>()), Times.Once);
             _mockUnidadTrabajo.Verify(u => u.Guardar(), Times.Once);

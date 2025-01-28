@@ -140,7 +140,7 @@ namespace SalticosAdminTest
 
             
             _mockUnidadTrabajo
-                .Setup(u => u.Evento.ObtenerPrimero(It.IsAny<Expression<Func<Evento, bool>>>(), null, false))
+                .Setup(u => u.Evento.ObtenerPrimero(It.IsAny<Expression<Func<Evento, bool>>>(), null, true))
                 .ReturnsAsync(new Evento
                 {
                     Id = 1,
@@ -166,7 +166,7 @@ namespace SalticosAdminTest
 
             var result = await _controller.Upsert(eventoVehiculoVM);
 
-            tempDataMock.VerifySet(tempData => tempData[DS.Exitosa] = "Evento agregado exitosamente", Times.Once);
+            tempDataMock.VerifySet(tempData => tempData[DS.Exitosa] = "Vehiculo agregado exitosamente", Times.Once);
             _mockUnidadTrabajo.Verify(u => u.EventoVehiculo.Agregar(It.IsAny<EventoVehiculo>()), Times.Once);
             _mockUnidadTrabajo.Verify(u => u.Guardar(), Times.Once);
             Assert.That(result, Is.InstanceOf<RedirectResult>());
