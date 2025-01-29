@@ -208,6 +208,49 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Personal"));
         }
 
+        [Test]
+        public async Task ValidarCedula_CedulaNoDuplicada_RetornaFalse()
+        {
+            var cedulaNueva = "123456789";
+            var listaPersonal = new List<Personal>
+            {
+                new Personal { Id = 1, Cedula = "987654321" },
+                new Personal { Id = 2, Cedula = "456789123" }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Personal.ObtenerTodos(It.IsAny<Expression<Func<Personal, bool>>>(), null, null, true))
+                .ReturnsAsync(listaPersonal);
+
+            var resultado = await _controller.ValidarCedula(cedulaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.False, "El valor de 'data' no es false.");
+        }
+
+        // Verifica que el método ValidarCedula retorne true si la cédula está duplicada.
+        [Test]
+        public async Task ValidarCedula_CedulaDuplicada_RetornaTrue()
+        {
+            var cedulaNueva = "456789123";
+            var listaPersonal = new List<Personal>
+            {
+                new Personal { Id = 1, Cedula = "123456789" },
+                new Personal { Id = 2, Cedula = "456789123" }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Personal.ObtenerTodos(It.IsAny<Expression<Func<Personal, bool>>>(), null, null, true))
+                .ReturnsAsync(listaPersonal);
+
+            var resultado = await _controller.ValidarCedula(cedulaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.True, "El valor de 'data' no es true.");
+        }
+
         [TearDown]
         public void TearDown()
         {

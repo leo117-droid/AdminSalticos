@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
+using System.Linq.Expressions;
 
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
@@ -188,6 +189,48 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var contenido = JObject.FromObject(jsonResult.Value);
 
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Herramienta"));
+        }
+
+        [Test]
+        public async Task ValidarNombre_NombreNoDuplicado_RetornaFalse()
+        {
+            var nombreNuevo = "Taladro";
+            var listaHerramientas = new List<Herramienta>
+            {
+                new Herramienta { Id = 1, Nombre = "Martillo" },
+                new Herramienta { Id = 2, Nombre = "Sierra" }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Herramienta.ObtenerTodos(It.IsAny<Expression<Func<Herramienta, bool>>>(), null, null, true))
+                .ReturnsAsync(listaHerramientas);
+
+            var resultado = await _controller.ValidarNombre(nombreNuevo);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.False, "El valor de 'data' no es false.");
+        }
+
+        [Test]
+        public async Task ValidarNombre_NombreDuplicado_RetornaTrue()
+        {
+            var nombreNuevo = "Sierra";
+            var listaHerramientas = new List<Herramienta>
+            {
+                new Herramienta { Id = 1, Nombre = "Martillo" },
+                new Herramienta { Id = 2, Nombre = "Sierra" }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Herramienta.ObtenerTodos(It.IsAny<Expression<Func<Herramienta, bool>>>(), null, null, true))
+                .ReturnsAsync(listaHerramientas);
+
+            var resultado = await _controller.ValidarNombre(nombreNuevo);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.True, "El valor de 'data' no es true.");
         }
 
         [TearDown]

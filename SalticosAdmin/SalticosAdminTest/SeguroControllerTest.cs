@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
+using System.Linq.Expressions;
 
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
@@ -189,6 +190,49 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var contenido = JObject.FromObject(jsonResult.Value);
 
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar seguro"));
+        }
+
+        [Test]
+        public async Task ValidarPoliza_PolizaNoDuplicada_RetornaFalse()
+        {
+            var polizaNueva = 67890;
+            var listaSeguros = new List<Seguro>
+            {
+                new Seguro { Id = 1, NumeroPoliza = 12345 },
+                new Seguro { Id = 2, NumeroPoliza = 54321 }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Seguros.ObtenerTodos(It.IsAny<Expression<Func<Seguro, bool>>>(), null, null, true))
+                .ReturnsAsync(listaSeguros);
+
+            var resultado = await _controller.ValidarPoliza(polizaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.False, "El valor de 'data' no es false.");
+        }
+
+        // Verifica que el método ValidarPoliza retorne true si el número de póliza está duplicado.
+        [Test]
+        public async Task ValidarPoliza_PolizaDuplicada_RetornaTrue()
+        {
+            var polizaNueva = 54321;
+            var listaSeguros = new List<Seguro>
+            {
+                new Seguro { Id = 1, NumeroPoliza = 12345 },
+                new Seguro { Id = 2, NumeroPoliza = 54321 }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Seguros.ObtenerTodos(It.IsAny<Expression<Func<Seguro, bool>>>(), null, null, true))
+                .ReturnsAsync(listaSeguros);
+
+            var resultado = await _controller.ValidarPoliza(polizaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.True, "El valor de 'data' no es true.");
         }
 
         [TearDown]

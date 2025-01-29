@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
+using System.Linq.Expressions;
 
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
@@ -196,6 +197,49 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var contenido = JObject.FromObject(jsonResult.Value);
 
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Vehiculo"));
+        }
+
+        [Test]
+        public async Task ValidarPlaca_PlacaNoDuplicada_RetornaFalse()
+        {
+            var placaNueva = "DEF456";
+            var listaVehiculos = new List<Vehiculo>
+            {
+                new Vehiculo { Id = 1, Placa = "ABC123" },
+                new Vehiculo { Id = 2, Placa = "GHI789" }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Vehiculo.ObtenerTodos(It.IsAny<Expression<Func<Vehiculo, bool>>>(), null, null, true))
+                .ReturnsAsync(listaVehiculos);
+
+            var resultado = await _controller.ValidarPlaca(placaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.False, "El valor de 'data' no es false.");
+        }
+
+        // Verifica que el método ValidarPlaca retorne true si la placa está duplicada.
+        [Test]
+        public async Task ValidarPlaca_PlacaDuplicada_RetornaTrue()
+        {
+            var placaNueva = "GHI789";
+            var listaVehiculos = new List<Vehiculo>
+            {
+                new Vehiculo { Id = 1, Placa = "ABC123" },
+                new Vehiculo { Id = 2, Placa = "GHI789" }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Vehiculo.ObtenerTodos(It.IsAny<Expression<Func<Vehiculo, bool>>>(), null, null, true))
+                .ReturnsAsync(listaVehiculos);
+
+            var resultado = await _controller.ValidarPlaca(placaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.True, "El valor de 'data' no es true.");
         }
 
         [TearDown]

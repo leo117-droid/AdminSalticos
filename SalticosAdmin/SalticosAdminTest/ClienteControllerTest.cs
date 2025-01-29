@@ -194,6 +194,50 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Cliente"));
         }
 
+        // Verifica que el método ValidarCedula retorne false si la cédula no está duplicada.
+        [Test]
+        public async Task ValidarCedula_CedulaNoDuplicada_RetornaFalse()
+        {
+            var cedulaNueva = "123456789";
+            var listaClientes = new List<Cliente>
+            {
+                new Cliente { Id = 1, Cedula = "987654321" },
+                new Cliente { Id = 2, Cedula = "456789123" }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Cliente.ObtenerTodos(It.IsAny<Expression<Func<Cliente, bool>>>(), null, null, true))
+                .ReturnsAsync(listaClientes);
+
+            var resultado = await _controller.ValidarCedula(cedulaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.False, "El valor de 'data' no es false.");
+        }
+
+        // Verifica que el método ValidarCedula retorne true si la cédula está duplicada.
+        [Test]
+        public async Task ValidarCedula_CedulaDuplicada_RetornaTrue()
+        {
+            var cedulaNueva = "456789123";
+            var listaClientes = new List<Cliente>
+            {
+                new Cliente { Id = 1, Cedula = "123456789" },
+                new Cliente { Id = 2, Cedula = "456789123" }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Cliente.ObtenerTodos(It.IsAny<Expression<Func<Cliente, bool>>>(), null, null, true))
+                .ReturnsAsync(listaClientes);
+
+            var resultado = await _controller.ValidarCedula(cedulaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.True, "El valor de 'data' no es true.");
+        }
+
         [TearDown]
         public void TearDown()
         {
