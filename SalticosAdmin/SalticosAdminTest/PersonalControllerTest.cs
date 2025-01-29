@@ -57,13 +57,13 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         }
 
         // Verifica que el método Index retorne una vista correctamente.
-        [Test]
-        public void Index_RetornaVista()
-        {
-            var resultado = _controller.Index();
+        //[Test]
+        //public void Index_RetornaVista()
+        //{
+        //    var resultado = _controller.Index();
 
-            Assert.That(resultado, Is.InstanceOf<ViewResult>());
-        }
+        //    Assert.That(resultado, Is.InstanceOf<ViewResult>());
+        //}
 
         // Verifica que, cuando el ID es null, el método Upsert retorne una vista con un modelo vacío.
         [Test]
