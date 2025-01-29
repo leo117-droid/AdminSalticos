@@ -192,6 +192,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar seguro"));
         }
 
+        // Verifica que el método ValidarPoliza retorne false si el número de póliza no está duplicado.
         [Test]
         public async Task ValidarPoliza_PolizaNoDuplicada_RetornaFalse()
         {

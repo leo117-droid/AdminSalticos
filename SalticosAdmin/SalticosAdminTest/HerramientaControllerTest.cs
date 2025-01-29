@@ -191,6 +191,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Herramienta"));
         }
 
+        // Verifica que el método ValidarNombre retorne false si el nombre no está duplicado.
         [Test]
         public async Task ValidarNombre_NombreNoDuplicado_RetornaFalse()
         {
@@ -212,6 +213,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(dataValor, Is.False, "El valor de 'data' no es false.");
         }
 
+        // Verifica que el método ValidarNombre retorne true si el nombre está duplicado.
         [Test]
         public async Task ValidarNombre_NombreDuplicado_RetornaTrue()
         {

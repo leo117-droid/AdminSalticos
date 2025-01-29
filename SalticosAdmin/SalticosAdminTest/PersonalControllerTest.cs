@@ -208,6 +208,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Personal"));
         }
 
+        // Verifica que el método ValidarCedula retorne fase si el cédula no está duplicado.
         [Test]
         public async Task ValidarCedula_CedulaNoDuplicada_RetornaFalse()
         {

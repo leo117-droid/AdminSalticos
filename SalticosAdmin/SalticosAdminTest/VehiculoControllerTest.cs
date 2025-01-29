@@ -199,6 +199,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Vehiculo"));
         }
 
+        // Verifica que el método ValidarPlaca retorne false si la placa no está duplicada.
         [Test]
         public async Task ValidarPlaca_PlacaNoDuplicada_RetornaFalse()
         {
