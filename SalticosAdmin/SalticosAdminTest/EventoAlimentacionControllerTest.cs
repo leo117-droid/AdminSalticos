@@ -150,6 +150,67 @@ namespace SalticosAdminTest
             Assert.That(result, Is.InstanceOf<RedirectResult>());
         }
 
+
+
+        [Test]
+        public async Task Upsert_PostModeloValido_ActualizaEventoAlimentacionExistente()
+        {
+            var eventoAlimentacionVM = new EventoAlimentacionVM
+            {
+                IdEvento = 1,
+                IdRelacion = 5,
+                IdAlimentacion = 1,
+                Cantidad = 3
+            };
+
+            var urlHelperMock = new Mock<IUrlHelper>();
+            urlHelperMock
+                .Setup(x => x.Action(It.IsAny<UrlActionContext>()))
+                .Returns("fake-url");
+            _controller.Url = urlHelperMock.Object;
+
+            _mockUnidadTrabajo
+                .Setup(u => u.Evento.ObtenerPrimero(It.IsAny<Expression<Func<Evento, bool>>>(), null, true))
+                .ReturnsAsync(new Evento
+                {
+                    Id = 1,
+                    Fecha = DateTime.Now,
+                    HoraInicio = DateTime.Now.TimeOfDay,
+                });
+
+            _mockUnidadTrabajo
+                .Setup(u => u.Alimentacion.ObtenerPrimero(It.IsAny<Expression<Func<Alimentacion, bool>>>(), null, true))
+                .ReturnsAsync(new Alimentacion { Id = 1, Nombre = "Pizza"});
+
+
+            _mockUnidadTrabajo
+                .Setup(u => u.Alimentacion.Obtener(It.IsAny<int>()))
+                .ReturnsAsync(new Alimentacion { Id = 1, Nombre = "Pizza"});
+
+            _mockUnidadTrabajo
+                .Setup(u => u.EventoAlimentacion.ObtenerPrimero(It.IsAny<Expression<Func<EventoAlimentacion, bool>>>(), null, true))
+                .ReturnsAsync(new EventoAlimentacion { Id = 5, IdEvento = 1, IdAlimentacion = 1, Cantidad = 2 });
+
+            _mockUnidadTrabajo
+                .Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
+
+            var tempDataMock = new Mock<ITempDataDictionary>();
+            _controller.TempData = tempDataMock.Object;
+
+            var result = await _controller.Upsert(eventoAlimentacionVM);
+
+            tempDataMock.VerifySet(tempData => tempData[DS.Exitosa] = "Evento actualizado exitosamente", Times.Once);
+            _mockUnidadTrabajo.Verify(u => u.EventoAlimentacion.Actualizar(It.IsAny<EventoAlimentacion>()), Times.Once);
+            _mockUnidadTrabajo.Verify(u => u.Guardar(), Times.Once);
+            Assert.That(result, Is.InstanceOf<RedirectResult>());
+        }
+
+
+
+
+
+
         [Test]
         public async Task Delete_Post_EliminaEventoAlimentacion_Exito()
         {

@@ -172,6 +172,61 @@ namespace SalticosAdminTest
         }
 
         [Test]
+        public async Task Upsert_PostModeloValido_ActualizaEventoMobiliarioExistente()
+        {
+            var eventoMobiliarioVM = new EventoMobiliarioVM
+            {
+                IdEvento = 1,
+                IdRelacion = 5,
+                IdMobiliario = 1,
+                Cantidad = 3
+            };
+
+            var urlHelperMock = new Mock<IUrlHelper>();
+            urlHelperMock
+                .Setup(x => x.Action(It.IsAny<UrlActionContext>()))
+                .Returns("fake-url");
+            _controller.Url = urlHelperMock.Object;
+
+            _mockUnidadTrabajo
+                .Setup(u => u.Evento.ObtenerPrimero(It.IsAny<Expression<Func<Evento, bool>>>(), null, true))
+                .ReturnsAsync(new Evento
+                {
+                    Id = 1,
+                    Fecha = DateTime.Now,
+                    HoraInicio = DateTime.Now.TimeOfDay,
+                });
+
+            _mockUnidadTrabajo
+                .Setup(u => u.Mobiliario.ObtenerPrimero(It.IsAny<Expression<Func<Mobiliario, bool>>>(), null, true))
+                .ReturnsAsync(new Mobiliario { Id = 1, Nombre = "Mesa", Inventario = 10 });
+
+
+            _mockUnidadTrabajo
+                .Setup(u => u.Mobiliario.Obtener(It.IsAny<int>()))
+                .ReturnsAsync(new Mobiliario { Id = 1, Nombre = "Mesa", Inventario = 10 });
+
+            _mockUnidadTrabajo
+                .Setup(u => u.EventoMobiliario.ObtenerPrimero(It.IsAny<Expression<Func<EventoMobiliario, bool>>>(), null, true))
+                .ReturnsAsync(new EventoMobiliario { Id = 5, IdEvento = 1, IdMobiliario = 1, Cantidad = 2 });
+
+            _mockUnidadTrabajo
+                .Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
+
+            var tempDataMock = new Mock<ITempDataDictionary>();
+            _controller.TempData = tempDataMock.Object;
+
+            var result = await _controller.Upsert(eventoMobiliarioVM);
+
+            tempDataMock.VerifySet(tempData => tempData[DS.Exitosa] = "Evento actualizado exitosamente", Times.Once);
+            _mockUnidadTrabajo.Verify(u => u.EventoMobiliario.Actualizar(It.IsAny<EventoMobiliario>()), Times.Once);
+            _mockUnidadTrabajo.Verify(u => u.Guardar(), Times.Once);
+            Assert.That(result, Is.InstanceOf<RedirectResult>());
+        }
+
+
+        [Test]
         public async Task Delete_Post_EliminaEventoMobiliario_Exito()
         {
             int idEventoMobiliario = 1;
