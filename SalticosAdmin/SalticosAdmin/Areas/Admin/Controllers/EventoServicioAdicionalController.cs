@@ -160,7 +160,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
                         await _unidadTrabajo.EventoServicioAdicional.Agregar(eventoServicioAdicional);
 
-                        TempData[DS.Exitosa] = "Servicio Adicional agregado exitosamente";
+                        TempData[DS.Exitosa] = "Servicio adicional agregado exitosamente";
 
                         var usuarioNombre = User.Identity.Name;
                         
@@ -252,7 +252,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             
 
 
-            return Json(new { success = true, message = "Servicio borrado del evento exitosamente" });
+            return Json(new { success = true, message = "Servicio adicional borrado del evento exitosamente" });
 
         }
 
