@@ -23,6 +23,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
     [TestFixture]
     public class EventoControllerTests
     {
+        // Configuración inicial antes de cada prueba
+
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private EventoController _controller;
 
@@ -53,6 +55,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 .Returns(Task.CompletedTask);
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
+
         [Test]
         public async Task Index_RetornaVista()
         {
@@ -65,6 +69,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.EventoLista, Is.Not.Null);
         }
 
+        // Verifica que, cuando el ID es null, el método Upsert retorne una vista con un modelo vacío.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloVacioCuandoIdEsNull()
         {
@@ -77,6 +82,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Evento.Id, Is.EqualTo(0));
         }
 
+        // Verifica que, cuando se proporciona un ID válido, el método Upsert retorne una vista con el modelo correspondiente.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
@@ -92,6 +98,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Evento.Id, Is.EqualTo(eventoId));
         }
 
+        // Verifica que el método Upsert cree un nuevo evento cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_Post_CreaEvento()
         {
@@ -102,13 +109,13 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                     Id = 0,
                     ClienteId = 1,
                     Fecha = DateTime.Now,
-                    HoraInicio = DateTime.Now.TimeOfDay, // Convertimos DateTime a TimeSpan
-                    HoraFinal = DateTime.Now.AddHours(1).TimeOfDay // Convertimos DateTime a TimeSpan
+                    HoraInicio = DateTime.Now.TimeOfDay, 
+                    HoraFinal = DateTime.Now.AddHours(1).TimeOfDay 
                 },
                 ClienteLista = new List<SelectListItem>()
             };
 
-            var cliente = new Cliente { Id = 1, Nombre = "Nombre", Apellidos = "Apellidos" };
+            var cliente = new Cliente { Id = 1, Nombre = "Samira", Apellidos = "Rodriguez" };
 
             _unidadTrabajoMock.Setup(u => u.Evento.Agregar(It.IsAny<Evento>())).Returns(Task.CompletedTask);
             _unidadTrabajoMock.Setup(u => u.Guardar()).Returns(Task.CompletedTask);
@@ -129,6 +136,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Evento.Agregar(It.IsAny<Evento>()), Times.Once);
         }
 
+        // Verifica que el método Upsert actualice un evento existente.
         [Test]
         public async Task Upsert_Post_ActualizaEvento()
         {
@@ -138,8 +146,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 Id = eventoId,
                 ClienteId = 1,
                 Fecha = DateTime.Now,
-                HoraInicio = DateTime.Now.TimeOfDay, // Convertimos DateTime a TimeSpan
-                HoraFinal = DateTime.Now.AddHours(1).TimeOfDay // Convertimos DateTime a TimeSpan
+                HoraInicio = DateTime.Now.TimeOfDay, 
+                HoraFinal = DateTime.Now.AddHours(1).TimeOfDay
             };
 
             var eventoVM = new EventoVM
@@ -163,12 +171,13 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Evento.Actualizar(It.IsAny<Evento>()), Times.Once);
         }
 
+        // Verifica que el método Delete elimine correctamente un evento.
         [Test]
         public async Task Delete_RetornaExito_CuandoElEventoExiste()
         {
             var eventoId = 1;
             var evento = new Evento { Id = eventoId, ClienteId = 1, Fecha = System.DateTime.Now };
-            var cliente = new Cliente { Id = 1, Nombre = "Nombre", Apellidos = "Apellidos" };
+            var cliente = new Cliente { Id = 1, Nombre = "Sara", Apellidos = "Medina" };
 
             _unidadTrabajoMock.Setup(u => u.Evento.Obtener(eventoId)).ReturnsAsync(evento);
             _unidadTrabajoMock.Setup(u => u.Cliente.Obtener(evento.ClienteId)).ReturnsAsync(cliente);
@@ -193,7 +202,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Evento.Remover(It.IsAny<Evento>()), Times.Once);
         }
 
-
+        // Verifica que se retorne un error cuando se intenta eliminar un evento que no existe.
         [Test]
         public async Task Delete_RetornaError_CuandoElEventoNoExiste()
         {
@@ -214,6 +223,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _unidadTrabajoMock.Reset();
 
             if (_controller != null)

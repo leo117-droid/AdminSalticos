@@ -51,11 +51,11 @@ namespace SalticosAdminTest
         [Test]
         public async Task Index_DebeRetornarConCotizacionVM_CuandoHayDatosDisponibles()
         {
-            var mockInflables = new List<Inflable> { new Inflable { Id = 1, Nombre = "Inflable 1" } };
-            var mockMobiliarios = new List<Mobiliario> { new Mobiliario { Id = 1, Nombre = "Mobiliario 1" } };
-            var mockServicios = new List<ServicioAdicional> { new ServicioAdicional { Id = 1, Nombre = "Servicio 1" } };
-            var mockAlimentacion = new List<Alimentacion> { new Alimentacion { Id = 1, Nombre = "Alimento 1" } };
-            var mockTarifas = new List<TarifasTransporte> { new TarifasTransporte { Id = 1, Provincia = "Provincia 1" } };
+            var mockInflables = new List<Inflable> { new Inflable { Id = 1, Nombre = "Avengers" } };
+            var mockMobiliarios = new List<Mobiliario> { new Mobiliario { Id = 1, Nombre = "Sillas" } };
+            var mockServicios = new List<ServicioAdicional> { new ServicioAdicional { Id = 1, Nombre = "Máquina de burbujas" } };
+            var mockAlimentacion = new List<Alimentacion> { new Alimentacion { Id = 1, Nombre = "Hot dog" } };
+            var mockTarifas = new List<TarifasTransporte> { new TarifasTransporte { Id = 1, Provincia = "Heredia" } };
 
             _mockUnidadTrabajo.Setup(x => x.Inflable.ObtenerTodos(It.IsAny<Expression<Func<Inflable, bool>>>(), null, null, true)).ReturnsAsync(mockInflables);
             _mockUnidadTrabajo.Setup(x => x.Mobiliario.ObtenerTodos(It.IsAny<Expression<Func<Mobiliario, bool>>>(), null, null, true)).ReturnsAsync(mockMobiliarios);
@@ -108,23 +108,23 @@ namespace SalticosAdminTest
         {
             var inflables = new List<Inflable>
             {
-                new Inflable { Id = 1, Precio = 100, PrecioHoraAdicional = 20 }
+                new Inflable { Id = 1, Precio = 110000, PrecioHoraAdicional = 20000 }
             };
             var mobiliarios = new List<Mobiliario>
             {
-                new Mobiliario { Id = 1, Precio = 50 }
+                new Mobiliario { Id = 1, Precio = 325 }
             };
             var servicios = new List<ServicioAdicional>
             {
-                new ServicioAdicional { Id = 1, Precio = 30 }
+                new ServicioAdicional { Id = 1, Precio = 12500 }
             };
             var alimentacion = new List<Alimentacion>
             {
-                new Alimentacion { Id = 1, Precio = 15 }
+                new Alimentacion { Id = 1, Precio = 850 }
             };
             var transportes = new List<TarifasTransporte>
             {
-                new TarifasTransporte { Id = 1, Precio = 200 }
+                new TarifasTransporte { Id = 1, Precio = 3500 }
             };
 
             _mockUnidadTrabajo.Setup(u => u.Inflable.ObtenerTodos(It.IsAny<Expression<Func<Inflable, bool>>>(), null, null, true)).ReturnsAsync(inflables);
