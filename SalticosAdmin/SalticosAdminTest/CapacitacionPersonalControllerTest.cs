@@ -6,20 +6,13 @@ using SalticosAdmin.Areas.Admin.Controllers;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
 using SalticosAdmin.Modelos.ViewModels;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
@@ -30,8 +23,6 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private CapacitacionPersonalController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
 
         [SetUp]
         public void SetUp()

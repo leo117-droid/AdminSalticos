@@ -12,6 +12,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [SetUp]
         public void SetUp()
         {
+            // Configuración inicial antes de cada prueba
+
             _controller = new AccountController();
         }
 
@@ -19,10 +21,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [Test]
         public void Index_RedireccionaCorrectamenteAlLogin()
         {
-            // Act
             var resultado = _controller.Index();
 
-            // Assert
             Assert.That(resultado, Is.InstanceOf<RedirectResult>());
             var redirectResult = resultado as RedirectResult;
             Assert.That(redirectResult.Url, Is.EqualTo("/Identity/Account/Login"));
@@ -33,7 +33,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         {
             if (_controller != null)
             {
-                _controller.Dispose(); // Asegúrate de que el método Dispose es llamado
+                _controller.Dispose(); 
                 _controller = null;
             }
         }

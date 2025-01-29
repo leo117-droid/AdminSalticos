@@ -1,20 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SalticosAdmin.Areas.Admin.Controllers;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
 using System.Linq.Expressions;
-using SalticosAdmin.AccesoDeDatos.Repositorio;
+using Newtonsoft.Json.Linq;
 
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
@@ -25,9 +20,6 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private CategoriaTamannoController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
-
 
         [SetUp]
         public void SetUp()
@@ -35,19 +27,16 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock = new Mock<IUnidadTrabajo>();
             _controller = new CategoriaTamannoController(_unidadTrabajoMock.Object);
             
-            //Simula el login y creacion de un usuario
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Name, "testuser")
             }, "mock"));
 
-            //Simula el HTTP necesario para el funcionamiento de la prueba
             _controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = new DefaultHttpContext() { User = user }
             };
 
-            //Simula la existencia del TempData 
             var tempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>())
             {
                 [DS.Exitosa] = "Success message",
@@ -55,7 +44,6 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             };
             _controller.TempData = tempData;
 
-            // Simula los metodo para Bitacora 
             _unidadTrabajoMock.Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
         }
@@ -182,6 +170,23 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once);
         }
 
+        // Verifica que se retorne un error cuando se intenta eliminar una categoría por tamaño que no existe.
+        [Test]
+        public async Task Delete_RetornaError_CuandoLaCategoriaTamannoNoExiste()
+        {
+            var categoriaTamannoId = 999;
+            CategoriaTamanno categoriaTamannoBd = null;
+
+            _unidadTrabajoMock.Setup(u => u.CategoriaTamanno.Obtener(categoriaTamannoId)).ReturnsAsync(categoriaTamannoBd);
+
+            var resultado = await _controller.Delete(categoriaTamannoId);
+
+            Assert.That(resultado, Is.InstanceOf<JsonResult>());
+            var jsonResult = resultado as JsonResult;
+            var contenido = JObject.FromObject(jsonResult.Value);
+            Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Categoría por tamanno"));
+        }
+
         // Verifica que el método ValidarNombre retorne false si el nombre no está duplicado.
         [Test]
         public async Task ValidarNombre_NombreNoDuplicado_RetornaFalse()
@@ -225,7 +230,6 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var dataValor = dataPropiedad.GetValue(jsonResult.Value);
             Assert.That(dataValor, Is.True, "El valor de 'data' no es true.");
         }
-
 
         [TearDown]
         public void TearDown()

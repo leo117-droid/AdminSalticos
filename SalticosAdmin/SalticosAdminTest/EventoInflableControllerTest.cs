@@ -5,22 +5,15 @@ using NUnit.Framework;
 using SalticosAdmin.Areas.Admin.Controllers;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using SalticosAdmin.Modelos;
 using SalticosAdmin.Modelos.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SalticosAdminTest
 {
@@ -28,6 +21,7 @@ namespace SalticosAdminTest
     [TestFixture]
     public class EventoInflableControllerTest
     {
+        // Configuración inicial antes de cada prueba
 
         private Mock<IUnidadTrabajo> _mockUnidadTrabajo;
         private EventoInflableController _controller;
@@ -61,6 +55,7 @@ namespace SalticosAdminTest
 
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
         [Test]
         public void Index_ConId_RetornaVista()
         {
@@ -73,6 +68,7 @@ namespace SalticosAdminTest
             Assert.That(id, Is.EqualTo(result.ViewData["Id"]));
         }
 
+        //Verifica el controlador sigue funciona correctamente y proporciona la lista de inflable esperada en la vista.
         [Test]
         public async Task Upsert_ConRelacionIdEsNull_RetornVistaConViewModel()
         {
@@ -102,7 +98,7 @@ namespace SalticosAdminTest
             
         }
 
-
+        //Asegura que cuando el modelo es inválido, el controlador responde correctamente, mostrando la vista con los errores de validación
         [Test]
         public async Task Upsert_PostModeloInvalido_ReturnsVistaConErrores()
         {
@@ -117,8 +113,7 @@ namespace SalticosAdminTest
             Assert.That(_controller.ModelState.IsValid, Is.False);
         }
 
-
-
+        // Verifica que el método Upsert cree un nuevo evento inflable cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_PostModeloValido_CreaNuevoEventoInflable()
         {
@@ -171,6 +166,7 @@ namespace SalticosAdminTest
         }
 
 
+        // Verifica que el método Delete elimine correctamente un producto de inflable de un evento.
         [Test]
         public async Task Delete_Post_EliminaEventoInflable_Exito()
         {
@@ -237,7 +233,7 @@ namespace SalticosAdminTest
 
         }
 
-
+        // Verifica que se retorne un error cuando se intenta eliminar un evento alimentación que no existe.
         [Test]
         public async Task Delete_CuandoEventoInflableNoExiste_RetornaError()
         {
@@ -260,6 +256,8 @@ namespace SalticosAdminTest
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _mockUnidadTrabajo.Reset();
             if (_controller != null)
             {

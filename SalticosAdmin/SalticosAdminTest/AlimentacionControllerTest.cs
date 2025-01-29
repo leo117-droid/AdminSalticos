@@ -5,10 +5,7 @@ using NUnit.Framework;
 using SalticosAdmin.Areas.Admin.Controllers;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -187,9 +184,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var resultado = await _controller.Upsert(alimentacion);
 
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
-            _unidadTrabajoMock.Verify(u => u.Alimentacion.Actualizar(It.IsAny<Alimentacion>()), Times.Once); // Verifica la actualización
-            _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once); // Verifica que se guarden los cambios
-
+            _unidadTrabajoMock.Verify(u => u.Alimentacion.Actualizar(It.IsAny<Alimentacion>()), Times.Once);
+            _unidadTrabajoMock.Verify(u => u.Guardar(), Times.Once); 
             Assert.That(_controller.TempData[DS.Exitosa], Is.EqualTo("Alimentacion actualizado Exitosamente"));
         }
 

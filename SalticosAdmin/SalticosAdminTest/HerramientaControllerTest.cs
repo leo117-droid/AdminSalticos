@@ -18,10 +18,10 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
     [TestFixture]
     public class HerramientaControllerTests
     {
+        // Configuración inicial antes de cada prueba
+
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private HerramientaController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
 
         [SetUp]
         public void SetUp()
@@ -50,6 +50,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 .Returns(Task.CompletedTask);
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
         [Test]
         public void Index_RetornaVista()
         {
@@ -58,6 +59,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
         }
 
+        // Verifica que, cuando el ID es null, el método Upsert retorne una vista con un modelo vacío.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloVacioCuandoIdEsNull()
         {
@@ -68,6 +70,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo, Is.Not.Null);
             Assert.That(modelo.Id, Is.EqualTo(0));
         }
+
+        // Verifica que, cuando se proporciona un ID válido, el método Upsert retorne una vista con el modelo correspondiente.
 
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
@@ -89,6 +93,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Id, Is.EqualTo(herramientaId));
         }
 
+        // Verifica que el método Upsert cree un nueva herramienta cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_Post_CreaHerramienta()
         {
@@ -108,6 +113,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(redirectResult.ActionName, Is.EqualTo("Index"));
             _unidadTrabajoMock.Verify(u => u.Herramienta.Agregar(It.IsAny<Herramienta>()), Times.Once);
         }
+
+        // Verifica que el método Upsert actualice una herramienta existente.
 
         [Test]
         public async Task Upsert_Post_ActualizaHerramienta()
@@ -138,6 +145,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Herramienta.Actualizar(It.IsAny<Herramienta>()), Times.Once);
         }
 
+        // Verifica que el método Delete elimine correctamente un herramiento.
         [Test]
         public async Task Delete_RetornaExito_CuandoLaHerramientaExiste()
         {
@@ -164,6 +172,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Herramienta.Remover(It.IsAny<Herramienta>()), Times.Once);
         }
 
+        // Verifica que se retorne un error cuando se intenta eliminar una herramienta que no existe.
         [Test]
         public async Task Delete_RetornaError_CuandoLaHerramientaNoExiste()
         {
@@ -184,6 +193,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _unidadTrabajoMock.Reset();
 
             if (_controller != null)

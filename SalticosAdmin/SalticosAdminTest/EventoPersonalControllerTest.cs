@@ -5,22 +5,15 @@ using NUnit.Framework;
 using SalticosAdmin.Areas.Admin.Controllers;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using SalticosAdmin.Modelos;
 using SalticosAdmin.Modelos.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SalticosAdminTest
 {
@@ -28,6 +21,7 @@ namespace SalticosAdminTest
     [TestFixture]
     public class EventoPersonalControllerTest
     {
+        // Configuración inicial antes de cada prueba
 
         private Mock<IUnidadTrabajo> _mockUnidadTrabajo;
         private EventoPersonalController _controller;
@@ -36,6 +30,8 @@ namespace SalticosAdminTest
         [SetUp]
         public void SetUp()
         {
+            // Configuración inicial antes de cada prueba
+
             _mockUnidadTrabajo = new Mock<IUnidadTrabajo>();
             _controller = new EventoPersonalController(_mockUnidadTrabajo.Object);
 
@@ -61,25 +57,7 @@ namespace SalticosAdminTest
 
         }
 
-
-        [TearDown]
-        public void TearDown()
-        {
-            _mockUnidadTrabajo.Reset();
-            if (_controller != null)
-            {
-                _controller.TempData?.Clear();
-
-                if (_controller is IDisposable disposableController)
-                {
-                    disposableController.Dispose();
-                }
-
-                _controller = null;
-            }
-        }
-
-
+        // Verifica que el método Index retorne una vista correctamente.
         [Test]
         public void Index_ConId_RetornaVista()
         {
@@ -92,6 +70,7 @@ namespace SalticosAdminTest
             Assert.That(id, Is.EqualTo(result.ViewData["Id"]));
         }
 
+        //Verifica el controlador sigue funciona correctamente y proporciona la lista de personal esperada en la vista.
         [Test]
         public async Task Upsert_ConRelacionIdEsNull_RetornVistaConViewModel()
         {
@@ -121,7 +100,7 @@ namespace SalticosAdminTest
             
         }
 
-
+        //Asegura que cuando el modelo es inválido, el controlador responde correctamente, mostrando la vista con los errores de validación
         [Test]
         public async Task Upsert_PostModeloInvalido_ReturnsVistaConErrores()
         {
@@ -138,7 +117,7 @@ namespace SalticosAdminTest
         }
 
 
-
+        // Verifica que el método Upsert cree un nuevo evento personal cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_PostModeloValido_CreaNuevoEventoPersonal()
         {
@@ -186,7 +165,7 @@ namespace SalticosAdminTest
             Assert.That(result, Is.InstanceOf<RedirectResult>());
         }
 
-
+        // Verifica que el método Delete elimine correctamente un producto de personal de un evento.
         [Test]
         public async Task Delete_Post_EliminaEventoPersonal_Exito()
         {
@@ -253,8 +232,7 @@ namespace SalticosAdminTest
 
         }
 
-
-
+        // Verifica que se retorne un error cuando se intenta eliminar un evento personal que no existe.
         [Test]
         public async Task Delete_CuandoEventoPersonalNoExiste_RetornaError()
         {
@@ -275,6 +253,24 @@ namespace SalticosAdminTest
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar personal del evento"));
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
+            _mockUnidadTrabajo.Reset();
+            if (_controller != null)
+            {
+                _controller.TempData?.Clear();
+
+                if (_controller is IDisposable disposableController)
+                {
+                    disposableController.Dispose();
+                }
+
+                _controller = null;
+            }
+        }
 
     }
 }

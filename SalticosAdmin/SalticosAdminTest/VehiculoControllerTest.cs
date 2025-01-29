@@ -18,10 +18,10 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
     [TestFixture]
     public class VehiculoControllerTests
     {
+        // Configuración inicial antes de cada prueba
+
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private VehiculoController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
 
         [SetUp]
         public void SetUp()
@@ -50,6 +50,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 .Returns(Task.CompletedTask);
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
         [Test]
         public void Index_RetornaVista()
         {
@@ -58,6 +59,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
         }
 
+        // Verifica que, cuando el ID es null, el método Upsert retorne una vista con un modelo vacío.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloVacioCuandoIdEsNull()
         {
@@ -69,6 +71,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Id, Is.EqualTo(0));
         }
 
+        // Verifica que, cuando se proporciona un ID válido, el método Upsert retorne una vista con el modelo correspondiente.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
@@ -91,6 +94,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Id, Is.EqualTo(vehiculoId));
         }
 
+        // Verifica que el método Upsert cree un nuevo vehículo cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_Post_CreaVehiculo()
         {
@@ -113,6 +117,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Vehiculo.Agregar(It.IsAny<Vehiculo>()), Times.Once);
         }
 
+        // Verifica que el método Upsert actualice un vehículo existente.
         [Test]
         public async Task Upsert_Post_ActualizaVehiculo()
         {
@@ -146,6 +151,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Vehiculo.Actualizar(It.IsAny<Vehiculo>()), Times.Once);
         }
 
+        // Verifica que el método Delete elimine correctamente un vehiculo.
         [Test]
         public async Task Delete_RetornaExito_CuandoElVehiculoExiste()
         {
@@ -174,6 +180,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Vehiculo.Remover(It.IsAny<Vehiculo>()), Times.Once);
         }
 
+        // Verifica que se retorne un error cuando se intenta eliminar un vehiculo que no existe.
         [Test]
         public async Task Delete_RetornaError_CuandoElVehiculoNoExiste()
         {
@@ -194,6 +201,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _unidadTrabajoMock.Reset();
 
             if (_controller != null)

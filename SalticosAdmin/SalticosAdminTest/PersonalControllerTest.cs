@@ -22,10 +22,10 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
     [TestFixture]
     public class PersonalControllerTests
     {
+        // Configuración inicial antes de cada prueba
+
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private PersonalController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
         private Mock<IWebHostEnvironment> _webHostEnvironmentMock;
 
         [SetUp]
@@ -56,13 +56,19 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 .Returns(Task.CompletedTask);
         }
 
-        
+        // Verifica que el método Index retorne una vista correctamente.
+        [Test]
+        public void Index_RetornaVista()
+        {
+            var resultado = _controller.Index();
 
+            Assert.That(resultado, Is.InstanceOf<ViewResult>());
+        }
 
+        // Verifica que, cuando el ID es null, el método Upsert retorne una vista con un modelo vacío.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloVacioCuandoIdEsNull()
         {
-            // Asegurarse de que RolPersonalLista se inicialice correctamente
             _unidadTrabajoMock.Setup(u => u.Personal.ObtenerTodosDropdownLista("RolPersonal"))
                 .Returns(new List<SelectListItem>());
 
@@ -74,7 +80,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Personal.Id, Is.EqualTo(0));
         }
 
-
+        // Verifica que, cuando se proporciona un ID válido, el método Upsert retorne una vista con el modelo correspondiente.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
@@ -97,6 +103,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Personal.Id, Is.EqualTo(personalId));
         }
 
+        // Verifica que el método Upsert cree un nuevo personal cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_Post_CreaPersonal()
         {
@@ -105,8 +112,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 Personal = new Personal
                 {
                     Id = 0,
-                    Nombre = "John",
-                    Apellidos = "Doe",
+                    Nombre = "Alejandro",
+                    Apellidos = "Campos",
                     FechaNacimiento = DateTime.Now.AddYears(-25),
                     RolPersonalId = 1
                 }
@@ -122,6 +129,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Personal.Agregar(It.IsAny<Personal>()), Times.Once);
         }
 
+        // Verifica que el método Upsert actualice un personal existente.
         [Test]
         public async Task Upsert_Post_ActualizaPersonal()
         {
@@ -129,8 +137,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var personalExistente = new Personal
             {
                 Id = personalId,
-                Nombre = "John",
-                Apellidos = "Doe",
+                Nombre = "Alejandro",
+                Apellidos = "Campos",
                 FechaNacimiento = DateTime.Now.AddYears(-25),
                 RolPersonalId = 1
             };
@@ -138,8 +146,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var personalActualizado = new Personal
             {
                 Id = personalId,
-                Nombre = "John Updated",
-                Apellidos = "Doe Updated",
+                Nombre = "Alejandro",
+                Apellidos = "Campos Paredes",
                 FechaNacimiento = DateTime.Now.AddYears(-25),
                 RolPersonalId = 1
             };
@@ -155,6 +163,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Personal.Actualizar(It.IsAny<Personal>()), Times.Once);
         }
 
+        // Verifica que el método Delete elimine correctamente un ingrediente.
         [Test]
         public async Task Delete_RetornaExito_CuandoElPersonalExiste()
         {
@@ -162,8 +171,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var personalBd = new Personal
             {
                 Id = personalId,
-                Nombre = "John",
-                Apellidos = "Doe"
+                Nombre = "Daniela",
+                Apellidos = "Chaves"
             };
 
             _unidadTrabajoMock.Setup(u => u.Personal.Obtener(personalId)).ReturnsAsync(personalBd);
@@ -181,6 +190,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Personal.Remover(It.IsAny<Personal>()), Times.Once);
         }
 
+        // Verifica que se retorne un error cuando se intenta eliminar un personal que no existe.
         [Test]
         public async Task Delete_RetornaError_CuandoElPersonalNoExiste()
         {
@@ -201,6 +211,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _unidadTrabajoMock.Reset();
 
             if (_controller != null)

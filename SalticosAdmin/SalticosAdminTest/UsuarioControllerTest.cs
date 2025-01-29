@@ -5,10 +5,7 @@ using NUnit.Framework;
 using SalticosAdmin.Areas.Admin.Controllers;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
@@ -20,10 +17,10 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
     [TestFixture]
     public class UsuarioControllerTests
     {
+        // Configuración inicial antes de cada prueba
+
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private UsuarioController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
         private Mock<ApplicationDbContext> _dbContextMock;
 
         [SetUp]
@@ -54,6 +51,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 .Returns(Task.CompletedTask);
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
+
         [Test]
         public void Index_RetornaVista()
         {
@@ -62,6 +61,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
         }
 
+        // Verifica que, cuando el ID es null, el método Upsert retorne una vista con un modelo vacío.
         [Test]
         public async Task Edit_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
@@ -69,9 +69,9 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var usuario = new Usuario
             {
                 Id = usuarioId,
-                Nombre = "John",
-                Apellido = "Doe",
-                Email = "john.doe@example.com"
+                Nombre = "Karlinna",
+                Apellido = "Chaves",
+                Email = "karlinna@gmail.com"
             };
             _unidadTrabajoMock.Setup(u => u.Usuario.ObtenerPorIdAsync(usuarioId)).ReturnsAsync(usuario);
 
@@ -83,15 +83,16 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Id, Is.EqualTo(usuarioId));
         }
 
+        // Verifica que el método Edit actualice un usuario
         [Test]
         public async Task Edit_Post_ActualizaUsuario()
         {
             var usuario = new Usuario
             {
                 Id = "1",
-                Nombre = "John",
-                Apellido = "Doe",
-                Email = "john.doe@example.com"
+                Nombre = "Yisley",
+                Apellido = "Rodriguez",
+                Email = "yis@gmail.com"
             };
 
             _unidadTrabajoMock.Setup(u => u.Usuario.Actualizar(It.IsAny<Usuario>())).Verifiable();
@@ -104,6 +105,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Usuario.Actualizar(It.IsAny<Usuario>()), Times.Once);
         }
 
+        // Verifica que el método Delete elimine correctamente un usuario.
         [Test]
         public async Task Delete_RetornaExito_CuandoElUsuarioExiste()
         {
@@ -111,8 +113,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var usuarioBd = new Usuario
             {
                 Id = usuarioId,
-                Nombre = "John",
-                Apellido = "Doe"
+                Nombre = "Jose Enrique",
+                Apellido = "Mata"
             };
 
             _unidadTrabajoMock.Setup(u => u.Usuario.ObtenerPorIdAsync(usuarioId)).ReturnsAsync(usuarioBd);
@@ -130,6 +132,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Usuario.Remover(It.IsAny<Usuario>()), Times.Once);
         }
 
+        // Verifica que se retorne un error cuando se intenta eliminar un usuario que no existe.
         [Test]
         public async Task Delete_RetornaError_CuandoElUsuarioNoExiste()
         {
@@ -150,6 +153,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _unidadTrabajoMock.Reset();
 
             if (_controller != null)

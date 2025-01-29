@@ -5,10 +5,7 @@ using NUnit.Framework;
 using SalticosAdmin.Areas.Admin.Controllers;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
@@ -19,10 +16,10 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
     [TestFixture]
     public class BitacoraControllerTests
     {
+        // Configuración inicial antes de cada prueba
+
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private BitacoraController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
 
         [SetUp]
         public void SetUp()
@@ -48,6 +45,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _controller.TempData = tempData;
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
         [Test]
         public void Index_RetornaVista()
         {
@@ -56,6 +54,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
         }
 
+        // Verifica que el método Intermedia retorne una vista correctamente.
         [Test]
         public void Intermedia_RetornaVista()
         {
@@ -64,6 +63,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
         }
 
+        // Verifica que el método ObtenerTodos retorna un Json con los datos ordenados.
         [Test]
         public async Task ObtenerTodos_RetornaJsonConDatosOrdenados()
         {
@@ -73,7 +73,6 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 new Bitacora { Fecha = DateTime.Now }
             };
 
-            // Configurar el mock para devolver la lista de bitácoras
             _unidadTrabajoMock.Setup(u => u.Bitacora.ObtenerTodos(
                 It.IsAny<Expression<Func<Bitacora, bool>>>(),
                 It.IsAny<Func<IQueryable<Bitacora>, IOrderedQueryable<Bitacora>>>(),
@@ -93,6 +92,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(datos[0].Fecha, Is.GreaterThan(datos[1].Fecha));
         }
 
+        // Verifica que el método ConsultarConFiltro retorna un Json con los datos correctamente filtrados.
         [Test]
         public async Task ConsultarConFiltro_RetornaJsonConDatosFiltrados()
         {
@@ -118,6 +118,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(datos.Count, Is.EqualTo(bitacoraLista.Count));
         }
 
+        // Verifica que el método ConsultarConFiltro retorna un Json con los datos correctamente en caso de no seleccionar fechas para el filtro.
         [Test]
         public async Task ConsultarConFiltro_RetornaJsonConTodosLosDatosSiFechasSonMinValue()
         {
@@ -148,6 +149,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _unidadTrabajoMock.Reset();
 
             if (_controller != null)
