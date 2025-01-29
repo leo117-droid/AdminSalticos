@@ -132,7 +132,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     }
                     else
                     {
-                        TempData[DS.Error] = $"No hay suficiente mobiliario disponible. Solo quedan {servicioAdicional.Inventario - cantidadAsignadaEnEventosSolapados} unidades.";
+                        TempData[DS.Error] = $"No hay suficiente inventario para el servicio adicional disponible. Solo quedan {servicioAdicional.Inventario - cantidadAsignadaEnEventosSolapados} unidades.";
 
                     }
                     eventoServicioAdicionalVM.ListaServicioAdicional = _unidadTrabajo.EventoServicioAdicional.ObtenerServicioAdicional("ServicioAdicional", eventoServicioAdicionalVM.IdEvento);

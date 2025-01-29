@@ -151,6 +151,122 @@ namespace SalticosAdminTest
         }
 
         [Test]
+        public async Task Upsert_PostModeloValido_ActualizaEventoServicioAdicionalExistente()
+        {
+            var eventoServicioAdicionalVM = new EventoServicioAdicionalVM
+            {
+                IdEvento = 1,
+                IdRelacion = 5, 
+                IdServicioAdicional = 1,
+                Cantidad = 3
+            };
+
+            var urlHelperMock = new Mock<IUrlHelper>();
+            urlHelperMock
+                .Setup(x => x.Action(It.IsAny<UrlActionContext>()))
+                .Returns("fake-url");
+            _controller.Url = urlHelperMock.Object;
+
+            _mockUnidadTrabajo
+                .Setup(u => u.Evento.ObtenerPrimero(It.IsAny<Expression<Func<Evento, bool>>>(), null, true))
+                .ReturnsAsync(new Evento { Id = 1, Fecha = DateTime.Now, HoraInicio = DateTime.Now.TimeOfDay,
+                });
+
+            _mockUnidadTrabajo
+                .Setup(u => u.ServicioAdicional.ObtenerPrimero(It.IsAny<Expression<Func<ServicioAdicional, bool>>>(), null, true))
+                .ReturnsAsync(new ServicioAdicional { Id = 1, Nombre = "Parlante", Inventario = 10 });
+
+
+            _mockUnidadTrabajo
+                .Setup(u => u.ServicioAdicional.Obtener(It.IsAny<int>()))
+                .ReturnsAsync(new ServicioAdicional { Id = 1, Nombre = "Parlante", Inventario = 10 });
+
+            _mockUnidadTrabajo
+                .Setup(u => u.EventoServicioAdicional.ObtenerPrimero(It.IsAny<Expression<Func<EventoServicioAdicional, bool>>>(), null, true))
+                .ReturnsAsync(new EventoServicioAdicional { Id = 5, IdEvento = 1, IdServicioAdicional = 1, Cantidad = 2 });
+
+            _mockUnidadTrabajo
+                .Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
+
+            var tempDataMock = new Mock<ITempDataDictionary>();
+            _controller.TempData = tempDataMock.Object;
+
+            var result = await _controller.Upsert(eventoServicioAdicionalVM);
+
+            tempDataMock.VerifySet(tempData => tempData[DS.Exitosa] = "Evento actualizado exitosamente", Times.Once);
+            _mockUnidadTrabajo.Verify(u => u.EventoServicioAdicional.Actualizar(It.IsAny<EventoServicioAdicional>()), Times.Once);
+            _mockUnidadTrabajo.Verify(u => u.Guardar(), Times.Once);
+            Assert.That(result, Is.InstanceOf<RedirectResult>());
+        }
+
+        [Test]
+        public async Task Upsert_PostModeloValido_ConInventarioInsuficiente_NoActualizaYRetornaError()
+        {
+            // Arrange
+            var eventoServicioAdicionalVM = new EventoServicioAdicionalVM
+            {
+                IdEvento = 1,
+                IdRelacion = 5, // Indica que el registro ya existe
+                IdServicioAdicional = 1,
+                Cantidad = 15 // Más de lo que hay en el inventario
+            };
+
+            var urlHelperMock = new Mock<IUrlHelper>();
+            urlHelperMock
+                .Setup(x => x.Action(It.IsAny<UrlActionContext>()))
+                .Returns("fake-url");
+            _controller.Url = urlHelperMock.Object;
+
+            // Mock de Evento existente
+            _mockUnidadTrabajo
+                .Setup(u => u.Evento.ObtenerPrimero(It.IsAny<Expression<Func<Evento, bool>>>(), null, true))
+                .ReturnsAsync(new Evento { Id = 1, Fecha = DateTime.Now });
+
+            // Mock de ServicioAdicional con inventario insuficiente
+            _mockUnidadTrabajo
+                .Setup(u => u.ServicioAdicional.ObtenerPrimero(It.IsAny<Expression<Func<ServicioAdicional, bool>>>(), null, true))
+                .ReturnsAsync(new ServicioAdicional { Id = 1, Nombre = "Parlante", Inventario = 10 }); // Inventario insuficiente
+
+
+            _mockUnidadTrabajo
+                .Setup(u => u.ServicioAdicional.Obtener(It.IsAny<int>()))
+                .ReturnsAsync(new ServicioAdicional { Id = 1, Nombre = "Parlante", Inventario = 10 });
+
+            // Mock de EventoServicioAdicional existente
+            _mockUnidadTrabajo
+                .Setup(u => u.EventoServicioAdicional.ObtenerPrimero(It.IsAny<Expression<Func<EventoServicioAdicional, bool>>>(), null, true))
+                .ReturnsAsync(new EventoServicioAdicional { Id = 5, IdEvento = 1, IdServicioAdicional = 1, Cantidad = 2 });
+
+            // Mock de bitácora
+            _mockUnidadTrabajo
+                .Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
+
+            // Mock de TempData
+            var tempDataMock = new Mock<ITempDataDictionary>();
+            string tempDataErrorMessage = null;
+            tempDataMock
+                .SetupSet(t => t[DS.Error] = It.IsAny<string>())
+                .Callback<string, object>((key, value) =>
+                {
+                    if (key == DS.Error)
+                    {
+                        tempDataErrorMessage = value?.ToString();
+                    }
+                });
+
+            // Act
+            var result = await _controller.Upsert(eventoServicioAdicionalVM);
+
+            Assert.That(tempDataErrorMessage, Does.Contain("No hay suficiente inventario para el servicio adicional"), "El mensaje de error no contiene el texto esperado.");
+            _mockUnidadTrabajo.Verify(u => u.EventoServicioAdicional.Actualizar(It.IsAny<EventoServicioAdicional>()), Times.Never);
+            _mockUnidadTrabajo.Verify(u => u.Guardar(), Times.Never);
+            Assert.That(result, Is.InstanceOf<ViewResult>()); // Se queda en la misma vista por el error
+        }
+
+
+        [Test]
         public async Task Delete_Post_EliminaEventoEventoServicioAdicional_Exito()
         {
             int IdEventoServicioAdicional = 1;
