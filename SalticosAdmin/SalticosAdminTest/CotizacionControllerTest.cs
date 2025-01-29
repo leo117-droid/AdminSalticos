@@ -108,23 +108,23 @@ namespace SalticosAdminTest
         {
             var inflables = new List<Inflable>
             {
-                new Inflable { Id = 1, Precio = 110000, PrecioHoraAdicional = 20000 }
+                new Inflable { Id = 1, Precio = 100, PrecioHoraAdicional = 20 }
             };
             var mobiliarios = new List<Mobiliario>
             {
-                new Mobiliario { Id = 1, Precio = 325 }
+                new Mobiliario { Id = 1, Precio = 50 }
             };
             var servicios = new List<ServicioAdicional>
             {
-                new ServicioAdicional { Id = 1, Precio = 12500 }
+                new ServicioAdicional { Id = 1, Precio = 30 }
             };
             var alimentacion = new List<Alimentacion>
             {
-                new Alimentacion { Id = 1, Precio = 850 }
+                new Alimentacion { Id = 1, Precio = 15 }
             };
             var transportes = new List<TarifasTransporte>
             {
-                new TarifasTransporte { Id = 1, Precio = 3500 }
+                new TarifasTransporte { Id = 1, Precio = 200 }
             };
 
             _mockUnidadTrabajo.Setup(u => u.Inflable.ObtenerTodos(It.IsAny<Expression<Func<Inflable, bool>>>(), null, null, true)).ReturnsAsync(inflables);
