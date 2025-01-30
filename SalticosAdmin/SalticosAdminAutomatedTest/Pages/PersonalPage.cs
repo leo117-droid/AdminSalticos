@@ -69,7 +69,7 @@ namespace SalticosAdminAutomatedTest.Pages
             SetDateUsingJS(FechaNacimiento, SelectFechaNacimiento);
             SetDateUsingJS(FechaEntrada, SelectFechaEntrada);
             SelectByVisibleTextUsingJS(Rol, DropdownRol);
-            Click(BtnCrearPersonal);
+            ClickElementUsingJS(BtnCrearPersonal);
         }
 
         public void CrearPersonal_CedulaRepetida(String nombre, String apellido, String telefono, String correo, String cedula) 

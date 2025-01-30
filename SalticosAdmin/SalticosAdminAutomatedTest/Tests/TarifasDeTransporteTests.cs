@@ -58,7 +58,7 @@ namespace SalticosAdminAutomatedTest.Tests
             Thread.Sleep(2000);
             tarifasDeTransportePage.ActualizarPrecioTarifa("2000", "Alajuela");
             Thread.Sleep(2000);
-            Assert.IsTrue(tarifasDeTransportePage.PrecioTarifaActualizado("2000", "Alajuela"));
+            Assert.IsTrue(tarifasDeTransportePage.PrecioTarifaActualizado("₡2,000.00", "Alajuela"));
         }
 
         [Test, Order(4)]
