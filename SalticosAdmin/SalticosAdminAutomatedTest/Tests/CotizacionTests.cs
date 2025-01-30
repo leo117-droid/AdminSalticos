@@ -16,7 +16,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
         CotizacionPage cotizacionPage;
 
-        private readonly String downloadPath = @"C:\Users\yaira\Downloads\Cotizaciones";
+        private readonly String downloadPath = @"C:\Users\camiu\Downloads\Cotizaciones";
 
 
         [SetUp]
@@ -40,9 +40,9 @@ namespace SalticosAdminAutomatedTest.Tests
 
 
             cotizacionPage = new CotizacionPage(driver, downloadPath);
-            cotizacionPage.Visit("http://localhost:5270/");
+            cotizacionPage.Visit("http://localhost:7033/");
 
-            cotizacionPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            cotizacionPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
 

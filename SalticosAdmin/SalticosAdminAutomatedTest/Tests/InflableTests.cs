@@ -15,7 +15,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
         InflablePage inflablePage;
 
-        private readonly String imagenPath = @"C:\Users\yaira\Downloads\Imagenes\super_tobogan.png";
+        private readonly String imagenPath = @"C:\Users\camiu\Downloads\Imagenes\super_tobogan.png";
 
 
         [SetUp]
@@ -24,9 +24,9 @@ namespace SalticosAdminAutomatedTest.Tests
             inflablePage = new InflablePage(driver);
             driver = inflablePage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            inflablePage.Visit("http://localhost:5270/");
+            inflablePage.Visit("http://localhost:7033/");
 
-            inflablePage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            inflablePage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
 

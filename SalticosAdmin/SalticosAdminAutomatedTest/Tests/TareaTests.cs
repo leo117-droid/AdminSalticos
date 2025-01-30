@@ -21,7 +21,7 @@ namespace SalticosAdminAutomatedTest.Tests
             driver.Manage().Window.Maximize();
             tareaPage.Visit("https://localhost:7033/");
 
-            tareaPage.IniciarSesion("leomora641@gmail.com", "Hola123.");
+            tareaPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
         [TearDown]

@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,27 +46,31 @@ namespace SalticosAdminAutomatedTest.Pages
             Click(BuscarBtnLocator);
         }
 
-
         public Boolean FiltraResultados(String fechaInicio, String fechaFin)
         {
+            DateTime inicio = DateTime.ParseExact(fechaInicio, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime fin = DateTime.ParseExact(fechaFin, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
             List<IWebElement> registros = FindElements(RegistrosLocator);
             for (int i = 1; i < registros.Count; i++)
             {
                 List<IWebElement> columnas = registros[i].FindElements(By.TagName("td")).ToList();
 
-                if(columnas.Count > 0)
+                if (columnas.Count > 0)
                 {
-                    String fecha = columnas[0].Text;
-                    if (fecha.CompareTo(fechaInicio) < 0 || fecha.CompareTo(fechaFin) > 0)
+                    string fechaTexto = columnas[0].Text;
+                    DateTime fecha = DateTime.ParseExact(fechaTexto, "dd MMM yyyy", new CultureInfo("es-ES"));
+
+                    if (fecha < inicio || fecha > fin)
                     {
                         return false;
                     }
                 }
-                
             }
 
             return true;
         }
+
+        
     }
 }

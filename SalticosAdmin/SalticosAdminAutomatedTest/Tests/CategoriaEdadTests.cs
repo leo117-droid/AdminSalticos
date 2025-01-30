@@ -21,9 +21,9 @@ namespace SalticosAdminAutomatedTest.Tests
             categoriaEdadPage = new CategoriaEdadPage(driver);
             driver = categoriaEdadPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            categoriaEdadPage.Visit("http://localhost:5270/");
+            categoriaEdadPage.Visit("https://localhost:7033/");
 
-            categoriaEdadPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            categoriaEdadPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
         [TearDown]

@@ -29,7 +29,7 @@ namespace SalticosAdminAutomatedTest.Pages
 
             Type(password, PasswordLocator);
 
-            Click(IniciarSesionBtnLocator);
+            ClickElementUsingJS(IniciarSesionBtnLocator);
         }
 
 

@@ -15,7 +15,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
         AlimentacionPage alimentacionPage;
 
-        private readonly string imagenPath = @"C:\Users\yaira\Downloads\Imagenes\pizza.jpg";
+        private readonly string imagenPath = @"C:\Users\camiu\Downloads\Imagenes\pizza.jpg";
 
 
         [SetUp]
@@ -24,9 +24,9 @@ namespace SalticosAdminAutomatedTest.Tests
             alimentacionPage = new AlimentacionPage(driver);
             driver = alimentacionPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            alimentacionPage.Visit("http://localhost:5270/");
+            alimentacionPage.Visit("https://localhost:7033/");
 
-            alimentacionPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            alimentacionPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
 

@@ -22,9 +22,9 @@ namespace SalticosAdminAutomatedTest.Tests
             rolPersonalPage = new RolPersonalPage(driver);
             driver = rolPersonalPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            rolPersonalPage.Visit("http://localhost:5270/");
+            rolPersonalPage.Visit("http://localhost:7033/");
 
-            rolPersonalPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            rolPersonalPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
 

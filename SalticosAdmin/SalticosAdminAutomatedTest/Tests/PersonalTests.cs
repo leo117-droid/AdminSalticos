@@ -19,9 +19,9 @@ namespace SalticosAdminAutomatedTest.Tests
             personalPage = new PersonalPage(driver);
             driver = personalPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            personalPage.Visit("https://localhost:7033/");
+            personalPage.Visit("http://localhost:7033/");
 
-            personalPage.IniciarSesion("leomora641@gmail.com", "Hola123.");
+            personalPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
         [TearDown]
         public void TearDown()

@@ -18,9 +18,9 @@ namespace SalticosAdminAutomatedTest.Tests
             herramientasPage = new HerramientasPage(driver);
             driver = herramientasPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            herramientasPage.Visit("http://localhost:5270/");
+            herramientasPage.Visit("http://localhost:7033/");
 
-            herramientasPage.IniciarSesion("leomora641@gmail.com", "Hola123.");
+            herramientasPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
         [TearDown]
         public void TearDown()

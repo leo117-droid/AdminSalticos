@@ -15,7 +15,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
         MobiliarioPage mobiliarioPage;
 
-        private readonly String imagenPath = @"C:\Users\yaira\Downloads\Imagenes\mesa_conferencia.jpg";
+        private readonly String imagenPath = @"C:\Users\camiu\Downloads\Imagenes\mesa_conferencia.jpg";
 
 
         [SetUp]
@@ -24,9 +24,9 @@ namespace SalticosAdminAutomatedTest.Tests
             mobiliarioPage = new MobiliarioPage(driver);
             driver = mobiliarioPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            mobiliarioPage.Visit("http://localhost:5270/");
+            mobiliarioPage.Visit("http://localhost:7033/");
 
-            mobiliarioPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            mobiliarioPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
 

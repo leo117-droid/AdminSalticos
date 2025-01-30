@@ -26,7 +26,7 @@ namespace SalticosAdminAutomatedTest.Tests
         public void IniciarSesion_UsuarioValido()
         {
             Thread.Sleep(2000);
-            loginPage.Login("leomora641@gmail.com", "Hola123.");
+            loginPage.Login("camiulatech@gmail.com", "Hola321!");
             Thread.Sleep(2000);
             Assert.IsTrue(loginPage.InicioDeSesionCorrecto());
         }
@@ -34,7 +34,7 @@ namespace SalticosAdminAutomatedTest.Tests
         [Test, Order(2)]
         public void IniciarSesion_UsuarioNoValido() 
         {
-            loginPage.Login("leomora641@gmail.com", "Hola1234.");
+            loginPage.Login("camiulatech@gmail.com", "Hola1234!");
             Thread.Sleep(2000);
             Assert.IsTrue(loginPage.MensajeErrorInicioSesionDesplegado());
         

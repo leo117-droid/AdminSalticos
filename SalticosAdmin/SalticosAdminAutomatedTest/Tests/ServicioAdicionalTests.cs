@@ -14,7 +14,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
         private ServicioAdicionalPage servicioAdicionalPage;
 
-        private readonly String imagenPath = @"C:\Users\yaira\Downloads\Imagenes\karaoke.jpg";
+        private readonly String imagenPath = @"C:\Users\camiu\Downloads\Imagenes\karaoke.jpg";
 
         [SetUp]
         public void SetUp()
@@ -22,9 +22,9 @@ namespace SalticosAdminAutomatedTest.Tests
             servicioAdicionalPage = new ServicioAdicionalPage(driver);
             driver = servicioAdicionalPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            servicioAdicionalPage.Visit("http://localhost:5270/");
+            servicioAdicionalPage.Visit("http://localhost:7033/");
 
-            servicioAdicionalPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            servicioAdicionalPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
 

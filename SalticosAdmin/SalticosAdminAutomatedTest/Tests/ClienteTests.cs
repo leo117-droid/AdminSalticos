@@ -22,7 +22,7 @@ namespace SalticosAdminAutomatedTest.Tests
             driver.Manage().Window.Maximize();
             clientePage.Visit("https://localhost:7033/");
 
-            clientePage.IniciarSesion("leomora641@gmail.com", "Hola123.");
+            clientePage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
         [TearDown]

@@ -21,9 +21,9 @@ namespace SalticosAdminAutomatedTest.Tests
             bitacoraPage = new BitacoraPage(driver);
             driver = bitacoraPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            bitacoraPage.Visit("http://localhost:5270/");
+            bitacoraPage.Visit("https://localhost:7033/");
 
-            bitacoraPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            bitacoraPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
 
@@ -39,9 +39,9 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             bitacoraPage.GestionBitacora();
             Thread.Sleep(1500);
-            bitacoraPage.FiltrarBitacora("22/01/2025", "23/01/2025");
+            bitacoraPage.FiltrarBitacora("01/01/2025", "02/02/2025");
             Thread.Sleep(1500);
-            Assert.IsTrue(bitacoraPage.FiltraResultados("22/01/2025", "23/01/2025"));
+            Assert.IsTrue(bitacoraPage.FiltraResultados("01/01/2025", "02/02/2025"));
         }
     }
 }

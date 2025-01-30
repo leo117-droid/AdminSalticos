@@ -16,7 +16,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
         InformePage informePage;
 
-        private readonly String downloadPath = @"C:\Users\yaira\Downloads\Informes";
+        private readonly String downloadPath = @"C:\Users\camiu\Downloads\Informes";
 
         [SetUp]
         public void SetUp()
@@ -39,9 +39,9 @@ namespace SalticosAdminAutomatedTest.Tests
 
 
             informePage = new InformePage(driver, downloadPath);
-            informePage.Visit("http://localhost:5270/");
+            informePage.Visit("http://localhost:7033/");
 
-            informePage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            informePage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
 

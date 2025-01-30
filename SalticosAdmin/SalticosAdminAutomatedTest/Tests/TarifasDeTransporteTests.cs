@@ -22,7 +22,7 @@ namespace SalticosAdminAutomatedTest.Tests
             driver.Manage().Window.Maximize();
             tarifasDeTransportePage.Visit("https://localhost:7033/");
 
-            tarifasDeTransportePage.IniciarSesion("leomora641@gmail.com", "Hola123.");
+            tarifasDeTransportePage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
         [TearDown]

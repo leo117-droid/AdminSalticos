@@ -20,9 +20,9 @@ namespace SalticosAdminAutomatedTest.Tests
             categoriaTamannoPage = new CategoriaTamannoPage(driver);
             driver = categoriaTamannoPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            categoriaTamannoPage.Visit("http://localhost:5270/");
+            categoriaTamannoPage.Visit("https://localhost:7033/");
 
-            categoriaTamannoPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            categoriaTamannoPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
         [TearDown]
@@ -37,9 +37,9 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             categoriaTamannoPage.GestionCategoriaTamanno();
             Thread.Sleep(2000);
-            categoriaTamannoPage.AgregarCategoriaTamanno("Mediano");
+            categoriaTamannoPage.AgregarCategoriaTamanno("Muy pequeño");
             Thread.Sleep(2000);
-            Assert.IsTrue(categoriaTamannoPage.CategoriaTamannoEstaRegistrada("Mediano"));
+            Assert.IsTrue(categoriaTamannoPage.CategoriaTamannoEstaRegistrada("Muy pequeño"));
         }
 
 
@@ -59,7 +59,7 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             categoriaTamannoPage.GestionCategoriaTamanno();
             Thread.Sleep(2000);
-            categoriaTamannoPage.ActualizarNombreCategoriaTamanno("Mediano", "Muy grande");
+            categoriaTamannoPage.ActualizarNombreCategoriaTamanno("Muy pequeño", "Muy grande");
             Thread.Sleep(2000);
             Assert.IsTrue(categoriaTamannoPage.NombreCategoriaTamannoActualizado("Muy grande"));
         }
