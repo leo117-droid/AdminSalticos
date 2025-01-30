@@ -20,7 +20,7 @@ namespace SalticosAdminAutomatedTest.Tests
             vehiculoPage = new VehiculoPage(driver);
             driver = vehiculoPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            vehiculoPage.Visit("http://localhost:7033/");
+            vehiculoPage.Visit("https://localhost:7033/");
 
             vehiculoPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }

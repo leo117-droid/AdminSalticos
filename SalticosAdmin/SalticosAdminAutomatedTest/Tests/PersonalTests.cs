@@ -19,7 +19,7 @@ namespace SalticosAdminAutomatedTest.Tests
             personalPage = new PersonalPage(driver);
             driver = personalPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            personalPage.Visit("http://localhost:7033/");
+            personalPage.Visit("https://localhost:7033/");
 
             personalPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
@@ -33,7 +33,7 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             personalPage.GestionPersonal();
             Thread.Sleep(2000);
-            personalPage.CrearPersonal("Ian", "Calvo", "88225588", "IanCalvo@gmail.com", "2058", "2003-04-24", "2025-04-24", "Ingeniero");
+            personalPage.CrearPersonal("Ian", "Calvo", "88225588", "IanCalvo@gmail.com", "2058", "2003-04-24", "2025-04-24", "Conductor");
             Thread.Sleep(2000);
             Assert.IsTrue(personalPage.PersonalEstaRegistrado("2058"));
         }

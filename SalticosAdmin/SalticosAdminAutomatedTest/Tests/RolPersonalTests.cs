@@ -22,7 +22,7 @@ namespace SalticosAdminAutomatedTest.Tests
             rolPersonalPage = new RolPersonalPage(driver);
             driver = rolPersonalPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            rolPersonalPage.Visit("http://localhost:7033/");
+            rolPersonalPage.Visit("https://localhost:7033/");
 
             rolPersonalPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
@@ -40,9 +40,9 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             rolPersonalPage.GestionRolPersonal();
             Thread.Sleep(2000);
-            rolPersonalPage.AgregarRolPersonal("Conductor");
+            rolPersonalPage.AgregarRolPersonal("Limpieza");
             Thread.Sleep(2000);
-            Assert.IsTrue(rolPersonalPage.RolPersonalEstaRegistrada("Conductor"));
+            Assert.IsTrue(rolPersonalPage.RolPersonalEstaRegistrada("Limpieza"));
         }
 
         [Test, Order(2)]
@@ -50,7 +50,7 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             rolPersonalPage.GestionRolPersonal();
             Thread.Sleep(2000);
-            rolPersonalPage.RegistrarRolPersonalConNombreRepetido("Conductor");
+            rolPersonalPage.RegistrarRolPersonalConNombreRepetido("Limpieza");
             Thread.Sleep(1500);
             Assert.IsTrue(rolPersonalPage.MensajeErrorNombreRepetidoDesplegado());
         }
@@ -61,9 +61,9 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             rolPersonalPage.GestionRolPersonal();
             Thread.Sleep(2000);
-            rolPersonalPage.ActualizarNombreRolPersonal("Conductor", "Asistente");
+            rolPersonalPage.ActualizarNombreRolPersonal("Limpieza", "Pintacaritas");
             Thread.Sleep(2000);
-            Assert.IsTrue(rolPersonalPage.NombreRolPersonalActualizado("Asistente"));
+            Assert.IsTrue(rolPersonalPage.NombreRolPersonalActualizado("Pintacaritas"));
         }
 
 
@@ -72,7 +72,7 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             rolPersonalPage.GestionRolPersonal();
             Thread.Sleep(2000);
-            rolPersonalPage.EliminarRolPersonal("Asistente");
+            rolPersonalPage.EliminarRolPersonal("Pintacaritas");
             Thread.Sleep(2000);
             Assert.IsTrue(rolPersonalPage.EstaCategoriaEdadEliminado());
         }

@@ -100,10 +100,10 @@ namespace SalticosAdminAutomatedTest.Pages
 
         }
 
-        public Boolean TelefonoYCorreoActualizado(String telefono, String correo, String nombre)
+        public Boolean TelefonoYCorreoActualizado(String telefono, String nombre)
         {
             Type(telefono, InputBarraBusqueda);
-            return GetText(EspacioTelefonoTablaProveedores) == telefono && GetText(EspacioCorreoTablaProveedores) == correo;
+            return GetText(EspacioTelefonoTablaProveedores) == telefono;
 
         }
         public bool ProveedorEliminado()

@@ -22,6 +22,12 @@ namespace SalticosAdminAutomatedTest.Tests
             loginPage.Visit("https://localhost:7033/");
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            driver.Quit();
+        }
+
         [Test, Order(1)]
         public void IniciarSesion_UsuarioValido()
         {
@@ -39,5 +45,7 @@ namespace SalticosAdminAutomatedTest.Tests
             Assert.IsTrue(loginPage.MensajeErrorInicioSesionDesplegado());
         
         }
+
+
     }
 }

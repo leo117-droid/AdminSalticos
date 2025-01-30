@@ -24,7 +24,7 @@ namespace SalticosAdminAutomatedTest.Tests
             mobiliarioPage = new MobiliarioPage(driver);
             driver = mobiliarioPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            mobiliarioPage.Visit("http://localhost:7033/");
+            mobiliarioPage.Visit("https://localhost:7033/");
 
             mobiliarioPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }

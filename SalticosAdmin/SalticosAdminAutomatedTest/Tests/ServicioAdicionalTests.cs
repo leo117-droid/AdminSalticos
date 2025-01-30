@@ -22,7 +22,7 @@ namespace SalticosAdminAutomatedTest.Tests
             servicioAdicionalPage = new ServicioAdicionalPage(driver);
             driver = servicioAdicionalPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            servicioAdicionalPage.Visit("http://localhost:7033/");
+            servicioAdicionalPage.Visit("https://localhost:7033/");
 
             servicioAdicionalPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }

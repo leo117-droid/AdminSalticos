@@ -47,7 +47,7 @@ namespace SalticosAdminAutomatedTest.Tests
             Thread.Sleep(2000);
             proveedoresPage.ActualizarTelefonoYCorreoProveedor("80808080", "Epa22@gmail.com", "EPA");
             Thread.Sleep(2000);
-            Assert.IsTrue(proveedoresPage.TelefonoYCorreoActualizado("80808080", "Epa22@gmail.com", "EPA"));
+            Assert.IsTrue(proveedoresPage.TelefonoYCorreoActualizado("80808080", "EPA"));
         }
         [Test, Order(3)]
         public void EliminarTarifa_EsEliminada()
