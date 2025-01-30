@@ -43,6 +43,12 @@ namespace SalticosAdminAutomatedTest.Pages
         By BtnEliminarInflable = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td[3]/div/a");
         By BtnConfirmarEliminacionInflable = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td[3]/div/a");
         By NingunInflableMensaje = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td");
+        By BtnCrearPersonal = By.XPath("//*[@id=\"formEventoPersonal\"]/div/div[3]/button");
+        By OpcionesPersonal = By.XPath("//*[@id=\"IdPersonal\"]");
+        By BtnAnadirPersonal = By.XPath("/html/body/div/main/div[1]/div[2]/a");
+        By EspacioCedulaPersonal = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td[3]");
+        By BtnEliminarPersonal = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td[4]/div/a");
+        By BtnConfirmarEliminarPersonal = By.XPath("/html/body/div[2]/div/div[4]/div[2]/button");
 
         public EventoPage(IWebDriver driver) : base(driver)
         {
@@ -115,6 +121,16 @@ namespace SalticosAdminAutomatedTest.Pages
             Click(BtnCrearInflable);
             
         }
+        public void SeleccionarPersonal(String nombrePersonal, String nombre)
+        {
+            Type(nombre, InputBarraBusqueda);
+            Click(BtnAccionesEvento);
+            Click(BtnOpcionPersonalAcciones);
+            Thread.Sleep(1500);
+            Click(BtnAnadirPersonal);
+            SelectByVisibleTextUsingJS(nombrePersonal, OpcionesPersonal);
+            Click(BtnCrearPersonal);
+        }
 
         public void EliminarInflable(String nombre) 
         {
@@ -124,6 +140,15 @@ namespace SalticosAdminAutomatedTest.Pages
             Thread.Sleep(1500);
             Click(BtnEliminarInflable);
             Click(BtnConfirmarEliminacionInflable);
+        }
+        public void EliminarPersonal(String nombre)
+        {
+            Type(nombre, InputBarraBusqueda);
+            Click(BtnAccionesEvento);
+            Click(BtnOpcionPersonalAcciones);
+            Thread.Sleep(1500);
+            Click(BtnEliminarPersonal);
+            Click(BtnConfirmarEliminarPersonal);
         }
 
         public Boolean FechaActualizada(String fecha, String cliente)
@@ -143,7 +168,15 @@ namespace SalticosAdminAutomatedTest.Pages
             return GetText(EspacioNombreInflable) == inflable;
         }
 
+        public Boolean PersonalActualizado(String cedula) 
+        {
+            return GetText(EspacioCedulaPersonal) == cedula;
+        }
         public Boolean InflableEliminado() 
+        {
+            return IsDisplayed(NingunInflableMensaje);
+        }
+        public Boolean PersonalEliminado()
         {
             return IsDisplayed(NingunInflableMensaje);
         }

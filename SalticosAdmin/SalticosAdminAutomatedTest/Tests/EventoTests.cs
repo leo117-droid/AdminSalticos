@@ -56,7 +56,7 @@ namespace SalticosAdminAutomatedTest.Tests
             eventoPage.InflableActualizado("el torilllo");
         }
         [Test, Order(4)]
-        public void EliminarInflableAEvento()
+        public void EliminarInflableEvento()
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
@@ -64,6 +64,22 @@ namespace SalticosAdminAutomatedTest.Tests
             eventoPage.InflableEliminado();
         }
         [Test, Order(5)]
+        public void AgregarPersonalAEvento() 
+        {
+            eventoPage.GestionEvento();
+            Thread.Sleep(2000);
+            eventoPage.SeleccionarPersonal("Leo Mora - 1", "Yowi Garcia");
+            eventoPage.PersonalActualizado("1");
+        }
+        [Test, Order(6)]
+        public void EliminarPersonalEvento()
+        {
+            eventoPage.GestionEvento();
+            Thread.Sleep(2000);
+            eventoPage.EliminarPersonal("Yowi Garcia");
+            eventoPage.PersonalEliminado();
+        }
+        [Test, Order(7)]
         public void EliminarEvento_EsEliminado()
         {
             eventoPage.GestionEvento();
