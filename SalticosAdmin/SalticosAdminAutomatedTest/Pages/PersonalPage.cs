@@ -118,5 +118,6 @@ namespace SalticosAdminAutomatedTest.Pages
         {
             return IsDisplayed(MensajeCedulaRepetida);
         }
+
     }
 }

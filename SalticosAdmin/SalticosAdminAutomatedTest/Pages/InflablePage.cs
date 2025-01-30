@@ -53,6 +53,7 @@ namespace SalticosAdminAutomatedTest.Pages
         }
 
 
+
         public void IniciarSesion(string usuario, string contrasenna)
         {
             LoginPage loginPage = new LoginPage(driver);
