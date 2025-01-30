@@ -140,6 +140,18 @@ namespace SalticosAdminAutomatedTest
             ", dropdown, visibleText);
         }
 
+        public void SetDateUsingJS(string date, By elementLocator)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            var dateInput = driver.FindElement(elementLocator);
+
+            js.ExecuteScript(@"
+        arguments[0].value = arguments[1];
+        var event = new Event('input', { bubbles: true });
+        arguments[0].dispatchEvent(event);
+    ", dateInput, date);
+        }
+
 
         public void SelectByText(String text, By locator)
         {

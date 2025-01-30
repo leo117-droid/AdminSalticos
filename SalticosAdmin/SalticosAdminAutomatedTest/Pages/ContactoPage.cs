@@ -18,6 +18,9 @@ namespace SalticosAdminAutomatedTest.Pages
         By BtnIrOtros = By.XPath("/html/body/div/main/section/div/div[2]/div[2]/div/div/a");
         By BtnIrContactos = By.XPath("/html/body/div/main/section/div/div/div[2]/div/div/a");
         By CorreoTablaLocator = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr[1]/td[6]");
+        By BtnEditarContactoLocator = By.XPath("/html/body/div/main/div[2]/div/table/tbody/tr[1]/td[7]/div/a[1]");
+        By BtnCampoNombreTabla = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr[1]/td[1]");
+        By BtnEliminarContactoLocator = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr[1]/td[7]/div/a[2]");
 
         //Boton de Upsert Locators
         By BtnCrearNuevoContacto = By.XPath("/html/body/div/main/div[1]/div[2]/a");
@@ -28,12 +31,15 @@ namespace SalticosAdminAutomatedTest.Pages
         By TelefonoLocator = By.Id("Telefono");
         By CorreoLocator = By.Id("Correo");
         By BtnCrearContactoLocator = By.XPath("/html/body/div/main/form/div/div[9]/div/button");
-
+        By EspacioNombreLocator = By.Id("nombre");
+        By BtnGuardarCambios = By.XPath("/html/body/div/main/form/div/div[9]/div/button");
         //Mensaje Eliminar Contacto
 
         By BtnMensajeEliminarContacto = By.XPath("/html/body/div[2]/div/div[4]/div[2]/button");
 
+        // Mensjae de ningun registro
 
+        By NingunRegistroMensaje = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td");
         public ContactoPage(IWebDriver driver) : base(driver)
         {
         }
@@ -57,6 +63,8 @@ namespace SalticosAdminAutomatedTest.Pages
             Click(BtnIrContactos);
         }
 
+        
+
         public void CrearContacto(String nombre, String apellido, String tipoServicio, String direccion, string telefono, string correo) 
         {
             Click(BtnCrearNuevoContacto);
@@ -70,6 +78,18 @@ namespace SalticosAdminAutomatedTest.Pages
             Click(BtnCrearContactoLocator);
         }
 
+        public void ActualizarNombreContacto(String nombre, String correo)
+        {
+            Type(correo, InputBarraBusqueda);
+
+            Click(BtnEditarContactoLocator);
+            Thread.Sleep(2000);
+            Clear(EspacioNombreLocator);
+            Type(nombre, EspacioNombreLocator);
+            Click(BtnGuardarCambios);
+
+        }
+
         public void EliminarContacto(String contacto)
         {
             Type(contacto, InputBarraBusqueda);
@@ -77,6 +97,17 @@ namespace SalticosAdminAutomatedTest.Pages
             Click(BtnMensajeEliminarContacto);
             Thread.Sleep(2000);
 
+        }
+
+        public Boolean NombreContactoActualizado(String nombre, String correo)
+        {
+            Type(correo, InputBarraBusqueda);
+            return GetText(BtnCampoNombreTabla) == nombre;
+        }
+
+        public Boolean EstaContactoEliminado()
+        {
+            return IsDisplayed(NingunRegistroMensaje);
         }
     }
 }

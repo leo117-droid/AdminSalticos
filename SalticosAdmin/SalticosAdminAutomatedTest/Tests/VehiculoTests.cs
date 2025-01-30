@@ -42,7 +42,7 @@ namespace SalticosAdminAutomatedTest.Tests
         }
 
         [Test, Order(2)]
-        public void CrearVehiculoConCedulaExistente_MuestraMensajeDeError()
+        public void CrearVehiculoConPlacaExistente_MuestraMensajeDeError()
         {
             vehiculoPage.GestionVehiculos();
             Thread.Sleep(2000);

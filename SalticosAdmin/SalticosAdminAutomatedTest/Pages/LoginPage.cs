@@ -13,6 +13,8 @@ namespace SalticosAdminAutomatedTest.Pages
         By EmailLocator = By.Id("Input_Email");
         By PasswordLocator = By.Id("Input_Password");
         By IniciarSesionBtnLocator = By.XPath("//*[@id=\"account\"]/div[4]/button");
+        By MensajeErrorInicioSesion = By.XPath("//*[@id=\"account\"]/div[1]/ul/li");
+        By BannerPagPrincipal = By.XPath("/html/body/div/main/div/img");
 
 
         public LoginPage(IWebDriver driver) : base(driver)
@@ -31,5 +33,14 @@ namespace SalticosAdminAutomatedTest.Pages
         }
 
 
+        public Boolean MensajeErrorInicioSesionDesplegado()
+        {
+            return IsDisplayed(MensajeErrorInicioSesion);
+        }
+
+        public Boolean InicioDeSesionCorrecto()
+        {
+            return IsDisplayed(BannerPagPrincipal);
+        }
     }
 }

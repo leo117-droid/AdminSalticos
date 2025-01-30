@@ -31,7 +31,7 @@ namespace SalticosAdminAutomatedTest.Tests
             driver.Quit();
         }
 
-        [Test]
+        [Test, Order(1)]
         public void CrearContactoConDatosValidos_EsRegistrado()
         {
             contactoPage.GestionContactos();
@@ -40,6 +40,27 @@ namespace SalticosAdminAutomatedTest.Tests
             Thread.Sleep(2000);
             Assert.IsTrue(contactoPage.ContactoEstaRegistrado("yowi@gmail.com"));
         }
+
+        [Test, Order(2)]
+        public void ActualizarNombreContacto_EsActualizado()
+        {
+            contactoPage.GestionContactos();
+            Thread.Sleep(2000);
+            contactoPage.ActualizarNombreContacto("Yosward", "yowi@gmail.com");
+            Thread.Sleep(2000);
+            Assert.IsTrue(contactoPage.NombreContactoActualizado("Yosward", "yowi@gmail.com"));
+        }
+        [Test, Order(3)]
+
+        public void EliminarContacto_EsEliminado()
+        {
+            contactoPage.GestionContactos();
+            Thread.Sleep(2000);
+            contactoPage.EliminarContacto("yowi@gmail.com");
+            Thread.Sleep(2000);
+            Assert.IsTrue(contactoPage.EstaContactoEliminado());
+        }
+
 
     }
 }

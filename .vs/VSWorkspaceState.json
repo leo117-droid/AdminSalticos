@@ -1,7 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\SalticosAdmin",
+    "\\SalticosAdmin\\SalticosAdminAutomatedTest",
+    "\\SalticosAdmin\\SalticosAdminAutomatedTest\\Pages",
+    "\\SalticosAdmin\\SalticosAdminAutomatedTest\\Tests",
+    "\\SalticosAdmin\\SalticosAdminPruebas",
+    "\\SalticosAdmin\\SalticosAdminTest"
   ],
-  "SelectedNode": "\\SalticosAdmin.sln",
+  "SelectedNode": "\\SalticosAdmin\\SalticosAdmin.sln",
   "PreviewInSolutionExplorer": false
 }
