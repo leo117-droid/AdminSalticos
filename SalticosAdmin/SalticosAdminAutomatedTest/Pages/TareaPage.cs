@@ -17,7 +17,7 @@ namespace SalticosAdminAutomatedTest.Pages
         By CuadroTareaDisplay = By.XPath("//*[@id=\"tarea-8\"]/div/div");
         By BtnMarcarTareaCompletada = By.XPath("//*[@id=\"tarea-8\"]/div/div/div/button");
         By BtnEditarTarea = By.XPath("//*[@id=\"tarea-8\"]/div/div/div/a");
-        By BtnEliminarTarea = By.XPath("//*[@id=\"tarea-8\"]/div/div/button");
+        By BtnEliminarTarea = By.XPath("/html/body/div/main/div/div[2]/div[1]/div/div/button");
 
         By BtnMensajeEliminarTarea = By.XPath("/html/body/div[2]/div/div[4]/div[2]/button");
 

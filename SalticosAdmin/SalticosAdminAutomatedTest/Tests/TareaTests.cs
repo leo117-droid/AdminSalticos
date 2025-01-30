@@ -19,9 +19,9 @@ namespace SalticosAdminAutomatedTest.Tests
             tareaPage = new TareaPage(driver);
             driver = tareaPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            tareaPage.Visit("https://localhost:7033/");
+            tareaPage.Visit("http://localhost:5270/");
 
-            tareaPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
+            tareaPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
         }
 
         [TearDown]
