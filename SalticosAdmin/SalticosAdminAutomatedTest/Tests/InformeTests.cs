@@ -39,7 +39,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
 
             informePage = new InformePage(driver, downloadPath);
-            informePage.Visit("http://localhost:7033/");
+            informePage.Visit("https://localhost:7033/");
 
             informePage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }

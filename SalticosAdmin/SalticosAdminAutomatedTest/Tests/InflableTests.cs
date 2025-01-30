@@ -24,7 +24,7 @@ namespace SalticosAdminAutomatedTest.Tests
             inflablePage = new InflablePage(driver);
             driver = inflablePage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            inflablePage.Visit("http://localhost:7033/");
+            inflablePage.Visit("https://localhost:7033/");
 
             inflablePage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }

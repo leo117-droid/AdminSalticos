@@ -58,7 +58,10 @@ namespace SalticosAdminAutomatedTest
 
         public void Click(By locator)
         {
-            driver.FindElement(locator).Click();
+            //driver.FindElement(locator).Click();
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            var element = driver.FindElement(locator);
+            js.ExecuteScript("arguments[0].click();", element);
         }
 
         public void Click(IWebElement element)

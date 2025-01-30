@@ -80,7 +80,7 @@ namespace SalticosAdminAutomatedTest.Pages
             Type(cedula, CedulaEspacioCrearCliente);
             Type(telefono, TelefonoEspacioCrearCliente);
             Type(correo, CorreoEspacioCrearCliente);
-            Click(BtnCrearCliente);
+            ClickElementUsingJS(BtnCrearCliente);
 
         }
 
@@ -102,7 +102,7 @@ namespace SalticosAdminAutomatedTest.Pages
             Thread.Sleep(2000);
             Clear(NombreEspacioActualizarCliente);
             Type(nombre, NombreEspacioActualizarCliente);
-            Click(BtnGuardarCambios);
+            ClickElementUsingJS(BtnGuardarCambios);
 
         }
 

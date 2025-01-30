@@ -40,7 +40,7 @@ namespace SalticosAdminAutomatedTest.Tests
 
 
             cotizacionPage = new CotizacionPage(driver, downloadPath);
-            cotizacionPage.Visit("http://localhost:7033/");
+            cotizacionPage.Visit("https://localhost:7033/");
 
             cotizacionPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
