@@ -80,6 +80,74 @@ namespace SalticosAdminAutomatedTest.Tests
             eventoPage.PersonalEliminado();
         }
         [Test, Order(7)]
+        public void AgregarVehiculoAEvento()
+        {
+            eventoPage.GestionEvento();
+            Thread.Sleep(2000);
+            eventoPage.SeleccionarVehiculo("Camion - 111111", "Yowi Garcia");
+            eventoPage.VehiculoActualizado("111111");
+        }
+        [Test, Order(8)]
+        public void EliminarVehiculoEvento()
+        {
+            eventoPage.GestionEvento();
+            Thread.Sleep(2000);
+            eventoPage.EliminarVehiculo("Yowi Garcia");
+            eventoPage.VehiculoEliminado();
+        }
+        [Test, Order(9)]
+        public void AgregarMobiliarioAEvento()
+        {
+            eventoPage.GestionEvento();
+            Thread.Sleep(2000);
+            eventoPage.SeleccionarMobiliario("Mob1", "01", "Yowi Garcia");
+            eventoPage.MobiliarioActualizado("Mob1");
+        }
+        [Test, Order(10)]
+        public void EliminarMobiliarioEvento()
+        {
+            eventoPage.GestionEvento();
+            Thread.Sleep(2000);
+            eventoPage.EliminarMobiliario("Yowi Garcia");
+            eventoPage.MobiliarioEliminado();
+        }
+
+        [Test, Order(11)]
+        public void AgregarAlimentacionAEvento()
+        {
+            eventoPage.GestionEvento();
+            Thread.Sleep(2000);
+            eventoPage.SeleccionarAlimentacion("vorgesita", "1", "Yowi Garcia");
+            eventoPage.AlimentacionActualizada("vorgesita");
+        }
+
+        [Test, Order(12)]
+        public void EliminarAlimentacionEvento()
+        {
+            eventoPage.GestionEvento();
+            Thread.Sleep(2000);
+            eventoPage.EliminarAlimentacion("Yowi Garcia");
+            eventoPage.AlimentacionEliminada();
+        }
+
+        [Test, Order(13)]
+        public void AgregarServicioAEvento()
+        {
+            eventoPage.GestionEvento();
+            Thread.Sleep(2000);
+            eventoPage.SeleccionarServicioAdicional("Leo", "1", "Yowi Garcia");
+            eventoPage.ServicioActualizado("Leo");
+        }
+
+        [Test, Order(14)]
+        public void EliminarServicioEvento()
+        {
+            eventoPage.GestionEvento();
+            Thread.Sleep(2000);
+            eventoPage.EliminarServicioAdicional("Yowi Garcia");
+            eventoPage.ServicioEliminado();
+        }
+        [Test, Order(15)]
         public void EliminarEvento_EsEliminado()
         {
             eventoPage.GestionEvento();
