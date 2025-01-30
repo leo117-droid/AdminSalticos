@@ -51,11 +51,11 @@ namespace SalticosAdminTest
         [Test]
         public async Task Index_DebeRetornarConCotizacionVM_CuandoHayDatosDisponibles()
         {
-            var mockInflables = new List<Inflable> { new Inflable { Id = 1, Nombre = "Inflable 1" } };
-            var mockMobiliarios = new List<Mobiliario> { new Mobiliario { Id = 1, Nombre = "Mobiliario 1" } };
-            var mockServicios = new List<ServicioAdicional> { new ServicioAdicional { Id = 1, Nombre = "Servicio 1" } };
-            var mockAlimentacion = new List<Alimentacion> { new Alimentacion { Id = 1, Nombre = "Alimento 1" } };
-            var mockTarifas = new List<TarifasTransporte> { new TarifasTransporte { Id = 1, Provincia = "Provincia 1" } };
+            var mockInflables = new List<Inflable> { new Inflable { Id = 1, Nombre = "Avengers" } };
+            var mockMobiliarios = new List<Mobiliario> { new Mobiliario { Id = 1, Nombre = "Sillas" } };
+            var mockServicios = new List<ServicioAdicional> { new ServicioAdicional { Id = 1, Nombre = "Máquina de burbujas" } };
+            var mockAlimentacion = new List<Alimentacion> { new Alimentacion { Id = 1, Nombre = "Hot dog" } };
+            var mockTarifas = new List<TarifasTransporte> { new TarifasTransporte { Id = 1, Provincia = "Heredia" } };
 
             _mockUnidadTrabajo.Setup(x => x.Inflable.ObtenerTodos(It.IsAny<Expression<Func<Inflable, bool>>>(), null, null, true)).ReturnsAsync(mockInflables);
             _mockUnidadTrabajo.Setup(x => x.Mobiliario.ObtenerTodos(It.IsAny<Expression<Func<Mobiliario, bool>>>(), null, null, true)).ReturnsAsync(mockMobiliarios);

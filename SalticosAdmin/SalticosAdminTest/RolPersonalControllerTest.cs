@@ -25,9 +25,6 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private RolPersonalController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
-
 
         [SetUp]
         public void SetUp()
@@ -35,19 +32,16 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock = new Mock<IUnidadTrabajo>();
             _controller = new RolPersonalController(_unidadTrabajoMock.Object);
             
-            //Simula el login y creacion de un usuario
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Name, "testuser")
             }, "mock"));
 
-            //Simula el HTTP necesario para el funcionamiento de la prueba
             _controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = new DefaultHttpContext() { User = user }
             };
 
-            //Simula la existencia del TempData 
             var tempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>())
             {
                 [DS.Exitosa] = "Success message",
@@ -55,7 +49,6 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             };
             _controller.TempData = tempData;
 
-            // Simula los metodo para Bitacora 
             _unidadTrabajoMock.Setup(u => u.Bitacora.RegistrarBitacora(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
         }

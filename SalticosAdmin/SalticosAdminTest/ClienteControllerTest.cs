@@ -19,10 +19,10 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
     [TestFixture]
     public class ClienteControllerTests
     {
+        // Configuración inicial antes de cada prueba
+
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private ClienteController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
 
         [SetUp]
         public void SetUp()
@@ -51,6 +51,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 .Returns(Task.CompletedTask);
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
         [Test]
         public void Index_RetornaVista()
         {
@@ -59,6 +60,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
         }
 
+        // Verifica que, cuando el ID es null, el método Upsert retorne una vista con un modelo vacío.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloVacioCuandoIdEsNull()
         {
@@ -70,6 +72,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Id, Is.EqualTo(0));
         }
 
+        // Verifica que, cuando se proporciona un ID válido, el método Upsert retorne una vista con el modelo correspondiente.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
@@ -91,15 +94,16 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Id, Is.EqualTo(clienteId));
         }
 
+        // Verifica que el método Upsert cree una nueva cliente cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_Post_CreaCliente()
         {
             var cliente = new Cliente
             {
                 Id = 0,
-                Nombre = "Maria",
-                Apellidos = "Gomez",
-                Cedula = "987654321"
+                Nombre = "Yosward",
+                Apellidos = "García",
+                Cedula = "108923471"
             };
 
             _unidadTrabajoMock.Setup(u => u.Cliente.Agregar(It.IsAny<Cliente>())).Returns(Task.CompletedTask);
@@ -112,6 +116,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Cliente.Agregar(It.IsAny<Cliente>()), Times.Once);
         }
 
+        // Verifica que el método Upsert actualice un cliente existente.
         [Test]
         public async Task Upsert_Post_ActualizaCliente()
         {
@@ -119,17 +124,17 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var clienteExistente = new Cliente
             {
                 Id = clienteId,
-                Nombre = "Carlos",
-                Apellidos = "Rojas",
-                Cedula = "456123789"
+                Nombre = "Santiago",
+                Apellidos = "Ulate",
+                Cedula = "10987210"
             };
 
             var clienteActualizado = new Cliente
             {
                 Id = clienteId,
-                Nombre = "Carlos",
-                Apellidos = "Rojas",
-                Cedula = "456123789"
+                Nombre = "Santiago Luis",
+                Apellidos = "Ulate",
+                Cedula = "10987210"
             };
 
             _unidadTrabajoMock.Setup(u => u.Cliente.Obtener(clienteId)).ReturnsAsync(clienteExistente);
@@ -143,6 +148,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Cliente.Actualizar(It.IsAny<Cliente>()), Times.Once);
         }
 
+        // Verifica que el método Delete elimine correctamente una cliente.
         [Test]
         public async Task Delete_RetornaExito_CuandoElClienteExiste()
         {
@@ -150,9 +156,9 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var clienteBd = new Cliente
             {
                 Id = clienteId,
-                Nombre = "Luis",
-                Apellidos = "Ramirez",
-                Cedula = "321654987"
+                Nombre = "Raul",
+                Apellidos = "Bolaños",
+                Cedula = "509821345"
             };
 
             _unidadTrabajoMock.Setup(u => u.Cliente.Obtener(clienteId)).ReturnsAsync(clienteBd);
@@ -170,6 +176,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Cliente.Remover(It.IsAny<Cliente>()), Times.Once);
         }
 
+        // Verifica que se retorne un error cuando se intenta eliminar un cliente que no existe.
         [Test]
         public async Task Delete_RetornaError_CuandoElClienteNoExiste()
         {
@@ -187,9 +194,55 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar Cliente"));
         }
 
+        // Verifica que el método ValidarCedula retorne false si la cédula no está duplicada.
+        [Test]
+        public async Task ValidarCedula_CedulaNoDuplicada_RetornaFalse()
+        {
+            var cedulaNueva = "123456789";
+            var listaClientes = new List<Cliente>
+            {
+                new Cliente { Id = 1, Cedula = "987654321" },
+                new Cliente { Id = 2, Cedula = "456789123" }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Cliente.ObtenerTodos(It.IsAny<Expression<Func<Cliente, bool>>>(), null, null, true))
+                .ReturnsAsync(listaClientes);
+
+            var resultado = await _controller.ValidarCedula(cedulaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.False, "El valor de 'data' no es false.");
+        }
+
+        // Verifica que el método ValidarCedula retorne true si la cédula está duplicada.
+        [Test]
+        public async Task ValidarCedula_CedulaDuplicada_RetornaTrue()
+        {
+            var cedulaNueva = "456789123";
+            var listaClientes = new List<Cliente>
+            {
+                new Cliente { Id = 1, Cedula = "123456789" },
+                new Cliente { Id = 2, Cedula = "456789123" }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Cliente.ObtenerTodos(It.IsAny<Expression<Func<Cliente, bool>>>(), null, null, true))
+                .ReturnsAsync(listaClientes);
+
+            var resultado = await _controller.ValidarCedula(cedulaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.True, "El valor de 'data' no es true.");
+        }
+
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _unidadTrabajoMock.Reset();
 
             if (_controller != null)

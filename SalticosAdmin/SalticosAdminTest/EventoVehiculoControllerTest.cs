@@ -60,6 +60,7 @@ namespace SalticosAdminTest
                 .Returns(Task.CompletedTask);
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
         [Test]
         public void Index_ConId_RetornaVista()
         {
@@ -72,6 +73,7 @@ namespace SalticosAdminTest
             Assert.That(id, Is.EqualTo(result.ViewData["Id"]));
         }
 
+        //Verifica el controlador sigue funciona correctamente y proporciona la lista de servicio adicional esperada en la vista.
         [Test]
         public async Task Upsert_ConRelacionIdEsNull_RetornVistaConViewModel()
         {
@@ -101,7 +103,7 @@ namespace SalticosAdminTest
             
         }
 
-
+        //Asegura que cuando el modelo es inválido, el controlador responde correctamente, mostrando la vista con los errores de validación
         [Test]
         public async Task Upsert_PostModeloInvalido_ReturnsVistaConErrores()
         {         
@@ -115,8 +117,7 @@ namespace SalticosAdminTest
             Assert.That(_controller.ModelState.IsValid, Is.False);
         }
 
-
-
+        // Verifica que el método Upsert cree un nuevo evento vehiculo cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_PostModeloValido_CreaNuevoEventoVehiculo()
         {
@@ -173,6 +174,7 @@ namespace SalticosAdminTest
         }
 
 
+        // Verifica que el método Delete elimine correctamente un vehiculo de un evento.
         [Test]
         public async Task Delete_Post_EliminaEventoVehiculo_Exito()
         {
@@ -239,8 +241,7 @@ namespace SalticosAdminTest
 
         }
 
-
-
+        // Verifica que se retorne un error cuando se intenta eliminar un evento vehiculo que no existe.
         [Test]
         public async Task Delete_CuandoEventoVehiculoNoExiste_RetornaError()
         {
@@ -264,6 +265,8 @@ namespace SalticosAdminTest
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _mockUnidadTrabajo.Reset();
             if (_controller != null)
             {

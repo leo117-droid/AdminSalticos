@@ -12,16 +12,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
+using System.Linq.Expressions;
 
 namespace SalticosAdmin.Tests.Areas.Admin.Controllers
 {
     [TestFixture]
     public class SeguroControllerTests
-    {
+    {        
+        // Configuración inicial antes de cada prueba
+
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private SeguroController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
 
         [SetUp]
         public void SetUp()
@@ -50,6 +51,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 .Returns(Task.CompletedTask);
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
         [Test]
         public void Index_RetornaVista()
         {
@@ -58,6 +60,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
         }
 
+        // Verifica que, cuando el ID es null, el método Upsert retorne una vista con un modelo vacío.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloVacioCuandoIdEsNull()
         {
@@ -69,6 +72,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Id, Is.EqualTo(0));
         }
 
+        // Verifica que, cuando se proporciona un ID válido, el método Upsert retorne una vista con el modelo correspondiente.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
@@ -90,6 +94,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Id, Is.EqualTo(seguroId));
         }
 
+        // Verifica que el método Upsert cree un nuevo seguro cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_Post_CreaSeguro()
         {
@@ -111,6 +116,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Seguros.Agregar(It.IsAny<Seguro>()), Times.Once);
         }
 
+        // Verifica que el método Upsert actualice un seguro existente.
         [Test]
         public async Task Upsert_Post_ActualizaSeguro()
         {
@@ -142,6 +148,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Seguros.Actualizar(It.IsAny<Seguro>()), Times.Once);
         }
 
+        // Verifica que el método Delete elimine correctamente seguro.
         [Test]
         public async Task Delete_RetornaExito_CuandoElSeguroExiste()
         {
@@ -167,6 +174,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Seguros.Remover(It.IsAny<Seguro>()), Times.Once);
         }
 
+        // Verifica que se retorne un error cuando se intenta eliminar un seguro que no existe.
         [Test]
         public async Task Delete_RetornaError_CuandoElSeguroNoExiste()
         {
@@ -184,9 +192,55 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Error al borrar seguro"));
         }
 
+        // Verifica que el método ValidarPoliza retorne false si el número de póliza no está duplicado.
+        [Test]
+        public async Task ValidarPoliza_PolizaNoDuplicada_RetornaFalse()
+        {
+            var polizaNueva = 67890;
+            var listaSeguros = new List<Seguro>
+            {
+                new Seguro { Id = 1, NumeroPoliza = 12345 },
+                new Seguro { Id = 2, NumeroPoliza = 54321 }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Seguros.ObtenerTodos(It.IsAny<Expression<Func<Seguro, bool>>>(), null, null, true))
+                .ReturnsAsync(listaSeguros);
+
+            var resultado = await _controller.ValidarPoliza(polizaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.False, "El valor de 'data' no es false.");
+        }
+
+        // Verifica que el método ValidarPoliza retorne true si el número de póliza está duplicado.
+        [Test]
+        public async Task ValidarPoliza_PolizaDuplicada_RetornaTrue()
+        {
+            var polizaNueva = 54321;
+            var listaSeguros = new List<Seguro>
+            {
+                new Seguro { Id = 1, NumeroPoliza = 12345 },
+                new Seguro { Id = 2, NumeroPoliza = 54321 }
+            };
+
+            _unidadTrabajoMock.Setup(u => u.Seguros.ObtenerTodos(It.IsAny<Expression<Func<Seguro, bool>>>(), null, null, true))
+                .ReturnsAsync(listaSeguros);
+
+            var resultado = await _controller.ValidarPoliza(polizaNueva);
+
+            var jsonResult = resultado as JsonResult;
+            var dataPropiedad = jsonResult.Value.GetType().GetProperty("data");
+            var dataValor = dataPropiedad.GetValue(jsonResult.Value);
+            Assert.That(dataValor, Is.True, "El valor de 'data' no es true.");
+        }
+
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _unidadTrabajoMock.Reset();
 
             if (_controller != null)

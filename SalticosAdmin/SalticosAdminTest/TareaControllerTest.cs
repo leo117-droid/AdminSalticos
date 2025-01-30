@@ -5,10 +5,7 @@ using NUnit.Framework;
 using SalticosAdmin.Areas.Admin.Controllers;
 using SalticosAdmin.AccesoDeDatos.Repositorio.IRepositorio;
 using SalticosAdmin.Modelos;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SalticosAdmin.Utilidades;
@@ -18,10 +15,10 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
     [TestFixture]
     public class TareaControllerTests
     {
+        // Configuración inicial antes de cada prueba
+
         private Mock<IUnidadTrabajo> _unidadTrabajoMock;
         private TareaController _controller;
-        private Mock<HttpContext> _httpContextMock;
-        private Mock<ITempDataDictionary> _tempDataMock;
 
         [SetUp]
         public void SetUp()
@@ -50,6 +47,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
                 .Returns(Task.CompletedTask);
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
+
         [Test]
         public void Index_RetornaVista()
         {
@@ -58,6 +57,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(resultado, Is.InstanceOf<ViewResult>());
         }
 
+        // Verifica que, cuando el ID es null, el método Upsert retorne una vista con un modelo vacío.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloVacioCuandoIdEsNull()
         {
@@ -69,6 +69,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Id, Is.EqualTo(0));
         }
 
+        // Verifica que, cuando se proporciona un ID válido, el método Upsert retorne una vista con el modelo correspondiente.
         [Test]
         public async Task Upsert_Get_RetornaVistaConModeloCuandoIdEsValido()
         {
@@ -76,8 +77,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var tarea = new Tarea
             {
                 Id = tareaId,
-                Titulo = "Tarea 1",
-                Descripcion = "Descripción de la tarea 1",
+                Titulo = "Llamar al mecánico",
+                Descripcion = "Llamar al mecánico antes de las 10am",
                 Estado = "Pendiente",
                 Prioridad = "Alta",
                 Fecha = DateTime.Now.AddDays(-1)
@@ -92,14 +93,15 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             Assert.That(modelo.Id, Is.EqualTo(tareaId));
         }
 
+        // Verifica que el método Upsert cree un nueva tarea cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_Post_CreaTarea()
         {
             var tarea = new Tarea
             {
                 Id = 0,
-                Titulo = "Nueva Tarea",
-                Descripcion = "Descripción de la nueva tarea",
+                Titulo = "Recoger paquete en el correo",
+                Descripcion = "Recoger paquete de tips en el correo",
                 Estado = "Pendiente",
                 Prioridad = "Alta",
                 Fecha = DateTime.Now
@@ -115,6 +117,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Tareas.Agregar(It.IsAny<Tarea>()), Times.Once);
         }
 
+        // Verifica que el método Upsert actualiza una tarea existente.
         [Test]
         public async Task Upsert_Post_ActualizaTarea()
         {
@@ -122,8 +125,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var tareaExistente = new Tarea
             {
                 Id = tareaId,
-                Titulo = "Tarea Existente",
-                Descripcion = "Descripción de la tarea existente",
+                Titulo = "Recoger camisas negras para empleados",
+                Descripcion = "Recoger 3 camisas tallas M y 1 talla L",
                 Estado = "Pendiente",
                 Prioridad = "Media",
                 Fecha = DateTime.Now.AddDays(-1)
@@ -132,8 +135,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var tareaActualizada = new Tarea
             {
                 Id = tareaId,
-                Titulo = "Tarea Actualizada",
-                Descripcion = "Descripción de la tarea actualizada",
+                Titulo = "Recoger camisas negras para empleados",
+                Descripcion = "Recoger 3 camisas tallas M y 2 talla L",
                 Estado = "En Progreso",
                 Prioridad = "Alta",
                 Fecha = DateTime.Now
@@ -150,6 +153,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Tareas.Actualizar(It.IsAny<Tarea>()), Times.Once);
         }
 
+        // Verifica que el método Delete elimine correctamente una tarea.
         [Test]
         public async Task Delete_RetornaExito_CuandoLaTareaExiste()
         {
@@ -157,7 +161,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             var tareaBd = new Tarea
             {
                 Id = tareaId,
-                Titulo = "Tarea 1"
+                Titulo = "Llamar a la contadora"
             };
 
             _unidadTrabajoMock.Setup(u => u.Tareas.Obtener(tareaId)).ReturnsAsync(tareaBd);
@@ -175,6 +179,7 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
             _unidadTrabajoMock.Verify(u => u.Tareas.Remover(It.IsAny<Tarea>()), Times.Once);
         }
 
+        // Verifica que se retorne un error cuando se intenta eliminar una tarea que no existe.
         [Test]
         public async Task Delete_RetornaError_CuandoLaTareaNoExiste()
         {
@@ -195,6 +200,8 @@ namespace SalticosAdmin.Tests.Areas.Admin.Controllers
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _unidadTrabajoMock.Reset();
 
             if (_controller != null)

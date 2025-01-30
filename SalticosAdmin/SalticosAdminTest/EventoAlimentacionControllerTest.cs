@@ -9,19 +9,15 @@ using SalticosAdmin.Areas.Admin.Controllers;
 using SalticosAdmin.Modelos.ViewModels;
 using SalticosAdmin.Modelos;
 using SalticosAdmin.Utilidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SalticosAdminTest
 {
     public class EventoAlimentacionControllerTest
     {
+        // Configuración inicial antes de cada prueba
 
         private Mock<IUnidadTrabajo> _mockUnidadTrabajo;
         private EventoAlimentacionController _controller;
@@ -55,6 +51,7 @@ namespace SalticosAdminTest
 
         }
 
+        // Verifica que el método Index retorne una vista correctamente.
         [Test]
         public void Index_ConId_RetornaVista()
         {
@@ -66,6 +63,7 @@ namespace SalticosAdminTest
             Assert.That(id, Is.EqualTo(result.ViewData["Id"]));
         }
 
+        //Verifica el controlador sigue funciona correctamente y proporciona la lista de alimentación esperada en la vista.
         [Test]
         public async Task Upsert_ConRelacionIdEsNull_RetornVistaConViewModel()
         {
@@ -91,6 +89,7 @@ namespace SalticosAdminTest
             Assert.That(mockeventoList, Is.EqualTo(model.ListaAlimentacion));
         }
 
+        //Asegura que cuando el modelo es inválido, el controlador responde correctamente, mostrando la vista con los errores de validación
         [Test]
         public async Task Upsert_PostModeloInvalido_ReturnsVistaConErrores()
         {
@@ -104,6 +103,7 @@ namespace SalticosAdminTest
             Assert.That(_controller.ModelState.IsValid, Is.False);
         }
 
+        // Verifica que el método Upsert cree un nuevo evento alimentación cuando el modelo no tiene un ID.
         [Test]
         public async Task Upsert_PostModeloValido_CreaNuevoEventoAlimentacion()
         {
@@ -151,7 +151,7 @@ namespace SalticosAdminTest
         }
 
 
-
+        // Verifica que el método Upsert actualice una cantidad en de alimentación en un evento.
         [Test]
         public async Task Upsert_PostModeloValido_ActualizaEventoAlimentacionExistente()
         {
@@ -206,11 +206,7 @@ namespace SalticosAdminTest
             Assert.That(result, Is.InstanceOf<RedirectResult>());
         }
 
-
-
-
-
-
+        // Verifica que el método Delete elimine correctamente un producto de alimentación de un evento.
         [Test]
         public async Task Delete_Post_EliminaEventoAlimentacion_Exito()
         {
@@ -275,6 +271,7 @@ namespace SalticosAdminTest
             Assert.That(contenido["message"].ToString(), Is.EqualTo("Alimentación borrado del evento exitosamente"));
         }
 
+        // Verifica que se retorne un error cuando se intenta eliminar un evento alimentación que no existe.
         [Test]
         public async Task Delete_CuandoEventoAlimentacionNoExiste_RetornaError()
         {
@@ -297,6 +294,8 @@ namespace SalticosAdminTest
         [TearDown]
         public void TearDown()
         {
+            // Limpia las configuraciones y recursos después de cada prueba.
+
             _mockUnidadTrabajo.Reset();
             if (_controller != null)
             {
