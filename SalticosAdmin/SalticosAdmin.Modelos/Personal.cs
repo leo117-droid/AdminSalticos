@@ -34,7 +34,7 @@ namespace SalticosAdmin.Modelos
         public string Correo { get; set; }
 
 
-        [Required(ErrorMessage = "Cédula es requerido")]
+        [Required(ErrorMessage = "Cédula es requerida")]
         [MaxLength(11, ErrorMessage = "Cédula debe ser máximo 11 dígitos")]
         [RegularExpression(@"^\d+$", ErrorMessage = "La cédula solo debe contener números")]
         public string Cedula { get; set; }

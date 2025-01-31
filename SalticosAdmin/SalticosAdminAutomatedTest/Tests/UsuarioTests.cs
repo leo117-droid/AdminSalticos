@@ -22,9 +22,9 @@ namespace SalticosAdminAutomatedTest.Tests
             usuarioPage = new UsuarioPage(driver);
             driver = usuarioPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            usuarioPage.Visit("http://localhost:5270/");
+            usuarioPage.Visit("https://localhost:7033/");
 
-            usuarioPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            usuarioPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
 

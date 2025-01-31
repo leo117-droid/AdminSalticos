@@ -85,8 +85,8 @@ function loadDataTable() {
         ],
         "columnDefs": [
             {
-                "targets": -1, // Aplica el cambio a la última columna (botones)
-                "width": "250px" // Ajusta el ancho de la columna
+                "targets": -1, 
+                "width": "250px" 
             }
         ]
     });
@@ -96,8 +96,8 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el Evento?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar el evento?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true

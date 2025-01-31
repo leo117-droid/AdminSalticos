@@ -59,8 +59,8 @@ function obtenerIdDesdeURL() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el Personal?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar el personal?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true

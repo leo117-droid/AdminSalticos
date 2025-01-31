@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 function loadDataTable() {
 
-    var id = obtenerIdDesdeURL(); // Obtener la ID de la URL
+    var id = obtenerIdDesdeURL(); 
     var padreId = id;
 
     datatable = $('#tblDatos').DataTable({
@@ -61,8 +61,8 @@ function obtenerIdDesdeURL() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el servicio adicional?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar el servicio adicional?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true

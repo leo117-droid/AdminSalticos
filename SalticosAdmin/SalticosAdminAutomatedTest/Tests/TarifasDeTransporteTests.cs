@@ -36,9 +36,9 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             tarifasDeTransportePage.GestionTarifasDeTransporte();
             Thread.Sleep(2000);
-            tarifasDeTransportePage.CrearTarifa("Alajuela", "3000");
+            tarifasDeTransportePage.CrearTarifa("Puntarenas", "3000");
             Thread.Sleep(2000);
-            Assert.IsTrue(tarifasDeTransportePage.TarifaEstaRegistrada("Alajuela"));
+            Assert.IsTrue(tarifasDeTransportePage.TarifaEstaRegistrada("Puntarenas"));
         }
 
 
