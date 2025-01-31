@@ -39,7 +39,8 @@ namespace SalticosAdminAutomatedTest.Pages
         By MensajeNingunRegistro = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td");
         By OpcionesInflables = By.XPath("//*[@id=\"IdInflable\"]");
         By BtnCrearInflable = By.XPath("//*[@id=\"formEventoInflable\"]/div/div[3]/button");
-        By EspacioNombreInflable = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td[1]");
+
+        By EspacioNombreInflable = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td[1]"); 
         By BtnEliminarInflable = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td[3]/div/a");
         By BtnConfirmarEliminacionInflable = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td[3]/div/a");
         By NingunRegistroMensaje = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td");
