@@ -20,9 +20,9 @@ namespace SalticosAdminAutomatedTest.Tests
             proveedoresPage = new ProveedoresPage(driver);
             driver = proveedoresPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            proveedoresPage.Visit("http://localhost:5270/");
+            proveedoresPage.Visit("https://localhost:7033/");
 
-            proveedoresPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            proveedoresPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
 
         [TearDown]

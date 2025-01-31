@@ -91,9 +91,8 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     await _unidadTrabajo.Evento.Agregar(eventoVM.Evento);
                     TempData[DS.Exitosa] = "Evento creado Exitosamente";
 
-                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVM.Evento.ClienteId);
 
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoVM.Evento.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se agregó el evento para el {eventoVM.Evento.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
 
                 }
                 else
@@ -101,9 +100,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                     _unidadTrabajo.Evento.Actualizar(eventoVM.Evento);
                     TempData[DS.Exitosa] = "Evento actualizado Exitosamente";
 
-                    var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoVM.Evento.ClienteId);
-
-                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoVM.Evento.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
+                    await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se actualizó el evento de para el {eventoVM.Evento.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction("Index");
@@ -173,23 +170,12 @@ namespace SalticosAdmin.Areas.Admin.Controllers
             _unidadTrabajo.Evento.Remover(eventoBd);
             await _unidadTrabajo.Guardar();
 
-            var clienteBitacora = await _unidadTrabajo.Cliente.Obtener(eventoBd.ClienteId);
-
-            
-
-            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el evento de '{clienteBitacora.Nombre} {clienteBitacora.Apellidos} para {eventoBd.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
+            await _unidadTrabajo.Bitacora.RegistrarBitacora($"Se eliminó el evento para el {eventoBd.Fecha.ToString("dd/MM/yyyy")}'", usuarioNombre);
            
 
             return Json(new { success = true, message = "Evento borrado exitosamente" });
             
         }
-
-
-
-       
-
-
-
 
 
         #endregion

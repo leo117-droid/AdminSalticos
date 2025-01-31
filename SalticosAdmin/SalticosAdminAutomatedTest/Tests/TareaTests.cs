@@ -35,7 +35,7 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             tareaPage.GestionTareas();
             Thread.Sleep(2000);
-            tareaPage.CrearTarea("Llamar a Yosward", "Llamar al veneco", "Alta", "Pendiente", "2026-10-28", "17:05");
+            tareaPage.CrearTarea("Llamar al proveedor de EPA", "Llamar al proveedor de EPA para un reclamo en factura", "Alta", "Pendiente", "2026-10-28", "17:05");
             Thread.Sleep(2000);
             Assert.IsTrue(tareaPage.TareaEstaRegistrada());
         }

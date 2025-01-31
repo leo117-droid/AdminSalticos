@@ -21,7 +21,7 @@ namespace SalticosAdminAutomatedTest.Tests
             driver.Manage().Window.Maximize();
             eventoPage.Visit("https://localhost:7033/");
 
-            eventoPage.IniciarSesion("leomora641@gmail.com", "Hola123.");
+            eventoPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
         [TearDown]
         public void TearDown()
@@ -33,9 +33,9 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.CrearEvento("10/02/2025", "12:48", "22:00", "La Ceiba", "Alajuela", "Yowi Garcia - 112233", "yowi@gmail.com");
+            eventoPage.CrearEvento("10/02/2025", "13:00", "16:00", "La Ceiba", "Alajuela", "Jose Chaves Arce - 101289043", "jose@gmail.com");
             Thread.Sleep(2000);
-            Assert.IsTrue(eventoPage.EventoEstaRegistrado("Yowi Garcia"));
+            Assert.IsTrue(eventoPage.EventoEstaRegistrado("Jose Chaves Arce"));
         }
 
         [Test, Order(2)]
@@ -43,24 +43,25 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.ActualizarFechaEvento("Yowi Garcia", "15/02/2025");
+            eventoPage.ActualizarFechaEvento("Jose Chaves Arce", "03/03/2025");
             Thread.Sleep(2000);
-            Assert.IsTrue(eventoPage.FechaActualizada("15/02/2025", "Yowi Garcia"));
+            Assert.IsTrue(eventoPage.FechaActualizada("03/03/2025", "Jose Chaves Arce"));
         }
+
         [Test, Order(3)]
         public void AgregarInflableAEvento() 
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.SeleccionarInflable("el torilllo", "Yowi Garcia");
-            eventoPage.InflableActualizado("el torilllo");
+            eventoPage.SeleccionarInflable("Cono Escalador", "Jose Chaves Arce");
+            eventoPage.InflableActualizado("Cono Escalador");
         }
         [Test, Order(4)]
         public void EliminarInflableEvento()
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.EliminarInflable("Yowi Garcia");
+            eventoPage.EliminarInflable("Jose Chaves Arce");
             eventoPage.InflableEliminado();
         }
         [Test, Order(5)]
@@ -68,15 +69,15 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.SeleccionarPersonal("Leo Mora - 1", "Yowi Garcia");
-            eventoPage.PersonalActualizado("1");
+            eventoPage.SeleccionarPersonal("Raúl Bolaños Días - 102671235", "Jose Chaves Arce");
+            eventoPage.PersonalActualizado("102671235");
         }
         [Test, Order(6)]
         public void EliminarPersonalEvento()
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.EliminarPersonal("Yowi Garcia");
+            eventoPage.EliminarPersonal("Jose Chaves Arce");
             eventoPage.PersonalEliminado();
         }
         [Test, Order(7)]
@@ -84,15 +85,15 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.SeleccionarVehiculo("Camion - 111111", "Yowi Garcia");
-            eventoPage.VehiculoActualizado("111111");
+            eventoPage.SeleccionarVehiculo("Hyundai Porter - 321880", "Jose Chaves Arce");
+            eventoPage.VehiculoActualizado("321880");
         }
         [Test, Order(8)]
         public void EliminarVehiculoEvento()
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.EliminarVehiculo("Yowi Garcia");
+            eventoPage.EliminarVehiculo("Jose Chaves Arce");
             eventoPage.VehiculoEliminado();
         }
         [Test, Order(9)]
@@ -100,15 +101,15 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.SeleccionarMobiliario("Mob1", "01", "Yowi Garcia");
-            eventoPage.MobiliarioActualizado("Mob1");
+            eventoPage.SeleccionarMobiliario("Mesa", "6", "Jose Chaves Arce");
+            eventoPage.MobiliarioActualizado("Mesa");
         }
         [Test, Order(10)]
         public void EliminarMobiliarioEvento()
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.EliminarMobiliario("Yowi Garcia");
+            eventoPage.EliminarMobiliario("Jose Chaves Arce");
             eventoPage.MobiliarioEliminado();
         }
 
@@ -117,8 +118,8 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.SeleccionarAlimentacion("vorgesita", "1", "Yowi Garcia");
-            eventoPage.AlimentacionActualizada("vorgesita");
+            eventoPage.SeleccionarAlimentacion("Hot dog básico", "50", "Jose Chaves Arce");
+            eventoPage.AlimentacionActualizada("Hot dog básico");
         }
 
         [Test, Order(12)]
@@ -126,7 +127,7 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.EliminarAlimentacion("Yowi Garcia");
+            eventoPage.EliminarAlimentacion("Jose Chaves Arce");
             eventoPage.AlimentacionEliminada();
         }
 
@@ -135,8 +136,8 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.SeleccionarServicioAdicional("Leo", "1", "Yowi Garcia");
-            eventoPage.ServicioActualizado("Leo");
+            eventoPage.SeleccionarServicioAdicional("Planta", "1", "Jose Chaves Arce");
+            eventoPage.ServicioActualizado("Planta");
         }
 
         [Test, Order(14)]
@@ -144,7 +145,7 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.EliminarServicioAdicional("Yowi Garcia");
+            eventoPage.EliminarServicioAdicional("Jose Chaves Arce");
             eventoPage.ServicioEliminado();
         }
         [Test, Order(15)]
@@ -152,7 +153,7 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             eventoPage.GestionEvento();
             Thread.Sleep(2000);
-            eventoPage.EliminarEvento("Yowi Garcia");
+            eventoPage.EliminarEvento("Jose Chaves Arce");
             Thread.Sleep(2000);
             Assert.IsTrue(eventoPage.EventoEliminado());
         }

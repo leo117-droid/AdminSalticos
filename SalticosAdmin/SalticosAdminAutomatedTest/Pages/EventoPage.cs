@@ -123,7 +123,9 @@ namespace SalticosAdminAutomatedTest.Pages
 
             Click(BtnEditarEvento);
             Thread.Sleep(2000);
+            Clear(SeleccionFechaFormularioEvento);
             Type(Fecha, SeleccionFechaFormularioEvento);
+            Thread.Sleep(3000);
             Click(BtnGuardarCambios);
 
         }

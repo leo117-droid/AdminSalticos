@@ -19,9 +19,9 @@ namespace SalticosAdminAutomatedTest.Tests
             capacitacionesPage = new CapacitacionesPage(driver);
             driver = capacitacionesPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            capacitacionesPage.Visit("http://localhost:5270/");
+            capacitacionesPage.Visit("https://localhost:7033/");
 
-            capacitacionesPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
+            capacitacionesPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
         }
         [TearDown]
         public void TearDown()
@@ -34,7 +34,7 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             capacitacionesPage.GestionCapacitaciones();
             Thread.Sleep(2000);
-            capacitacionesPage.CrearCapacitacion("2025-10-28", "Uso de equipos", "2 dias");
+            capacitacionesPage.CrearCapacitacion("2025-10-28", "Uso de equipos", "2 días");
             Thread.Sleep(2000);
             Assert.IsTrue(capacitacionesPage.CapacitacionEstaRegistrada("Uso de equipos"));
         }
@@ -54,9 +54,9 @@ namespace SalticosAdminAutomatedTest.Tests
         {
             capacitacionesPage.GestionCapacitaciones();
             Thread.Sleep(2000);
-            capacitacionesPage.ActualizarDuracion("Uso de equipos", "4 dias");
+            capacitacionesPage.ActualizarDuracion("Uso de equipos", "4 días");
             Thread.Sleep(2000);
-            Assert.IsTrue(capacitacionesPage.DuracionActualizada("4 dias", "Uso de equipos"));
+            Assert.IsTrue(capacitacionesPage.DuracionActualizada("4 días", "Uso de equipos"));
         }
 
 
