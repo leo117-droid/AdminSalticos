@@ -21,7 +21,7 @@ namespace SalticosAdminAutomatedTest.Tests
             driver.Manage().Window.Maximize();
             personalPage.Visit("https://localhost:7033/");
 
-            personalPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
+            personalPage.IniciarSesion("leomora641@gmail.com", "Hola123.");
         }
         [TearDown]
         public void TearDown()
@@ -58,6 +58,15 @@ namespace SalticosAdminAutomatedTest.Tests
             Assert.IsTrue(personalPage.CorreoActualizado("2058", "Ian@gmail.com"));
         }
         [Test, Order(4)]
+        public void FiltrarPersonal_PorRol() 
+        {
+            personalPage.GestionPersonal();
+            Thread.Sleep(2000);
+            personalPage.FiltrarPersonal("Ingeniero");
+            Thread.Sleep(2000);
+            Assert.IsTrue(personalPage.FiltroCorreocto("Ingeniero"));
+        }
+        [Test, Order(5)]
         public void EliminarPersonal_EsEliminado()
         {
             personalPage.GestionPersonal();

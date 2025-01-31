@@ -21,7 +21,6 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
         public IActionResult Informe()
         {
-            // Obtener los datos de los inflables más solicitados
             var inflablesMasSolicitados = _informeServicio.ObtenerInflablesMasSolicitados();
             ViewBag.InflablesMasSolicitados = inflablesMasSolicitados;
 
@@ -30,19 +29,13 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
             var mobiliariosMasSolicitados = _informeServicio.ObtenerMobiliariosMasSolicitados();
             ViewBag.MobiliariosMasSolicitados = mobiliariosMasSolicitados;
-            // Pasar los datos a la vista
             return View();
         }
 
-
-
-        // Acción para generar el informe
         public IActionResult GenerarInformeInflables()
         {
-            // Obtener inflables más solicitados con la cantidad de veces que fueron utilizados
             var inflablesMasSolicitados = _informeServicio.ObtenerInflablesMasSolicitados();
 
-            // Crear el documento PDF
             using (var memoryStream = new MemoryStream())
             {
                 var document = new Document(PageSize.A4, 36, 36, 54, 54);
@@ -60,7 +53,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
 
 
-                document.Add(new Paragraph("Informe Inflables  -  Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
+                document.Add(new Paragraph("Informe inflables  -  Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
                 document.Add(new Paragraph(" "));
 
 
@@ -104,7 +97,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 }
 
                 var table = CreateTable(2, new float[] { 2, 2});
-                AddTableHeaders(table, new[] { "Nombre del Inflable", "Cantidad de veces solicitado" });
+                AddTableHeaders(table, new[] { "Nombre del inflable", "Cantidad de veces solicitado" });
 
 
                 foreach (var inflable in inflablesMasSolicitados)
@@ -144,7 +137,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
 
 
-                document.Add(new Paragraph("Informe Alimentos  -  Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
+                document.Add(new Paragraph("Informe alimentos  -  Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
                 document.Add(new Paragraph(" "));
 
 
@@ -188,7 +181,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 }
 
                 var table = CreateTable(2, new float[] { 2, 2 });
-                AddTableHeaders(table, new[] { "Nombre del Alimento", "Cantidad de veces solicitado" });
+                AddTableHeaders(table, new[] { "Nombre del alimento", "Cantidad de veces solicitado" });
 
                 foreach (var alimento in alimentosMasSolicitados)
                 {
@@ -225,7 +218,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
 
 
 
-                document.Add(new Paragraph("Informe Mobiliario  -  Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
+                document.Add(new Paragraph("Informe mobiliario  -  Sal-Ticos", titleFont) { Alignment = Element.ALIGN_CENTER });
                 document.Add(new Paragraph(" "));
 
 
@@ -269,7 +262,7 @@ namespace SalticosAdmin.Areas.Admin.Controllers
                 }
 
                 var table = CreateTable(2, new float[] { 2, 2 });
-                AddTableHeaders(table, new[] { "Nombre del Mobiliario", "Cantidad de veces solicitado" });
+                AddTableHeaders(table, new[] { "Nombre del mobiliario", "Cantidad de veces solicitado" });
 
 
                 foreach (var mobiliario in mobiliariosMasSolicitados)

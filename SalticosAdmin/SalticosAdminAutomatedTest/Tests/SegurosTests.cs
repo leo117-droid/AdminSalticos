@@ -57,7 +57,7 @@ namespace SalticosAdminAutomatedTest.Tests
             Thread.Sleep(2000);
             segurosPage.ActualizarFechaVencimiento("2200", "2028-08-22");
             Thread.Sleep(2000);
-            Assert.IsTrue(segurosPage.FechaActualizada("22-08-2028", "2200"));
+            Assert.IsTrue(segurosPage.FechaActualizada("22/08/2028", "2200"));
         }
 
         [Test, Order(4)]

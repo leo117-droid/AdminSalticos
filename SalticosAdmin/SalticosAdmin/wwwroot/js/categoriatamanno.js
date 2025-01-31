@@ -49,8 +49,8 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar la Categoría por Tamaño?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar la categoría por tamaño?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true

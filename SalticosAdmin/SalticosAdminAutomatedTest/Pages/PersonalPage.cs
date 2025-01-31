@@ -30,7 +30,9 @@ namespace SalticosAdminAutomatedTest.Pages
         By BtnGuardarCambios = By.XPath("//*[@id=\"formPersonal\"]/div/div[11]/div/button");
         By MensajeNingunRegistro = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td");
         By MensajeCedulaRepetida = By.XPath("/html/body/div[2]/div");
-
+        By DropdownRoles = By.XPath("//*[@id=\"rolPersonalSelect\"]");
+        By BtnBuscarRol = By.XPath("//*[@id=\"formFiltrar\"]/div/div[2]/button");
+        By EspacioRolTablaPersonal = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr[1]/td[8]");
         public PersonalPage(IWebDriver driver) : base(driver)
         {
 
@@ -94,6 +96,14 @@ namespace SalticosAdminAutomatedTest.Pages
             ClickElementUsingJS(BtnGuardarCambios);
         }
 
+        public void FiltrarPersonal(String rol) 
+        {
+            Click(DropdownRoles);
+            SelectByVisibleTextUsingJS(rol, DropdownRoles);
+            Thread.Sleep(1000);
+            Click(BtnBuscarRol);
+
+        }
         public void EliminarPersonal(String cedula)
         {
             Type(cedula, InputBarraBusqueda);
@@ -117,6 +127,11 @@ namespace SalticosAdminAutomatedTest.Pages
         public bool MensajeDespliegaCedulaRepetida() 
         {
             return IsDisplayed(MensajeCedulaRepetida);
+        }
+
+        public Boolean FiltroCorreocto(String rol) 
+        {
+            return GetText(EspacioRolTablaPersonal) == rol;
         }
     }
 }
