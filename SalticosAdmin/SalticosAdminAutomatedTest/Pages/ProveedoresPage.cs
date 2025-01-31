@@ -36,7 +36,8 @@ namespace SalticosAdminAutomatedTest.Pages
 
         By NingunRegistroMensaje = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td");
 
-        //Formulario
+        By GestionProovedoresHeaderLocator = By.XPath("/html/body/div[1]/main/div[1]/div[1]/h2");
+
 
 
         public ProveedoresPage(IWebDriver driver) : base(driver)
@@ -109,6 +110,13 @@ namespace SalticosAdminAutomatedTest.Pages
         public bool ProveedorEliminado()
         {
             return IsDisplayed(NingunRegistroMensaje);
+        }
+
+
+        public bool ValidacionDesplegada()
+        {
+            return IsDisplayed(GestionProovedoresHeaderLocator) &&
+                GetText(GestionProovedoresHeaderLocator) == "Gestión de proveedores";
         }
 
     }
