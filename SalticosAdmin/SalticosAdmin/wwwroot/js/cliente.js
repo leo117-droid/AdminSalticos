@@ -53,8 +53,8 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el Cliente?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar el cliente?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true

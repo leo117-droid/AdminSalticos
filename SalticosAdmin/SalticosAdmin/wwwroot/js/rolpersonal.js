@@ -49,8 +49,8 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar este rol de personal?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar este rol de personal?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true

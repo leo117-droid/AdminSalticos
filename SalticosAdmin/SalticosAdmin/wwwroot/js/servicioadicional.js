@@ -58,8 +58,8 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el Servicio Adicional?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar el servicio adicional?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true

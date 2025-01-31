@@ -108,8 +108,8 @@ function clearDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el Inflable?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar el inflable?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true

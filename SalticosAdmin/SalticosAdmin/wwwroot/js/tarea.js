@@ -99,7 +99,6 @@ function ActualizarEstado(id) {
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.message);
-                        // Refrescar la página automáticamente
                         location.reload();
                     } else {
                         toastr.error(data.message);
@@ -129,10 +128,7 @@ function EliminarTarea(id) {
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.message);
-                        // Eliminar la tarjeta del DOM
                         $(`#tarea-${id}`).remove();
-
-                        // Si no hay más tareas, mostrar el mensaje de vacío
                         if ($("#task-list").children().length === 0) {
                             $("#task-list").html('<p class="text-center text-muted">No hay tareas pendientes</p>');
                         }

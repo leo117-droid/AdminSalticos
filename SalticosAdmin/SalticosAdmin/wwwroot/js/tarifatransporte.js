@@ -54,7 +54,7 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar la Tarifa de Transporte?",
+        title: "¿Está seguro de eliminar la tarifa de transporte?",
         text: "Este registro no se podra recuperar",
         icon: "warning",
         buttons: true,

@@ -58,8 +58,8 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de eliminar el mobiliario?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar el mobiliario?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true

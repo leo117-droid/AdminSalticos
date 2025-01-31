@@ -56,7 +56,7 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el Usuario?",
+        title: "¿Está seguro de eliminar el usuario?",
         text: "Este registro no se podra recuperar",
         icon: "warning",
         buttons: true,

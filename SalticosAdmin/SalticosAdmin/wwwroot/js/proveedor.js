@@ -52,8 +52,8 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de eliminar el Proveedor?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar el proveedor?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true

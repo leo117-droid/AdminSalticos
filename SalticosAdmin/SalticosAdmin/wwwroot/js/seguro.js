@@ -72,7 +72,6 @@ function loadDataTable() {
 }
 
 function validarFechas(id) {
-    // Verificar las fechas antes de redirigir al formulario de actualización
     $.ajax({
         type: "GET",
         url: `/Admin/Seguro/ObtenerSeguroPorId/${id}`,
@@ -82,9 +81,8 @@ function validarFechas(id) {
 
             if (fechaVencimiento <= fechaInicio) {
                 swal("Error", "La fecha de vencimiento debe ser posterior a la fecha de inicio", "error");
-                return false;  // Impide que el usuario acceda al formulario de actualización
+                return false;
             } else {
-                // Si las fechas son correctas, redirige al formulario de actualización
                 window.location.href = `/Admin/Seguro/Upsert/${id}`;
             }
         }
@@ -93,8 +91,8 @@ function validarFechas(id) {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el Seguro?",
-        text: "Este registro no se podra recuperar",
+        title: "¿Está seguro de eliminar el seguro?",
+        text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
         dangerMode: true
