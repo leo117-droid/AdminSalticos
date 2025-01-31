@@ -35,6 +35,14 @@ namespace SalticosAdminAutomatedTest.Pages
         By EspacioNombreCapacitacion = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr[1]/td[2]");
         By EspacioDuracionCapacitacion = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr[1]/td[3]");
 
+        By PersonalDeCapacitacionBtnLocator = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr[1]/td[4]/div/a[2]");
+        By AgregarNuevoPersonalBtnLocator = By.XPath("/html/body/div/main/div[1]/div[2]/a");
+        By DropdownPersonalLocator = By.Id("IdPersonal");
+        By CrearBtnLocator = By.XPath("//*[@id=\"formCapacitacionPersonal\"]/div/div[3]/button");
+        By NingunRegistroMsgLocator = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td");
+        By EliminarPersonalCapacitacionBtnLocator = By.XPath("//*[@id=\"tblDatos\"]/tbody/tr/td[4]/div/a/i");
+        By EliminarPersonalCapacitacionConfirmacionBtnLocator = By.XPath("/html/body/div[2]/div/div[4]/div[2]/button");
+
         public CapacitacionesPage(IWebDriver driver) : base(driver)
         {
 
@@ -118,6 +126,44 @@ namespace SalticosAdminAutomatedTest.Pages
         {
             return IsDisplayed(MensajeNingunRegistroCapacitacion);
         }
+
+        public void AgregarPersonalACapacitacion(String nombreCapacitacion)
+        {
+            Type(nombreCapacitacion, InputBarraBusqueda);
+            Thread.Sleep(1500);
+            Click(PersonalDeCapacitacionBtnLocator);
+            Thread.Sleep(1500);
+            Click(AgregarNuevoPersonalBtnLocator);
+            Thread.Sleep(1500);
+            SeleccionarPrimeraOpcionEnSelect(DropdownPersonalLocator);
+            Click(CrearBtnLocator);
+        }
+
+        public bool PersonalEsAsignadoACapacitacion()
+        {
+            return IsDisplayed(MensajeNingunRegistroCapacitacion) &&
+                GetText(MensajeNingunRegistroCapacitacion) == "Ningún registro"; ;
+        }
+
+        public void EliminarPersonalDeCapacitacion(String nombreCapacitacion)
+        {
+            Type(nombreCapacitacion, InputBarraBusqueda);
+            Thread.Sleep(1500);
+            Click(PersonalDeCapacitacionBtnLocator);
+            Thread.Sleep(1500);
+            Click(EliminarPersonalCapacitacionBtnLocator);
+            Thread.Sleep(1500);
+            Click(EliminarPersonalCapacitacionConfirmacionBtnLocator);
+
+        }
+
+        public bool PersonalEliminadoCapacitacion()
+        {
+            return IsDisplayed(NingunRegistroMsgLocator);
+        }
+
+        
+
     }
 }
 

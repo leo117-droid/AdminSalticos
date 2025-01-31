@@ -163,5 +163,25 @@ namespace SalticosAdminAutomatedTest
             selectElement.SelectByText(text);
         }
 
+
+        public void SeleccionarPrimeraOpcionEnSelect(By selector)
+        {
+            var dropdownElement = driver.FindElement(selector);
+            var selectElement = new SelectElement(dropdownElement);
+
+            if (selectElement.Options.Count > 1) 
+            {
+                selectElement.SelectByIndex(1); 
+            }
+            else if (selectElement.Options.Count == 1)
+            {
+                selectElement.SelectByIndex(0);
+            }
+            else
+            {
+                throw new NoSuchElementException("El select no contiene opciones disponibles.");
+            }
+        }
+
     }
 }

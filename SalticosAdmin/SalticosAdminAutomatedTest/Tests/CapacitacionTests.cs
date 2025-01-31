@@ -19,9 +19,9 @@ namespace SalticosAdminAutomatedTest.Tests
             capacitacionesPage = new CapacitacionesPage(driver);
             driver = capacitacionesPage.ChromeDriverConnection();
             driver.Manage().Window.Maximize();
-            capacitacionesPage.Visit("https://localhost:7033/");
+            capacitacionesPage.Visit("http://localhost:5270/");
 
-            capacitacionesPage.IniciarSesion("camiulatech@gmail.com", "Hola321!");
+            capacitacionesPage.IniciarSesion("yoswi200210@gmail.com", "Hola321!");
         }
         [TearDown]
         public void TearDown()
@@ -59,7 +59,30 @@ namespace SalticosAdminAutomatedTest.Tests
             Assert.IsTrue(capacitacionesPage.DuracionActualizada("4 dias", "Uso de equipos"));
         }
 
+
+
         [Test, Order(4)]
+        public void AsignarPersonalACapacitacion_EsAsignado()
+        {
+            capacitacionesPage.GestionCapacitaciones();
+            Thread.Sleep(1500);
+            capacitacionesPage.AgregarPersonalACapacitacion("Uso de equipos");
+            Thread.Sleep(1500);
+            Assert.IsFalse(capacitacionesPage.PersonalEsAsignadoACapacitacion());
+        }
+
+
+        [Test, Order(5)]
+        public void EliminarPersonalDeCapacitacion_EsEliminado()
+        {
+            capacitacionesPage.GestionCapacitaciones();
+            Thread.Sleep(1500);
+            capacitacionesPage.EliminarPersonalDeCapacitacion("Uso de equipos");
+            Thread.Sleep(1500);
+            Assert.IsTrue(capacitacionesPage.PersonalEliminadoCapacitacion());
+        }
+
+        [Test, Order(6)]
         public void EliminarCapacitacion_EsEliminado()
         {
             capacitacionesPage.GestionCapacitaciones();
